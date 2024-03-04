@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <div class="navbar-logo">
+    <img src="logo.png" alt="Logo">
+  </div>
+  <div class="navbar-options">
+    <ul>
+      <li><a href="#" i18n>Home</a></li>
+      <li><a href="#" i18n>About</a></li>
+      <li><a href="#" i18n>Services</a></li>
+      <li><a href="#" i18n>Pricing</a></li>
+      <li><a href="#" i18n>Contact</a></li>
+    </ul>
+  </div>
+  <div class="navbar-buttons">
+    <button mat-raised-button i18n routerLink="/login">Login</button>
+    <button mat-raised-button (click)="openRegisterDialog('3000ms', '1500ms')" i18n>Register</button>
+  </div>
+</nav>

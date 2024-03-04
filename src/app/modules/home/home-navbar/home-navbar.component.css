@@ -1,0 +1,41 @@
+/* FILEPATH: /e:/Programming/Web/ShiftSchedulerAngular/src/app/modules/home/home-navbar/home-navbar.component.css */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 10px;
+  }
+  
+  .navbar-logo img {
+    height: 40px;
+  }
+  
+  .navbar-options ul {
+    list-style-type: none;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .navbar-options li {
+    margin-right: 10px;
+  }
+  
+  .navbar-options a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .navbar-buttons button {
+    padding: 5px 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .navbar-buttons button:hover {
+    background-color: #555;
+  }

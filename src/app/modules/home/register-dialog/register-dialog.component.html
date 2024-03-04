@@ -1,0 +1,40 @@
+
+<div id="register-dialog">
+
+<h1 mat-dialog-title i18n>Register</h1>
+
+<mat-dialog-content>
+    <form>
+        <mat-form-field class="register-input">
+            <input matInput placeholder="Name" i18n-placeholder required>
+        </mat-form-field>
+            
+        <mat-form-field class="register-input">
+            <mat-label i18n>Gender</mat-label>
+            <mat-select>
+                <mat-option value="male" i18n>Male</mat-option>
+                <mat-option value="female" i18n>Female</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="email" placeholder="Email" i18n-placeholder required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="password" placeholder="Password" i18n-placeholder required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="password" placeholder="Confirm Password" i18n-placeholder required>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+
+<mat-dialog-actions class="mat-dialog-actions">
+  <button class="mat-dialog-action-button" mat-raised-button i18n>Cancel</button>
+  <button class="mat-dialog-action-button" color="primary" mat-raised-button cdkFocusInitial i18n>Register</button>
+</mat-dialog-actions>
+
+</div>

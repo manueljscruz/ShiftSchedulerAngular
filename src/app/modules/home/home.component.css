@@ -1,0 +1,20 @@
+#hero {
+    background-color: #f2f2f2;
+    background-image: url('../../../assets/images/hero_splash.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    text-align: center;
+}
+
+#hero h1 {
+    margin: 0 auto;
+    font-size: 24px;
+    color: #333;
+}
+
+#hero p {
+    font-size: 16px;
+    color: #666;
+}

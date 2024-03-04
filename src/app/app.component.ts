@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'ShiftSchedulerAngular';
+  title = 'Shift Scheduler';
+
+  constructor(@Inject(Title) private titleService: Title) {
+    this.titleService.setTitle($localize`${this.title}`);
+  }
 }
