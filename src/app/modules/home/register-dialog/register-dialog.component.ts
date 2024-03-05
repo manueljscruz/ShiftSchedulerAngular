@@ -13,6 +13,18 @@ import { Gender } from '../../../shared/models/gender';
 
 export class RegisterDialogComponent {
 
-  genders: Gender[] = [];
+  genders: Gender[];
 
+  
+
+  selectedGender? : Gender;
+
+  constructor() {
+    this.genders = [
+      new Gender(1, 'Male'),
+      new Gender(2, 'Female'),
+      new Gender(3, 'Non-Binary'),
+    ];
+
+  }
 }

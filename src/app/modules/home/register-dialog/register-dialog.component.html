@@ -11,9 +11,8 @@
             
         <mat-form-field class="register-input">
             <mat-label i18n>Gender</mat-label>
-            <mat-select>
-                <mat-option value="male" i18n>Male</mat-option>
-                <mat-option value="female" i18n>Female</mat-option>
+            <mat-select [(ngModel)]="selectedGender" name="gender" [ngModelOptions]="{ standalone: true }">
+                <mat-option *ngFor="let gender of genders" [value]="gender">{{gender.genderValue}}</mat-option>
             </mat-select>
         </mat-form-field>
 
