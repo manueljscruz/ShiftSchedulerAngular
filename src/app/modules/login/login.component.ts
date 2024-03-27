@@ -3,6 +3,7 @@ import { MatCard } from '@angular/material/card';
 import { LoginDTO } from '../../shared/models/DTOs/LoginDTO';
 import { LoginRegisterService } from '../../core/services/LoginRegisterService';
 import { WorkerDTO } from '../../shared/models/DTOs/WorkerDTO';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent {
   rememberMe: boolean;
   emailErrorWarningVisible: boolean;
   passwordErrorWarningVisible: boolean;
-
+  isLoading: boolean;
 
 constructor(private loginRegisterService: LoginRegisterService) {
   this.email = '';
@@ -24,6 +25,7 @@ constructor(private loginRegisterService: LoginRegisterService) {
   this.rememberMe = false;
   this.emailErrorWarningVisible = false;
   this.passwordErrorWarningVisible = false;
+  this.isLoading = false;
 }
 
   async login() {
@@ -33,10 +35,17 @@ constructor(private loginRegisterService: LoginRegisterService) {
       alert('Please enter email and password');
       return;
     } else {
+
+      this.toggleLoadingSpinner(true);
+
       loginDTO = new LoginDTO(this.email, this.password); // Initialize it here
 
       // Call the login service here
       let loginResult : WorkerDTO = await this.loginRegisterService.login(loginDTO);
+
+      await this.wait(3);
+
+      this.toggleLoadingSpinner(false);
     }
   }
 
@@ -56,6 +65,12 @@ constructor(private loginRegisterService: LoginRegisterService) {
   /// Toggles the visibility of the loading spinner
   /// </summary>
   private toggleLoadingSpinner(newState: boolean) {
+    this.isLoading = newState;
+  }
 
+  private wait(seconds: number): Promise<void> {
+    return new Promise<void>((resolve) => {
+      setTimeout(resolve, seconds * 1000);
+    });
   }
 }
