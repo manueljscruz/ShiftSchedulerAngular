@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterDialogComponent } from '../register-dialog/register-dialog.component';
+import { GenderLocalizedDTO } from '../../../shared/models/DTOs/GenderLocalizedDTO';
 
 @Component({
   selector: 'home-navbar',
@@ -10,12 +11,16 @@ import { RegisterDialogComponent } from '../register-dialog/register-dialog.comp
 
 export class HomeNavbarComponent {
 
-  constructor(private dialog: MatDialog) {}
+  @Input() gendersLocalized: GenderLocalizedDTO[];
 
-  openRegisterDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+  constructor(private dialog: MatDialog) {
+    this.gendersLocalized = [];
+  }
+
+  openRegisterDialog(enterAnimationDuration: string, exitAnimationDuration: string, gendersLocalized: GenderLocalizedDTO[]): void {
     this.dialog.open(RegisterDialogComponent, {
       width: '400px',
-      data: { enterAnimationDuration, exitAnimationDuration }
+      data: { enterAnimationDuration, exitAnimationDuration, gendersLocalized }
     });
   }
 

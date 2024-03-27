@@ -5,3 +5,35 @@
   height: 100vh;
   background-color: #272727;
 }
+
+#login-card{
+  width: 400px;
+  height: 400px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-evenly;	
+}
+
+#login-logo{
+  display: flex;
+  justify-content: center;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#login-form mat-form-field {
+  width: 250px;
+}
+
+#login-form button {
+  width: 250px;
+  margin-top: 10px;
+}

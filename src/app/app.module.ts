@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -14,6 +14,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './modules/login/login.component';
 import { HomeComponent } from './modules/home/home.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatError } from '@angular/material/form-field';
+
 
 @NgModule({
   declarations: [
@@ -32,6 +35,8 @@ import { HomeComponent } from './modules/home/home.component';
     MatFormFieldModule,
     MatSelectModule,
     MatButtonModule,
+    HttpClientModule,
+    MatCardModule
   ],
   providers: [
     provideClientHydration(),
