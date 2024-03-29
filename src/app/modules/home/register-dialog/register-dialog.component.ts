@@ -8,6 +8,7 @@ import { Gender } from '../../../shared/models/database/gender';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { NewWorkerDTO } from '../../../shared/models/DTOs/NewWorkerDTO';
 import { GenderLocalizedDTO } from '../../../shared/models/DTOs/GenderLocalizedDTO';
+import { LoginRegisterService } from '../../../core/services/LoginRegisterService';
 
 @Component({
   selector: 'app-register-dialog',
@@ -28,7 +29,7 @@ export class RegisterDialogComponent {
   // Holds the selected gender
   selectedGender? : GenderLocalizedDTO;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private loginRegisterService: LoginRegisterService) {
     this.gendersLocalized = data.gendersLocalized;
   }
 
@@ -38,58 +39,66 @@ export class RegisterDialogComponent {
   }
 
   // Handles the form submission
-  onRegisterSubmit(){
+  async onRegisterSubmit(){
 
     // Validate the form
     let validationResult = this.validateRegisterForm();
     if(!validationResult.result){
-      alert(validationResult.errorMessage);
+      alert(validationResult.message);
       return;
     }
 
     // Register the user
     let newRegister: NewWorkerDTO = new NewWorkerDTO(this.nameInput, this.selectedGender?.genderId ? this.selectedGender.genderId : 0, this.emailInput, this.passwordInput);
 
-    console.log(newRegister);
+    // Call the API to register the user
+    let response : BaseResponseModel = await this.loginRegisterService.register(newRegister);
+
+    // If successful, close the dialog
+    if(response.result){
+      alert(response.message);
+      
+    }
+    
   }
   
 
   validateRegisterForm() : BaseResponseModel{
     let emailRegex = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
-    let response = new BaseResponseModel(false, '', '', null);
+    let response = new BaseResponseModel(false, '', null);
 
     if(this.nameInput.trim().length === 0){
-      response.errorMessage = 'Name is required';
+      response.message = 'Name is required';
       return response;
     }
 
     if(this.selectedGender === undefined){
-      response.errorMessage = 'Gender is required';
+      response.message = 'Gender is required';
       return response;
     }
 
     if(this.emailInput.trim().length === 0){
-      response.errorMessage = 'Email is required';
+      response.message = 'Email is required';
       return response;
     }
 
     if(!emailRegex.test(this.emailInput)){
-      response.errorMessage = 'Invalid Email address';
+      response.message = 'Invalid Email address';
       return response;
     }
 
     if(this.passwordInput.trim().length === 0){
-      response.errorMessage = 'Password is required';
+      response.message = 'Password is required';
       return response;
     }
 
     if(this.confirmPasswordInput.trim().length === 0){
-      response.errorMessage = 'Confirm Password is required';
+      response.message = 'Confirm Password is required';
       return response;
     }
 
     if(this.passwordInput !== this.confirmPasswordInput){
-      response.errorMessage = 'Password and Confirm Password do not match';
+      response.message = 'Password and Confirm Password do not match';
       return response;
     }
 

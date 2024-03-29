@@ -4,6 +4,10 @@ import { LoginDTO } from '../../shared/models/DTOs/LoginDTO';
 import { LoginRegisterService } from '../../core/services/LoginRegisterService';
 import { WorkerDTO } from '../../shared/models/DTOs/WorkerDTO';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatIcon } from '@angular/material/icon';
+import { BaseResponseModel } from '../../shared/models/baseResponseModel';
+
 
 @Component({
   selector: 'app-login',
@@ -34,18 +38,28 @@ constructor(private loginRegisterService: LoginRegisterService) {
     if (this.email === '' || this.password === '') {
       alert('Please enter email and password');
       return;
-    } else {
+    } 
+    else if (!this.validateEmail()) {
+      alert('Please enter a valid email');
+      return;
+    }
+    else {
 
       this.toggleLoadingSpinner(true);
 
       loginDTO = new LoginDTO(this.email, this.password); // Initialize it here
 
       // Call the login service here
-      let loginResult : WorkerDTO = await this.loginRegisterService.login(loginDTO);
-
-      await this.wait(3);
+      let loginResult : BaseResponseModel = await this.loginRegisterService.login(loginDTO);
 
       this.toggleLoadingSpinner(false);
+
+      if (loginResult.result) {
+        alert("Login successful");
+        console.log(loginResult.result);
+      } else {
+        alert(loginResult.message);
+      }
     }
   }
 
@@ -55,7 +69,6 @@ constructor(private loginRegisterService: LoginRegisterService) {
   validateEmail() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(this.email)) {
-      alert('Please enter a valid email');
       return false;
     }
     return true;

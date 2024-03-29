@@ -1,13 +1,11 @@
 export class BaseResponseModel{
-    result: boolean;
-    successMessage: string;
-    errorMessage: string;
-    data: any;
+    success: boolean;
+    message: string;
+    result: any;
 
-    constructor(result: boolean, successMessage: string, errorMessage: string, data: any){
+    constructor(success: boolean, message: string, result: any){
+        this.success = success;
+        this.message = message;
         this.result = result;
-        this.successMessage = successMessage;
-        this.errorMessage = errorMessage;
-        this.data = data;
     }
 }

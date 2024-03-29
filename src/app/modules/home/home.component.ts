@@ -16,20 +16,15 @@ export class HomeComponent {
    */
   constructor(private genderService: GenderService) {
     this.genders = [
-      new GenderLocalizedDTO(1, 'Male'),
-      new GenderLocalizedDTO(2, 'Female'),
-      new GenderLocalizedDTO(3, 'Non-Binary'),
     ];
   }
 
   async ngOnInit()
   {
-    // await this.GetGenders();
+    await this.GetGenders();
   }
 
   async GetGenders() : Promise<void>{
-    
-    
     this.genders = await this.genderService.getGenders();
     console.log(this.genders);
   }

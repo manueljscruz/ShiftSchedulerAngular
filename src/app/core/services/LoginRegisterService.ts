@@ -21,7 +21,7 @@ export class LoginRegisterService {
             let url = this.baseUrl + this.loginURL;
 
             const response = await this.http.post(url, loginDTO).toPromise();
-            console.log('Data received:', response);
+            return response;
             // Process the received data
         } catch (error : any) {
             console.error('Error fetching data:', error.message);
@@ -37,7 +37,7 @@ export class LoginRegisterService {
             let url = this.baseUrl + this.registerURL;
 
             const response = await this.http.post(url, newWorkerDTO).toPromise();
-            console.log('Data received:', response);
+            return response;
             // Process the received data
         } catch (error : any) {
             console.error('Error fetching data:', error.message);

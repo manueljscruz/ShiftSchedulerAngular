@@ -17,6 +17,8 @@ import { HomeComponent } from './modules/home/home.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatError } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatIcon } from '@angular/material/icon';
 
 
 @NgModule({
@@ -38,7 +40,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatButtonModule,
     HttpClientModule,
     MatCardModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCheckboxModule,
+    MatIcon
   ],
   providers: [
     provideClientHydration(),

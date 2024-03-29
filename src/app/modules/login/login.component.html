@@ -15,6 +15,18 @@
                             <mat-form-field>
                                 <input matInput placeholder="Password" type="password" [(ngModel)]="password" name="password" required>
                             </mat-form-field>
+                            
+                            <div class="row" id="login-spec-ops">
+                                <div class="col">
+                                    <mat-checkbox id="remember-checkbox" [(ngModel)]="rememberMe" [ngModelOptions]="{standalone: true}">Remember me</mat-checkbox>
+                                </div>
+                                <div class="col" >
+                                    <a id="forgot-password-container" routerLink="/forgot-password">Forgot Password
+                                        <mat-icon id="forgot-password-icon">help</mat-icon>
+                                    </a>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <button mat-raised-button color="primary" (click)="login()">Login</button>
                             </div>

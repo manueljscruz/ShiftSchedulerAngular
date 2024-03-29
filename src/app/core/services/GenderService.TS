@@ -12,17 +12,25 @@ export class GenderService {
     constructor(private http: HttpClient) {}
 
     async getGenders() : Promise<any> {
-        const userLanguage = navigator.language;
+        let userLanguage = navigator.language;
+        if(userLanguage.indexOf('-') > 0)
+        {
+            userLanguage = userLanguage.split('-')[0];
+        }
 
         try {
             let url = this.baseUrl + this.getGenderListURL + userLanguage;
 
             const response = await fetch(url);
+            const data = await response.json();
+
             if (!response.ok) {
               throw new Error('Network response was not ok.');
             }
-            const data = await response.json();
-            console.log('Data received:', data);
+            else{
+                return data;
+            }
+
             // Process the received data
         } catch (error : any) {
             console.error('Error fetching data:', error.message);

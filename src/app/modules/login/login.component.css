@@ -7,8 +7,8 @@
 }
 
 #login-card{
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 450px;
   padding: 20px;
   background-color: #fff;
   border-radius: 5px;
@@ -31,12 +31,39 @@
 }
 
 #login-form mat-form-field {
-  width: 250px;
+  width: 80%;
+}
+
+#login-spec-ops {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+}
+
+#remember-checkbox {
+  margin-right: 10px;
+}
+
+#forgot-password-container {
+  display: flex;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+  color: #272727;
+  cursor: pointer;
+}
+
+#forgot-password-container mat-icon {
+  margin-left: 5px;
 }
 
 #login-form button {
   width: 250px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 #loading-spinner {
