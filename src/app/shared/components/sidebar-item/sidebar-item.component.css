@@ -1,0 +1,27 @@
+.nav-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    white-space: nowrap;
+    height: 40px;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    padding: 0 20px;
+    color: black;
+}
+
+.nav-link:hover {
+    background-color: grey;
+    cursor: pointer;
+}
+
+.nav-link.active {
+    background-color: grey;
+}
+
+.nav-link i{
+    margin-right: 10px;
+
+}

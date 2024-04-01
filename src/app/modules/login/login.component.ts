@@ -7,6 +7,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatIcon } from '@angular/material/icon';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
+import { Router } from '@angular/router';
+import { Inject } from '@angular/core';
+import { LocalService } from '../../core/services/local.service';
 
 
 @Component({
@@ -23,7 +26,7 @@ export class LoginComponent {
   passwordErrorWarningVisible: boolean;
   isLoading: boolean;
 
-constructor(private loginRegisterService: LoginRegisterService) {
+constructor(private loginRegisterService: LoginRegisterService, private router: Router, @Inject(LocalService) private localStore: LocalService) {
   this.email = '';
   this.password = '';
   this.rememberMe = false;
@@ -54,9 +57,10 @@ constructor(private loginRegisterService: LoginRegisterService) {
 
       this.toggleLoadingSpinner(false);
 
-      if (loginResult.result) {
-        alert("Login successful");
-        console.log(loginResult.result);
+      if (loginResult.success) {
+        this.localStore.saveData("loggedUser", JSON.stringify(loginResult.result));
+        this.router.navigate(['/dashboard']);
+
       } else {
         alert(loginResult.message);
       }
@@ -81,9 +85,4 @@ constructor(private loginRegisterService: LoginRegisterService) {
     this.isLoading = newState;
   }
 
-  private wait(seconds: number): Promise<void> {
-    return new Promise<void>((resolve) => {
-      setTimeout(resolve, seconds * 1000);
-    });
-  }
 }

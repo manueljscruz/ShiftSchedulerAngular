@@ -19,7 +19,12 @@ import { MatError } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatIcon } from '@angular/material/icon';
-
+import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { AppSidebarComponent } from './shared/components/app-sidebar/app-sidebar.component';
+import { AppHeaderComponent } from './shared/components/app-header/app-header.component';
+import { SidebarItemComponent } from './shared/components/sidebar-item/sidebar-item.component';
+import { SidebarItemGroupComponent } from './shared/components/sidebar-item-group/sidebar-item-group.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -27,7 +32,12 @@ import { MatIcon } from '@angular/material/icon';
     HomeNavbarComponent,
     RegisterDialogComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    DashboardComponent,
+    AppSidebarComponent,
+    AppHeaderComponent,
+    SidebarItemComponent,
+    SidebarItemGroupComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +52,8 @@ import { MatIcon } from '@angular/material/icon';
     MatCardModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
-    MatIcon
+    MatIcon,
+    MatExpansionModule
   ],
   providers: [
     provideClientHydration(),
