@@ -4,10 +4,10 @@
     </div>
     <div class="separator"></div>
     <div class="menu">
-        <sidebar-item [sidebarItemText]="'Dashboard'" [sidebarItemRouterLink]="'dashboard'" [sidebarItemIcon]="'house-door'"></sidebar-item>
-        <sidebar-item [sidebarItemText]="'Profile'" [sidebarItemRouterLink]="'profile'" [sidebarItemIcon]="'person'"></sidebar-item>
-        <sidebar-item-group></sidebar-item-group>
-        <sidebar-item [sidebarItemText]="'Logout'" [sidebarItemRouterLink]="''" [sidebarItemIcon]="'box-arrow-in-left'"></sidebar-item>
+        <sidebar-item [sidebarItemText]="'Dashboard'" [sidebarItemRouterLink]="'dashboard'" [sidebarItemIcon]="DASHBOARD_HOME"></sidebar-item>
+        <sidebar-item [sidebarItemText]="'Profile'" [sidebarItemRouterLink]="'profile'" [sidebarItemIcon]="PERSON"></sidebar-item>
+        <sidebar-item-group [sidebarItemGroupText]="'Work Entities'" [sidebarItemGroupIcon]="BUILDING" [sidebarGroupItems]="workEntitiesSideBarItems"></sidebar-item-group>
+        <sidebar-item [sidebarItemText]="'Logout'" [sidebarItemRouterLink]="''" [sidebarItemIcon]="LOGOUT"></sidebar-item>
     </div>
 </div>
 

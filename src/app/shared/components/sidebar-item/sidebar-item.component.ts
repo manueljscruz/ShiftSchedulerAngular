@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { BOOTSTRAP_ICON_PREFIX } from '../../constants/IconNamesConstants';
 
 @Component({
   selector: 'sidebar-item',
@@ -8,9 +9,12 @@ import { Component, Input } from '@angular/core';
 
 export class SidebarItemComponent {
 
+  BOOTSTRAP_ICON_PREFIX: string = BOOTSTRAP_ICON_PREFIX;
+
   @Input() public sidebarItemText: string = '';
   @Input() public sidebarItemRouterLink: string = '';
   @Input() public sidebarItemIcon: string = "default-icon"; 
+  
   constructor(){
   }
 }

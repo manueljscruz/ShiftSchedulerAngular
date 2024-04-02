@@ -1,8 +1,12 @@
 <mat-expansion-panel>
     <mat-expansion-panel-header>
         <div class="sidebar-item-group-header">
-            <i class="bi bi-building"></i>
-            <span>Test</span>
+            <i class="{{BOOTSTRAP_ICON_PREFIX}}{{sidebarItemGroupIcon}}"></i>
+            <span>{{sidebarItemGroupText}}</span>
         </div>
     </mat-expansion-panel-header>
+    <div class="separator"></div>
+    <div class="menu" *ngFor="let item of sidebarGroupItems">
+        <sidebar-item [sidebarItemText]="item.sidebarItemText" [sidebarItemRouterLink]="item.sidebarItemLink" [sidebarItemIcon]="item.sidebarItemIcon"></sidebar-item>
+    </div>
 </mat-expansion-panel>
