@@ -1,7 +1,7 @@
 <div id="dashboard-container">
-    <app-sidebar [workEntitiesSideBarItems]="workEntitiesSideBarItems" ></app-sidebar>
+    <app-sidebar [workEntitiesSideBarItems]="workEntitiesSideBarItems" (logoutEvent)="logout()" ></app-sidebar>
     <div id="dashboard-content">
         <app-header></app-header>
-        <p>Content here</p>
+        <router-outlet></router-outlet>
     </div>
 </div>

@@ -1,4 +1,4 @@
-<a class="nav-link" [routerLink]="sidebarItemRouterLink">
+<a class="nav-link" [routerLink]="sidebarItemRouterLink" (click)="onSidebarItemClick()">
     <!--<fa-icon [icon]="[iconPrefix, iconName]"></fa-icon>-->
     <i class="{{BOOTSTRAP_ICON_PREFIX}}{{sidebarItemIcon}}"></i>
     <span>{{sidebarItemText}}</span>

@@ -25,6 +25,9 @@ import { AppHeaderComponent } from './shared/components/app-header/app-header.co
 import { SidebarItemComponent } from './shared/components/sidebar-item/sidebar-item.component';
 import { SidebarItemGroupComponent } from './shared/components/sidebar-item-group/sidebar-item-group.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { DashboardHomeComponent } from './modules/dashboard-home/dashboard-home.component';
+import { NewEntityComponent } from './modules/new-entity/new-entity.component';
+import { ProfileComponent } from './modules/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
     AppSidebarComponent,
     AppHeaderComponent,
     SidebarItemComponent,
-    SidebarItemGroupComponent
+    SidebarItemGroupComponent,
+    DashboardHomeComponent,
+    NewEntityComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

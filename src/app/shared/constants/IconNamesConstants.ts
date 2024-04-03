@@ -1,6 +1,6 @@
 export const BOOTSTRAP_ICON_PREFIX: string = "bi bi-";
-export const DASHBOARD_HOME: string = "house-door";
-export const PERSON: string = "person";
-export const BUILDING: string = "building";
-export const BUILDING_ADD: string = "building-add";
-export const LOGOUT: string = "box-arrow-in-left";
+export const DASHBOARD_HOME_ICON: string = "house-door";
+export const PROFILE_ICON: string = "person";
+export const ENTITY_ICON: string = "building";
+export const ENTITY_ADD_ICON: string = "building-add";
+export const LOGOUT_ICON: string = "box-arrow-in-left";

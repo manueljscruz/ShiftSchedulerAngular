@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { BOOTSTRAP_ICON_PREFIX } from '../../constants/IconNamesConstants';
 
 @Component({
@@ -14,7 +14,12 @@ export class SidebarItemComponent {
   @Input() public sidebarItemText: string = '';
   @Input() public sidebarItemRouterLink: string = '';
   @Input() public sidebarItemIcon: string = "default-icon"; 
+  @Output() eventTriggered = new EventEmitter<void>();
   
   constructor(){
+  }
+
+  onSidebarItemClick(){
+    this.eventTriggered.emit();
   }
 }
