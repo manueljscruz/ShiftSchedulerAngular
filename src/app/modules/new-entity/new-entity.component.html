@@ -1,3 +1,4 @@
+<!--<loading-screen></loading-screen>-->
 <div class="container">
     <h1>New Work Entity</h1>
     <div id="new-work-entity-form">
@@ -5,7 +6,7 @@
             <div class="div-spacer">
                 <mat-form-field appearance="outline">
                     <mat-label>Entity Name</mat-label>
-                    <input matInput placeholder="Insert name here">
+                    <input matInput placeholder="Insert name here" [(ngModel)]="entityNameInput" [ngModelOptions]="{standalone: true}">
                     <mat-hint>Minimum of 3 characters</mat-hint>
                 </mat-form-field>
             </div>
@@ -13,9 +14,8 @@
             <div class="div-spacer">
                 <mat-form-field appearance="outline"> 
                     <mat-label>Entity Type</mat-label>
-                    <mat-select>
-                        <mat-option value="option">Healthcare</mat-option>
-                        <mat-option value="option">Other</mat-option>
+                    <mat-select [(ngModel)]="selectedEntityType" name="entityType" [ngModelOptions]="{ standalone: true }">
+                        <mat-option *ngFor="let entityType of entityTypes" [value]="entityType">{{entityType.entityTypeLocalizedName}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -23,7 +23,7 @@
             <div class="div-spacer">
                 <mat-form-field appearance="outline">
                     <mat-label>Description</mat-label>
-                    <textarea matInput rows="8" placeholder="Describe the entity so it others may know more about what services it provides."></textarea>
+                    <textarea matInput rows="8" [(ngModel)]="entityDescriptionInput" [ngModelOptions]="{standalone: true}" placeholder="Describe the entity so it others may know more about what services it provides."></textarea>
                 </mat-form-field>
             </div>
             

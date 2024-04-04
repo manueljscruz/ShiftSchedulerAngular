@@ -28,6 +28,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { DashboardHomeComponent } from './modules/dashboard-home/dashboard-home.component';
 import { NewEntityComponent } from './modules/new-entity/new-entity.component';
 import { ProfileComponent } from './modules/profile/profile.component';
+import { LoadingScreenComponent } from './shared/components/loading-screen/loading-screen.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ProfileComponent } from './modules/profile/profile.component';
     SidebarItemGroupComponent,
     DashboardHomeComponent,
     NewEntityComponent,
-    ProfileComponent
+    ProfileComponent,
+    LoadingScreenComponent
   ],
   imports: [
     BrowserModule,

@@ -14,12 +14,15 @@ import { LANDING_PAGE_ROUTE, LOGIN_ROUTE, DASHBOARD_ROUTE, DASHBOARD_HOME_ROUTE,
 
 export class DashboardComponent {
 
+  // Constants
+  // Route Links
   LANDING_PAGE_ROUTE: string = LANDING_PAGE_ROUTE;
   LOGIN_ROUTE: string = LOGIN_ROUTE;
   DASHBOARD_ROUTE: string = DASHBOARD_ROUTE;
   DASHBOARD_HOME_ROUTE: string = DASHBOARD_HOME_ROUTE;
   NEW_ENTITY_ROUTE: string = NEW_ENTITY_ROUTE;
 
+  
   loggedUser: WorkerDTO;
   workEntitiesSideBarItems: SideBarItemModel[] = [];
 

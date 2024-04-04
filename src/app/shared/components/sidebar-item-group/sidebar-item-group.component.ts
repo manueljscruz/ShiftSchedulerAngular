@@ -22,6 +22,6 @@ export class SidebarItemGroupComponent {
 
   ngOnInit()
   {
-    console.log(this.sidebarGroupItems);
+    // console.log(this.sidebarGroupItems);
   }
 }

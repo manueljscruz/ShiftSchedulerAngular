@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Inject } from '@angular/core';
-import { GenderService } from '../../core/services/GenderService'; // Replace 'path/to/gender.service' with the actual path to the 'GenderService' file
-import { GenderLocalizedDTO } from '../../shared/models/DTOs/GenderLocalizedDTO'; // Replace 'path/to/GenderLocalizedDTO' with the actual path to the 'GenderLocalizedDTO' file
+import { AuxiliaryDataService } from '../../core/services/AuxiliaryDataService'; 
+import { GenderLocalizedDTO } from '../../shared/models/DTOs/GenderLocalizedDTO';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +14,7 @@ export class HomeComponent {
   /**
    *
    */
-  constructor(private genderService: GenderService) {
+  constructor(private auxDataService: AuxiliaryDataService) {
     this.genders = [
     ];
   }
@@ -25,7 +25,7 @@ export class HomeComponent {
   }
 
   async GetGenders() : Promise<void>{
-    this.genders = await this.genderService.getGenders();
+    this.genders = await this.auxDataService.getGenders();
     console.log(this.genders);
   }
 }
