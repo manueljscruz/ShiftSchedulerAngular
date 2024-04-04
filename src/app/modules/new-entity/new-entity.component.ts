@@ -60,11 +60,14 @@ export class NewEntityComponent {
     // let response : BaseResponseModel = await this.entityService.addEntity(newEntity);
     this.loadingScreenService.changeLoadingState(true);
     
-    await this.wait(3);
+    let response : BaseResponseModel = await this.entityService.addEntity(newEntity);
 
     this.loadingScreenService.changeLoadingState(false);
 
-    this.isLoading = false;
+    if(response.success)
+      alert('Entity created successfully');
+    else
+      alert('Failed to create entity: ' + response.message);
     // Hide loading screen
   }
 
