@@ -1,6 +1,33 @@
 <div class="container">
     <h1>New Work Entity</h1>
-    <mat-card id="new-work-entity-form">
-        <mat-card-content>Simple card</mat-card-content>
-    </mat-card>
+    <div id="new-work-entity-form">
+        <form>
+            <div class="div-spacer">
+                <mat-form-field appearance="outline">
+                    <mat-label>Entity Name</mat-label>
+                    <input matInput placeholder="Insert name here">
+                    <mat-hint>Minimum of 3 characters</mat-hint>
+                </mat-form-field>
+            </div>
+            
+            <div class="div-spacer">
+                <mat-form-field appearance="outline"> 
+                    <mat-label>Entity Type</mat-label>
+                    <mat-select>
+                        <mat-option value="option">Healthcare</mat-option>
+                        <mat-option value="option">Other</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            
+            <div class="div-spacer">
+                <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput rows="8" placeholder="Describe the entity so it others may know more about what services it provides."></textarea>
+                </mat-form-field>
+            </div>
+            
+            <button class="mat-dialog-action-button" color="primary" mat-raised-button cdkFocusInitial (click)="onCreateEntitySubmit()">Create</button>
+        </form>
+    </div>
 </div>

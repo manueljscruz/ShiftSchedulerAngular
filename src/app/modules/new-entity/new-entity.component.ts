@@ -7,4 +7,21 @@ import { Component } from '@angular/core';
 })
 export class NewEntityComponent {
 
+  
+
+  constructor() {
+
+  }
+
+
+  ngOnInit() {
+
+  }
+
+  onCreateEntitySubmit() {
+    alert('Entity Created');
+  }
+
 }
+
+

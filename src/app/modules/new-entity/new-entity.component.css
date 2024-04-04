@@ -1,7 +1,26 @@
 .container{
-    padding: 40px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 #new-work-entity-form{
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--mdc-elevated-card-container-shape);
+    background-color: var(--mdc-elevated-card-container-color);
+    border-width: 0;
+    border-style: solid;
+    border-color: var(--mdc-elevated-card-container-color);
+    box-shadow: var(--mdc-elevated-card-container-elevation);
+}
+
+.div-spacer{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+mat-form-field{
+    width: 100%;
 }

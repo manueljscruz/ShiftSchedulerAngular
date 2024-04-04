@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginDTO } from '../../shared/models/DTOs/LoginDTO';
 import { NewWorkerDTO } from '../../shared/models/DTOs/NewWorkerDTO';
+import { LOGIN_URL, REGISTER_URL } from '../../shared/constants/APIPathsConstants';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LoginRegisterService {
-    baseUrl = 'https://localhost:7203/api/worker';
-    loginURL = '/login';
-    registerURL = '/add';
+    LOGIN_URL = LOGIN_URL;
+    REGISTER_URL = REGISTER_URL;
 
     constructor(private http: HttpClient) {}
 
@@ -18,9 +18,7 @@ export class LoginRegisterService {
     /// </summary>
     async login(loginDTO: LoginDTO) : Promise<any> {
         try {
-            let url = this.baseUrl + this.loginURL;
-
-            const response = await this.http.post(url, loginDTO).toPromise();
+            const response = await this.http.post(LOGIN_URL, loginDTO).toPromise();
             return response;
             // Process the received data
         } catch (error : any) {
@@ -34,9 +32,7 @@ export class LoginRegisterService {
     /// </summary>
     async register(newWorkerDTO: NewWorkerDTO) : Promise<any> {
         try {
-            let url = this.baseUrl + this.registerURL;
-
-            const response = await this.http.post(url, newWorkerDTO).toPromise();
+            const response = await this.http.post(REGISTER_URL, newWorkerDTO).toPromise();
             return response;
             // Process the received data
         } catch (error : any) {
