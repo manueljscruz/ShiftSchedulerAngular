@@ -1,13 +1,15 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { AuxiliaryDataService } from '../../core/services/AuxiliaryDataService';
+import { AuxiliaryDataService } from '../../core/services/api/AuxiliaryDataService';
 import { EntityTypeLocalizedDTO } from '../../shared/models/DTOs/EntityTypeLocalizedDTO';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { NewEntityDTO } from '../../shared/models/DTOs/NewEntityDTO';
 import { LocalService } from '../../core/services/local.service';
 import { WorkerDTO } from '../../shared/models/DTOs/WorkerDTO';
-import { EntityService } from '../../core/services/EntityService';
-import { LoadingSpinnerManagerService } from '../../core/services/loading-spinner-manager.service';
+import { EntityService } from '../../core/services/api/EntityService';
+import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { Subscription } from 'rxjs';
+import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
+import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 
 @Component({
   selector: 'app-new-entity',
@@ -27,7 +29,7 @@ export class NewEntityComponent {
   subscription: Subscription = new Subscription();
 
   constructor(@Inject(LocalService) private localStore: LocalService, private auxDataService: AuxiliaryDataService, private entityService: EntityService,
-    private loadingScreenService: LoadingSpinnerManagerService) {
+    private loadingScreenService: LoadingSpinnerManagerService, private snackbarManagerService: SnackbarManagerService) {
     this.loggedInUser = JSON.parse(this.localStore.getData("loggedUser"));
   }
 
@@ -64,11 +66,13 @@ export class NewEntityComponent {
 
     this.loadingScreenService.changeLoadingState(false);
 
-    if(response.success)
-      alert('Entity created successfully');
+    if(response.success){
+      this.clearFormInputs();
+      this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Entity created successfully'));
+    }
     else
       alert('Failed to create entity: ' + response.message);
-    // Hide loading screen
+    
   }
 
   /// Waits for a specified number of seconds
@@ -103,6 +107,12 @@ export class NewEntityComponent {
       response.result = true;
     
     return response;
+  }
+
+  private clearFormInputs(){
+    this.entityNameInput = '';
+    this.entityDescriptionInput = '';
+    this.selectedEntityType = undefined;
   }
 }
 

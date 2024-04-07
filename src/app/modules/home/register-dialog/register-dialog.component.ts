@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { NewWorkerDTO } from '../../../shared/models/DTOs/NewWorkerDTO';
 import { GenderLocalizedDTO } from '../../../shared/models/DTOs/GenderLocalizedDTO';
-import { LoginRegisterService } from '../../../core/services/LoginRegisterService';
+import { LoginRegisterService } from '../../../core/services/api/LoginRegisterService';
 
 @Component({
   selector: 'app-register-dialog',
@@ -63,7 +63,7 @@ export class RegisterDialogComponent {
     let response = new BaseResponseModel(false, '', null);
 
     if(this.nameInput.trim().length === 0){
-      response.message = 'Name is required';
+      response.message = `Name is required`;
       return response;
     }
 

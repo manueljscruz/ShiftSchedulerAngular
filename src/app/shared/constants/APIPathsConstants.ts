@@ -8,3 +8,4 @@ export const REGISTER_URL : string = BASE_API_URL + "worker/add";
 export const GET_ENTITY_TYPES_BY_LOCALIZATION_URL : string = BASE_API_URL + "EntityType/get-all-entity-types-by-localization/{lcode}";
 // Entity
 export const ADD_ENTITY_URL : string = BASE_API_URL + "Entity/add";
+export const GET_ENTITIES_BY_WORKER_URL : string = BASE_API_URL + "Entity/get-entities-by-worker-id/{workerId}";

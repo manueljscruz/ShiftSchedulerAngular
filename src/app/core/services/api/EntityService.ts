@@ -1,24 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginDTO } from '../../shared/models/DTOs/LoginDTO';
-import { NewWorkerDTO } from '../../shared/models/DTOs/NewWorkerDTO';
-import { LOGIN_URL, REGISTER_URL } from '../../shared/constants/APIPathsConstants';
+import { ADD_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL } from '../../../shared/constants/APIPathsConstants';
 
 @Injectable({
     providedIn: 'root'
 })
-export class LoginRegisterService {
-    LOGIN_URL = LOGIN_URL;
-    REGISTER_URL = REGISTER_URL;
+
+export class EntityService {
 
     constructor(private http: HttpClient) {}
 
-    /// <summary>
-    /// Logs in the user
-    /// </summary>
-    async login(loginDTO: LoginDTO) : Promise<any> {
+    async addEntity(newEntityDTO: any) : Promise<any> {
         try {
-            const response = await this.http.post(LOGIN_URL, loginDTO).toPromise();
+            const response = await this.http.post(ADD_ENTITY_URL, newEntityDTO).toPromise();
             return response;
             // Process the received data
         } catch (error : any) {
@@ -27,12 +21,9 @@ export class LoginRegisterService {
         }
     }
 
-    /// <summary>
-    /// Registers a new worker
-    /// </summary>
-    async register(newWorkerDTO: NewWorkerDTO) : Promise<any> {
+    async getEntitiesByWorkerId(workerId: string) : Promise<any> {
         try {
-            const response = await this.http.post(REGISTER_URL, newWorkerDTO).toPromise();
+            const response = await this.http.get(GET_ENTITIES_BY_WORKER_URL.replace("{workerId}", workerId)).toPromise();
             return response;
             // Process the received data
         } catch (error : any) {

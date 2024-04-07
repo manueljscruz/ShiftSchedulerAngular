@@ -7,6 +7,11 @@
     </mat-expansion-panel-header>
     <div class="separator"></div>
     <div class="menu" *ngFor="let item of sidebarGroupItems">
-        <sidebar-item [sidebarItemText]="item.sidebarItemText" [sidebarItemRouterLink]="item.sidebarItemLink" [sidebarItemIcon]="item.sidebarItemIcon"></sidebar-item>
+        <div *ngIf="item.sidebarItemChildren.length == 0">
+            <sidebar-item [sidebarItemText]="item.sidebarItemText" [sidebarItemRouterLink]="item.sidebarItemLink" [sidebarItemIcon]="item.sidebarItemIcon"></sidebar-item>
+        </div>
+        <div *ngIf="item.sidebarItemChildren.length > 0">
+            <sidebar-item-group [sidebarItemGroupText]="item.sidebarItemText" [sidebarItemGroupIcon]="item.sidebarItemIcon" [sidebarGroupItems]="item.sidebarItemChildren"></sidebar-item-group>
+        </div>
     </div>
 </mat-expansion-panel>

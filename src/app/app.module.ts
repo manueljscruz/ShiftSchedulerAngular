@@ -29,6 +29,10 @@ import { DashboardHomeComponent } from './modules/dashboard-home/dashboard-home.
 import { NewEntityComponent } from './modules/new-entity/new-entity.component';
 import { ProfileComponent } from './modules/profile/profile.component';
 import { LoadingScreenComponent } from './shared/components/loading-screen/loading-screen.component';
+import { EntityWorkersComponent } from './modules/entity-workers/entity-workers.component';
+import { EntityScheduleComponent } from './modules/entity-schedule/entity-schedule.component';
+import { SuccessSnackbarComponent } from './shared/components/success-snackbar/success-snackbar.component';
+import { FailSnackbarComponent } from './shared/components/fail-snackbar/fail-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,11 @@ import { LoadingScreenComponent } from './shared/components/loading-screen/loadi
     DashboardHomeComponent,
     NewEntityComponent,
     ProfileComponent,
-    LoadingScreenComponent
+    LoadingScreenComponent,
+    EntityWorkersComponent,
+    EntityScheduleComponent,
+    SuccessSnackbarComponent,
+    FailSnackbarComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { LoginDTO } from '../../shared/models/DTOs/LoginDTO';
-import { LoginRegisterService } from '../../core/services/LoginRegisterService';
+import { LoginRegisterService } from '../../core/services/api/LoginRegisterService';
 import { WorkerDTO } from '../../shared/models/DTOs/WorkerDTO';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -55,6 +55,8 @@ constructor(private loginRegisterService: LoginRegisterService, private router: 
       // Call the login service here
       let loginResult : BaseResponseModel = await this.loginRegisterService.login(loginDTO);
 
+      this.clearPassword();
+
       this.toggleLoadingSpinner(false);
 
       if (loginResult.success) {
@@ -85,4 +87,7 @@ constructor(private loginRegisterService: LoginRegisterService, private router: 
     this.isLoading = newState;
   }
 
+  private clearPassword() {
+    this.password = '';
+  }
 }

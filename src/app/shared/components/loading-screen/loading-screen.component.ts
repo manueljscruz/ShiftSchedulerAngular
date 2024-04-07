@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { LoadingSpinnerManagerService } from '../../../core/services/loading-spinner-manager.service';
+import { LoadingSpinnerManagerService } from '../../../core/services/ui/loading-spinner-manager.service';
 import { Subscription } from 'rxjs';
 
 @Component({

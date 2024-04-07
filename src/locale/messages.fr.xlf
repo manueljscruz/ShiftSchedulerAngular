@@ -11,7 +11,7 @@
       </trans-unit>
       <trans-unit id="2821179408673282599" datatype="html">
         <source>Home</source>
-        <target>Início</target>
+        <target></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home-navbar/home-navbar.component.html</context>
           <context context-type="linenumber">7,8</context>
@@ -19,7 +19,6 @@
       </trans-unit>
       <trans-unit id="1726363342938046830" datatype="html">
         <source>About</source>
-        <target>Sobre</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home-navbar/home-navbar.component.html</context>
           <context context-type="linenumber">8,9</context>
@@ -27,7 +26,6 @@
       </trans-unit>
       <trans-unit id="7143579180750436311" datatype="html">
         <source>Services</source>
-        <target>Serviços</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home-navbar/home-navbar.component.html</context>
           <context context-type="linenumber">9,10</context>
@@ -35,7 +33,6 @@
       </trans-unit>
       <trans-unit id="5080775557941296581" datatype="html">
         <source>Pricing</source>
-        <target>Preços</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home-navbar/home-navbar.component.html</context>
           <context context-type="linenumber">10,11</context>
@@ -43,7 +40,6 @@
       </trans-unit>
       <trans-unit id="7922989125096435449" datatype="html">
         <source>Contact</source>
-        <target>Contato</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home-navbar/home-navbar.component.html</context>
           <context context-type="linenumber">11,12</context>
@@ -51,7 +47,6 @@
       </trans-unit>
       <trans-unit id="2454050363478003966" datatype="html">
         <source>Login</source>
-        <target>Entrar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home-navbar/home-navbar.component.html</context>
           <context context-type="linenumber">15,16</context>
@@ -59,7 +54,7 @@
       </trans-unit>
       <trans-unit id="3301086086650990787" datatype="html">
         <source>Register</source>
-        <target>Registrar</target>
+        <target>Registre</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home-navbar/home-navbar.component.html</context>
           <context context-type="linenumber">16,17</context>
@@ -75,7 +70,6 @@
       </trans-unit>
       <trans-unit id="2629117252981613197" datatype="html">
         <source>Welcome to our website!</source>
-        <target>Bem-vindo ao nosso site!</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">6,7</context>
@@ -83,7 +77,6 @@
       </trans-unit>
       <trans-unit id="6838720294225682747" datatype="html">
         <source>Discover amazing features and services.</source>
-        <target>Descubra recursos e serviços incríveis.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">7,8</context>
@@ -91,7 +84,6 @@
       </trans-unit>
       <trans-unit id="8953033926734869941" datatype="html">
         <source>Name</source>
-        <target>Nome</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/register-dialog/register-dialog.component.html</context>
           <context context-type="linenumber">10</context>
@@ -99,7 +91,6 @@
       </trans-unit>
       <trans-unit id="3948439187870398089" datatype="html">
         <source>Gender</source>
-        <target>Gênero</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/register-dialog/register-dialog.component.html</context>
           <context context-type="linenumber">14</context>
@@ -107,7 +98,6 @@
       </trans-unit>
       <trans-unit id="4768749765465246664" datatype="html">
         <source>Email</source>
-        <target>Email</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/register-dialog/register-dialog.component.html</context>
           <context context-type="linenumber">21</context>
@@ -115,7 +105,6 @@
       </trans-unit>
       <trans-unit id="1431416938026210429" datatype="html">
         <source>Password</source>
-        <target>Senha</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/register-dialog/register-dialog.component.html</context>
           <context context-type="linenumber">25</context>
@@ -123,7 +112,6 @@
       </trans-unit>
       <trans-unit id="3241357959735682038" datatype="html">
         <source>Confirm Password</source>
-        <target>Confirmar Senha</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/register-dialog/register-dialog.component.html</context>
           <context context-type="linenumber">29</context>
@@ -131,7 +119,6 @@
       </trans-unit>
       <trans-unit id="2159130950882492111" datatype="html">
         <source>Cancel</source>
-        <target>Cancelar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/register-dialog/register-dialog.component.html</context>
           <context context-type="linenumber">36,37</context>
