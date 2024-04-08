@@ -22,9 +22,5 @@ export class LoadingScreenComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-  /*
-  ngOnChanges(): void {
-    console.log('Loading Screen State : ' + this.isLoading);
-  }
-  */
+  
 }

@@ -27,6 +27,6 @@ export class SidebarItemGroupComponent {
 
   ngOnChanges()
   {
-    console.log(this.sidebarGroupItems);
+    
   }
 }

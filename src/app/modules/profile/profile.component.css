@@ -1,0 +1,139 @@
+.container{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.elevated-card-container{
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--mdc-elevated-card-container-shape);
+    background-color: var(--mdc-elevated-card-container-color);
+    border-width: 0;
+    border-style: solid;
+    border-color: var(--mdc-elevated-card-container-color);
+    box-shadow: var(--mdc-elevated-card-container-elevation);
+}
+
+.header-and-actions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.actions>button{
+    margin: 0 5px;
+}
+
+.action-edit-button {
+    height: 48px;
+    border-radius: 10px;
+    border-color: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #54f542;
+}
+
+.action-edit-button:hover {
+    background-color: #3fde3f;
+}
+
+.action-edit-button>mat-icon{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.action-edit-button>span{
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.action-delete-button {
+    height: 48px;
+    border-radius: 10px;
+    border-color: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #f54242;
+}
+
+.action-delete-button:hover {
+    background-color: #de3f3f;
+}
+
+.action-delete-button>mat-icon{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.action-delete-button>span{
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+
+.div-spacer{
+    border-bottom: 1px solid #464444;
+}
+
+.elevated-card-container-content{
+    padding: 20px;
+}
+
+.form-input-spacer{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+mat-form-field{
+    width: 100%;
+}
+
+.end-form-actions{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+}
+
+.action-submit-button {
+    height: 48px;
+    border-radius: 10px;
+    border-color: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #6d9ee9;
+}
+
+.action-submit-button:hover {
+    background-color: #5c8ad6;
+}
+
+.action-submit-button>mat-icon{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.action-submit-button>span{
+    padding-left: 5px;
+    padding-right: 10px;
+}
