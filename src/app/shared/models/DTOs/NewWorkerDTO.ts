@@ -1,5 +1,3 @@
-import {  } from "../DTOs/GenderLocalizedDTO";
-
 export class NewWorkerDTO {
     workerName: string;
     genderId : number;

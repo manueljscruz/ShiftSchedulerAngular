@@ -1,0 +1,13 @@
+.entity-worker-member-item{
+    width: 270px;
+    flex: 1;
+    margin: 10px 10px;
+}
+
+.member-image{
+    border-radius: 20px;
+}
+
+.mat-expansion-panel{
+    box-shadow: none;
+}

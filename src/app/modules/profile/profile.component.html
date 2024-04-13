@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="form-input-spacer end-form-actions" *ngIf="isEditing">
-                    <button class="action-submit-button" cdkFocusInitial>
+                    <button class="action-submit-button" cdkFocusInitial (click)="saveProfile()">
                         <mat-icon>save</mat-icon>
                         <span i18n>Save</span>
                     </button>

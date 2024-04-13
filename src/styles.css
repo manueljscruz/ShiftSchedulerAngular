@@ -7,3 +7,39 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .success-snackbar {
   background-color: #89c98c;
 }
+
+.container{
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.elevated-card-container{
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--mdc-elevated-card-container-shape);
+  background-color: var(--mdc-elevated-card-container-color);
+  border-width: 0;
+  border-style: solid;
+  border-color: var(--mdc-elevated-card-container-color);
+  box-shadow: var(--mdc-elevated-card-container-elevation);
+}
+
+.elevated-card-container-content{
+  padding: 20px;
+}
+
+.div-spacer{
+  border-bottom: 1px solid #464444;
+}
+
+mat-form-field{
+  width: 100%;
+}
+
+.form-input-spacer{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

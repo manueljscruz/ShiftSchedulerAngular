@@ -6,4 +6,5 @@ export const ENTITY_ADD_ICON: string = "building-add";
 export const MEMBERS_ICON: string = "people";
 export const ENTITY_SCHEDULE_ICON: string = "calendar-week";
 export const EDIT_ICON: string = "pencil-square";
+export const FILTER_ICON: string = "funnel-fill";
 export const LOGOUT_ICON: string = "box-arrow-in-left";

@@ -13,7 +13,7 @@ export class LoadingSpinnerManagerService {
   constructor() { }
 
   changeLoadingState(newState: boolean){
-    console.log('Loading State Changed : ' + newState);
+    // console.log('Loading State Changed : ' + newState);
     this.isLoadingSource.next(newState);
   }
 }

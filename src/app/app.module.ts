@@ -33,6 +33,8 @@ import { EntityWorkersComponent } from './modules/entity-workers/entity-workers.
 import { EntityScheduleComponent } from './modules/entity-schedule/entity-schedule.component';
 import { SuccessSnackbarComponent } from './shared/components/success-snackbar/success-snackbar.component';
 import { FailSnackbarComponent } from './shared/components/fail-snackbar/fail-snackbar.component';
+import { EntityWorkerMemberCardComponent } from './shared/components/entity-worker-member-card/entity-worker-member-card.component';
+import { MatChipsModule, MatChipGrid } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { FailSnackbarComponent } from './shared/components/fail-snackbar/fail-sn
     EntityWorkersComponent,
     EntityScheduleComponent,
     SuccessSnackbarComponent,
-    FailSnackbarComponent
+    FailSnackbarComponent,
+    EntityWorkerMemberCardComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +72,8 @@ import { FailSnackbarComponent } from './shared/components/fail-snackbar/fail-sn
     MatProgressSpinnerModule,
     MatCheckboxModule,
     MatIcon,
-    MatExpansionModule
+    MatExpansionModule,
+    MatChipsModule
   ],
   providers: [
     provideClientHydration(),

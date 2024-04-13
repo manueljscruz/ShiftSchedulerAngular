@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { NewWorkerDTO } from '../../../shared/models/DTOs/NewWorkerDTO';
 import { GenderLocalizedDTO } from '../../../shared/models/DTOs/GenderLocalizedDTO';
-import { LoginRegisterService } from '../../../core/services/api/LoginRegisterService';
+import { WorkerService } from '../../../core/services/api/WorkerService';
 
 @Component({
   selector: 'app-register-dialog',
@@ -24,7 +24,7 @@ export class RegisterDialogComponent {
   // Holds the selected gender
   selectedGender? : GenderLocalizedDTO;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private loginRegisterService: LoginRegisterService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private loginRegisterService: WorkerService) {
     this.gendersLocalized = data.gendersLocalized;
   }
 

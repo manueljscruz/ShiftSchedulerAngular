@@ -4,8 +4,10 @@ export const GET_GENDERS_BY_LOCALIZATION_URL : string = BASE_API_URL + "gender/g
 // Worker
 export const LOGIN_URL : string = BASE_API_URL + "worker/login";
 export const REGISTER_URL : string = BASE_API_URL + "worker/add";
+export const UPDATE_WORKER_URL : string = BASE_API_URL + "worker/update";
 // EntityType
 export const GET_ENTITY_TYPES_BY_LOCALIZATION_URL : string = BASE_API_URL + "EntityType/get-all-entity-types-by-localization/{lcode}";
 // Entity
 export const ADD_ENTITY_URL : string = BASE_API_URL + "Entity/add";
 export const GET_ENTITIES_BY_WORKER_URL : string = BASE_API_URL + "Entity/get-entities-by-worker-id/{workerId}";
+export const GET_ENTITY_MEMBERS_VM : string = BASE_API_URL + "Entity/get-entities-members-view-model/{entityId}/{lcode}";

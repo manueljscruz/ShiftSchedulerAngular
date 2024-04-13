@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { LoginDTO } from '../../shared/models/DTOs/LoginDTO';
-import { LoginRegisterService } from '../../core/services/api/LoginRegisterService';
+import { WorkerService } from '../../core/services/api/WorkerService';
 import { WorkerDTO } from '../../shared/models/DTOs/WorkerDTO';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -26,7 +26,7 @@ export class LoginComponent {
   passwordErrorWarningVisible: boolean;
   isLoading: boolean;
 
-constructor(private loginRegisterService: LoginRegisterService, private router: Router, @Inject(LocalService) private localStore: LocalService) {
+constructor(private loginRegisterService: WorkerService, private router: Router, @Inject(LocalService) private localStore: LocalService) {
   this.email = '';
   this.password = '';
   this.rememberMe = false;

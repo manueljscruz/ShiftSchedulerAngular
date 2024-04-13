@@ -87,22 +87,8 @@
     padding-right: 10px;
 }
 
-
-.div-spacer{
-    border-bottom: 1px solid #464444;
-}
-
 .elevated-card-container-content{
     padding: 20px;
-}
-
-.form-input-spacer{
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-mat-form-field{
-    width: 100%;
 }
 
 .end-form-actions{
