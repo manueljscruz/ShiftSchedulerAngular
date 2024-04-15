@@ -11,6 +11,7 @@ import { GenderLocalizedDTO } from '../../../shared/models/DTOs/GenderLocalizedD
 
 export class HomeNavbarComponent {
 
+
   @Input() gendersLocalized: GenderLocalizedDTO[];
 
   constructor(private dialog: MatDialog) {
@@ -23,5 +24,4 @@ export class HomeNavbarComponent {
       data: { enterAnimationDuration, exitAnimationDuration, gendersLocalized }
     });
   }
-
 }

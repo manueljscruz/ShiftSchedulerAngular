@@ -1,0 +1,15 @@
+.row{
+    display: flex;
+    flex-direction: row;
+}
+
+.color-box{
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

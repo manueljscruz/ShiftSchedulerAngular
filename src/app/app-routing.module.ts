@@ -8,9 +8,11 @@ import { NewEntityComponent } from './modules/new-entity/new-entity.component';
 import { ProfileComponent } from './modules/profile/profile.component';
 import { EntityWorkersComponent } from './modules/entity-workers/entity-workers.component';
 import { EntityScheduleComponent } from './modules/entity-schedule/entity-schedule.component';
+import { UITestsComponent } from './modules/uitests/uitests.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
+  { path: 'ui', component: UITestsComponent},
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, children: [
     { path: '', redirectTo: 'home', pathMatch: 'full'},

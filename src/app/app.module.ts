@@ -35,6 +35,7 @@ import { SuccessSnackbarComponent } from './shared/components/success-snackbar/s
 import { FailSnackbarComponent } from './shared/components/fail-snackbar/fail-snackbar.component';
 import { EntityWorkerMemberCardComponent } from './shared/components/entity-worker-member-card/entity-worker-member-card.component';
 import { MatChipsModule, MatChipGrid } from '@angular/material/chips';
+import { UITestsComponent } from './modules/uitests/uitests.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { MatChipsModule, MatChipGrid } from '@angular/material/chips';
     EntityScheduleComponent,
     SuccessSnackbarComponent,
     FailSnackbarComponent,
-    EntityWorkerMemberCardComponent
+    EntityWorkerMemberCardComponent,
+    UITestsComponent
   ],
   imports: [
     BrowserModule,
