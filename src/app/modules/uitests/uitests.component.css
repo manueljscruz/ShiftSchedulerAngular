@@ -3,6 +3,21 @@
     flex-direction: row;
 }
 
+.col{
+    display: flex;
+    flex-direction: column;
+}
+
+.primary-color-bg{
+    background-color: #C03221;
+    color: white;
+}
+
+.fourth-color-bg{
+    background-color: #545E75;
+    color: white;
+}
+
 .color-box{
     width: 200px;
     height: 200px;
@@ -12,4 +27,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.full-height{
+    height: 100%;
+}
+
+.full-width{
+    width: 100%;
+}
+
+#input-collection-container{
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
 }
