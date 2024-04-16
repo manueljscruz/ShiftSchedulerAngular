@@ -21,6 +21,7 @@ export class EntityWorkersComponent {
   public entityMembersViewModel: EntityMembersViewModel;
   public selectedSkill? : SkillDTO;
   private currentEntityId: string = '';
+  public isFilterActive: boolean = false;
   
   /// Constructor
   constructor(private entityService : EntityService,
@@ -43,5 +44,9 @@ export class EntityWorkersComponent {
   // TEMPORARY FUNCTION
   countRange(count: number): number[] {
     return Array(count).fill(0).map((_, index) => index);
+  }
+
+  toggleFilters() {
+    this.isFilterActive = !this.isFilterActive;
   }
 }

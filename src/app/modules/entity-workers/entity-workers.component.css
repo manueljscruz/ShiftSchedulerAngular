@@ -12,6 +12,16 @@
     flex-wrap: wrap;
 }
 
+#filter-btn{
+    height: 56px;
+}
+
+#filter-row{
+    column-gap: 18px;
+    margin-bottom: 10px;
+    height: 56px;
+}
+
 .action-filter-button {
     height: 48px;
     border-radius: 10px;

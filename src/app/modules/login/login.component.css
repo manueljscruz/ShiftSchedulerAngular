@@ -1,3 +1,5 @@
+@import url('../../../styles.css');
+
 #login-view {
   display: flex;
   justify-content: center;
@@ -8,7 +10,7 @@
 
 #login-card{
   width: 500px;
-  height: 450px;
+  height: 480px;
   padding: 20px;
   background-color: #fff;
   border-radius: 5px;
@@ -26,45 +28,25 @@
 #login-form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 20px 20px 0px 20px;
 }
 
 #login-form mat-form-field {
-  width: 80%;
+  margin-top: 10px;
 }
 
-#login-spec-ops {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
-  width: 80%;
+#login-form a{
+    cursor: pointer;
+    text-decoration: underline;
+    text-align: end;
+    color: #545E75;
 }
 
-#remember-checkbox {
-  margin-right: 10px;
+#login-button{
+  margin-top: 30px;
+  height: 56px;
 }
 
-#forgot-password-container {
-  display: flex;
-  align-items: center;
-}
-
-a {
-  text-decoration: none;
-  color: #272727;
-  cursor: pointer;
-}
-
-#forgot-password-container mat-icon {
-  margin-left: 5px;
-}
-
-#login-form button {
-  width: 250px;
-  margin-top: 20px;
-}
 
 #loading-spinner {
   position: absolute;

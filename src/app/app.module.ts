@@ -36,6 +36,7 @@ import { FailSnackbarComponent } from './shared/components/fail-snackbar/fail-sn
 import { EntityWorkerMemberCardComponent } from './shared/components/entity-worker-member-card/entity-worker-member-card.component';
 import { MatChipsModule, MatChipGrid } from '@angular/material/chips';
 import { UITestsComponent } from './modules/uitests/uitests.component';
+import {MatDividerModule} from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { UITestsComponent } from './modules/uitests/uitests.component';
     MatCheckboxModule,
     MatIcon,
     MatExpansionModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDividerModule
   ],
   providers: [
     provideClientHydration(),

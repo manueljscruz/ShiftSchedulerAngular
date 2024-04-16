@@ -7,31 +7,30 @@
                     <div class="row" id="login-logo">
                         <img src="https://placehold.co/100x80" alt="Logo">
                     </div>
-                    <div class="row">
+                    
                         <form id="login-form">
-                            <mat-form-field>
-                                <input matInput placeholder="Email" type="email" [(ngModel)]="email" name="email" required>
-                            </mat-form-field>
-                            <mat-form-field>
-                                <input matInput placeholder="Password" type="password" [(ngModel)]="password" name="password" required>
-                            </mat-form-field>
                             
-                            <div class="row" id="login-spec-ops">
-                                <div class="col">
-                                    <mat-checkbox id="remember-checkbox" [(ngModel)]="rememberMe" [ngModelOptions]="{standalone: true}">Remember me</mat-checkbox>
-                                </div>
-                                <div class="col" >
-                                    <a id="forgot-password-container" routerLink="/forgot-password">Forgot Password
-                                        <mat-icon id="forgot-password-icon">help</mat-icon>
-                                    </a>
-                                </div>
-                            </div>
+                            <span i18n>Email</span>
+                            <mat-form-field appearance="outline">
+                                <mat-icon matPrefix>alternate_email</mat-icon>
+                                <input matInput type="email" [(ngModel)]="email" name="email" required>
+                            </mat-form-field>
 
-                            <div class="row">
-                                <button mat-raised-button color="primary" (click)="login()">Login</button>
-                            </div>
+                            <span i18n>Password</span>
+                            <mat-form-field appearance="outline">
+                                <mat-icon matPrefix>lock</mat-icon>
+                                <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="password" name="password" required>
+                                <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+                                    <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                </button>
+                            </mat-form-field>
+
+                            <a (click)="forgotPassword()">
+                                <span i18n> Forgot Password?</span>
+                            </a>
+
+                            <button id="login-button" class="secondary-color-bg" mat-raised-button (click)="login()" i18n>Sign in</button>
                         </form>
-                    </div>
                 </mat-card>
             </div>
         </div>

@@ -4,10 +4,6 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
-.success-snackbar {
-  background-color: #89c98c;
-}
-
 .container{
   padding: 20px;
   display: flex;
@@ -31,15 +27,44 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding: 20px;
 }
 
-.div-spacer{
-  border-bottom: 1px solid #464444;
+.row{
+  display: flex;
+  flex-direction: row;
+}
+
+.col{
+  display: flex;
+  flex-direction: column;
+}
+
+.full-height{
+  height: 100%;
+}
+
+.full-width{
+  width: 100%;
+}
+
+.primary-color-bg{
+  background-color: #C03221 !important;
+  color: white !important;
+}
+
+.secondary-color-bg{
+  background-color: #545E75 !important;
+  color: white !important;
+}
+
+.third-color-bg{
+  background-color: #F7F7F7 !important;
+  color: black !important;
+}
+
+.edit-color-bg{
+  background-color: #33b249 !important;
+  color: white !important;
 }
 
 mat-form-field{
   width: 100%;
-}
-
-.form-input-spacer{
-  padding-top: 10px;
-  padding-bottom: 10px;
 }

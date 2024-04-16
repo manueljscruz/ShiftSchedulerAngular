@@ -1,21 +1,15 @@
-<div class="container">
-    <div class="elevated-card-container">
+<div class="container full-height">
+    <div class="elevated-card-container full-height">
         <div class="header-and-actions">
             <h1 i18n>Profile</h1>
             <div class="actions">
-                <button class="action-edit-button" (click)="toggleEditProfile()">
+                <button mat-fab extended class="edit-color-bg"(click)="toggleEditProfile()">
                     <mat-icon>edit</mat-icon>
                     <span i18n>Edit</span>
                 </button>
-                <!--
-                <button class="action-delete-button">
-                    <mat-icon>delete</mat-icon>
-                    <span i18n>Delete</span>
-                </button>
-                -->
             </div>
         </div>
-        <div class="div-spacer"></div>
+        <mat-divider></mat-divider>
         <div class="elevated-card-container-content">
             <form>
                 <!-- Name -->
@@ -45,7 +39,7 @@
                 </div>
 
                 <div class="form-input-spacer end-form-actions" *ngIf="isEditing">
-                    <button class="action-submit-button" cdkFocusInitial (click)="saveProfile()">
+                    <button class="action-submit-button secondary-color-bg" cdkFocusInitial (click)="saveProfile()">
                         <mat-icon>save</mat-icon>
                         <span i18n>Save</span>
                     </button>

@@ -14,7 +14,3 @@ mat-expansion-panel-header{
 .sidebar-item-group-header i{
     margin-right: 10px;
 }
-
-.separator{
-    border-bottom: 2px solid rgba(0, 0, 0, 0.12);
-}

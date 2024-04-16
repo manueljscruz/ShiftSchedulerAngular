@@ -10,6 +10,9 @@ import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { Router } from '@angular/router';
 import { Inject } from '@angular/core';
 import { LocalService } from '../../core/services/local.service';
+import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
+import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
+import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 
 
 @Component({
@@ -21,12 +24,17 @@ export class LoginComponent {
 
   email: string;
   password: string;
+  hidePassword: boolean = true;
   rememberMe: boolean;
   emailErrorWarningVisible: boolean;
   passwordErrorWarningVisible: boolean;
   isLoading: boolean;
 
-constructor(private loginRegisterService: WorkerService, private router: Router, @Inject(LocalService) private localStore: LocalService) {
+constructor(private loginRegisterService: WorkerService, 
+  private router: Router, 
+  private loadingScreenService: LoadingSpinnerManagerService,
+  private snackbarManagerService: SnackbarManagerService,
+  @Inject(LocalService) private localStore: LocalService) {
   this.email = '';
   this.password = '';
   this.rememberMe = false;
@@ -48,7 +56,7 @@ constructor(private loginRegisterService: WorkerService, private router: Router,
     }
     else {
 
-      this.toggleLoadingSpinner(true);
+      this.loadingScreenService.changeLoadingState(true);
 
       loginDTO = new LoginDTO(this.email, this.password); // Initialize it here
 
@@ -57,14 +65,14 @@ constructor(private loginRegisterService: WorkerService, private router: Router,
 
       this.clearPassword();
 
-      this.toggleLoadingSpinner(false);
+      this.loadingScreenService.changeLoadingState(false);
 
       if (loginResult.success) {
         this.localStore.saveData("loggedUser", JSON.stringify(loginResult.result));
         this.router.navigate(['/dashboard']);
 
       } else {
-        alert(loginResult.message);
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, loginResult.message));
       }
     }
   }
@@ -89,5 +97,13 @@ constructor(private loginRegisterService: WorkerService, private router: Router,
 
   private clearPassword() {
     this.password = '';
+  }
+
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  forgotPassword() {
+    this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Please contact the administrator to reset your password'));
   }
 }
