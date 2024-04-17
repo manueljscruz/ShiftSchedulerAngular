@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppHeaderComponent {
 
+  public searchInput: string = '';
+
+  constructor() {
+    
+    
+  }
 }

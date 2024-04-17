@@ -22,6 +22,7 @@ export class EntityWorkersComponent {
   public selectedSkill? : SkillDTO;
   private currentEntityId: string = '';
   public isFilterActive: boolean = false;
+  public nameFilter: string = '';
   
   /// Constructor
   constructor(private entityService : EntityService,

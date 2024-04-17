@@ -3,6 +3,7 @@
     <app-sidebar [workEntitiesSideBarItems]="workEntitiesSideBarItems" (logoutEvent)="logout()" ></app-sidebar>
     <div id="dashboard-view">
         <app-header></app-header>
+        <mat-divider></mat-divider>
         <div id="dashboard-content" class="full-height">
             <router-outlet></router-outlet>
         </div>
