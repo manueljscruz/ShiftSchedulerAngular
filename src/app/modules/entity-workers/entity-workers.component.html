@@ -1,6 +1,14 @@
 <div class="container full-height">
     <div class="elevated-card-container full-height">
-        <h1 i18n>Members</h1>
+        <div class="header-and-actions">
+            <h1 i18n>Members</h1>
+            <div class="actions" *ngIf="isCurrentUserEntityOwner">
+                <button mat-fab extended class="edit-color-bg"(click)="addMember()">
+                    <mat-icon>add</mat-icon>
+                    <span i18n>Add Member</span>
+                </button>
+            </div>
+        </div>
         <mat-divider></mat-divider>
         <div class="elevated-card-container-content">
 

@@ -5,6 +5,7 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h3>{{entityWorkerMember?.workerName}}</h3>
+                    <mat-icon *ngIf="entityWorkerMember?.isOwner">stars</mat-icon>
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-chip-set>
