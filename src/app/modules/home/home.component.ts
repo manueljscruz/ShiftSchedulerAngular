@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Inject } from '@angular/core';
 import { AuxiliaryDataService } from '../../core/services/api/AuxiliaryDataService'; 
-import { GenderLocalizedDTO } from '../../shared/models/DTOs/GenderLocalizedDTO';
+import { GenderLocalizedDTO } from '../../shared/models/DTOs/Incoming/GenderLocalizedDTO';
 
 @Component({
   selector: 'app-home',

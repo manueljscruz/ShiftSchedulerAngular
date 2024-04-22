@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { EDIT_ICON } from '../../shared/constants/IconNamesConstants';
-import { GenderLocalizedDTO } from '../../shared/models/DTOs/GenderLocalizedDTO';
+import { GenderLocalizedDTO } from '../../shared/models/DTOs/Incoming/GenderLocalizedDTO';
 import { AuxiliaryDataService } from '../../core/services/api/AuxiliaryDataService';
-import { WorkerDTO } from '../../shared/models/DTOs/WorkerDTO';
+import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';

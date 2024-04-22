@@ -6,3 +6,4 @@ export const PROFILE_ROUTE: string = "/dashboard/profile";
 export const NEW_ENTITY_ROUTE: string = "/dashboard/new-entity";
 export const ENTITY_WORKERS_ROUTE: string = "/dashboard/entity-workers/:entityId";
 export const ENTITY_SCHEDULE_ROUTE: string = "/dashboard/entity-schedule/:entityId";
+export const ENTITY_FORM_ROUTE: string = "/dashboard/entity-form/:entityId";

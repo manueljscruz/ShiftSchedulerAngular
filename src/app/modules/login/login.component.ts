@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatCard } from '@angular/material/card';
-import { LoginDTO } from '../../shared/models/DTOs/LoginDTO';
+import { LoginDTO } from '../../shared/models/DTOs/Outgoing/LoginDTO';
 import { WorkerService } from '../../core/services/api/WorkerService';
-import { WorkerDTO } from '../../shared/models/DTOs/WorkerDTO';
+import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatIcon } from '@angular/material/icon';

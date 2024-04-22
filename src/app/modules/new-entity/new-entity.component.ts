@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { AuxiliaryDataService } from '../../core/services/api/AuxiliaryDataService';
-import { EntityTypeLocalizedDTO } from '../../shared/models/DTOs/EntityTypeLocalizedDTO';
+import { EntityTypeLocalizedDTO } from '../../shared/models/DTOs/Incoming/EntityTypeLocalizedDTO';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
-import { NewEntityDTO } from '../../shared/models/DTOs/NewEntityDTO';
+import { NewEntityDTO } from '../../shared/models/DTOs/Outgoing/NewEntityDTO';
 import { LocalService } from '../../core/services/local.service';
-import { WorkerDTO } from '../../shared/models/DTOs/WorkerDTO';
+import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
 import { EntityService } from '../../core/services/api/EntityService';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { Subscription } from 'rxjs';

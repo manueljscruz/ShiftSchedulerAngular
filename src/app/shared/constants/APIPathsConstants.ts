@@ -11,3 +11,4 @@ export const GET_ENTITY_TYPES_BY_LOCALIZATION_URL : string = BASE_API_URL + "Ent
 export const ADD_ENTITY_URL : string = BASE_API_URL + "Entity/add";
 export const GET_ENTITIES_BY_WORKER_URL : string = BASE_API_URL + "Entity/get-entities-by-worker-id/{workerId}";
 export const GET_ENTITY_MEMBERS_VM : string = BASE_API_URL + "Entity/get-entities-members-view-model/{entityId}/{lcode}";
+export const GET_ENTITY_PROFILE_VM : string = BASE_API_URL + "Entity/get-entity-profile-view-model";

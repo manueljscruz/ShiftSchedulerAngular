@@ -6,8 +6,8 @@ import { EntityService } from '../../core/services/api/EntityService';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { ActivatedRoute } from '@angular/router';
-import { SkillDTO } from '../../shared/models/DTOs/SkillDTO';
-import { WorkerDTO } from '../../shared/models/DTOs/WorkerDTO';
+import { SkillDTO } from '../../shared/models/DTOs/Incoming/SkillDTO';
+import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
 import { LocalService } from '../../core/services/local.service';
 
 

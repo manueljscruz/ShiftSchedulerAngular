@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginDTO } from '../../../shared/models/DTOs/LoginDTO';
-import { NewWorkerDTO } from '../../../shared/models/DTOs/NewWorkerDTO';
+import { LoginDTO } from '../../../shared/models/DTOs/Outgoing/LoginDTO';
+import { NewWorkerDTO } from '../../../shared/models/DTOs/Outgoing/NewWorkerDTO';
 import { LOGIN_URL, REGISTER_URL, UPDATE_WORKER_URL } from '../../../shared/constants/APIPathsConstants';
-import { WorkerDTO } from '../../../shared/models/DTOs/WorkerDTO';
+import { WorkerDTO } from '../../../shared/models/DTOs/Incoming/WorkerDTO';
 
 @Injectable({
     providedIn: 'root'

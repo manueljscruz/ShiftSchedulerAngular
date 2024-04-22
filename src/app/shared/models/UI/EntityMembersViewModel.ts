@@ -1,5 +1,5 @@
-import { EntityWorkerMemberDTO } from "../DTOs/EntityWorkerMemberDTO";
-import { SkillDTO } from "../DTOs/SkillDTO";
+import { EntityWorkerMemberDTO } from "../DTOs/Incoming/EntityWorkerMemberDTO";
+import { SkillDTO } from "../DTOs/Incoming/SkillDTO";
 
 export class EntityMembersViewModel {
     entityOwnerId: string;

@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
-import { NewWorkerDTO } from '../../../shared/models/DTOs/NewWorkerDTO';
-import { GenderLocalizedDTO } from '../../../shared/models/DTOs/GenderLocalizedDTO';
+import { NewWorkerDTO } from '../../../shared/models/DTOs/Outgoing/NewWorkerDTO';
+import { GenderLocalizedDTO } from '../../../shared/models/DTOs/Incoming/GenderLocalizedDTO';
 import { WorkerService } from '../../../core/services/api/WorkerService';
 
 @Component({

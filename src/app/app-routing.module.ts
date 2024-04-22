@@ -9,6 +9,7 @@ import { ProfileComponent } from './modules/profile/profile.component';
 import { EntityWorkersComponent } from './modules/entity-workers/entity-workers.component';
 import { EntityScheduleComponent } from './modules/entity-schedule/entity-schedule.component';
 import { UITestsComponent } from './modules/uitests/uitests.component';
+import { EntityFormComponent } from './modules/entity-form/entity-form.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
     { path: 'home', component: DashboardHomeComponent},
     { path: 'profile', component: ProfileComponent},
     { path: 'new-entity', component: NewEntityComponent},
+    { path: 'entity-form/:entityId', component: EntityFormComponent},
     { path: 'entity-workers/:entityId', component: EntityWorkersComponent},
     { path: 'entity-schedule/:entityId', component: EntityScheduleComponent},
   ]},

@@ -1,11 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { LocalService } from '../../core/services/local.service';
 import { Router } from '@angular/router';
-import { WorkerDTO } from '../../shared/models/DTOs/WorkerDTO';
-import { EntityWorkerDTO } from '../../shared/models/DTOs/EntityWorkerDTO';
+import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
+import { EntityWorkerDTO } from '../../shared/models/DTOs/Incoming/EntityWorkerDTO';
 import { SideBarItemModel } from '../../shared/models/UI/SideBarItemModel';
 import { BOOTSTRAP_ICON_PREFIX, ENTITY_ICON, ENTITY_ADD_ICON, MEMBERS_ICON, ENTITY_SCHEDULE_ICON } from '../../shared/constants/IconNamesConstants';
-import { LANDING_PAGE_ROUTE, LOGIN_ROUTE, DASHBOARD_ROUTE, DASHBOARD_HOME_ROUTE, NEW_ENTITY_ROUTE, ENTITY_WORKERS_ROUTE, ENTITY_SCHEDULE_ROUTE } from '../../shared/constants/ViewRoutesConstants';
+import { LANDING_PAGE_ROUTE, LOGIN_ROUTE, DASHBOARD_ROUTE, DASHBOARD_HOME_ROUTE, NEW_ENTITY_ROUTE, ENTITY_WORKERS_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_FORM_ROUTE } from '../../shared/constants/ViewRoutesConstants';
 import { EntityService } from '../../core/services/api/EntityService';
 
 @Component({
@@ -67,6 +67,7 @@ export class DashboardComponent {
     this.entityWorkerDTOs.forEach(entityWorkerDTO => {
       let entityOptionItems: SideBarItemModel[] = [];
       
+      entityOptionItems.push(new SideBarItemModel("Home", BOOTSTRAP_ICON_PREFIX+ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
       // Add Members Button
       entityOptionItems.push(new SideBarItemModel("Members", BOOTSTRAP_ICON_PREFIX+MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
       // Add Schedule Button

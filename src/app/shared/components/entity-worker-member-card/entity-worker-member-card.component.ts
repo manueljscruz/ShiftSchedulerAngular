@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { EntityWorkerMemberDTO } from '../../models/DTOs/EntityWorkerMemberDTO';
+import { EntityWorkerMemberDTO } from '../../models/DTOs/Incoming/EntityWorkerMemberDTO';
 
 @Component({
   selector: 'entity-worker-member-card',
