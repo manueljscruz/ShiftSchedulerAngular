@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EntityService } from '../../core/services/api/EntityService';
 import { LocalService } from '../../core/services/local.service';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
@@ -14,6 +14,7 @@ import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { Entity } from '../../shared/models/database/entity';
 import { FormEntityDTO } from '../../shared/models/DTOs/Outgoing/FormEntityDTO';
+import { DASHBOARD_HOME_ROUTE } from '../../shared/constants/ViewRoutesConstants';
 
 @Component({
   selector: 'entity-form',
@@ -59,7 +60,8 @@ export class EntityFormComponent {
     private snackbarManagerService: SnackbarManagerService,
     private localService: LocalService,
     private loadingScreenService: LoadingSpinnerManagerService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router 
   ) {
     this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
@@ -132,7 +134,6 @@ export class EntityFormComponent {
     });
 
     dialogRef.afterClosed().subscribe(result =>{
-      console.log(result);
       if(result){
         this.deleteEntity();
       };
@@ -163,7 +164,22 @@ export class EntityFormComponent {
     return response;
   }
 
-  deleteEntity() {
-    console.log('Deleting entity');
+  async deleteEntity() {
+    if(this.currentEntityId.length === 0){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Entity not found'));
+      return;
+    }
+
+    this.loadingScreenService.changeLoadingState(true);
+    await this.entityService.deleteEntity(this.currentEntityId).then(response => {
+      if(response.success){
+        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Entity deleted successfully'));
+        this.router.navigate([DASHBOARD_HOME_ROUTE]);
+      }
+      else
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to delete entity: ' + response.message));
+      
+      this.loadingScreenService.changeLoadingState(false);
+    });
   }
 }
