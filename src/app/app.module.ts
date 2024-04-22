@@ -38,6 +38,7 @@ import { MatChipsModule, MatChipGrid } from '@angular/material/chips';
 import { UITestsComponent } from './modules/uitests/uitests.component';
 import {MatDividerModule} from '@angular/material/divider';
 import { EntityFormComponent } from './modules/entity-form/entity-form.component';
+import { DeleteEntityWarningDialogComponent } from './modules/entity-form/delete-entity-warning-dialog/delete-entity-warning-dialog.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { EntityFormComponent } from './modules/entity-form/entity-form.component
     FailSnackbarComponent,
     EntityWorkerMemberCardComponent,
     UITestsComponent,
-    EntityFormComponent
+    EntityFormComponent,
+    DeleteEntityWarningDialogComponent
   ],
   imports: [
     BrowserModule,

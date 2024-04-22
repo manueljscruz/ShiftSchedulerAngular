@@ -1,8 +1,64 @@
 <div class="container full-height">
     <div class="elevated-card-container full-height">
         <div class="header-and-actions">
-            <h1>{{this.entityProfileViewModel.entityDTO.entityName}}</h1>
+            <h1 i18n>{{this.entityProfileViewModel.entityDTO.entityName}} - {{this.entityProfileViewModel.entityDTO.entityWorkersCount}} Members</h1>
+            <div class="actions" *ngIf="this.entityProfileViewModel.allowEdit">
+                <button mat-fab extended class="edit-color-bg"(click)="toggleEditEntity()">
+                    <mat-icon>edit</mat-icon>
+                    <span i18n>Edit</span>
+                </button>
+                <button mat-fab extended class="delete-color-bg"(click)="openDeleteEntityDialog('3000ms', '1500ms')">
+                    <mat-icon>delete</mat-icon>
+                    <span i18n>Delete</span>
+                </button>
+            </div>
         </div>
         <mat-divider></mat-divider>
+        <div class="elevated-card-container-content">
+            <form>
+                <!-- Name -->
+                <div class="form-input-spacer">
+                    <mat-form-field appearance="outline">
+                        <mat-label i18n>Name</mat-label>
+                        <input matInput placeholder="Name" name="entityName" [disabled]="!isEditing" [(ngModel)]="entityProfileViewModel.entityDTO.entityName" i18n-placeholder>
+                    </mat-form-field>
+                </div>
+
+                <!-- Type -->
+                <div class="form-input-spacer">
+                    <!-- If the user can edit -->
+                    <ng-container *ngIf="entityProfileViewModel.allowEdit">
+                        <mat-form-field appearance="outline">
+                            <mat-label i18n>Type</mat-label>
+                            <mat-select [(ngModel)]="selectedEntityType" [disabled]="!isEditing" name="entityType" [ngModelOptions]="{ standalone: true }">
+                                <mat-option *ngFor="let entityType of entityProfileViewModel.entityTypeLocalizeds" [value]="entityType">{{entityType.entityTypeLocalizedName}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </ng-container>
+                    <!-- If the user cannot edit -->
+                    <ng-container *ngIf="!entityProfileViewModel.allowEdit">
+                        <mat-form-field appearance="outline">
+                            <mat-label i18n>Type</mat-label>
+                            <input matInput [disabled]="true" name="entityType" [value]="entityProfileViewModel.entityDTO.entityTypeLocalized">
+                        </mat-form-field>
+                    </ng-container>
+                </div>
+
+                <!-- Description -->
+                <div class="form-input-spacer">
+                    <mat-form-field appearance="outline">
+                        <mat-label i18n>Description</mat-label>
+                        <textarea matInput rows="8" placeholder="Description" name="entityDescription" [disabled]="!isEditing" [(ngModel)]="entityProfileViewModel.entityDTO.entityDescription" i18n-placeholder></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-input-spacer end-form-actions" *ngIf="isEditing">
+                    <button class="action-submit-button secondary-color-bg" cdkFocusInitial (click)="saveEntity()">
+                        <mat-icon>save</mat-icon>
+                        <span i18n>Save</span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

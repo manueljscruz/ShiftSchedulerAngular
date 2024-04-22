@@ -6,6 +6,14 @@ import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spi
 import { EntityProfileViewModel } from '../../shared/models/VM/EntityProfileViewModel';
 import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
 import { EntityDTO } from '../../shared/models/DTOs/Incoming/EntityDTO';
+import { EntityTypeLocalizedDTO } from '../../shared/models/DTOs/Incoming/EntityTypeLocalizedDTO';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteEntityWarningDialogComponent } from './delete-entity-warning-dialog/delete-entity-warning-dialog.component';
+import { BaseResponseModel } from '../../shared/models/baseResponseModel';
+import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
+import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
+import { Entity } from '../../shared/models/database/entity';
+import { FormEntityDTO } from '../../shared/models/DTOs/Outgoing/FormEntityDTO';
 
 @Component({
   selector: 'entity-form',
@@ -14,15 +22,44 @@ import { EntityDTO } from '../../shared/models/DTOs/Incoming/EntityDTO';
 })
 
 export class EntityFormComponent {
+
+  /// <summary>
+  /// ViewModel for the entity profile page
+  /// </summary>
   entityProfileViewModel: EntityProfileViewModel = new EntityProfileViewModel(new EntityDTO('','','','',0), false, []);
+
+  /// <summary>
+  /// Identifier of the current entity being viewed
+  /// </summary>
   currentEntityId: string = '';
+
+  /// <summary>
+  /// Logged user information
+  /// </summary>
   loggedUser: WorkerDTO = new WorkerDTO();
+
+  /// <summary>
+  /// User language
+  /// </summary>
   userLanguage: string = '';
+
+  /// <summary>
+  /// Flag to indicate if the entity is being edited
+  /// </summary>
+  isEditing: boolean = false;
+
+
+  /// <summary>
+  /// Selected entity type. Can be null if the entity cannot be edited
+  /// </summary>
+  selectedEntityType?: EntityTypeLocalizedDTO;
 
   constructor(private route: ActivatedRoute,
     private entityService: EntityService,
+    private snackbarManagerService: SnackbarManagerService,
     private localService: LocalService,
-    private loadingScreenService: LoadingSpinnerManagerService
+    private loadingScreenService: LoadingSpinnerManagerService,
+    private dialog: MatDialog
   ) {
     this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
@@ -35,19 +72,98 @@ export class EntityFormComponent {
 
   async ngOnInit() {
     this.loadingScreenService.changeLoadingState(true);
+
+    // Retrieve the entity profile view model
     let entityProfileViewModelRequestDTO = {
       entityId: this.currentEntityId,
       workerId: this.loggedUser.workerId,
       languageCode: this.userLanguage
     };
     this.entityProfileViewModel = await this.entityService.getEntityProfileViewModel(entityProfileViewModelRequestDTO);
+
+    // Sets the initial entity type if the entity can be edited
+    this.setInitialEntityType();
+
     this.loadingScreenService.changeLoadingState(false);
   }
 
-  /*
-  private route: ActivatedRoute
-  ) {
-    this.entityMembersViewModel = new EntityMembersViewModel("", [], []);
-    this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
-  */
+  /// <summary>
+  /// Allows for the entity to be edited
+  /// </summary>
+  toggleEditEntity(){
+    this.isEditing = !this.isEditing;
+  }
+
+  /// <summary>
+  /// Sets the initial entity type for the select input if its allowed to be edited
+  /// </summary>
+  setInitialEntityType(){
+    if(this.entityProfileViewModel.allowEdit){
+      this.selectedEntityType = this.entityProfileViewModel.entityTypeLocalizeds.find(x => x.entityTypeLocalizedName == this.entityProfileViewModel.entityDTO.entityTypeLocalized);
+    }
+  }
+  
+  async saveEntity(){
+    let validationResult = this.validateEntityForm();
+    if(!validationResult.result){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.message));
+      return;
+    }
+
+    this.loadingScreenService.changeLoadingState(true);
+    let entityToUpdate = new FormEntityDTO(this.currentEntityId, this.entityProfileViewModel.entityDTO.entityName, this.selectedEntityType?.entityTypeId || 0, this.entityProfileViewModel.entityDTO.entityDescription, this.loggedUser.workerId);
+
+    let response = await this.entityService.updateEntity(entityToUpdate);
+    if(response.success){
+      this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Entity updated successfully'));
+      this.isEditing = false;
+    }
+    else
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to update entity: ' + response.message));
+
+    this.loadingScreenService.changeLoadingState(false);
+  }
+  
+
+  openDeleteEntityDialog(enterAnimationDuration: string, exitAnimationDuration: string){
+    const dialogRef = this.dialog.open(DeleteEntityWarningDialogComponent, {
+      width: '500px',
+      data: { enterAnimationDuration, exitAnimationDuration, entityName: this.entityProfileViewModel.entityDTO.entityName }
+    });
+
+    dialogRef.afterClosed().subscribe(result =>{
+      console.log(result);
+      if(result){
+        this.deleteEntity();
+      };
+    });
+  }
+  
+  validateEntityForm() : BaseResponseModel {
+    let response = new BaseResponseModel(false, '', null);
+
+    if(this.entityProfileViewModel.entityDTO.entityName.trim().length === 0){
+      response.message = 'Entity name is required';
+      return response;
+    }
+
+    else if(this.entityProfileViewModel.entityDTO.entityName.trim().length < 3){
+      response.message = 'Entity name must be at least 3 characters long';
+      return response;
+    }
+
+    else if(!this.selectedEntityType){
+      response.message = 'Please select an entity type';
+      return response;
+    }
+
+    else
+      response.result = true;
+
+    return response;
+  }
+
+  deleteEntity() {
+    console.log('Deleting entity');
+  }
 }

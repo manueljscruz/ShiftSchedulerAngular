@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ADD_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM } from '../../../shared/constants/APIPathsConstants';
+import { ADD_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
 import { EntityProfileViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityProfileViewModelRequestDTO';
+import { Entity } from '../../../shared/models/database/entity';
+import { FormEntityDTO } from '../../../shared/models/DTOs/Outgoing/FormEntityDTO';
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class EntityService {
-
     constructor(private http: HttpClient) {}
 
     async addEntity(newEntityDTO: any) : Promise<any> {
@@ -57,6 +58,17 @@ export class EntityService {
             return response;
         }
         catch (error : any) {
+            console.error('Error fetching data:', error.message);
+            // Handle the error appropriately (e.g., display an error message)
+        }
+    }
+
+    async updateEntity(entityToUpdate: FormEntityDTO) : Promise<any> {
+        try {
+            const response = await this.http.put(UPDATE_ENTITY_URL, entityToUpdate).toPromise();
+            return response;
+            // Process the received data
+        } catch (error : any) {
             console.error('Error fetching data:', error.message);
             // Handle the error appropriately (e.g., display an error message)
         }

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { AuxiliaryDataService } from '../../core/services/api/AuxiliaryDataService';
 import { EntityTypeLocalizedDTO } from '../../shared/models/DTOs/Incoming/EntityTypeLocalizedDTO';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
-import { NewEntityDTO } from '../../shared/models/DTOs/Outgoing/NewEntityDTO';
+import { FormEntityDTO } from '../../shared/models/DTOs/Outgoing/FormEntityDTO';
 import { LocalService } from '../../core/services/local.service';
 import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
 import { EntityService } from '../../core/services/api/EntityService';
@@ -55,7 +55,7 @@ export class NewEntityComponent {
     // Trigger loading screen
     this.isLoading = true;
 
-    let newEntity: NewEntityDTO = new NewEntityDTO(this.entityNameInput, this.selectedEntityType?.entityTypeId ? this.selectedEntityType.entityTypeId : 0, this.entityDescriptionInput, this.loggedInUser.workerId);
+    let newEntity: FormEntityDTO = new FormEntityDTO('', this.entityNameInput, this.selectedEntityType?.entityTypeId ? this.selectedEntityType.entityTypeId : 0, this.entityDescriptionInput, this.loggedInUser.workerId);
     console.log(newEntity);
 
     // Call the API to create the new entity
