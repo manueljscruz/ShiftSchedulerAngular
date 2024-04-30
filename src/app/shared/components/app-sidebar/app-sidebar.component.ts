@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ENTITY_ICON, ENTITY_ADD_ICON, DASHBOARD_HOME_ICON, PROFILE_ICON, LOGOUT_ICON } from '../../constants/IconNamesConstants';
 import { SideBarItemModel } from '../../models/UI/SideBarItemModel';
 import { LANDING_PAGE_ROUTE, DASHBOARD_ROUTE, DASHBOARD_HOME_ROUTE, PROFILE_ROUTE, NEW_ENTITY_ROUTE } from '../../constants/ViewRoutesConstants';
+import { SIDERBAR_ITEM_GROUP_ENTITIES_CONTAINER } from '../../constants/UiIDsContants';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,6 +27,7 @@ export class AppSidebarComponent {
 
 
   // Properties
+  SIDERBAR_ITEM_GROUP_ENTITIES_CONTAINER: string = SIDERBAR_ITEM_GROUP_ENTITIES_CONTAINER;
   @Input() workEntitiesSideBarItems : SideBarItemModel[] = [];
   @Output() logoutEvent = new EventEmitter<void>();
 

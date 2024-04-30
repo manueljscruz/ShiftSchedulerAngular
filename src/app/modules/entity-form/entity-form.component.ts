@@ -15,6 +15,8 @@ import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { Entity } from '../../shared/models/database/entity';
 import { FormEntityDTO } from '../../shared/models/DTOs/Outgoing/FormEntityDTO';
 import { DASHBOARD_HOME_ROUTE } from '../../shared/constants/ViewRoutesConstants';
+import { SIDEBAR_ITEM_GROUP_ID } from '../../shared/constants/UiIDsContants';
+import { SidebarNavigationService } from '../../core/services/ui/sidebar-navigation.service';
 
 @Component({
   selector: 'entity-form',
@@ -60,6 +62,7 @@ export class EntityFormComponent {
     private snackbarManagerService: SnackbarManagerService,
     private localService: LocalService,
     private loadingScreenService: LoadingSpinnerManagerService,
+    private sidebarNavigationService: SidebarNavigationService,
     private dialog: MatDialog,
     private router: Router 
   ) {
@@ -78,10 +81,13 @@ export class EntityFormComponent {
     // Retrieve the entity profile view model
     let entityProfileViewModelRequestDTO = {
       entityId: this.currentEntityId,
-      workerId: this.loggedUser.workerId,
+      workerId: this.loggedUser.WorkerId,
       languageCode: this.userLanguage
     };
-    this.entityProfileViewModel = await this.entityService.getEntityProfileViewModel(entityProfileViewModelRequestDTO);
+    
+      this.entityProfileViewModel = await this.entityService.getEntityProfileViewModel(entityProfileViewModelRequestDTO);
+    
+    
 
     // Sets the initial entity type if the entity can be edited
     this.setInitialEntityType();
@@ -100,28 +106,32 @@ export class EntityFormComponent {
   /// Sets the initial entity type for the select input if its allowed to be edited
   /// </summary>
   setInitialEntityType(){
-    if(this.entityProfileViewModel.allowEdit){
-      this.selectedEntityType = this.entityProfileViewModel.entityTypeLocalizeds.find(x => x.entityTypeLocalizedName == this.entityProfileViewModel.entityDTO.entityTypeLocalized);
+    if(this.entityProfileViewModel.AllowEdit){
+      let localizedTypes : any = this.entityProfileViewModel.EntityTypeLocalizeds;
+      let array = localizedTypes.$values as EntityTypeLocalizedDTO[];
+      this.entityProfileViewModel.EntityTypeLocalizeds = array;
+      this.selectedEntityType = this.entityProfileViewModel.EntityTypeLocalizeds.find(x => x.EntityTypeLocalizedName == this.entityProfileViewModel.EntityDTO.EntityTypeLocalized);
     }
   }
   
   async saveEntity(){
     let validationResult = this.validateEntityForm();
-    if(!validationResult.result){
-      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.message));
+    if(!validationResult.Result){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.Message));
       return;
     }
 
     this.loadingScreenService.changeLoadingState(true);
-    let entityToUpdate = new FormEntityDTO(this.currentEntityId, this.entityProfileViewModel.entityDTO.entityName, this.selectedEntityType?.entityTypeId || 0, this.entityProfileViewModel.entityDTO.entityDescription, this.loggedUser.workerId);
+    let entityToUpdate = new FormEntityDTO(this.currentEntityId, this.entityProfileViewModel.EntityDTO.EntityName, this.selectedEntityType?.EntityTypeId || 0, this.entityProfileViewModel.EntityDTO.EntityDescription, this.loggedUser.WorkerId);
 
     let response = await this.entityService.updateEntity(entityToUpdate);
-    if(response.success){
+    if(response.Success){
+      this.sidebarNavigationService.updateWorkEntitySideBarItem(this.currentEntityId, entityToUpdate.EntityName);
       this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Entity updated successfully'));
       this.isEditing = false;
     }
     else
-      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to update entity: ' + response.message));
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to update entity: ' + response.Message));
 
     this.loadingScreenService.changeLoadingState(false);
   }
@@ -130,7 +140,7 @@ export class EntityFormComponent {
   openDeleteEntityDialog(enterAnimationDuration: string, exitAnimationDuration: string){
     const dialogRef = this.dialog.open(DeleteEntityWarningDialogComponent, {
       width: '500px',
-      data: { enterAnimationDuration, exitAnimationDuration, entityName: this.entityProfileViewModel.entityDTO.entityName }
+      data: { enterAnimationDuration, exitAnimationDuration, entityName: this.entityProfileViewModel.EntityDTO.EntityName }
     });
 
     dialogRef.afterClosed().subscribe(result =>{
@@ -143,23 +153,23 @@ export class EntityFormComponent {
   validateEntityForm() : BaseResponseModel {
     let response = new BaseResponseModel(false, '', null);
 
-    if(this.entityProfileViewModel.entityDTO.entityName.trim().length === 0){
-      response.message = 'Entity name is required';
+    if(this.entityProfileViewModel.EntityDTO.EntityName.trim().length === 0){
+      response.Message = 'Entity name is required';
       return response;
     }
 
-    else if(this.entityProfileViewModel.entityDTO.entityName.trim().length < 3){
-      response.message = 'Entity name must be at least 3 characters long';
+    else if(this.entityProfileViewModel.EntityDTO.EntityName.trim().length < 3){
+      response.Message = 'Entity name must be at least 3 characters long';
       return response;
     }
 
     else if(!this.selectedEntityType){
-      response.message = 'Please select an entity type';
+      response.Message = 'Please select an entity type';
       return response;
     }
 
     else
-      response.result = true;
+      response.Result = true;
 
     return response;
   }
@@ -172,12 +182,13 @@ export class EntityFormComponent {
 
     this.loadingScreenService.changeLoadingState(true);
     await this.entityService.deleteEntity(this.currentEntityId).then(response => {
-      if(response.success){
+      if(response.Success){
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Entity deleted successfully'));
+        this.sidebarNavigationService.deleteWorkEntitySideBarItem(this.currentEntityId);
         this.router.navigate([DASHBOARD_HOME_ROUTE]);
       }
       else
-        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to delete entity: ' + response.message));
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to delete entity: ' + response.Message));
       
       this.loadingScreenService.changeLoadingState(false);
     });

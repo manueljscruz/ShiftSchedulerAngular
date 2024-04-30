@@ -10,6 +10,12 @@ import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spi
 import { Subscription } from 'rxjs';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE } from '../../shared/constants/ViewRoutesConstants';
+import { SideBarItemModel } from '../../shared/models/UI/SideBarItemModel';
+import { BOOTSTRAP_ICON_PREFIX, ENTITY_ICON, ENTITY_SCHEDULE_ICON, MEMBERS_ICON } from '../../shared/constants/IconNamesConstants';
+import { SIDEBAR_ITEM_GROUP_ID, SIDERBAR_ITEM_GROUP_ENTITIES_CONTAINER } from '../../shared/constants/UiIDsContants';
+import { SidebarNavigationService } from '../../core/services/ui/sidebar-navigation.service';
 
 @Component({
   selector: 'app-new-entity',
@@ -28,14 +34,20 @@ export class NewEntityComponent {
   isLoading: boolean = false;
   subscription: Subscription = new Subscription();
 
-  constructor(@Inject(LocalService) private localStore: LocalService, private auxDataService: AuxiliaryDataService, private entityService: EntityService,
-    private loadingScreenService: LoadingSpinnerManagerService, private snackbarManagerService: SnackbarManagerService) {
+  constructor(@Inject(LocalService) private localStore: LocalService, 
+  private auxDataService: AuxiliaryDataService, 
+  private entityService: EntityService,
+  private loadingScreenService: LoadingSpinnerManagerService, 
+  private snackbarManagerService: SnackbarManagerService,
+  private sidebarNavigationService: SidebarNavigationService,
+  private router: Router) {
     this.loggedInUser = JSON.parse(this.localStore.getData("loggedUser"));
   }
 
 
   async ngOnInit() {
-    this.entityTypes = await this.auxDataService.getEntityTypes();
+    let entityTypes = await this.auxDataService.getEntityTypes();
+    this.entityTypes = entityTypes.$values; // await this.auxDataService.getEntityTypes();
     this.subscription = this.loadingScreenService.currentIsLoading.subscribe(isLoading => this.isLoading = isLoading);
   }
 
@@ -47,15 +59,15 @@ export class NewEntityComponent {
   async onCreateEntitySubmit() {
     let validationResult = this.validateNewEntityForm();
     
-    if(!validationResult.result){
-      alert(validationResult.message);
+    if(!validationResult.Result){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.Message));
       return;
     }
 
     // Trigger loading screen
     this.isLoading = true;
 
-    let newEntity: FormEntityDTO = new FormEntityDTO('', this.entityNameInput, this.selectedEntityType?.entityTypeId ? this.selectedEntityType.entityTypeId : 0, this.entityDescriptionInput, this.loggedInUser.workerId);
+    let newEntity: FormEntityDTO = new FormEntityDTO('', this.entityNameInput, this.selectedEntityType?.EntityTypeId ? this.selectedEntityType.EntityTypeId : 0, this.entityDescriptionInput, this.loggedInUser.WorkerId);
     console.log(newEntity);
 
     // Call the API to create the new entity
@@ -66,22 +78,15 @@ export class NewEntityComponent {
 
     this.loadingScreenService.changeLoadingState(false);
 
-    if(response.success){
+    if(response.Success){
       this.clearFormInputs();
+      this.sidebarNavigationService.addNewWorkEntitySideBarItem(response.Result);
       this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Entity created successfully'));
+      this.router.navigate([ENTITY_FORM_ROUTE.replace(':entityId', response.Result.EntityId)]);
     }
     else
-      alert('Failed to create entity: ' + response.message);
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to create entity: ' + response.Message));
     
-  }
-
-  /// Waits for a specified number of seconds
-  private async wait(seconds: number): Promise<void> {
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, seconds * 1000);
-    });
   }
 
   /// Validates the form inputs for creating a new entity
@@ -89,22 +94,22 @@ export class NewEntityComponent {
     let response = new BaseResponseModel(false, '', null);
 
     if(this.entityNameInput.trim().length === 0){
-      response.message = 'Please enter a name for the entity';
+      response.Message = 'Please enter a name for the entity';
       return response;
     }
 
     else if(this.entityNameInput.trim().length < 3){
-      response.message = 'The entity name must be at least 3 characters long.';
+      response.Message = 'The entity name must be at least 3 characters long.';
       return response;
     }
 
     else if(!this.selectedEntityType){
-      response.message = 'Please select an entity type';
+      response.Message = 'Please select an entity type';
       return response;
     }
 
     else
-      response.result = true;
+      response.Result = true;
     
     return response;
   }
@@ -113,6 +118,28 @@ export class NewEntityComponent {
     this.entityNameInput = '';
     this.entityDescriptionInput = '';
     this.selectedEntityType = undefined;
+  }
+
+  addEntityTest(id:string , name:string, description:string, workerId:string){
+    let entityOptionItems: SideBarItemModel[] = [];
+      
+      // Add Home Button
+      entityOptionItems.push(new SideBarItemModel('', "Home", ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', id), []));
+      // Add Members Button
+      entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', id), []));
+      // Add Schedule Button
+      entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', id), []));
+
+      let sidebarGroupModel = new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', id), name, ENTITY_ICON, "", entityOptionItems);
+
+      let entitiesContainer = document.getElementById(SIDERBAR_ITEM_GROUP_ENTITIES_CONTAINER);
+      let newSidebarGroup = document.createElement('sidebar-item-group');
+      newSidebarGroup.setAttribute('id', sidebarGroupModel.sidebarItemId);
+      newSidebarGroup.setAttribute('sidebarItemGroupText', name);
+      newSidebarGroup.setAttribute('sidebarItemGroupIcon', sidebarGroupModel.sidebarItemIcon);
+      newSidebarGroup.setAttribute('sidebarItemGroupLink', sidebarGroupModel.sidebarItemLink);
+
+      entitiesContainer?.appendChild(newSidebarGroup);
   }
 }
 

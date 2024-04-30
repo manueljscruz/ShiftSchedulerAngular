@@ -6,7 +6,7 @@
     <div class="menu">
         <sidebar-item [sidebarItemText]="'Dashboard'" [sidebarItemRouterLink]="DASHBOARD_HOME_ROUTE" [sidebarItemIcon]="DASHBOARD_HOME_ICON"></sidebar-item>
         <sidebar-item [sidebarItemText]="'Profile'" [sidebarItemRouterLink]="PROFILE_ROUTE" [sidebarItemIcon]="PROFILE_ICON"></sidebar-item>
-        <sidebar-item-group [sidebarItemGroupText]="'Work Entities'" [sidebarItemGroupIcon]="ENTITY_ICON" [sidebarGroupItems]="workEntitiesSideBarItems"></sidebar-item-group>
+        <sidebar-item-group [id]="SIDERBAR_ITEM_GROUP_ENTITIES_CONTAINER" [sidebarItemGroupText]="'Work Entities'" [sidebarItemGroupIcon]="ENTITY_ICON" [sidebarGroupItems]="workEntitiesSideBarItems"></sidebar-item-group>
         <sidebar-item [sidebarItemText]="'Logout'" (eventTriggered)="onLogoutClick()" [sidebarItemRouterLink]="LANDING_PAGE_ROUTE" [sidebarItemIcon]="LOGOUT_ICON"></sidebar-item>
     </div>
 </div>

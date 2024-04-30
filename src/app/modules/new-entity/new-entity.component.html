@@ -13,7 +13,7 @@
                 <mat-form-field appearance="outline"> 
                     <mat-label i18n>Entity Type</mat-label>
                     <mat-select [(ngModel)]="selectedEntityType" name="entityType" [ngModelOptions]="{ standalone: true }">
-                        <mat-option *ngFor="let entityType of entityTypes" [value]="entityType">{{entityType.entityTypeLocalizedName}}</mat-option>
+                        <mat-option *ngFor="let entityType of entityTypes" [value]="entityType">{{entityType.EntityTypeLocalizedName}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             

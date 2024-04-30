@@ -1,9 +1,9 @@
 export class EntityTypeLocalizedDTO {
-    entityTypeId: number;
-    entityTypeLocalizedName: string;
+    EntityTypeId: number;
+    EntityTypeLocalizedName: string;
 
     constructor(entityTypeId: number, entityTypeLocalizedName: string) {
-        this.entityTypeId = entityTypeId;
-        this.entityTypeLocalizedName = entityTypeLocalizedName;
+        this.EntityTypeId = entityTypeId;
+        this.EntityTypeLocalizedName = entityTypeLocalizedName;
     }
 }

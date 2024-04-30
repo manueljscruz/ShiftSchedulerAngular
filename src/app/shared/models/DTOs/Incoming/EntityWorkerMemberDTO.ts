@@ -1,17 +1,17 @@
 import { SkillDTO } from "./SkillDTO";
 
 export class EntityWorkerMemberDTO{
-    workerId: string;
-    workerName: string;
-    canCreateSchedules: boolean;
-    isOwner: boolean;
-    skillSet: SkillDTO[];
+    WorkerId: string;
+    WorkerName: string;
+    CanCreateSchedules: boolean;
+    IsOwner: boolean;
+    SkillSet: SkillDTO[];
 
     constructor(workerId: string, workerName: string, canCreateSchedules: boolean, isOwner : boolean, skillSet: SkillDTO[]) {
-        this.workerId = workerId;
-        this.workerName = workerName;
-        this.canCreateSchedules = canCreateSchedules;
-        this.isOwner = isOwner;
-        this.skillSet = skillSet;
+        this.WorkerId = workerId;
+        this.WorkerName = workerName;
+        this.CanCreateSchedules = canCreateSchedules;
+        this.IsOwner = isOwner;
+        this.SkillSet = skillSet;
     }
 }

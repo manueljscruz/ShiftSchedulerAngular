@@ -1,4 +1,4 @@
-<mat-expansion-panel>
+<mat-expansion-panel id="{{sidebarItemGroupId}}">
     <mat-expansion-panel-header>
         <div class="sidebar-item-group-header">
             <i class="{{BOOTSTRAP_ICON_PREFIX}}{{sidebarItemGroupIcon}}"></i>
@@ -11,7 +11,7 @@
             <sidebar-item [sidebarItemText]="item.sidebarItemText" [sidebarItemRouterLink]="item.sidebarItemLink" [sidebarItemIcon]="item.sidebarItemIcon"></sidebar-item>
         </div>
         <div *ngIf="item.sidebarItemChildren.length > 0">
-            <sidebar-item-group [sidebarItemGroupText]="item.sidebarItemText" [sidebarItemGroupIcon]="item.sidebarItemIcon" [sidebarGroupItems]="item.sidebarItemChildren"></sidebar-item-group>
+            <sidebar-item-group [sidebarItemGroupId]="item.sidebarItemId" [sidebarItemGroupText]="item.sidebarItemText" [sidebarItemGroupIcon]="item.sidebarItemIcon" [sidebarGroupItems]="item.sidebarItemChildren"></sidebar-item-group>
         </div>
     </div>
 </mat-expansion-panel>

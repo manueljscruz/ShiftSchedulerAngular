@@ -1,13 +1,13 @@
 export class EntityWorkerDTO {
-    entityId: string;
-    entityName: string;
+    EntityId: string;
+    EntityName: string;
 
     constructor(
         entityId: string,
         entityName: string
         
     ) {
-        this.entityId = entityId;
-        this.entityName = entityName;
+        this.EntityId = entityId;
+        this.EntityName = entityName;
     }
 }

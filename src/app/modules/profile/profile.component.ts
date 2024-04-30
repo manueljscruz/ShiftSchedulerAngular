@@ -39,10 +39,12 @@ export class ProfileComponent{
     this.backupUser = { ...this.loggedUser };
     
     // Load the
-    this.gendersLocalized = await this.auxDataService.getGenders();
-
-    if (this.loggedUser != null && this.loggedUser.genderId != null) {
-      this.selectedGender = this.gendersLocalized.find(g => g.genderId == this.loggedUser?.genderId);
+    let gendersLocalized = await this.auxDataService.getGenders();
+    //let genderArray = gendersLocalized.$values;
+    this.gendersLocalized = gendersLocalized.$values;
+    if (this.loggedUser != null && this.loggedUser.GenderId != null) {
+      
+      this.selectedGender = this.gendersLocalized.find(g => g.GenderId == this.loggedUser?.GenderId);
     }
   }
 
@@ -54,9 +56,9 @@ export class ProfileComponent{
 
     let validationResult: BaseResponseModel = this.validateProfileInput();
 
-    if(validationResult.result){
+    if(validationResult.Result){
 
-      this.loggedUser.genderId = this.selectedGender?.genderId || 0;
+      this.loggedUser.GenderId = this.selectedGender?.GenderId || 0;
       // Save the profile
       this.loadingScreenService.changeLoadingState(true);
 
@@ -65,19 +67,19 @@ export class ProfileComponent{
 
       this.loadingScreenService.changeLoadingState(false);
 
-      if(response.result){
+      if(response.Result){
         this.toggleEditProfile();
         this.localStore.saveData("loggedUser", JSON.stringify(this.loggedUser));
         this.backupUser = { ...this.loggedUser };
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Profile saved successfully'));
       }
       else{
-        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, response.message));
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, response.Message));
       }
       
     }
     else{
-      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.message));
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.Message));
     }
   }
 
@@ -85,28 +87,28 @@ export class ProfileComponent{
     let emailRegex = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
     let response = new BaseResponseModel(false, '', null);
 
-    if(this.loggedUser.workerName.trim().length === 0)
+    if(this.loggedUser.WorkerName.trim().length === 0)
     {
-      response.message = 'A name is required';
+      response.Message = 'A name is required';
       return response;
     }
 
     else if(this.selectedGender === undefined){
-      response.message = 'Gender is required';
+      response.Message = 'Gender is required';
       return response;
     }
 
-    else if(this.loggedUser.email.trim().length === 0){
-      response.message = 'Email is required';
+    else if(this.loggedUser.Email.trim().length === 0){
+      response.Message = 'Email is required';
       return response;
     }
 
-    else if(!emailRegex.test(this.loggedUser.email)){
-      response.message = 'Invalid Email address';
+    else if(!emailRegex.test(this.loggedUser.Email)){
+      response.Message = 'Invalid Email address';
       return response;
     }
 
-    else response.result = true;
+    else response.Result = true;
 
     return response;
   }

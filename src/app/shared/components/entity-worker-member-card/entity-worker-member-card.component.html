@@ -4,12 +4,12 @@
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <h3>{{entityWorkerMember?.workerName}}</h3>
-                    <mat-icon *ngIf="entityWorkerMember?.isOwner">stars</mat-icon>
+                    <h3>{{entityWorkerMember?.WorkerName}}</h3>
+                    <mat-icon *ngIf="entityWorkerMember?.IsOwner">stars</mat-icon>
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-chip-set>
-                <mat-chip  *ngFor="let skill of entityWorkerMember?.skillSet" [color]="skill.skillHexFontColor" [ngStyle]="{ 'background-color': skill.skillHexBGColor, '--mdc-chip-label-text-color': skill.skillHexFontColor}">{{skill.skillLocalizedName}}</mat-chip>
+                <mat-chip  *ngFor="let skill of entityWorkerMember?.SkillSet" [color]="skill.SkillHexFontColor" [ngStyle]="{ 'background-color': skill.SkillHexBGColor, '--mdc-chip-label-text-color': skill.SkillHexFontColor}">{{skill.SkillLocalizedName}}</mat-chip>
             </mat-chip-set>
         </mat-expansion-panel>
     </div>

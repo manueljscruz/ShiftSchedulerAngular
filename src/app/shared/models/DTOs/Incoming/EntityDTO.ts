@@ -1,15 +1,15 @@
 export class EntityDTO{
-    entityId: string;
-    entityName: string;
-    entityDescription: string;
-    entityTypeLocalized: string;
-    entityWorkersCount: number;
+    EntityId: string;
+    EntityName: string;
+    EntityDescription: string;
+    EntityTypeLocalized: string;
+    EntityWorkersCount: number;
 
     constructor(entityId: string, entityName: string, entityDescription: string, entityTypeLocalized: string, entityWorkersCount: number) {
-        this.entityId = entityId;
-        this.entityName = entityName;
-        this.entityDescription = entityDescription;
-        this.entityTypeLocalized = entityTypeLocalized;
-        this.entityWorkersCount = entityWorkersCount;
+        this.EntityId = entityId;
+        this.EntityName = entityName;
+        this.EntityDescription = entityDescription;
+        this.EntityTypeLocalized = entityTypeLocalized;
+        this.EntityWorkersCount = entityWorkersCount;
     }
 }

@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SkillDTO } from '../../shared/models/DTOs/Incoming/SkillDTO';
 import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
 import { LocalService } from '../../core/services/local.service';
+import { EntityWorkerMemberDTO } from '../../shared/models/DTOs/Incoming/EntityWorkerMemberDTO';
 
 
 @Component({
@@ -45,7 +46,8 @@ export class EntityWorkersComponent {
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
     this.entityMembersViewModel = await this.entityService.getEntityMembersViewModel(this.currentEntityId);
 
-    this.isCurrentUserEntityOwner = this.entityMembersViewModel.entityOwnerId === this.loggedUser.workerId ? true : false;
+    this.prepareViewModel();
+    this.isCurrentUserEntityOwner = this.entityMembersViewModel.EntityOwnerId === this.loggedUser.WorkerId ? true : false;
     this.loadingScreenService.changeLoadingState(false);
   }
 
@@ -55,5 +57,21 @@ export class EntityWorkersComponent {
 
   addMember(){
     
+  }
+
+  prepareViewModel(){
+    let members : any = this.entityMembersViewModel.EntityMembers;
+    let memberArray = members.$values as EntityWorkerMemberDTO[];
+    this.entityMembersViewModel.EntityMembers = memberArray;
+    
+    let skills : any = this.entityMembersViewModel.Skills;
+    let skillArray = skills.$values as SkillDTO[];
+    this.entityMembersViewModel.Skills = skillArray;
+
+    this.entityMembersViewModel.EntityMembers.forEach(member => {
+      let memberSkills : any = member.SkillSet;
+      let memberSkillsArray = memberSkills.$values as SkillDTO[];
+      member.SkillSet = memberSkillsArray;
+    });
   }
 }

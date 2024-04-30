@@ -2,13 +2,13 @@ import { EntityDTO } from "../DTOs/Incoming/EntityDTO";
 import { EntityTypeLocalizedDTO } from "../DTOs/Incoming/EntityTypeLocalizedDTO";
 
 export class EntityProfileViewModel{
-    entityDTO : EntityDTO;
-    allowEdit: boolean;
-    entityTypeLocalizeds : EntityTypeLocalizedDTO[];
+    EntityDTO : EntityDTO;
+    AllowEdit: boolean;
+    EntityTypeLocalizeds : EntityTypeLocalizedDTO[];
 
     constructor(entityDTO : EntityDTO, allowEdit: boolean, entityTypeLocalizeds : EntityTypeLocalizedDTO[]){
-        this.entityDTO = entityDTO;
-        this.allowEdit = allowEdit;
-        this.entityTypeLocalizeds = entityTypeLocalizeds;
+        this.EntityDTO = entityDTO;
+        this.AllowEdit = allowEdit;
+        this.EntityTypeLocalizeds = entityTypeLocalizeds;
     }
 }

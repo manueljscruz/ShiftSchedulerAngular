@@ -38,20 +38,20 @@ export class RegisterDialogComponent {
 
     // Validate the form
     let validationResult = this.validateRegisterForm();
-    if(!validationResult.result){
-      alert(validationResult.message);
+    if(!validationResult.Result){
+      alert(validationResult.Message);
       return;
     }
 
     // Register the user
-    let newRegister: NewWorkerDTO = new NewWorkerDTO(this.nameInput, this.selectedGender?.genderId ? this.selectedGender.genderId : 0, this.emailInput, this.passwordInput);
+    let newRegister: NewWorkerDTO = new NewWorkerDTO(this.nameInput, this.selectedGender?.GenderId ? this.selectedGender.GenderId : 0, this.emailInput, this.passwordInput);
 
     // Call the API to register the user
     let response : BaseResponseModel = await this.loginRegisterService.register(newRegister);
 
     // If successful, close the dialog
-    if(response.result){
-      alert(response.message);
+    if(response.Result){
+      alert(response.Message);
       
     }
     
@@ -63,41 +63,41 @@ export class RegisterDialogComponent {
     let response = new BaseResponseModel(false, '', null);
 
     if(this.nameInput.trim().length === 0){
-      response.message = `Name is required`;
+      response.Message = `Name is required`;
       return response;
     }
 
     if(this.selectedGender === undefined){
-      response.message = 'Gender is required';
+      response.Message = 'Gender is required';
       return response;
     }
 
     if(this.emailInput.trim().length === 0){
-      response.message = 'Email is required';
+      response.Message = 'Email is required';
       return response;
     }
 
     if(!emailRegex.test(this.emailInput)){
-      response.message = 'Invalid Email address';
+      response.Message = 'Invalid Email address';
       return response;
     }
 
     if(this.passwordInput.trim().length === 0){
-      response.message = 'Password is required';
+      response.Message = 'Password is required';
       return response;
     }
 
     if(this.confirmPasswordInput.trim().length === 0){
-      response.message = 'Confirm Password is required';
+      response.Message = 'Confirm Password is required';
       return response;
     }
 
     if(this.passwordInput !== this.confirmPasswordInput){
-      response.message = 'Password and Confirm Password do not match';
+      response.Message = 'Password and Confirm Password do not match';
       return response;
     }
 
-    response.result = true;
+    response.Result = true;
     return response;
   }
 

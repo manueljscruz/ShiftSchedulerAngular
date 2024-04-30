@@ -4,9 +4,11 @@ import { Router } from '@angular/router';
 import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
 import { EntityWorkerDTO } from '../../shared/models/DTOs/Incoming/EntityWorkerDTO';
 import { SideBarItemModel } from '../../shared/models/UI/SideBarItemModel';
-import { BOOTSTRAP_ICON_PREFIX, ENTITY_ICON, ENTITY_ADD_ICON, MEMBERS_ICON, ENTITY_SCHEDULE_ICON } from '../../shared/constants/IconNamesConstants';
+import { ENTITY_ICON, ENTITY_ADD_ICON, MEMBERS_ICON, ENTITY_SCHEDULE_ICON } from '../../shared/constants/IconNamesConstants';
 import { LANDING_PAGE_ROUTE, LOGIN_ROUTE, DASHBOARD_ROUTE, DASHBOARD_HOME_ROUTE, NEW_ENTITY_ROUTE, ENTITY_WORKERS_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_FORM_ROUTE } from '../../shared/constants/ViewRoutesConstants';
 import { EntityService } from '../../core/services/api/EntityService';
+import { SIDEBAR_ITEM_GROUP_ID } from '../../shared/constants/UiIDsContants';
+import { SidebarNavigationService } from '../../core/services/ui/sidebar-navigation.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,12 +29,16 @@ export class DashboardComponent {
 
   // Cached data
   loggedUser: WorkerDTO;
-  entityWorkerDTOs: EntityWorkerDTO[] = [];
+  entityWorkerDTOs: any = {};
 
   // UI Data
+  showSidebar: boolean = true;
   workEntitiesSideBarItems: SideBarItemModel[] = [];
 
-  constructor(@Inject(LocalService) private localStore: LocalService, private router: Router, private entityService: EntityService) {
+  constructor(@Inject(LocalService) private localStore: LocalService, 
+    private router: Router, 
+    private entityService: EntityService,
+    private sidebarNavigationService: SidebarNavigationService) {
     this.loggedUser = JSON.parse(this.localStore.getData("loggedUser"));
   }
 
@@ -42,10 +48,18 @@ export class DashboardComponent {
       this.router.navigate([LOGIN_ROUTE]);
     }
 
+    this.sidebarNavigationService.getWorkEntitiesSideBarItems().subscribe(items => {
+      console.log("New items changes");
+      this.workEntitiesSideBarItems = items;
+    });
+
     // Get view model data
     await this.getViewModelData();
 
-    this.setupViewModel();
+    let entityWorkerDTOs = this.entityWorkerDTOs.$values;
+    this.sidebarNavigationService.addInitialWorkEntitiesSideBarItems(entityWorkerDTOs);
+
+    
   }
 
   logout() {
@@ -55,25 +69,7 @@ export class DashboardComponent {
 
   async getViewModelData() {
     // Get data from API
-    this.entityWorkerDTOs = await this.entityService.getEntitiesByWorkerId(this.loggedUser.workerId);
+    this.entityWorkerDTOs = await this.entityService.getEntitiesByWorkerId(this.loggedUser.WorkerId);
   }
 
-  setupViewModel(){
-    // Set up the Entities sidebar items
-    // Add New Entity Button
-    this.workEntitiesSideBarItems.push(new SideBarItemModel("New Entity", BOOTSTRAP_ICON_PREFIX+ENTITY_ADD_ICON, NEW_ENTITY_ROUTE, []));
-
-    // For each entity, add a sidebar group
-    this.entityWorkerDTOs.forEach(entityWorkerDTO => {
-      let entityOptionItems: SideBarItemModel[] = [];
-      
-      entityOptionItems.push(new SideBarItemModel("Home", BOOTSTRAP_ICON_PREFIX+ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
-      // Add Members Button
-      entityOptionItems.push(new SideBarItemModel("Members", BOOTSTRAP_ICON_PREFIX+MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
-      // Add Schedule Button
-      entityOptionItems.push(new SideBarItemModel("Schedule", BOOTSTRAP_ICON_PREFIX+ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
-
-      this.workEntitiesSideBarItems.push(new SideBarItemModel(entityWorkerDTO.entityName, BOOTSTRAP_ICON_PREFIX+ENTITY_ICON, "", entityOptionItems));
-    });
-  }
 }

@@ -63,16 +63,17 @@ constructor(private loginRegisterService: WorkerService,
       // Call the login service here
       let loginResult : BaseResponseModel = await this.loginRegisterService.login(loginDTO);
 
+      console.log(loginResult);
       this.clearPassword();
 
       this.loadingScreenService.changeLoadingState(false);
 
-      if (loginResult.success) {
-        this.localStore.saveData("loggedUser", JSON.stringify(loginResult.result));
+      if (loginResult.Success) {
+        this.localStore.saveData("loggedUser", JSON.stringify(loginResult.Result));
         this.router.navigate(['/dashboard']);
 
       } else {
-        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, loginResult.message));
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, loginResult.Message));
       }
     }
   }

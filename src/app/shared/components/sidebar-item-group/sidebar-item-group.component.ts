@@ -11,6 +11,7 @@ export class SidebarItemGroupComponent {
 
   BOOTSTRAP_ICON_PREFIX: string = BOOTSTRAP_ICON_PREFIX;
 
+  @Input() public sidebarItemGroupId: string = '';
   @Input() public sidebarItemGroupText: string = '';
   @Input() public sidebarGroupItems: SideBarItemModel[] = [];
   @Input() public sidebarItemGroupIcon: string = '';
