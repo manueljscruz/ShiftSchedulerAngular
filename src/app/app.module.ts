@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './modules/login/login.component';
 import { HomeComponent } from './modules/home/home.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule} from '@angular/material/tabs';
 import { MatError } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -39,6 +40,7 @@ import { UITestsComponent } from './modules/uitests/uitests.component';
 import {MatDividerModule} from '@angular/material/divider';
 import { EntityFormComponent } from './modules/entity-form/entity-form.component';
 import { DeleteEntityWarningDialogComponent } from './modules/entity-form/delete-entity-warning-dialog/delete-entity-warning-dialog.component';
+import { AddMemberDialogComponent } from './modules/entity-workers/add-member-dialog/add-member-dialog.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,8 @@ import { DeleteEntityWarningDialogComponent } from './modules/entity-form/delete
     EntityWorkerMemberCardComponent,
     UITestsComponent,
     EntityFormComponent,
-    DeleteEntityWarningDialogComponent
+    DeleteEntityWarningDialogComponent,
+    AddMemberDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +84,8 @@ import { DeleteEntityWarningDialogComponent } from './modules/entity-form/delete
     MatIcon,
     MatExpansionModule,
     MatChipsModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTabsModule
   ],
   providers: [
     provideClientHydration(),

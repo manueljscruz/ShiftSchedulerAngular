@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { BOOTSTRAP_ICON_PREFIX, FILTER_ICON } from '../../shared/constants/IconNamesConstants';
-import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
+import { FILTER_ICON } from '../../shared/constants/IconNamesConstants';
 import { EntityMembersViewModel } from '../../shared/models/UI/EntityMembersViewModel';
 import { EntityService } from '../../core/services/api/EntityService';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
@@ -10,6 +9,8 @@ import { SkillDTO } from '../../shared/models/DTOs/Incoming/SkillDTO';
 import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
 import { LocalService } from '../../core/services/local.service';
 import { EntityWorkerMemberDTO } from '../../shared/models/DTOs/Incoming/EntityWorkerMemberDTO';
+import { MatDialog } from '@angular/material/dialog';
+import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.component';
 
 
 @Component({
@@ -18,14 +19,45 @@ import { EntityWorkerMemberDTO } from '../../shared/models/DTOs/Incoming/EntityW
   styleUrl: './entity-workers.component.css'
 })
 export class EntityWorkersComponent {
-  public BOOTSTRAP_ICON_PREFIX: string = BOOTSTRAP_ICON_PREFIX;
+
+  /// <summary>
+  /// Constant filter icon name
+  /// </summary>
   public FILTER_ICON: string = FILTER_ICON;
+
+  /// <summary>
+  /// View model object for the entity workers page
+  /// </summary>
   public entityMembersViewModel: EntityMembersViewModel;
+
+  /// <summary>
+  /// Selected skill filter object
+  /// </summary>
   public selectedSkill? : SkillDTO;
+
+  /// <summary>
+  /// Logged user object
+  /// </summary>
   public loggedUser: WorkerDTO = new WorkerDTO();
+
+  /// <summary>
+  /// Current entity id
+  /// </summary>
   private currentEntityId: string = '';
+
+  /// <summary>
+  /// Filter active flag
+  /// </summary>
   public isFilterActive: boolean = false;
+
+  /// <summary>
+  /// Name filter
+  /// </summary>
   public nameFilter: string = '';
+
+  /// <summary>
+  /// Is current user entity owner flag
+  /// </summary>
   public isCurrentUserEntityOwner: boolean = false;
   
   
@@ -34,6 +66,7 @@ export class EntityWorkersComponent {
     private localStore: LocalService,
     private snackManagerService: SnackbarManagerService,
     private loadingScreenService: LoadingSpinnerManagerService,
+    private dialog: MatDialog,
     private route: ActivatedRoute
   ) {
     this.entityMembersViewModel = new EntityMembersViewModel("", [], []);
@@ -51,14 +84,16 @@ export class EntityWorkersComponent {
     this.loadingScreenService.changeLoadingState(false);
   }
 
+  /// <summary>
+  /// Method that activates or deactivates the filter options
+  /// </summary>
   toggleFilters() {
     this.isFilterActive = !this.isFilterActive;
   }
 
-  addMember(){
-    
-  }
-
+  /// <summary>
+  /// Method that readjusts the view model object to the correct format
+  /// </summary>
   prepareViewModel(){
     let members : any = this.entityMembersViewModel.EntityMembers;
     let memberArray = members.$values as EntityWorkerMemberDTO[];
@@ -73,5 +108,25 @@ export class EntityWorkersComponent {
       let memberSkillsArray = memberSkills.$values as SkillDTO[];
       member.SkillSet = memberSkillsArray;
     });
+  }
+
+  /// <summary>
+  /// Method that opens the add member dialog
+  /// </summary>
+  openAddMemberDialog(enterAnimationDuration: string, exitAnimationDuration: string, skillList: SkillDTO[]){
+    const dialogRef = this.dialog.open(AddMemberDialogComponent, {
+      width: '500px',
+      data: { enterAnimationDuration, exitAnimationDuration, skillList }
+    });
+
+    dialogRef.afterClosed().subscribe(result =>{
+      if(result){
+        this.addMember();
+      };
+    });
+  }
+
+  addMember(){
+    
   }
 }

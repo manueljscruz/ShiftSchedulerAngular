@@ -1,0 +1,30 @@
+#add-member-dialog {
+    padding: 20px 20px;
+}
+
+#add-member-options-container{
+    column-gap: 10px;
+}
+
+.add-member-option{
+    flex-direction: column;
+    flex: 1;
+    height: 100px;
+}
+
+.tab-content{
+    padding-top: 5px;
+}
+
+.actions {
+    display: flex;
+    column-gap: 10px;
+}
+
+.actions button {
+    flex: 1;
+}
+
+#specify-skills-checkbox{
+    padding-bottom: 10px;
+}
