@@ -17,6 +17,7 @@ import { FormEntityDTO } from '../../shared/models/DTOs/Outgoing/FormEntityDTO';
 import { DASHBOARD_HOME_ROUTE } from '../../shared/constants/ViewRoutesConstants';
 import { SIDEBAR_ITEM_GROUP_ID } from '../../shared/constants/UiIDsContants';
 import { SidebarNavigationService } from '../../core/services/ui/sidebar-navigation.service';
+import { LanguageServiceService } from '../../core/services/language-service.service';
 
 @Component({
   selector: 'entity-form',
@@ -63,16 +64,13 @@ export class EntityFormComponent {
     private localService: LocalService,
     private loadingScreenService: LoadingSpinnerManagerService,
     private sidebarNavigationService: SidebarNavigationService,
+    private languageService: LanguageServiceService,
     private dialog: MatDialog,
     private router: Router 
   ) {
     this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
-    this.userLanguage = navigator.language;
-    if(this.userLanguage.indexOf('-') > 0)
-    {
-      this.userLanguage = this.userLanguage.split('-')[0];
-    }
+    this.userLanguage = this.languageService.returnLocalization();
   }
 
   async ngOnInit() {

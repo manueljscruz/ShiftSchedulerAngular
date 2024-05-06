@@ -7,7 +7,7 @@
             <div class="tab-content">
                 <mat-form-field appearance="outline">
                     <mat-label i18n>Email</mat-label>
-                    <input matInput placeholder="Email">
+                    <input matInput type="email" placeholder="Email" [(ngModel)]="emailInput" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
             </div>
         </mat-tab>
@@ -19,20 +19,21 @@
                 <form>
                     <mat-form-field appearance="outline">
                         <mat-label i18n>Name</mat-label>
-                        <input matInput placeholder="Name">
+                        <input matInput placeholder="Name" [(ngModel)]="memberNameInput" [ngModelOptions]="{standalone: true}">
                     </mat-form-field>
                 </form>
             </div>
         </mat-tab>
     </mat-tab-group>
 
+    <!-- Specify Skills -->
     <div id="specify-skills-checkbox">
         <mat-checkbox (change)="toggleSpecifySkills($event)">Assign Specific Skills</mat-checkbox>
     </div>
     <div class="row" *ngIf="specifySkills">
         <mat-form-field appearance="outline">
             <mat-label i18n>Skills</mat-label>
-            <mat-select [(ngModel)]="selectedSkills" multiple>
+            <mat-select [(ngModel)]="selectedSkills" multiple >
                 <mat-option *ngFor="let skill of localizedSkills" [value]="skill">{{skill.SkillLocalizedName}}</mat-option>
             </mat-select>
         </mat-form-field>

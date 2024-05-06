@@ -1,20 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GET_GENDERS_BY_LOCALIZATION_URL, GET_ENTITY_TYPES_BY_LOCALIZATION_URL } from '../../../shared/constants/APIPathsConstants';
+import { LanguageServiceService } from '../language-service.service';
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class AuxiliaryDataService {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient,
+        private languageService: LanguageServiceService
+    ) {}
 
     async getGenders() : Promise<any> {
-        let userLanguage = navigator.language;
-        if(userLanguage.indexOf('-') > 0)
-        {
-            userLanguage = userLanguage.split('-')[0];
-        }
+        let userLanguage = this.languageService.returnLocalization();
 
         try {
             let url = GET_GENDERS_BY_LOCALIZATION_URL.replace('{lcode}', userLanguage);
@@ -37,11 +36,7 @@ export class AuxiliaryDataService {
     }
 
     async getEntityTypes() : Promise<any> {
-        let userLanguage = navigator.language;
-        if(userLanguage.indexOf('-') > 0)
-        {
-            userLanguage = userLanguage.split('-')[0];
-        }
+        let userLanguage = this.languageService.returnLocalization();
 
         try {
             let url = GET_ENTITY_TYPES_BY_LOCALIZATION_URL.replace('{lcode}', userLanguage);

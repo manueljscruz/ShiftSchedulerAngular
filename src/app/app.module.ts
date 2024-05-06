@@ -7,7 +7,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HomeNavbarComponent } from './modules/home/home-navbar/home-navbar.component';
 import { RegisterDialogComponent } from './modules/home/register-dialog/register-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -41,6 +41,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import { EntityFormComponent } from './modules/entity-form/entity-form.component';
 import { DeleteEntityWarningDialogComponent } from './modules/entity-form/delete-entity-warning-dialog/delete-entity-warning-dialog.component';
 import { AddMemberDialogComponent } from './modules/entity-workers/add-member-dialog/add-member-dialog.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,9 @@ import { AddMemberDialogComponent } from './modules/entity-workers/add-member-di
     MatExpansionModule,
     MatChipsModule,
     MatDividerModule,
-    MatTabsModule
+    MatTabsModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideClientHydration(),

@@ -1,9 +1,16 @@
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { ADD_ICON, ADD_MEMBER_ICON, ADD_NPC_MEMBER_ICON, EMAIL_ICON } from '../../../shared/constants/IconNamesConstants';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { SkillDTO } from '../../../shared/models/DTOs/Incoming/SkillDTO';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
+import { SnackbarManagerService } from '../../../core/services/ui/snackbar-manager.service';
+import { LoadingSpinnerManagerService } from '../../../core/services/ui/loading-spinner-manager.service';
+import { SnackbarUIModel } from '../../../shared/models/UI/SnackbarUIModel';
+import { AddNewMemberDTO } from '../../../shared/models/DTOs/Outgoing/AddNewMemberDTO';
+import { LanguageServiceService } from '../../../core/services/language-service.service';
+import { EntityService } from '../../../core/services/api/EntityService';
 
 @Component({
   selector: 'add-member-dialog',
@@ -15,7 +22,6 @@ export class AddMemberDialogComponent {
   /// Constants
   ADD_MEMBER_ICON: string = ADD_MEMBER_ICON;
   ADD_NPC_MEMBER_ICON: string = ADD_NPC_MEMBER_ICON;
-
   ADD_ICON: string = ADD_ICON;
   EMAIL_ICON: string = EMAIL_ICON;
 
@@ -51,21 +57,119 @@ export class AddMemberDialogComponent {
   /// </summary>
   executeActionIcon: string = EMAIL_ICON;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,) {
-    console.log(data);
-    this.localizedSkills = data.skillList;
-   }
+  /// <summary>
+  /// The email input used for the invite
+  /// </summary>
+  emailInput: string = '';
 
-  tabChanged($event: MatTabChangeEvent) {
-    $event.index === 0 ? this.executeActionText = 'Send' : this.executeActionText = 'Create';
-    $event.index === 0 ? this.executeActionIcon = EMAIL_ICON : this.executeActionIcon = ADD_ICON;
+  /// <summary>
+  /// The member name input used for creating a new member.
+  /// </summary>
+  memberNameInput: string = '';
+
+  currentEntityId: string = '';
+
+  @Output() onMemberAdded: EventEmitter<any> = new EventEmitter<any>();
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  private entityService: EntityService,
+  private snackbarManagerService: SnackbarManagerService,
+  private loadingScreenService: LoadingSpinnerManagerService,
+  private languageService: LanguageServiceService) {
+    this.localizedSkills = data.skillList;
+    this.currentEntityId = data.currentEntityId;
   }
 
+  ngOnInit() {
+  }
+
+  /// <summary>
+  /// Handles when a tab is changed.
+  /// </summary>
+  tabChanged($event: MatTabChangeEvent) {
+    this.selectedTabIndex = $event.index;
+
+    this.selectedTabIndex === 0 ? this.executeActionText = 'Send' : this.executeActionText = 'Create';
+    this.selectedTabIndex === 0 ? this.executeActionIcon = EMAIL_ICON : this.executeActionIcon = ADD_ICON;
+  }
+
+  /// <summary>
+  /// Toggles the specify skills flag.
+  /// </summary>
   toggleSpecifySkills($event: MatCheckboxChange) {
     this.specifySkills = $event.checked;
   }
 
-  executeAction() {
-    console.log(this.selectedSkills);
+  /// <summary>
+  /// Creates or send an invite to a new member.
+  /// </summary>
+  async executeAction() {
+    let validationResult = this.validateSubmissions();
+    if(!validationResult.Success){
+      this.snackbarManagerService.showFailSnackbar( new SnackbarUIModel(5, validationResult.Message));
+      return;
+    }
+    else{
+      
+      this.loadingScreenService.changeLoadingState(true);
+      // Send the new member to the server
+      if(this.selectedSkills.length === 0){
+        this.selectedSkills.push(this.localizedSkills[0]);
+      }
+
+
+      let newMember : AddNewMemberDTO = this.selectedTabIndex === 1 ? new AddNewMemberDTO(true, this.currentEntityId, this.memberNameInput, '', this.selectedSkills, this.languageService.returnLocalization())
+      :  new AddNewMemberDTO(false, this.currentEntityId, '', this.emailInput, this.selectedSkills, this.languageService.returnLocalization());
+
+      let apiResponse = await this.entityService.addNewEntityMember(newMember);
+
+      if(apiResponse.Success){
+        this.onMemberAdded.emit(apiResponse);
+      }
+      else{
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, apiResponse.Message));
+      }
+
+
+      this.loadingScreenService.changeLoadingState(false);
+    }
+  }
+
+  /// <summary>
+  /// Validates the submissions for the dialog.
+  /// </summary>
+  validateSubmissions() : BaseResponseModel {
+    let emailRegex = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
+    let response = new BaseResponseModel(false, '', null);
+
+    // Send Email Invite Tab
+    if (this.selectedTabIndex === 0) {
+      if (this.emailInput === '') {
+        response.Message = 'Please enter an email address.';
+        return response;
+      }
+
+      else if(!emailRegex.test(this.emailInput)){
+        response.Message = 'Invalid Email address';
+        return response;
+      }
+    } 
+
+    // Create Bot Member Tab
+    else {
+      if(this.memberNameInput.trim().length === 0){
+        response.Message = `Name is required`;
+        return response;
+      }
+    }
+
+    // Check if the user has specified skills assigned
+    if(this.specifySkills && this.selectedSkills.length === 0) {
+      response.Message = 'Please select at least one skill.';
+      return response;
+    }
+
+    response.Success = true;
+    return response;
   }
 }

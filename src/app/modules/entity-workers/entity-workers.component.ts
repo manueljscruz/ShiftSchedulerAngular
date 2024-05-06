@@ -11,6 +11,8 @@ import { LocalService } from '../../core/services/local.service';
 import { EntityWorkerMemberDTO } from '../../shared/models/DTOs/Incoming/EntityWorkerMemberDTO';
 import { MatDialog } from '@angular/material/dialog';
 import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.component';
+import { BaseResponseModel } from '../../shared/models/baseResponseModel';
+import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 
 
 @Component({
@@ -104,9 +106,7 @@ export class EntityWorkersComponent {
     this.entityMembersViewModel.Skills = skillArray;
 
     this.entityMembersViewModel.EntityMembers.forEach(member => {
-      let memberSkills : any = member.SkillSet;
-      let memberSkillsArray = memberSkills.$values as SkillDTO[];
-      member.SkillSet = memberSkillsArray;
+      member.SkillSet = this.auxReconfigureSkills(member); 
     });
   }
 
@@ -114,16 +114,44 @@ export class EntityWorkersComponent {
   /// Method that opens the add member dialog
   /// </summary>
   openAddMemberDialog(enterAnimationDuration: string, exitAnimationDuration: string, skillList: SkillDTO[]){
+    let currentEntityId = this.currentEntityId;
     const dialogRef = this.dialog.open(AddMemberDialogComponent, {
       width: '500px',
-      data: { enterAnimationDuration, exitAnimationDuration, skillList }
+      data: { enterAnimationDuration, exitAnimationDuration, skillList, currentEntityId }
     });
 
+    dialogRef.componentInstance.onMemberAdded.subscribe((result: BaseResponseModel) => {
+      dialogRef.close();
+
+      if(result.Success){
+        this.snackManagerService.showSuccessSnackbar(new SnackbarUIModel(5, result.Message));
+
+        let newMemberResult = result.Result;
+        if(newMemberResult === true){
+        }
+        else{
+          newMemberResult = newMemberResult as EntityWorkerMemberDTO;
+          newMemberResult.SkillSet = this.auxReconfigureSkills(newMemberResult);
+          this.entityMembersViewModel.EntityMembers.push(newMemberResult as EntityWorkerMemberDTO);
+        }
+        
+      }
+      
+    });
+
+    /*
     dialogRef.afterClosed().subscribe(result =>{
       if(result){
-        this.addMember();
+        console.log(result);
       };
     });
+    */
+  }
+
+  auxReconfigureSkills(skillList: any) : SkillDTO[]{
+    let memberSkills : any = skillList.SkillSet;
+    let memberSkillsArray = memberSkills.$values as SkillDTO[];
+    return memberSkillsArray;
   }
 
   addMember(){

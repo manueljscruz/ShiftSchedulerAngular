@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ADD_ENTITY_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
+import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
 import { EntityProfileViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityProfileViewModelRequestDTO';
 import { Entity } from '../../../shared/models/database/entity';
 import { FormEntityDTO } from '../../../shared/models/DTOs/Outgoing/FormEntityDTO';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { response } from 'express';
+import { LanguageServiceService } from '../language-service.service';
+import { AddNewMemberDTO } from '../../../shared/models/DTOs/Outgoing/AddNewMemberDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +17,9 @@ import { response } from 'express';
  * Service for managing entities.
  */
 export class EntityService {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient,
+        private languageService: LanguageServiceService
+    ) {}
 
     /**
      * Adds a new entity.
@@ -71,12 +75,7 @@ export class EntityService {
      * @returns A promise that resolves to the response from the server.
      */
     async getEntityMembersViewModel(entityId: string) : Promise<any> {
-        let userLanguage = navigator.language;
-        if(userLanguage.indexOf('-') > 0)
-        {
-            userLanguage = userLanguage.split('-')[0];
-        }
-
+        let userLanguage = this.languageService.returnLocalization();
         try {
             let url = GET_ENTITY_MEMBERS_VM.replace('{entityId}', entityId).replace('{lcode}', userLanguage);
             const response = await this.http.get(url).toPromise();
@@ -121,5 +120,23 @@ export class EntityService {
         }
 
         return response
+    }
+
+    /**
+     * Adds a new bot member to an entity or sends an invite to a new member.
+     * @param newMemberDTO - The data of the new member.
+     * @returns A promise that resolves to the response from the server.
+     */
+    async addNewEntityMember(newMemberDTO: AddNewMemberDTO) : Promise<any> {
+        let response = new BaseResponseModel(false, "", null);
+        try {
+             response = await this.http.post(ADD_NEW_ENTITY_MEMBER_URL, newMemberDTO).toPromise() as BaseResponseModel;
+            // Process the received data
+        } catch (error : any) {
+            console.error('Error fetching data:', error.message);
+            response.Message = error.message;
+        }
+
+        return response;
     }
 }
