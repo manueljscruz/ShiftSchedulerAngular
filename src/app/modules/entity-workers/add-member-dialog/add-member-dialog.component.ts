@@ -67,8 +67,14 @@ export class AddMemberDialogComponent {
   /// </summary>
   memberNameInput: string = '';
 
+  /// <summary>
+  /// The current entity id.
+  /// </summary>
   currentEntityId: string = '';
 
+  /// <summary>
+  /// Event emitter for when a member is added or invited.
+  /// </summary>
   @Output() onMemberAdded: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,

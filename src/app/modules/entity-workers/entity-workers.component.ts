@@ -134,27 +134,16 @@ export class EntityWorkersComponent {
           newMemberResult.SkillSet = this.auxReconfigureSkills(newMemberResult);
           this.entityMembersViewModel.EntityMembers.push(newMemberResult as EntityWorkerMemberDTO);
         }
-        
       }
-      
     });
-
-    /*
-    dialogRef.afterClosed().subscribe(result =>{
-      if(result){
-        console.log(result);
-      };
-    });
-    */
   }
 
+  /// <summary>
+  /// Method that reconfigures the skills list due to the API response
+  /// </summary>
   auxReconfigureSkills(skillList: any) : SkillDTO[]{
     let memberSkills : any = skillList.SkillSet;
     let memberSkillsArray = memberSkills.$values as SkillDTO[];
     return memberSkillsArray;
-  }
-
-  addMember(){
-    
   }
 }
