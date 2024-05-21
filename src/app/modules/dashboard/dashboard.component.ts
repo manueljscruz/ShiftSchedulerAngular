@@ -49,7 +49,6 @@ export class DashboardComponent {
     }
 
     this.sidebarNavigationService.getWorkEntitiesSideBarItems().subscribe(items => {
-      console.log("New items changes");
       this.workEntitiesSideBarItems = items;
     });
 

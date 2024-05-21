@@ -1,0 +1,98 @@
+<div id="shift-break-dialog" class="full-height">
+    <h1 i18n>{{isAddingShiftBreak ? 'Add Shift Break' : 'Edit Shift Break'}}</h1>
+    
+    <mat-tab-group [selectedIndex]="selectedTabIndex" header-less-tabs>
+        <!-- Options -->
+        <mat-tab label="Options">
+            <div class="row col-gap" id="add-shift-options">
+                <div matRipple class="flex-1 shift-options-column" (click)="setTabIndex(2)">
+                    <mat-icon class="shift-options-icon">note_add</mat-icon>
+                    <span i18n>Create from Scratch</span>
+                </div>
+                <div matRipple class="flex-1 shift-options-column" (click)="setTabIndex(1)">
+                    <mat-icon class="shift-options-icon">view_compact_alt</mat-icon>
+                    <span i18n>Based on Templates</span>
+                </div>
+            </div>
+            <div class="actions">
+                <button mat-fab extended class="secondary-color-bg flex-1" [mat-dialog-close]="true">
+                    <mat-icon>close</mat-icon>
+                    <span i18n>Cancel</span>
+                </button>
+            </div>
+        </mat-tab>
+
+        <!-- Templates -->
+        <mat-tab label="Templates">
+            <div id="shift-break-template-selection-grid">
+                <div *ngFor="let shiftBreaktemplate of shiftBreakTemplateDTOs">
+                    <shift-template-card  [shiftTemplate]="shiftBreaktemplate" [isShiftBreakTemplate]="true"></shift-template-card>
+                </div>
+            </div>
+            <div class="actions">
+                <button mat-fab extended class="secondary-color-bg flex-1" (click)="setTabIndex(0)">
+                    <mat-icon>keyboard_backspace</mat-icon>
+                    <span i18n>Back</span>
+                </button>
+            </div>
+            
+        </mat-tab>
+
+        <!-- Form -->
+        <mat-tab label="Form">
+            <form>
+                <mat-form-field appearance="outline">
+                    <mat-label i18n>Shift Break Type</mat-label>
+                    <mat-select [(ngModel)]="selectedShiftBreakType" name="shiftBreakTypeSelect">
+                        <mat-option *ngFor="let breakType of shiftBreakTypes" [value]="breakType">
+                            {{breakType.ShiftBreakTypeLocalizedName}}
+                        </mat-option>
+                        
+                    </mat-select>
+                </mat-form-field>
+                <div class="row col-gap">
+                    <!-- Start Time -->
+                    <div class="form-input-spacer flex-1">
+                        <mat-form-field appearance="outline">
+                            <mat-label i18n>Break Start Time</mat-label>
+                            <input type="time" matInput required placeholder="Break Start Timer" required min="00:00" max="24:00" name="break-start-timer">
+                        </mat-form-field>
+                    </div>
+                    <!-- Duration -->
+                    <div class="form-input-spacer flex-1">
+                        <mat-form-field appearance="outline">
+                            <mat-label i18n>Break Duration</mat-label>
+                            <input type="time" matInput required placeholder="Break Duration" required name="break-duration">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row col-gap">
+                    <!-- Checkboxes -->
+                    <!-- Include in the Shift-->
+                    <div class="form-input-spacer flex-1">
+                        <mat-checkbox>
+                            <span i18n>Included in the Shift</span>
+                        </mat-checkbox>
+                    </div>
+                    <!-- Time Flexible-->
+                    <div class="form-input-spacer flex-1">
+                        <mat-checkbox>
+                            <span i18n>Is Time Flexible</span>
+                        </mat-checkbox>
+                    </div>
+                </div>
+            </form>
+            <div class="actions">
+                <button mat-fab extended class="secondary-color-bg flex-1" (click)="setTabIndex(0)">
+                    <mat-icon>keyboard_backspace</mat-icon>
+                    <span i18n>Back</span>
+                </button>
+                <button mat-fab extended class="add-color-bg flex-1" (click)="handleShiftBreakSubmission()">
+                    <mat-icon>{{executeActionIcon}}</mat-icon>
+                    <span i18n>{{executeActionText}}</span>
+                </button>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+    

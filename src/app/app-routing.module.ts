@@ -10,6 +10,7 @@ import { EntityWorkersComponent } from './modules/entity-workers/entity-workers.
 import { EntityScheduleComponent } from './modules/entity-schedule/entity-schedule.component';
 import { UITestsComponent } from './modules/uitests/uitests.component';
 import { EntityFormComponent } from './modules/entity-form/entity-form.component';
+import { EntityShiftsComponent } from './modules/entity-shifts/entity-shifts.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -23,6 +24,7 @@ const routes: Routes = [
     { path: 'entity-form/:entityId', component: EntityFormComponent},
     { path: 'entity-workers/:entityId', component: EntityWorkersComponent},
     { path: 'entity-schedule/:entityId', component: EntityScheduleComponent},
+    { path: 'entity-shifts/:entityId', component: EntityShiftsComponent},
   ]},
 ];
 

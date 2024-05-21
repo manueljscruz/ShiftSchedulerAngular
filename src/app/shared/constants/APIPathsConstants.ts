@@ -15,3 +15,5 @@ export const GET_ENTITY_PROFILE_VM : string = BASE_API_URL + "Entity/get-entity-
 export const UPDATE_ENTITY_URL : string = BASE_API_URL + "Entity/update";
 export const DELETE_ENTITY_URL : string = BASE_API_URL + "Entity/delete-by-id/{id}";
 export const ADD_NEW_ENTITY_MEMBER_URL : string = BASE_API_URL + "Entity/add-new-entity-member";
+// Shift
+export const GET_ENTITY_SHIFT_VIEW_MODEL_URL : string = BASE_API_URL + "Shift/get-entity-shift-view-model";

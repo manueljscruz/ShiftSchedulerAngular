@@ -42,6 +42,11 @@ import { EntityFormComponent } from './modules/entity-form/entity-form.component
 import { DeleteEntityWarningDialogComponent } from './modules/entity-form/delete-entity-warning-dialog/delete-entity-warning-dialog.component';
 import { AddMemberDialogComponent } from './modules/entity-workers/add-member-dialog/add-member-dialog.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { EntityShiftsComponent } from './modules/entity-shifts/entity-shifts.component';
+import { ShiftBreakDialogFormComponent } from './modules/entity-shifts/shift-break-dialog-form/shift-break-dialog-form.component';
+import { MatRippleModule } from '@angular/material/core';
+import { HeaderLessTabsDirective } from './shared/directives/header-less-tabs.directive';
+import { ShiftTemplateCardComponent } from './shared/components/shift-template-card/shift-template-card.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +72,11 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     UITestsComponent,
     EntityFormComponent,
     DeleteEntityWarningDialogComponent,
-    AddMemberDialogComponent
+    AddMemberDialogComponent,
+    EntityShiftsComponent,
+    ShiftBreakDialogFormComponent,
+    HeaderLessTabsDirective,
+    ShiftTemplateCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,7 +97,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatDividerModule,
     MatTabsModule,
     MatAutocompleteModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatRippleModule
   ],
   providers: [
     provideClientHydration(),

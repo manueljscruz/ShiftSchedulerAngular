@@ -1,0 +1,89 @@
+<div class="container full-height">
+    <div class="elevated-card-container full-height">
+        <div class="header-and-actions">
+            <h1 i18n>Shifts</h1>
+            <div class="actions" *ngIf="isCurrentUserEntityOwner">
+                <button *ngIf="!isFormActive" mat-fab extended class="edit-color-bg" (click)="toggleForm(false)">
+                    <mat-icon>add</mat-icon>
+                    <span i18n>Add Shift</span>
+                </button>
+                <button *ngIf="isFormActive" mat-fab extended class="secondary-color-bg" (click)="toggleForm(false)">
+                    <mat-icon>close</mat-icon>
+                    <span i18n>Cancel</span>
+                </button>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="elevated-card-container-content">
+            <div *ngIf="isFormActive">
+                <h2 i18n>{{ isEditing ? 'Edit Shift' : 'Create Shift' }}</h2>
+                <form>
+                    <!-- Name -->
+                    <div class="form-input-spacer">
+                        <mat-form-field appearance="outline">
+                            <mat-label i18n>Shift Name</mat-label>
+                            <input matInput placeholder="Shift Name" name="shift-name" required [(ngModel)]="SelectedShift.ShiftName">
+                        </mat-form-field>
+                    </div>
+                    <div class="row col-gap">
+                        <!-- Alias -->
+                        <div class="form-input-spacer flex-1">
+                            <mat-form-field appearance="outline">
+                                <mat-label i18n>Shift Alias</mat-label>
+                                <input matInput placeholder="Shift Alias" name="shift-alias" [(ngModel)]="SelectedShift.ShiftAlias">
+                            </mat-form-field>
+                        </div>
+                        <!-- Start Time -->
+                        <div class="form-input-spacer flex-1">
+                            <mat-form-field appearance="outline">
+                                <mat-label i18n>Shift Start Time</mat-label>
+                                <input type="time" matInput required placeholder="Shift Start Timer" required min="00:00" max="24:00" name="shift-start-timer" [(ngModel)]="SelectedShift.ShiftStartHour" (ngModelChange)="onStartTimerChange($event)">
+                            </mat-form-field>
+                        </div>
+                        <!-- Duration -->
+                        <div class="form-input-spacer flex-1">
+                            <mat-form-field appearance="outline">
+                                <mat-label i18n>Shift Duration</mat-label>
+                                <input type="time" matInput required placeholder="Shift Duration" required name="shift-duration" [(ngModel)]="SelectedShift.ShiftDuration">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <!-- Description-->
+                    <div class="form-input-spacer">
+                        <mat-form-field appearance="outline">
+                            <mat-label i18n>Shift Description</mat-label>
+                            <textarea matInput placeholder="Shift Description" name="shift-description" rows="3" [(ngModel)]="SelectedShift.ShiftDescription"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Shift Breaks -->
+                    <div class="header-and-actions">
+                        <h4>Manage Shift Breaks</h4>
+                        <div class="actions">
+                            <button mat-fab extended class="edit-color-bg" (click)="newShiftBreak()">
+                                <mat-icon>add</mat-icon>
+                                <span i18n>Add Break</span>
+                            </button>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <p>Shift Breaks Table Here</p>
+                    <mat-divider></mat-divider>
+                    <div class="form-input-spacer end-form-actions">
+                        <button class="action-submit-button secondary-color-bg" cdkFocusInitial (click)="saveShift()">
+                            <mat-icon *ngIf="isEditing">save</mat-icon>
+                            <span *ngIf="isEditing" i18n>Save</span>
+
+                            <mat-icon *ngIf="!isEditing">add</mat-icon>
+                            <span *ngIf="!isEditing" i18n>Create</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div *ngIf="!isFormActive">
+                <p>Form Inactive</p>
+            </div>
+        </div>
+    </div>
+</div>

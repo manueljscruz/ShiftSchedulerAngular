@@ -45,6 +45,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%;
 }
 
+.flex-1{
+  flex: 1;
+}
+
+.col-gap{
+  column-gap: 10px;
+}
+
 .primary-color-bg{
   background-color: #C03221 !important;
   color: white !important;
@@ -77,4 +85,9 @@ mat-form-field{
 .div-top-down-spacer{
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+/* REQUIRED TO SHOW CLOCK FOR INPUT TYPE TIME */
+input.mat-mdc-input-element::-webkit-calendar-picker-indicator {
+  display: block;
 }

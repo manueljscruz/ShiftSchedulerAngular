@@ -4,8 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 import { EntityWorkerDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerDTO';
 import { Entity } from '../../../shared/models/database/entity';
 import { SIDEBAR_ITEM_GROUP_ID } from '../../../shared/constants/UiIDsContants';
-import { ENTITY_ADD_ICON, ENTITY_ICON, ENTITY_SCHEDULE_ICON, MEMBERS_ICON } from '../../../shared/constants/IconNamesConstants';
-import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE, NEW_ENTITY_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
+import { ENTITY_ADD_ICON, ENTITY_ICON, ENTITY_SCHEDULE_ICON, MEMBERS_ICON, SHIFT_ICON } from '../../../shared/constants/IconNamesConstants';
+import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE, NEW_ENTITY_ROUTE, ENTITY_SHIFTS_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +45,8 @@ export class SidebarNavigationService {
       entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', entityWorkerDTO.EntityId), []));
       // Add Schedule Button
       entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', entityWorkerDTO.EntityId), []));
+      // Add Shifts Button
+      entityOptionItems.push(new SideBarItemModel('', "Shifts", SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', entityWorkerDTO.EntityId), []));
 
       entityOptionsItems.push(new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', entityWorkerDTO.EntityId), entityWorkerDTO.EntityName, ENTITY_ICON, "", entityOptionItems));
     

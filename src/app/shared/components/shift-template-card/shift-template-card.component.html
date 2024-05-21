@@ -1,0 +1,13 @@
+<div class="shift-template-grid-card">
+    <div class="card-header">
+        <h3>{{shiftTemplate.ShiftBreakTemplateName}}</h3>
+    </div>
+    <div class="row">
+    <p>{{shiftTemplate.ShiftBreakTypeDisplayValue}}</p>
+</div>
+    <span i18n><b>Start Time</b></span>
+    <p>{{ getFormattedStartTime() }}</p>
+    
+    <span i18n><b>Break Duration</b></span>
+    <p>{{ getFormattedDuration() }}</p>
+</div>

@@ -1,0 +1,45 @@
+#shift-break-dialog{
+    padding: 20px 20px;
+}
+
+#add-shift-options{
+    height: 120px;
+}
+
+.shift-options-icon{
+    width: 75px;
+    height: 75px;
+    font-size: 75px;
+}
+
+.shift-options-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+}
+
+.shift-options-column:hover{
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+.actions {
+    background-color: transparent;
+    padding-top: 20px;
+    display: flex;
+    column-gap: 10px;
+}
+
+#shift-break-template-selection-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Always 3 columns */
+    grid-template-rows: repeat(2, 120px); /* Always 2 rows with fixed height */
+    gap: 10px;
+    max-height: calc(2 * 120px + 10px); /* Two rows of 120px plus one gap of 10px */
+    overflow-y: auto;
+}
+
+
