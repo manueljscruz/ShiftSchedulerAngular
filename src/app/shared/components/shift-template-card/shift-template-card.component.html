@@ -1,13 +1,13 @@
-<div class="shift-template-grid-card">
+<div matRipple class="shift-template-grid-card" (click)="onSelectShiftTemplate()">
     <div class="card-header">
-        <h3>{{shiftTemplate.ShiftBreakTemplateName}}</h3>
+        <h3>{{shiftTemplate.shiftBreakTemplateName}}</h3>
     </div>
     <div class="row">
-    <p>{{shiftTemplate.ShiftBreakTypeDisplayValue}}</p>
+    <p>{{shiftTemplate.shiftBreakTypeDisplayValue}}</p>
 </div>
     <span i18n><b>Start Time</b></span>
-    <p>{{ getFormattedStartTime() }}</p>
+    <p>{{ formattedStartTime }}</p>
     
     <span i18n><b>Break Duration</b></span>
-    <p>{{ getFormattedDuration() }}</p>
+    <p>{{ formattedDuration }}</p>
 </div>

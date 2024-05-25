@@ -1,10 +1,9 @@
 export class GenderLocalizedDTO {
-
-    GenderId: number;
-    GenderLocalizedName: string;
+    genderId: number;
+    genderLocalizedName: string;
 
     constructor(id: number, name: string) {
-        this.GenderId = id;
-        this.GenderLocalizedName = name;
+        this.genderId = id;
+        this.genderLocalizedName = name;
     }
 }

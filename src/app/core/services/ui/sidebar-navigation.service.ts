@@ -40,15 +40,15 @@ export class SidebarNavigationService {
       let entityOptionItems: SideBarItemModel[] = [];
       
       // Add Home Button
-      entityOptionItems.push(new SideBarItemModel('', "Home", ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', entityWorkerDTO.EntityId), []));
+      entityOptionItems.push(new SideBarItemModel('', "Home", ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
       // Add Members Button
-      entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', entityWorkerDTO.EntityId), []));
+      entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
       // Add Schedule Button
-      entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', entityWorkerDTO.EntityId), []));
+      entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
       // Add Shifts Button
-      entityOptionItems.push(new SideBarItemModel('', "Shifts", SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', entityWorkerDTO.EntityId), []));
+      entityOptionItems.push(new SideBarItemModel('', "Shifts", SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
 
-      entityOptionsItems.push(new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', entityWorkerDTO.EntityId), entityWorkerDTO.EntityName, ENTITY_ICON, "", entityOptionItems));
+      entityOptionsItems.push(new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', entityWorkerDTO.entityId), entityWorkerDTO.entityName, ENTITY_ICON, "", entityOptionItems));
     
     });
 
@@ -62,15 +62,15 @@ export class SidebarNavigationService {
     let entityOptionItems: SideBarItemModel[] = [];
       
     // Add Home Button
-    entityOptionItems.push(new SideBarItemModel('', "Home", ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', newEntity.EntityId), []));
+    entityOptionItems.push(new SideBarItemModel('', "Home", ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', newEntity.entityId), []));
 
     // Add Members Button
-    entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', newEntity.EntityId), []));
+    entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', newEntity.entityId), []));
 
     // Add Schedule Button
-    entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', newEntity.EntityId), []));
+    entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', newEntity.entityId), []));
 
-    let sidebarGroupModel = new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', newEntity.EntityId), newEntity.EntityName, ENTITY_ICON, "", entityOptionItems);
+    let sidebarGroupModel = new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', newEntity.entityId), newEntity.entityName, ENTITY_ICON, "", entityOptionItems);
  
     let currentItems = this.getWorkEntitiesSideBarItems().value;
     currentItems.push(sidebarGroupModel);

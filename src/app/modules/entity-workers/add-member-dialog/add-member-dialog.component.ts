@@ -111,8 +111,8 @@ export class AddMemberDialogComponent {
   /// </summary>
   async executeAction() {
     let validationResult = this.validateSubmissions();
-    if(!validationResult.Success){
-      this.snackbarManagerService.showFailSnackbar( new SnackbarUIModel(5, validationResult.Message));
+    if(!validationResult.success){
+      this.snackbarManagerService.showFailSnackbar( new SnackbarUIModel(5, validationResult.message));
       return;
     }
     else{
@@ -129,11 +129,11 @@ export class AddMemberDialogComponent {
 
       let apiResponse = await this.entityService.addNewEntityMember(newMember);
 
-      if(apiResponse.Success){
+      if(apiResponse.success){
         this.onMemberAdded.emit(apiResponse);
       }
       else{
-        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, apiResponse.Message));
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, apiResponse.message));
       }
 
 
@@ -151,12 +151,12 @@ export class AddMemberDialogComponent {
     // Send Email Invite Tab
     if (this.selectedTabIndex === 0) {
       if (this.emailInput === '') {
-        response.Message = 'Please enter an email address.';
+        response.message = 'Please enter an email address.';
         return response;
       }
 
       else if(!emailRegex.test(this.emailInput)){
-        response.Message = 'Invalid Email address';
+        response.message = 'Invalid Email address';
         return response;
       }
     } 
@@ -164,18 +164,18 @@ export class AddMemberDialogComponent {
     // Create Bot Member Tab
     else {
       if(this.memberNameInput.trim().length === 0){
-        response.Message = `Name is required`;
+        response.message = `Name is required`;
         return response;
       }
     }
 
     // Check if the user has specified skills assigned
     if(this.specifySkills && this.selectedSkills.length === 0) {
-      response.Message = 'Please select at least one skill.';
+      response.message = 'Please select at least one skill.';
       return response;
     }
 
-    response.Success = true;
+    response.success = true;
     return response;
   }
 }

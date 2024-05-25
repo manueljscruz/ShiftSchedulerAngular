@@ -20,3 +20,8 @@ h3{
     cursor: pointer;
     text-align: center;
 }
+
+.shift-template-grid-card:hover{
+    background-color: #f5f5f5;
+    cursor: pointer;
+}

@@ -16,7 +16,7 @@
                 <div class="form-input-spacer">
                     <mat-form-field appearance="outline">
                         <mat-label i18n>Name</mat-label>
-                        <input matInput placeholder="Name" [disabled]="!isEditing" [value]="loggedUser.WorkerName" i18n-placeholder>
+                        <input matInput placeholder="Name" [disabled]="!isEditing" [value]="loggedUser.workerName" i18n-placeholder>
                     </mat-form-field>
                 </div>
 
@@ -25,7 +25,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label i18n>Gender</mat-label>
                         <mat-select [(ngModel)]="selectedGender" [disabled]="!isEditing" name="gender" [ngModelOptions]="{standalone: true}">
-                            <mat-option *ngFor="let gender of gendersLocalized" [value]="gender">{{gender.GenderLocalizedName}}</mat-option>
+                            <mat-option *ngFor="let gender of gendersLocalized" [value]="gender">{{gender.genderLocalizedName}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -34,7 +34,7 @@
                 <div class="form-input-spacer">
                     <mat-form-field appearance="outline">
                         <mat-label i18n>Email</mat-label>
-                        <input matInput placeholder="Email" [disabled]="!isEditing" type="email" [value]="loggedUser.Email" i18n-placeholder>
+                        <input matInput placeholder="Email" [disabled]="!isEditing" type="email" [value]="loggedUser.email" i18n-placeholder>
                     </mat-form-field>
                 </div>
 

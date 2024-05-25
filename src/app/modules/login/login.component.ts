@@ -68,12 +68,12 @@ constructor(private loginRegisterService: WorkerService,
 
       this.loadingScreenService.changeLoadingState(false);
 
-      if (loginResult.Success) {
-        this.localStore.saveData("loggedUser", JSON.stringify(loginResult.Result));
+      if (loginResult.success) {
+        this.localStore.saveData("loggedUser", JSON.stringify(loginResult.result));
         this.router.navigate(['/dashboard']);
 
       } else {
-        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, loginResult.Message));
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, loginResult.message));
       }
     }
   }

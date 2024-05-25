@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ShiftBreakTemplateDTO } from '../../models/DTOs/Incoming/ShiftBreakTemplateDTO';
 import { DatePipe } from '@angular/common';
 
@@ -12,6 +12,7 @@ export class ShiftTemplateCardComponent {
 
   @Input() shiftTemplate: ShiftBreakTemplateDTO = new ShiftBreakTemplateDTO(0, 0, 0,'', '', new Date(), new Date(), false, false, false);
   @Input() isShiftBreakTemplate: boolean = false;
+  @Output() selectShiftTemplateEvent = new EventEmitter<ShiftBreakTemplateDTO>();
 
   formattedStartTime: string = '';
   formattedDuration: string = '';
@@ -20,24 +21,28 @@ export class ShiftTemplateCardComponent {
 
   ngOnInit() {
     if (this.shiftTemplate) {
-      this.formattedStartTime = this.getFormattedStartTime(this.shiftTemplate.ShiftBreakStartHour);
-      this.formattedDuration = this.getFormattedDuration(this.shiftTemplate.ShiftBreakDuration);
+      this.formattedStartTime = this.formatStartTime(this.shiftTemplate.shiftBreakStartHour);
+      this.formattedDuration = this.formatDuration(this.shiftTemplate.shiftBreakDuration);
     }
   }
 
-  getFormattedStartTime(startTime: any): string {
-    const date = new Date(startTime);
-    return this.datePipe.transform(date, 'HH:mm') ? this.datePipe.transform(date, 'HH:mm') : '';
+  onSelectShiftTemplate() {
+    this.selectShiftTemplateEvent.emit(this.shiftTemplate);
   }
 
-  formatDuration(durationInMinutes: number): string {
-    const hours = Math.floor(durationInMinutes / 60);
-    const minutes = durationInMinutes % 60;
-    return `${hours > 0 ? hours + ' hour' + (hours > 1 ? 's' : '') : ''} ${minutes > 0 ? minutes + ' minute' + (minutes > 1 ? 's' : '') : ''}`.trim();
-  }
+  formatStartTime(startTime: Date): string {
+    let splitTime = startTime.toString().split(':');
+    let strStartTime = splitTime[0] + ':' + splitTime[1];
+    return strStartTime;
+}
 
-  getFormattedDuration(duration: any): string {
-    const minutes = typeof duration === 'number' ? duration : parseInt(duration, 10);
-    return this.formatDuration(minutes);
-  }
+/// <summary>
+/// Formatted end time
+/// </summary>
+formatDuration(breakDuration : Date): string {
+    let splitTime = breakDuration.toString().split(':');
+    let hours = parseInt(splitTime[0]);
+    let minutes = parseInt(splitTime[1]);
+    return (hours > 0 ? hours + ' hour' + (hours > 1 ? 's' : '') : '') + ' ' + (minutes > 0 ? minutes + ' minute' + (minutes > 1 ? 's' : '') : '');
+}
 }

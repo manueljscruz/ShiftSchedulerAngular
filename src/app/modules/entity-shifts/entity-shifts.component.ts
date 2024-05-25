@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
 import { ActivatedRoute } from '@angular/router';
 import { ShiftDTO } from '../../shared/models/DTOs/Incoming/ShiftDTO';
@@ -10,6 +10,11 @@ import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { ShiftService } from '../../core/services/api/ShiftService';
 import { EntityShiftViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/EntityShiftViewModelRequestDTO';
+import { BaseResponseModel } from '../../shared/models/baseResponseModel';
+import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
+import { MatTable } from '@angular/material/table';
+import { AddShiftDTO } from '../../shared/models/DTOs/Outgoing/AddShiftDTO';
+import { AddShiftBreakDTO } from '../../shared/models/DTOs/Outgoing/AddShiftBreakDTO';
 
 @Component({
   selector: 'app-entity-shifts',
@@ -36,12 +41,22 @@ export class EntityShiftsComponent {
   /// <summary>
   /// Is the form visible at this moment
   /// </summary>
-  public isFormActive : boolean = true;
+  public isFormActive : boolean = false;
 
   /// <summary>
   /// Signaling if the user is editing the shift
   /// </summary>
   public isEditing: boolean = false;
+
+  /// <summary>
+  /// Shift view model object
+  /// </summary>
+  ShiftViewModel: ShiftViewModel = new ShiftViewModel([], [], false, []);
+
+  /// <summary>
+  /// Reference to the shifts table
+  /// </summary>
+  @ViewChild(MatTable) shiftTable!: MatTable<any>;
 
   /// <summary>
   /// Selected shift object
@@ -54,9 +69,18 @@ export class EntityShiftsComponent {
   public SelectedShiftBreaks: ShiftBreakDTO[] = [];
 
   /// <summary>
-  /// Shift view model object
+  /// Shift break to change
   /// </summary>
-  ShiftViewModel: ShiftViewModel = new ShiftViewModel([], [], false, []);
+  public shiftBreakToChange: ShiftBreakDTO = ShiftBreakDTO.newShiftBreakDTO();
+
+  
+
+  shiftBreakDisplayedColumns: string[] = ['ShiftBreakTypeDisplay', 'ShiftBreakDuration', 'ShiftBreakStartTime', 'IncludedInShift', 'IsTimeFlexible', 'Actions'];
+
+  /// <summary>
+  /// Reference to the selected shift breaks table in the create/edit shift form
+  /// </summary>
+  @ViewChild(MatTable) selectedShiftBreakTable!: MatTable<any>;
 
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -76,7 +100,7 @@ export class EntityShiftsComponent {
     this.loadingScreenService.changeLoadingState(true);
 
     // Get the shifts View Model
-    let entityShiftVWRequest = new EntityShiftViewModelRequestDTO(this.currentEntityId, this.loggedUser.WorkerId, '');
+    let entityShiftVWRequest = new EntityShiftViewModelRequestDTO(this.currentEntityId, this.loggedUser.workerId, '');
     this.ShiftViewModel = await this.shiftService.getShiftViewModel(entityShiftVWRequest);
 
     // Turn off the loading spinner
@@ -88,15 +112,137 @@ export class EntityShiftsComponent {
     this.isEditing = isEditing;
   }
 
-  onStartTimerChange($event: any) {
-    // const formattedTime = this.formatTime(event);
-    console.log(this.SelectedShift.ShiftStartHour);
+  expandRow(_t95: any) {
+    
   }
-
-  saveShift() {
+  
+  /// <summary>
+  /// Changes the shift form to edit mode
+  /// </summary>
+  editShift(shiftToEdit: ShiftDTO) {
+    this.SelectedShift = shiftToEdit;
+    this.SelectedShiftBreaks = shiftToEdit.shiftBreakDTOs;
+    this.selectedShiftBreakTable.renderRows();
+    this.isEditing = true;
+    this.toggleForm(true);
+  }
+  
+  /// <summary>
+  /// Deletes the shift
+  /// </summary>
+  deleteShift(shiftToDelete: ShiftDTO) {
     
   }
 
+  // CREATING OR EDITING A SHIFT
+
+  /// <summary>
+  /// Saves the shift
+  /// </summary>
+  async saveShift() {
+    // Validate Shift Submission Entry
+    let validateShiftForm = this.validateShiftForm();
+
+    if(validateShiftForm.success) {
+      // Turn on the loading spinner
+      this.loadingScreenService.changeLoadingState(true);
+
+      let apiResponse = new BaseResponseModel(false, '', null);
+
+      // Editing an existing shift
+      if(this.isEditing) {
+        this.SelectedShift.shiftBreakDTOs = this.SelectedShiftBreaks;
+        apiResponse = await this.shiftService.updateShift(this.SelectedShift);
+      }
+
+      // Adding a new shift
+      else {
+        // Convert SelectedShiftBreaks to AddShiftBreakDTO
+        let addShiftBreaks : AddShiftBreakDTO[] = [];
+        this.SelectedShiftBreaks.forEach((shiftBreak) => {
+          addShiftBreaks.push(new AddShiftBreakDTO(
+            '',
+            shiftBreak.shiftBreakTypeId,
+            shiftBreak.shiftBreakStartTime,
+            shiftBreak.shiftBreakDuration,
+            shiftBreak.includedInShift,
+            shiftBreak.isTimeFlexible
+          ));
+        });
+
+        // Create AddShiftDTO object from the selected shift object
+        let addShiftDTO = new AddShiftDTO(
+          this.currentEntityId,
+          this.SelectedShift.shiftName,
+          this.SelectedShift.shiftAlias,
+          this.SelectedShift.shiftDescription,
+          this.SelectedShift.shiftStartHour,
+          this.SelectedShift.shiftDuration,
+          addShiftBreaks
+        );
+
+        apiResponse = await this.shiftService.addShift(addShiftDTO);
+      }
+
+      // If API call successful
+      if(apiResponse.success) {
+        let shiftDTO = apiResponse.result as ShiftDTO;
+
+        // Replace entry with the new one
+        if(this.isEditing) {
+          let index = this.ShiftViewModel.shifts.findIndex(x => x.shiftId === shiftDTO.shiftId);
+          this.ShiftViewModel.shifts[index] = shiftDTO;
+        }
+
+        // Add new entry
+        else {
+          this.ShiftViewModel.shifts.push(shiftDTO);
+        }
+
+        // Show success message
+        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, apiResponse.message));
+
+        // Reset form related data, toggle off flags and reload the shift table 
+        this.isFormActive = false;
+        this.isEditing = false;
+        this.SelectedShift = ShiftDTO.newShiftDTO();
+        this.SelectedShiftBreaks = [];
+        this.shiftTable.renderRows();
+      }
+      // If API call not successful
+      else 
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, apiResponse.message));
+
+      // Turn off the loading spinner
+      this.loadingScreenService.changeLoadingState(false);
+    }
+    // If validation fails
+    else
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validateShiftForm.message));
+    
+  }
+
+  validateShiftForm() : BaseResponseModel {
+    let response = new BaseResponseModel(false, '', null);
+
+    if(this.SelectedShift.shiftName === '') {
+      response.message = 'Shift name is required';
+      return response;
+    }
+
+    else if(this.SelectedShift.shiftDuration === new Date()) {
+      response.message = 'Shift duration cannot be 0';
+      return response;
+    }
+
+    response.success = true;
+
+    return response;
+  }
+
+  /// <summary>
+  /// Opens the shift break dialog form
+  /// </summary>
   openShiftBreakDialogForm(enterAnimationDuration: string, exitAnimationDuration: string, isAddingShiftBreak : boolean, shiftBreakDTO: ShiftBreakDTO) {
     const dialogRef = this.dialog.open(ShiftBreakDialogFormComponent, {
       width: '600px',
@@ -104,20 +250,53 @@ export class EntityShiftsComponent {
         enterAnimationDuration, 
         exitAnimationDuration, 
         isAddingShiftBreak, 
-        currentShiftId: this.SelectedShift.ShiftId, 
-        shiftBreakTypes: this.ShiftViewModel.ShiftBreakTypeLocalizeds, 
+        currentShiftId: this.SelectedShift.shiftId, 
+        shiftBreakTypes: this.ShiftViewModel.shiftBreakTypeLocalizeds, 
         shiftBreakDTO : shiftBreakDTO,
-        shiftBreakTemplateDTOs: this.ShiftViewModel.ShiftBreakTemplates}
+        shiftBreakTemplateDTOs: this.ShiftViewModel.shiftBreakTemplates}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.SelectedShiftBreaks.push(result);
+    dialogRef.componentInstance.shiftBreakOp.subscribe((result : BaseResponseModel) => {
+      dialogRef.close();
+
+      // If successful
+      if(result.success) {
+        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, result.message));
+
+        // Add the shift break to the selected shift breaks
+        if(isAddingShiftBreak)
+          this.SelectedShiftBreaks.push(result.result);
+          // Find the index of the shift break to change and replace it with the new one
+        else
+        {
+          let index = this.SelectedShiftBreaks.findIndex(x => x === this.shiftBreakToChange);
+          this.SelectedShiftBreaks[index] = result.result;
+        }
+
+        this.selectedShiftBreakTable.renderRows();
+      }
+      else {
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, result.message));
       }
     });
   }
 
+  /// <summary>
+  /// Opens the dialog form for adding a new shift break
+  /// </summary>
   newShiftBreak() {
     this.openShiftBreakDialogForm('5000', '5000', true, ShiftBreakDTO.newShiftBreakDTO());
+  }
+
+  /// <summary>
+  /// Opens the dialog to edit the shift break
+  /// </summary>
+  editShiftBreak(shiftBreakDTO: ShiftBreakDTO) {
+    this.shiftBreakToChange = shiftBreakDTO;
+    this.openShiftBreakDialogForm('5000', '5000', false, this.shiftBreakToChange);
+  }
+
+  deleteShiftBreak(shiftBreakDTO: ShiftBreakDTO) {
+    throw new Error('Method not implemented.');
   }
 }

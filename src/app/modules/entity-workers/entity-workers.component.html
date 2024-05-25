@@ -3,7 +3,7 @@
         <div class="header-and-actions">
             <h1 i18n>Members</h1>
             <div class="actions" *ngIf="isCurrentUserEntityOwner">
-                <button mat-fab extended class="edit-color-bg"(click)="openAddMemberDialog('3000ms', '1500ms', entityMembersViewModel.Skills)">
+                <button mat-fab extended class="edit-color-bg"(click)="openAddMemberDialog('3000ms', '1500ms', entityMembersViewModel.skills)">
                     <mat-icon>add</mat-icon>
                     <span i18n>Add Member</span>
                 </button>
@@ -34,14 +34,14 @@
                 <mat-form-field *ngIf="isFilterActive" appearance="outline">
                     <mat-label i18n>Select Skill</mat-label>
                     <mat-select [(ngModel)]="selectedSkill">
-                        <mat-option *ngFor="let skill of entityMembersViewModel.Skills" [value]="skill">{{skill.SkillLocalizedName}}</mat-option>
+                        <mat-option *ngFor="let skill of entityMembersViewModel.skills" [value]="skill">{{skill.skillLocalizedName}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
 
             <!-- Entity Worker List -->
             <div id="entity-worker-list-container">
-                <div class="entity-worker-list-item" *ngFor="let member of entityMembersViewModel.EntityMembers">
+                <div class="entity-worker-list-item" *ngFor="let member of entityMembersViewModel.entityMembers">
                     <entity-worker-member-card [entityWorkerMember]="member"></entity-worker-member-card>
                 </div>
             </div>

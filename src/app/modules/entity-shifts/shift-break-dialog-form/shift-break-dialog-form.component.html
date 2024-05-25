@@ -26,7 +26,7 @@
         <mat-tab label="Templates">
             <div id="shift-break-template-selection-grid">
                 <div *ngFor="let shiftBreaktemplate of shiftBreakTemplateDTOs">
-                    <shift-template-card  [shiftTemplate]="shiftBreaktemplate" [isShiftBreakTemplate]="true"></shift-template-card>
+                    <shift-template-card  [shiftTemplate]="shiftBreaktemplate" [isShiftBreakTemplate]="true" (selectShiftTemplateEvent)="onSelectShiftTemplate($event)"></shift-template-card>
                 </div>
             </div>
             <div class="actions">
@@ -45,7 +45,7 @@
                     <mat-label i18n>Shift Break Type</mat-label>
                     <mat-select [(ngModel)]="selectedShiftBreakType" name="shiftBreakTypeSelect">
                         <mat-option *ngFor="let breakType of shiftBreakTypes" [value]="breakType">
-                            {{breakType.ShiftBreakTypeLocalizedName}}
+                            {{breakType.shiftBreakTypeLocalizedName}}
                         </mat-option>
                         
                     </mat-select>
@@ -55,14 +55,14 @@
                     <div class="form-input-spacer flex-1">
                         <mat-form-field appearance="outline">
                             <mat-label i18n>Break Start Time</mat-label>
-                            <input type="time" matInput required placeholder="Break Start Timer" required min="00:00" max="24:00" name="break-start-timer">
+                            <input type="time" matInput required placeholder="Break Start Timer" required min="00:00" max="24:00" name="break-start-timer" [(ngModel)]="breakStartTime">
                         </mat-form-field>
                     </div>
                     <!-- Duration -->
                     <div class="form-input-spacer flex-1">
                         <mat-form-field appearance="outline">
                             <mat-label i18n>Break Duration</mat-label>
-                            <input type="time" matInput required placeholder="Break Duration" required name="break-duration">
+                            <input type="time" matInput required placeholder="Break Duration" required name="break-duration" [(ngModel)]="breakDuration">
                         </mat-form-field>
                     </div>
                 </div>
@@ -70,20 +70,20 @@
                     <!-- Checkboxes -->
                     <!-- Include in the Shift-->
                     <div class="form-input-spacer flex-1">
-                        <mat-checkbox>
+                        <mat-checkbox [checked]="includedInShift" name="includedInShiftCheckBox" [(ngModel)]="includedInShift">
                             <span i18n>Included in the Shift</span>
                         </mat-checkbox>
                     </div>
                     <!-- Time Flexible-->
                     <div class="form-input-spacer flex-1">
-                        <mat-checkbox>
+                        <mat-checkbox [checked]="isTimeFlexible" name="isTimeFlexibleCheckBox" [(ngModel)]="isTimeFlexible">
                             <span i18n>Is Time Flexible</span>
                         </mat-checkbox>
                     </div>
                 </div>
             </form>
             <div class="actions">
-                <button mat-fab extended class="secondary-color-bg flex-1" (click)="setTabIndex(0)">
+                <button mat-fab extended class="secondary-color-bg flex-1" *ngIf="isAddingShiftBreak" (click)="setTabIndex(0)">
                     <mat-icon>keyboard_backspace</mat-icon>
                     <span i18n>Back</span>
                 </button>

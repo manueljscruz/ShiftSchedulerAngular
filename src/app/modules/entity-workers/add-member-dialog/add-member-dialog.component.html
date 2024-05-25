@@ -34,7 +34,7 @@
         <mat-form-field appearance="outline">
             <mat-label i18n>Skills</mat-label>
             <mat-select [(ngModel)]="selectedSkills" multiple >
-                <mat-option *ngFor="let skill of localizedSkills" [value]="skill">{{skill.SkillLocalizedName}}</mat-option>
+                <mat-option *ngFor="let skill of localizedSkills" [value]="skill">{{skill.skillLocalizedName}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>

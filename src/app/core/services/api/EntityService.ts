@@ -116,7 +116,7 @@ export class EntityService {
             // Process the received data
         } catch (error : any) {
             console.error('Error fetching data:', error.message);
-            response.Message = error.message;
+            response.message = error.message;
         }
 
         return response
@@ -134,7 +134,7 @@ export class EntityService {
             // Process the received data
         } catch (error : any) {
             console.error('Error fetching data:', error.message);
-            response.Message = error.message;
+            response.message = error.message;
         }
 
         return response;

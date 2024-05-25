@@ -5,58 +5,70 @@ export class ShiftDTO
     /// <summary>
     /// Shift identifier
     /// </summary>
-    public ShiftId: string;
+    public shiftId: string;
 
     /// <summary>
     /// Shift Owner - Entity identifier
     /// </summary>
-    public EntityId: string;
+    public entityId: string;
 
     /// <summary>
     /// Shift name
     /// </summary>
-    public ShiftName: string;
+    public shiftName: string;
 
     /// <summary>
     /// Shift alias
     /// </summary>
-    public ShiftAlias: string;
+    public shiftAlias: string;
 
     /// <summary>
     /// Shift description
     /// </summary>
-    public ShiftDescription: string;
+    public shiftDescription: string;
 
     /// <summary>
     /// Shift start time
     /// </summary>
-    public ShiftStartHour: Date;
+    public shiftStartHour: Date;
 
     /// <summary>
     /// Shift duration
     /// </summary>
-    public ShiftDuration: Date;
+    public shiftDuration: Date;
 
     /// <summary>
     /// Shift breaks
     /// </summary>
-    public ShiftBreaks: ShiftBreakDTO[];
+    public shiftBreakDTOs: ShiftBreakDTO[];
 
-        
     constructor(shiftId: string, entityId: string, shiftName: string, shiftAlias: string, shiftDescription: string, shiftStartHour: Date, shiftDuration: Date, shiftBreaks: ShiftBreakDTO[])
     {
-        this.ShiftId = shiftId;
-        this.EntityId = entityId;
-        this.ShiftName = shiftName;
-        this.ShiftAlias = shiftAlias;
-        this.ShiftDescription = shiftDescription;
-        this.ShiftStartHour = shiftStartHour;
-        this.ShiftDuration = shiftDuration;
-        this.ShiftBreaks = shiftBreaks;
+        this.shiftId = shiftId;
+        this.entityId = entityId;
+        this.shiftName = shiftName;
+        this.shiftAlias = shiftAlias;
+        this.shiftDescription = shiftDescription;
+        this.shiftStartHour = shiftStartHour;
+        this.shiftDuration = shiftDuration;
+        this.shiftBreakDTOs = shiftBreaks;
     }
 
     public static newShiftDTO(): ShiftDTO
     {
         return new ShiftDTO('', '', '', '', '', new Date(), new Date(), []);
     }
+
+    /*
+    public getFormattedStartTime(): string {
+        const splitTime = this.shiftStartHour.toTimeString().split(':');
+        return `${splitTime[0]}:${splitTime[1]}`;
+    }
+
+    public getFormattedDuration(): string {
+        const hours = this.shiftDuration.getUTCHours();
+        const minutes = this.shiftDuration.getUTCMinutes();
+        return `${hours > 0 ? hours + ' hour' + (hours > 1 ? 's' : '') : ''} ${minutes > 0 ? minutes + ' minute' + (minutes > 1 ? 's' : '') : ''}`.trim();
+    }
+    */
 }

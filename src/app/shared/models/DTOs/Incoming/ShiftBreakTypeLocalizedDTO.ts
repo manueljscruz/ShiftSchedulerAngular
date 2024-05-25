@@ -1,9 +1,9 @@
 export class ShiftBreakTypeLocalizedDTO {
-    ShiftBreakTypeId: number;
-    ShiftBreakTypeLocalizedName: string;
+    shiftBreakTypeId: number;
+    shiftBreakTypeLocalizedName: string;
 
     constructor(id: number, name: string) {
-        this.ShiftBreakTypeId = id;
-        this.ShiftBreakTypeLocalizedName = name;
+        this.shiftBreakTypeId = id;
+        this.shiftBreakTypeLocalizedName = name;
     }
 }

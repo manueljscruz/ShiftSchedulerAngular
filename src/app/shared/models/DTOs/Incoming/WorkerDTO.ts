@@ -1,13 +1,13 @@
 export class WorkerDTO {
-    WorkerId: string;
-    WorkerName: string;
-    GenderId: number;
-    Email: string;
+    workerId: string;
+    workerName: string;
+    genderId: number;
+    email: string;
 
     constructor(workerId: string = '', workerName: string = '', genderId: number = 0, workerEmail: string = '') {
-        this.WorkerId = workerId;
-        this.WorkerName = workerName;
-        this.GenderId = genderId;
-        this.Email = workerEmail;
+        this.workerId = workerId;
+        this.workerName = workerName;
+        this.genderId = genderId;
+        this.email = workerEmail;
     }
 }

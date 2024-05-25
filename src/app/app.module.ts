@@ -15,7 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './modules/login/login.component';
 import { HomeComponent } from './modules/home/home.component';
 import { MatCardModule } from '@angular/material/card';
-import { MatTabsModule} from '@angular/material/tabs';
+import { MatTab, MatTabsModule} from '@angular/material/tabs';
 import { MatError } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -47,6 +47,7 @@ import { ShiftBreakDialogFormComponent } from './modules/entity-shifts/shift-bre
 import { MatRippleModule } from '@angular/material/core';
 import { HeaderLessTabsDirective } from './shared/directives/header-less-tabs.directive';
 import { ShiftTemplateCardComponent } from './shared/components/shift-template-card/shift-template-card.component';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,8 @@ import { ShiftTemplateCardComponent } from './shared/components/shift-template-c
     MatTabsModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    MatRippleModule
+    MatRippleModule,
+    MatTableModule
   ],
   providers: [
     provideClientHydration(),

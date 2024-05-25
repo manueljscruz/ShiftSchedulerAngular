@@ -11,7 +11,6 @@ export class SuccessSnackbarComponent {
   message: string = '';
 
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {
-    console.log(data);
     this.message = data.message;
   }
 }

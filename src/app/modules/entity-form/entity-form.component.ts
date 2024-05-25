@@ -79,7 +79,7 @@ export class EntityFormComponent {
     // Retrieve the entity profile view model
     let entityProfileViewModelRequestDTO = {
       entityId: this.currentEntityId,
-      workerId: this.loggedUser.WorkerId,
+      workerId: this.loggedUser.workerId,
       languageCode: this.userLanguage
     };
     
@@ -104,32 +104,34 @@ export class EntityFormComponent {
   /// Sets the initial entity type for the select input if its allowed to be edited
   /// </summary>
   setInitialEntityType(){
-    if(this.entityProfileViewModel.AllowEdit){
+    if(this.entityProfileViewModel.allowEdit){
+      /*
       let localizedTypes : any = this.entityProfileViewModel.EntityTypeLocalizeds;
       let array = localizedTypes.$values as EntityTypeLocalizedDTO[];
       this.entityProfileViewModel.EntityTypeLocalizeds = array;
-      this.selectedEntityType = this.entityProfileViewModel.EntityTypeLocalizeds.find(x => x.EntityTypeLocalizedName == this.entityProfileViewModel.EntityDTO.EntityTypeLocalized);
+      */
+      this.selectedEntityType = this.entityProfileViewModel.entityTypeLocalizeds.find(x => x.entityTypeLocalizedName == this.entityProfileViewModel.entityDTO.entityTypeLocalized);
     }
   }
   
   async saveEntity(){
     let validationResult = this.validateEntityForm();
-    if(!validationResult.Result){
-      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.Message));
+    if(!validationResult.result){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.message));
       return;
     }
 
     this.loadingScreenService.changeLoadingState(true);
-    let entityToUpdate = new FormEntityDTO(this.currentEntityId, this.entityProfileViewModel.EntityDTO.EntityName, this.selectedEntityType?.EntityTypeId || 0, this.entityProfileViewModel.EntityDTO.EntityDescription, this.loggedUser.WorkerId);
+    let entityToUpdate = new FormEntityDTO(this.currentEntityId, this.entityProfileViewModel.entityDTO.entityName, this.selectedEntityType?.entityTypeId || 0, this.entityProfileViewModel.entityDTO.entityDescription, this.loggedUser.workerId);
 
     let response = await this.entityService.updateEntity(entityToUpdate);
-    if(response.Success){
+    if(response.success){
       this.sidebarNavigationService.updateWorkEntitySideBarItem(this.currentEntityId, entityToUpdate.EntityName);
       this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Entity updated successfully'));
       this.isEditing = false;
     }
     else
-      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to update entity: ' + response.Message));
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to update entity: ' + response.message));
 
     this.loadingScreenService.changeLoadingState(false);
   }
@@ -138,7 +140,7 @@ export class EntityFormComponent {
   openDeleteEntityDialog(enterAnimationDuration: string, exitAnimationDuration: string){
     const dialogRef = this.dialog.open(DeleteEntityWarningDialogComponent, {
       width: '500px',
-      data: { enterAnimationDuration, exitAnimationDuration, entityName: this.entityProfileViewModel.EntityDTO.EntityName }
+      data: { enterAnimationDuration, exitAnimationDuration, entityName: this.entityProfileViewModel.entityDTO.entityName }
     });
 
     dialogRef.afterClosed().subscribe(result =>{
@@ -151,23 +153,23 @@ export class EntityFormComponent {
   validateEntityForm() : BaseResponseModel {
     let response = new BaseResponseModel(false, '', null);
 
-    if(this.entityProfileViewModel.EntityDTO.EntityName.trim().length === 0){
-      response.Message = 'Entity name is required';
+    if(this.entityProfileViewModel.entityDTO.entityName.trim().length === 0){
+      response.message = 'Entity name is required';
       return response;
     }
 
-    else if(this.entityProfileViewModel.EntityDTO.EntityName.trim().length < 3){
-      response.Message = 'Entity name must be at least 3 characters long';
+    else if(this.entityProfileViewModel.entityDTO.entityName.trim().length < 3){
+      response.message = 'Entity name must be at least 3 characters long';
       return response;
     }
 
     else if(!this.selectedEntityType){
-      response.Message = 'Please select an entity type';
+      response.message = 'Please select an entity type';
       return response;
     }
 
     else
-      response.Result = true;
+      response.result = true;
 
     return response;
   }
@@ -180,13 +182,13 @@ export class EntityFormComponent {
 
     this.loadingScreenService.changeLoadingState(true);
     await this.entityService.deleteEntity(this.currentEntityId).then(response => {
-      if(response.Success){
+      if(response.success){
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Entity deleted successfully'));
         this.sidebarNavigationService.deleteWorkEntitySideBarItem(this.currentEntityId);
         this.router.navigate([DASHBOARD_HOME_ROUTE]);
       }
       else
-        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to delete entity: ' + response.Message));
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to delete entity: ' + response.message));
       
       this.loadingScreenService.changeLoadingState(false);
     });

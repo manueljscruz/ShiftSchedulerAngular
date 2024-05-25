@@ -42,9 +42,9 @@ export class ProfileComponent{
     let gendersLocalized = await this.auxDataService.getGenders();
     //let genderArray = gendersLocalized.$values;
     this.gendersLocalized = gendersLocalized.$values;
-    if (this.loggedUser != null && this.loggedUser.GenderId != null) {
+    if (this.loggedUser != null && this.loggedUser.genderId != null) {
       
-      this.selectedGender = this.gendersLocalized.find(g => g.GenderId == this.loggedUser?.GenderId);
+      this.selectedGender = this.gendersLocalized.find(g => g.genderId == this.loggedUser?.genderId);
     }
   }
 
@@ -56,9 +56,9 @@ export class ProfileComponent{
 
     let validationResult: BaseResponseModel = this.validateProfileInput();
 
-    if(validationResult.Result){
+    if(validationResult.result){
 
-      this.loggedUser.GenderId = this.selectedGender?.GenderId || 0;
+      this.loggedUser.genderId = this.selectedGender?.genderId || 0;
       // Save the profile
       this.loadingScreenService.changeLoadingState(true);
 
@@ -67,19 +67,19 @@ export class ProfileComponent{
 
       this.loadingScreenService.changeLoadingState(false);
 
-      if(response.Result){
+      if(response.result){
         this.toggleEditProfile();
         this.localStore.saveData("loggedUser", JSON.stringify(this.loggedUser));
         this.backupUser = { ...this.loggedUser };
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Profile saved successfully'));
       }
       else{
-        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, response.Message));
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, response.message));
       }
       
     }
     else{
-      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.Message));
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.message));
     }
   }
 
@@ -87,28 +87,28 @@ export class ProfileComponent{
     let emailRegex = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
     let response = new BaseResponseModel(false, '', null);
 
-    if(this.loggedUser.WorkerName.trim().length === 0)
+    if(this.loggedUser.workerName.trim().length === 0)
     {
-      response.Message = 'A name is required';
+      response.message = 'A name is required';
       return response;
     }
 
     else if(this.selectedGender === undefined){
-      response.Message = 'Gender is required';
+      response.message = 'Gender is required';
       return response;
     }
 
-    else if(this.loggedUser.Email.trim().length === 0){
-      response.Message = 'Email is required';
+    else if(this.loggedUser.email.trim().length === 0){
+      response.message = 'Email is required';
       return response;
     }
 
-    else if(!emailRegex.test(this.loggedUser.Email)){
-      response.Message = 'Invalid Email address';
+    else if(!emailRegex.test(this.loggedUser.email)){
+      response.message = 'Invalid Email address';
       return response;
     }
 
-    else response.Result = true;
+    else response.result = true;
 
     return response;
   }

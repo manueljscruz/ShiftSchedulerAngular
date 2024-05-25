@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FILTER_ICON } from '../../shared/constants/IconNamesConstants';
-import { EntityMembersViewModel } from '../../shared/models/UI/EntityMembersViewModel';
+import { EntityMembersViewModel } from '../../shared/models/VM/EntityMembersViewModel';
 import { EntityService } from '../../core/services/api/EntityService';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
@@ -81,8 +81,7 @@ export class EntityWorkersComponent {
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
     this.entityMembersViewModel = await this.entityService.getEntityMembersViewModel(this.currentEntityId);
 
-    this.prepareViewModel();
-    this.isCurrentUserEntityOwner = this.entityMembersViewModel.EntityOwnerId === this.loggedUser.WorkerId ? true : false;
+    this.isCurrentUserEntityOwner = this.entityMembersViewModel.entityOwnerId === this.loggedUser.workerId ? true : false;
     this.loadingScreenService.changeLoadingState(false);
   }
 
@@ -93,23 +92,7 @@ export class EntityWorkersComponent {
     this.isFilterActive = !this.isFilterActive;
   }
 
-  /// <summary>
-  /// Method that readjusts the view model object to the correct format
-  /// </summary>
-  prepareViewModel(){
-    let members : any = this.entityMembersViewModel.EntityMembers;
-    let memberArray = members.$values as EntityWorkerMemberDTO[];
-    this.entityMembersViewModel.EntityMembers = memberArray;
-    
-    let skills : any = this.entityMembersViewModel.Skills;
-    let skillArray = skills.$values as SkillDTO[];
-    this.entityMembersViewModel.Skills = skillArray;
-
-    this.entityMembersViewModel.EntityMembers.forEach(member => {
-      member.SkillSet = this.auxReconfigureSkills(member); 
-    });
-  }
-
+ 
   /// <summary>
   /// Method that opens the add member dialog
   /// </summary>
@@ -123,27 +106,18 @@ export class EntityWorkersComponent {
     dialogRef.componentInstance.onMemberAdded.subscribe((result: BaseResponseModel) => {
       dialogRef.close();
 
-      if(result.Success){
-        this.snackManagerService.showSuccessSnackbar(new SnackbarUIModel(5, result.Message));
+      if(result.success){
+        this.snackManagerService.showSuccessSnackbar(new SnackbarUIModel(5, result.message));
 
-        let newMemberResult = result.Result;
+        let newMemberResult = result.result;
         if(newMemberResult === true){
         }
         else{
           newMemberResult = newMemberResult as EntityWorkerMemberDTO;
-          newMemberResult.SkillSet = this.auxReconfigureSkills(newMemberResult);
-          this.entityMembersViewModel.EntityMembers.push(newMemberResult as EntityWorkerMemberDTO);
+          // newMemberResult.SkillSet = this.auxReconfigureSkills(newMemberResult);
+          this.entityMembersViewModel.entityMembers.push(newMemberResult as EntityWorkerMemberDTO);
         }
       }
     });
-  }
-
-  /// <summary>
-  /// Method that reconfigures the skills list due to the API response
-  /// </summary>
-  auxReconfigureSkills(skillList: any) : SkillDTO[]{
-    let memberSkills : any = skillList.SkillSet;
-    let memberSkillsArray = memberSkills.$values as SkillDTO[];
-    return memberSkillsArray;
   }
 }

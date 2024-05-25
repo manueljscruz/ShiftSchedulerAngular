@@ -13,7 +13,7 @@
         <mat-form-field class="register-input">
             <mat-label i18n>Gender</mat-label>
             <mat-select [(ngModel)]="selectedGender" name="gender" [ngModelOptions]="{ standalone: true }">
-                <mat-option *ngFor="let gender of gendersLocalized" [value]="gender">{{gender.GenderLocalizedName}}</mat-option>
+                <mat-option *ngFor="let gender of gendersLocalized" [value]="gender">{{gender.genderLocalizedName}}</mat-option>
             </mat-select>
         </mat-form-field>
 

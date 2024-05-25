@@ -59,15 +59,15 @@ export class NewEntityComponent {
   async onCreateEntitySubmit() {
     let validationResult = this.validateNewEntityForm();
     
-    if(!validationResult.Result){
-      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.Message));
+    if(!validationResult.result){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.message));
       return;
     }
 
     // Trigger loading screen
     this.isLoading = true;
 
-    let newEntity: FormEntityDTO = new FormEntityDTO('', this.entityNameInput, this.selectedEntityType?.EntityTypeId ? this.selectedEntityType.EntityTypeId : 0, this.entityDescriptionInput, this.loggedInUser.WorkerId);
+    let newEntity: FormEntityDTO = new FormEntityDTO('', this.entityNameInput, this.selectedEntityType?.entityTypeId ? this.selectedEntityType.entityTypeId : 0, this.entityDescriptionInput, this.loggedInUser.workerId);
     console.log(newEntity);
 
     // Call the API to create the new entity
@@ -78,14 +78,14 @@ export class NewEntityComponent {
 
     this.loadingScreenService.changeLoadingState(false);
 
-    if(response.Success){
+    if(response.success){
       this.clearFormInputs();
-      this.sidebarNavigationService.addNewWorkEntitySideBarItem(response.Result);
+      this.sidebarNavigationService.addNewWorkEntitySideBarItem(response.result);
       this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Entity created successfully'));
-      this.router.navigate([ENTITY_FORM_ROUTE.replace(':entityId', response.Result.EntityId)]);
+      this.router.navigate([ENTITY_FORM_ROUTE.replace(':entityId', response.result.entityId)]);
     }
     else
-      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to create entity: ' + response.Message));
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to create entity: ' + response.message));
     
   }
 
@@ -94,22 +94,22 @@ export class NewEntityComponent {
     let response = new BaseResponseModel(false, '', null);
 
     if(this.entityNameInput.trim().length === 0){
-      response.Message = 'Please enter a name for the entity';
+      response.message = 'Please enter a name for the entity';
       return response;
     }
 
     else if(this.entityNameInput.trim().length < 3){
-      response.Message = 'The entity name must be at least 3 characters long.';
+      response.message = 'The entity name must be at least 3 characters long.';
       return response;
     }
 
     else if(!this.selectedEntityType){
-      response.Message = 'Please select an entity type';
+      response.message = 'Please select an entity type';
       return response;
     }
 
     else
-      response.Result = true;
+      response.result = true;
     
     return response;
   }

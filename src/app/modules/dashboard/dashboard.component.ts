@@ -55,7 +55,7 @@ export class DashboardComponent {
     // Get view model data
     await this.getViewModelData();
 
-    let entityWorkerDTOs = this.entityWorkerDTOs.$values;
+    let entityWorkerDTOs = this.entityWorkerDTOs;
     this.sidebarNavigationService.addInitialWorkEntitiesSideBarItems(entityWorkerDTOs);
 
     
@@ -68,7 +68,7 @@ export class DashboardComponent {
 
   async getViewModelData() {
     // Get data from API
-    this.entityWorkerDTOs = await this.entityService.getEntitiesByWorkerId(this.loggedUser.WorkerId);
+    this.entityWorkerDTOs = await this.entityService.getEntitiesByWorkerId(this.loggedUser.workerId);
   }
 
 }
