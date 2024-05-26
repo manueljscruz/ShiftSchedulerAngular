@@ -7,7 +7,7 @@ export class ShiftBreakDTO
 
     /// <summary>
     /// Shift identifier 
-    public shiftId: string;
+    public shiftParentId: string;
 
     /// <summary>
     /// Shift break type identifier
@@ -39,6 +39,7 @@ export class ShiftBreakDTO
     /// </summary>
     public isTimeFlexible: boolean;
 
+    public readonly type = 'ShiftBreakDTO';
     /*
     /// <summary>
     /// Formatted start time
@@ -62,7 +63,7 @@ export class ShiftBreakDTO
 
     constructor(shiftBreakId: string, shiftId: string, shiftBreakTypeId: number, shiftBreakTypeDisplay: string, shiftBreakStartTime: Date, shiftBreakDuration: Date, includedInShift: boolean, isTimeFlexible: boolean) {
         this.shiftBreakId = shiftBreakId;
-        this.shiftId = shiftId;
+        this.shiftParentId = shiftId;
         this.shiftBreakTypeId = shiftBreakTypeId;
         this.shiftBreakTypeDisplay = shiftBreakTypeDisplay;
         this.shiftBreakStartTime = shiftBreakStartTime;

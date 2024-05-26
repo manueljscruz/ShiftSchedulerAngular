@@ -19,3 +19,7 @@ export const ADD_NEW_ENTITY_MEMBER_URL : string = BASE_API_URL + "Entity/add-new
 export const GET_ENTITY_SHIFT_VIEW_MODEL_URL : string = BASE_API_URL + "Shift/get-entity-shift-view-model";
 export const ADD_SHIFT_URL : string = BASE_API_URL + "Shift/add-entity-shift";
 export const ADD_SHIFT_BREAK_URL : string = BASE_API_URL + "Shift/add-entity-shift-break";
+export const UPDATE_SHIFT_URL : string = BASE_API_URL + "Shift/update-entity-shift";
+export const UPDATE_SHIFT_BREAK_URL : string = BASE_API_URL + "Shift/update-entity-shift-break";
+export const DELETE_SHIFT_URL : string = BASE_API_URL + "Shift/delete-entity-shift/{entityId}/{shiftId}";
+export const DELETE_SHIFT_BREAK_URL : string = BASE_API_URL + "Shift/delete-entity-shift-break/{shiftBreakId}";

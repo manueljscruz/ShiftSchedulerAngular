@@ -1,0 +1,14 @@
+<div id="delete-warning-dialog">
+    <h1 i18n>{{deleteWarningTitle}}</h1>
+    <p i18n>{{deleteWarningMessage}}</p>
+    <div class="actions">
+        <button mat-fab extended class="secondary-color-bg" [mat-dialog-close]="false">
+            <mat-icon>close</mat-icon>
+            <span i18n>Cancel</span>
+        </button>
+        <button mat-fab extended class="delete-color-bg" [mat-dialog-close]="true">
+            <mat-icon>delete</mat-icon>
+            <span i18n>Delete</span>
+        </button>
+    </div>
+</div>

@@ -42,6 +42,8 @@ export class ShiftDTO
     /// </summary>
     public shiftBreakDTOs: ShiftBreakDTO[];
 
+    public readonly type = 'ShiftDTO';
+
     constructor(shiftId: string, entityId: string, shiftName: string, shiftAlias: string, shiftDescription: string, shiftStartHour: Date, shiftDuration: Date, shiftBreaks: ShiftBreakDTO[])
     {
         this.shiftId = shiftId;

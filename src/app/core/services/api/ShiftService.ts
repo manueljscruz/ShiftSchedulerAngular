@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LanguageServiceService } from '../language-service.service';
-import { GET_ENTITY_SHIFT_VIEW_MODEL_URL, ADD_SHIFT_URL, ADD_SHIFT_BREAK_URL } from '../../../shared/constants/APIPathsConstants';
+import { GET_ENTITY_SHIFT_VIEW_MODEL_URL, ADD_SHIFT_URL, ADD_SHIFT_BREAK_URL, UPDATE_SHIFT_BREAK_URL, DELETE_SHIFT_URL, DELETE_SHIFT_BREAK_URL, UPDATE_SHIFT_URL } from '../../../shared/constants/APIPathsConstants';
 import { ShiftViewModel } from '../../../shared/models/VM/ShiftViewModel';
 import { EntityShiftViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityShiftViewModelRequestDTO';
 import { ShiftBreakTypeLocalizedDTO } from '../../../shared/models/DTOs/Incoming/ShiftBreakTypeLocalizedDTO';
@@ -61,11 +61,7 @@ export class ShiftService {
             addShiftJSON.ShiftDuration = this.auxConvertDateToTimeSpan(shiftDTO.ShiftDuration);
             // addShiftJSON.ShiftBreakDTOs = shiftBreaksJson;
            
-            let apiResponse = await this.http.post(ADD_SHIFT_URL, addShiftJSON).toPromise();
-
-            if(apiResponse){
-
-            }
+            response = await this.http.post<BaseResponseModel>(ADD_SHIFT_URL, addShiftJSON).toPromise() as BaseResponseModel;
         }
         catch(error : any){
             console.error('Error fetching data:', error.message);
@@ -75,13 +71,14 @@ export class ShiftService {
 
     }
 
+    /// <summary>
+    /// Add a new shift break
+    /// </summary>
     async addShiftBreak(newShiftBreakDTO: AddShiftBreakDTO) : Promise<BaseResponseModel> {
         let response = new BaseResponseModel(false, "", null);
 
         try{
-            let apiResponse = await this.http.post<AddShiftBreakResponse>(ADD_SHIFT_BREAK_URL, newShiftBreakDTO).toPromise();
-
-            
+            response = await this.http.post<BaseResponseModel>(ADD_SHIFT_BREAK_URL, newShiftBreakDTO).toPromise() as BaseResponseModel;
         }
         catch(error : any){
             console.error('Error fetching data:', error.message);
@@ -90,10 +87,66 @@ export class ShiftService {
         return response;
     }
 
-    updateShift(SelectedShift: ShiftDTO): BaseResponseModel | PromiseLike<BaseResponseModel> {
-        throw new Error('Method not implemented.');
+    async updateShift(SelectedShift: ShiftDTO): Promise<BaseResponseModel> {
+        let response = new BaseResponseModel(false, "", null);
+
+        try{
+            response = await this.http.put<BaseResponseModel>(UPDATE_SHIFT_URL, SelectedShift).toPromise() as BaseResponseModel;
+        }
+        catch(error : any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
     }
 
+    /// <summary>
+    /// Update a shift break
+    /// </summary>
+    async updateShiftBreak(SelectedShiftBreak: ShiftBreakDTO): Promise<BaseResponseModel> {
+        let response = new BaseResponseModel(false, "", null);
+
+        try{
+            response = await this.http.put<BaseResponseModel>(UPDATE_SHIFT_BREAK_URL, SelectedShiftBreak).toPromise() as BaseResponseModel;
+        }
+        catch(error : any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
+    }
+
+    /// <summary>
+    /// Delete a shift
+    /// </summary>
+    async deleteShift(entityId: string, shiftId: string): Promise<BaseResponseModel> {
+        let response = new BaseResponseModel(false, "", null);
+
+        try{
+            response = await this.http.delete<BaseResponseModel>(DELETE_SHIFT_URL.replace('{entityId}', entityId).replace('{shiftId}', shiftId)).toPromise() as BaseResponseModel;
+        }
+        catch(error : any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
+    }
+
+    /// <summary>
+    /// Delete a shift break
+    /// </summary>
+    async deleteShiftBreak(shiftBreakId: string) : Promise<BaseResponseModel>{
+        let response = new BaseResponseModel(false, "", null);
+
+        try{
+            response = await this.http.delete<BaseResponseModel>(DELETE_SHIFT_BREAK_URL.replace('{shiftBreakId}', shiftBreakId)).toPromise() as BaseResponseModel;
+        }
+        catch(error : any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
+    }
     /*
     convertDatesToTimeSpanStrings(obj: any): any {
         if (obj === null || obj === undefined) {

@@ -59,7 +59,7 @@
                             <button mat-icon-button color="primary" (click)="editShift(shift)">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                            <button mat-icon-button color="warn" (click)="deleteShift(shift)">
+                            <button mat-icon-button color="warn" (click)="openDeleteDialog('5000','5000', DELETE_SHIFT_TITLE, DELETE_SHIFT_CONTENT, shift, 'ShiftDTO')">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </mat-cell>
@@ -164,7 +164,7 @@
                                 <button mat-icon-button color="primary" (click)="editShiftBreak(shiftBreak)">
                                     <mat-icon>edit</mat-icon>
                                 </button>
-                                <button mat-icon-button color="warn" (click)="deleteShiftBreak(shiftBreak)">
+                                <button mat-icon-button color="warn" (click)="openDeleteDialog('5000','5000', DELETE_SHIFT_BREAK_TITLE, DELETE_SHIFT_BREAK_CONTENT, shiftBreak, 'ShiftBreakDTO')">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                             </mat-cell>

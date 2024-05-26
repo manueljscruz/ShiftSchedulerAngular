@@ -9,6 +9,8 @@ import { LoadingSpinnerManagerService } from '../../../core/services/ui/loading-
 import { ShiftBreakTemplateDTO } from '../../../shared/models/DTOs/Incoming/ShiftBreakTemplateDTO';
 import { SnackbarUIModel } from '../../../shared/models/UI/SnackbarUIModel';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
+import { AddShiftBreakDTO } from '../../../shared/models/DTOs/Outgoing/AddShiftBreakDTO';
+import { ShiftService } from '../../../core/services/api/ShiftService';
 
 @Component({
   selector: 'shift-break-dialog-form',
@@ -94,7 +96,8 @@ export class ShiftBreakDialogFormComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   private snackbarManagerService: SnackbarManagerService,
-  private loadingScreenService: LoadingSpinnerManagerService,) 
+  private loadingScreenService: LoadingSpinnerManagerService,
+  private shiftService: ShiftService) 
   { 
     this.isAddingShiftBreak = data.isAddingShiftBreak;
     this.currentShiftId = data.currentShiftId;
@@ -130,15 +133,14 @@ export class ShiftBreakDialogFormComponent {
   /// <summary>
   /// Handle the shift break submission
   /// </summary>
-  handleShiftBreakSubmission() {
+  async handleShiftBreakSubmission() {
     let validationResult = this.validateFormValues();
     if(!validationResult.success) {
       this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.message));
       return;
     }
     else{
-
-      this.shiftBreakDTO.shiftId = this.currentShiftId;
+      this.shiftBreakDTO.shiftParentId = this.currentShiftId;
       this.shiftBreakDTO.shiftBreakTypeId = this.selectedShiftBreakType.shiftBreakTypeId;
       this.shiftBreakDTO.shiftBreakStartTime = this.breakStartTime;
       this.shiftBreakDTO.shiftBreakDuration = this.breakDuration;
@@ -161,14 +163,39 @@ export class ShiftBreakDialogFormComponent {
 
         // If its a new shift break, with a shift association, call the API to add it
         if(this.isAddingShiftBreak) {
-          
+          let addShiftBreakDTO = new AddShiftBreakDTO(
+            this.shiftBreakDTO.shiftParentId, 
+            this.shiftBreakDTO.shiftBreakTypeId, 
+            this.shiftBreakDTO.shiftBreakStartTime, 
+            this.shiftBreakDTO.shiftBreakDuration, 
+            this.shiftBreakDTO.includedInShift, 
+            this.shiftBreakDTO.isTimeFlexible);
 
+          // API Call
+          let response = await this.shiftService.addShiftBreak(addShiftBreakDTO);
           
+          // If the API call was successful, emit the response
+          if(response.success){
+            this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Shift Break added successfully'));
+            response.result = this.shiftBreakDTO.shiftBreakTypeDisplay = this.selectedShiftBreakType.shiftBreakTypeLocalizedName;
+            this.shiftBreakOp.emit(response);
+          }
+          else{
+            this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, response.message));
+          }
         }
 
         // If its an existing shift break, with a shift association, call the API to update it
         else{
-
+          let apiResponse = await this.shiftService.updateShiftBreak(this.shiftBreakDTO);
+          if(apiResponse.success){
+            this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Shift Break updated successfully'));
+            apiResponse.result = this.shiftBreakDTO;
+            this.shiftBreakOp.emit(apiResponse);
+          }
+          else{
+            this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, apiResponse.message));
+          }
         }
 
         this.loadingScreenService.changeLoadingState(false);

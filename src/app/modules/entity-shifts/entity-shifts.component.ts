@@ -15,6 +15,9 @@ import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { MatTable } from '@angular/material/table';
 import { AddShiftDTO } from '../../shared/models/DTOs/Outgoing/AddShiftDTO';
 import { AddShiftBreakDTO } from '../../shared/models/DTOs/Outgoing/AddShiftBreakDTO';
+import { GenericDeleteWarningDialogComponent } from '../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
+import { DELETE_SHIFT_BREAK_CONTENT, DELETE_SHIFT_BREAK_TITLE, DELETE_SHIFT_CONTENT, DELETE_SHIFT_TITLE } from '../../shared/constants/UITextConstants';
+import e from 'express';
 
 @Component({
   selector: 'app-entity-shifts',
@@ -22,6 +25,12 @@ import { AddShiftBreakDTO } from '../../shared/models/DTOs/Outgoing/AddShiftBrea
   styleUrl: './entity-shifts.component.css'
 })
 export class EntityShiftsComponent {
+
+  // CONSTANTS
+  DELETE_SHIFT_TITLE = DELETE_SHIFT_TITLE;
+  DELETE_SHIFT_CONTENT = DELETE_SHIFT_CONTENT;
+  DELETE_SHIFT_BREAK_TITLE = DELETE_SHIFT_BREAK_TITLE;
+  DELETE_SHIFT_BREAK_CONTENT = DELETE_SHIFT_BREAK_CONTENT;
 
   /// <summary>
   /// Logged user object
@@ -130,8 +139,36 @@ export class EntityShiftsComponent {
   /// <summary>
   /// Deletes the shift
   /// </summary>
-  deleteShift(shiftToDelete: ShiftDTO) {
-    
+  async deleteShift(shiftToDelete: ShiftDTO) {
+    if(shiftToDelete.entityId != '' && shiftToDelete.shiftId != '') {
+      // Turn on the loading spinner
+      this.loadingScreenService.changeLoadingState(true);
+
+      let apiResponse = await this.shiftService.deleteShift(shiftToDelete.entityId, shiftToDelete.shiftId);
+
+      // If API call successful
+      if(apiResponse.success) {
+        // Remove the shift from the shift view model
+        let index = this.ShiftViewModel.shifts.findIndex(x => x.shiftId === shiftToDelete.shiftId);
+        this.ShiftViewModel.shifts.splice(index, 1);
+
+        // Show success message
+        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, apiResponse.message));
+
+        // Reload the shift table
+        this.shiftTable.renderRows();
+      }
+      else{
+        // Show fail message
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, apiResponse.message));
+      }
+
+
+      this.loadingScreenService.changeLoadingState(false);
+    }
+    else{
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Shift cannot be deleted without required data.'));
+    }
   }
 
   // CREATING OR EDITING A SHIFT
@@ -241,7 +278,7 @@ export class EntityShiftsComponent {
   }
 
   /// <summary>
-  /// Opens the shift break dialog form
+  /// Opens the shift break dialog form to add or edit a shift break
   /// </summary>
   openShiftBreakDialogForm(enterAnimationDuration: string, exitAnimationDuration: string, isAddingShiftBreak : boolean, shiftBreakDTO: ShiftBreakDTO) {
     const dialogRef = this.dialog.open(ShiftBreakDialogFormComponent, {
@@ -264,9 +301,11 @@ export class EntityShiftsComponent {
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, result.message));
 
         // Add the shift break to the selected shift breaks
-        if(isAddingShiftBreak)
+        if(isAddingShiftBreak){
           this.SelectedShiftBreaks.push(result.result);
-          // Find the index of the shift break to change and replace it with the new one
+        }
+        
+        // Find the index of the shift break to change and replace it with the new one
         else
         {
           let index = this.SelectedShiftBreaks.findIndex(x => x === this.shiftBreakToChange);
@@ -296,7 +335,57 @@ export class EntityShiftsComponent {
     this.openShiftBreakDialogForm('5000', '5000', false, this.shiftBreakToChange);
   }
 
-  deleteShiftBreak(shiftBreakDTO: ShiftBreakDTO) {
-    throw new Error('Method not implemented.');
+  async openDeleteDialog(enterAnimationDuration: string, exitAnimationDuration: string, title : string, content : string, objectToDelete: any, type: string){
+    const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+      width: '500px',
+      data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: title, deleteWarningMessage: content}
+    });
+
+    dialogRef.afterClosed().subscribe(async result =>{
+      if(result){
+        if(type === 'ShiftDTO'){
+          await this.deleteShift(objectToDelete);
+        }
+        
+        else if(type === 'ShiftBreakDTO'){
+          await this.deleteShiftBreak(objectToDelete);
+        }
+      };
+    });
+  }
+
+
+  async deleteShiftBreak(shiftBreakDTO: ShiftBreakDTO) {
+    // If no shift break id, remove from the selected shift breaks
+    if(shiftBreakDTO.shiftBreakId === ''){
+      let index = this.SelectedShiftBreaks.findIndex(x => x === shiftBreakDTO);
+      this.SelectedShiftBreaks.splice(index, 1);
+      this.selectedShiftBreakTable.renderRows();
+    }
+    else{
+      // Turn on the loading spinner
+      this.loadingScreenService.changeLoadingState(true);
+
+      let apiResponse = await this.shiftService.deleteShiftBreak(shiftBreakDTO.shiftBreakId);
+
+      // If API call successful
+      if(apiResponse.success) {
+        // Remove the shift break from the selected shift breaks
+        let index = this.SelectedShiftBreaks.findIndex(x => x.shiftBreakId === shiftBreakDTO.shiftBreakId);
+        this.SelectedShiftBreaks.splice(index, 1);
+
+        // Show success message
+        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, apiResponse.message));
+
+        // Reload the shift breaks table
+        this.selectedShiftBreakTable.renderRows();
+      }
+      // If API call not successful
+      else 
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, apiResponse.message));
+
+      // Turn off the loading spinner
+      this.loadingScreenService.changeLoadingState(false);
+    }
   }
 }

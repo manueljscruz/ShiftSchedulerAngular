@@ -48,6 +48,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { HeaderLessTabsDirective } from './shared/directives/header-less-tabs.directive';
 import { ShiftTemplateCardComponent } from './shared/components/shift-template-card/shift-template-card.component';
 import {MatTableModule} from '@angular/material/table';
+import { GenericDeleteWarningDialogComponent } from './shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import {MatTableModule} from '@angular/material/table';
     ShiftBreakDialogFormComponent,
     HeaderLessTabsDirective,
     ShiftTemplateCardComponent,
+    GenericDeleteWarningDialogComponent,
   ],
   imports: [
     BrowserModule,
