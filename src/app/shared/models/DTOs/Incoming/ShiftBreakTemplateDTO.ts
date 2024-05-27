@@ -9,6 +9,7 @@ export class ShiftBreakTemplateDTO{
     includedInShift: boolean;
     isTimeFlexible: boolean;
     isPopular: boolean;
+    public readonly type = 'ShiftBreakTemplateDTO';
     
     constructor(shiftBreakTemplateId: number, 
         shiftId: number, 

@@ -18,6 +18,8 @@ import { AddShiftBreakDTO } from '../../shared/models/DTOs/Outgoing/AddShiftBrea
 import { GenericDeleteWarningDialogComponent } from '../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 import { DELETE_SHIFT_BREAK_CONTENT, DELETE_SHIFT_BREAK_TITLE, DELETE_SHIFT_CONTENT, DELETE_SHIFT_TITLE } from '../../shared/constants/UITextConstants';
 import e from 'express';
+import { ShiftBreakTemplateDTO } from '../../shared/models/DTOs/Incoming/ShiftBreakTemplateDTO';
+import { ShiftTemplateDTO } from '../../shared/models/DTOs/Incoming/ShiftTemplateDTO';
 
 @Component({
   selector: 'app-entity-shifts',
@@ -168,6 +170,35 @@ export class EntityShiftsComponent {
     }
     else{
       this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Shift cannot be deleted without required data.'));
+    }
+  }
+
+  onSelectShiftTemplate($event: ShiftTemplateDTO) {
+    let shiftTemplateDTO = $event;
+    if(shiftTemplateDTO != null){
+      this.SelectedShift.shiftName = shiftTemplateDTO.shiftTemplateName;
+      this.SelectedShift.shiftAlias = shiftTemplateDTO.shiftTemplateAlias;
+      this.SelectedShift.shiftStartHour = shiftTemplateDTO.shiftStartHour;
+      this.SelectedShift.shiftDuration = shiftTemplateDTO.shiftDuration;
+
+      if(shiftTemplateDTO.shiftBreakTemplates != null){
+        this.SelectedShiftBreaks = [];
+
+        shiftTemplateDTO.shiftBreakTemplates.forEach((shiftBreakTemplate) => {
+          this.SelectedShiftBreaks.push(new ShiftBreakDTO(
+            '',
+            '',
+            shiftBreakTemplate.shiftBreakTypeId,
+            shiftBreakTemplate.shiftBreakTypeDisplayValue,
+            shiftBreakTemplate.shiftBreakStartHour,
+            shiftBreakTemplate.shiftBreakDuration,
+            shiftBreakTemplate.includedInShift,
+            shiftBreakTemplate.isTimeFlexible
+          ));
+        });
+
+        this.selectedShiftBreakTable.renderRows();
+      }
     }
   }
 

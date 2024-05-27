@@ -113,6 +113,16 @@
                         </mat-form-field>
                     </div>
 
+                    <!-- Template Selection -->
+                    <div *ngIf="!isEditing">
+                        <h4>Template Selection</h4>
+                        <div id="shift-template-selection-grid">
+                            <div *ngFor="let shiftTemplate of ShiftViewModel.shiftTemplates">
+                                <shift-template-card  [shiftTemplate]="shiftTemplate" [isShiftBreakTemplate]="false" (selectShiftTemplateEvent)="onSelectShiftTemplate($event)"></shift-template-card>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Shift Breaks -->
                     <div class="header-and-actions">
                         <h4>Manage Shift Breaks</h4>

@@ -85,7 +85,7 @@ export class EntityFormComponent {
     
       this.entityProfileViewModel = await this.entityService.getEntityProfileViewModel(entityProfileViewModelRequestDTO);
     
-    
+    console.log(this.entityProfileViewModel);
 
     // Sets the initial entity type if the entity can be edited
     this.setInitialEntityType();

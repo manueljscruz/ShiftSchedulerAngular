@@ -10,19 +10,33 @@ import { DatePipe } from '@angular/common';
 })
 export class ShiftTemplateCardComponent {
 
-  @Input() shiftTemplate: ShiftBreakTemplateDTO = new ShiftBreakTemplateDTO(0, 0, 0,'', '', new Date(), new Date(), false, false, false);
+  @Input() shiftTemplate: any;
   @Input() isShiftBreakTemplate: boolean = false;
-  @Output() selectShiftTemplateEvent = new EventEmitter<ShiftBreakTemplateDTO>();
+  @Output() selectShiftTemplateEvent = new EventEmitter<any>();
 
+
+  templateName: string = '';
+  templateAlias: string = '';
   formattedStartTime: string = '';
   formattedDuration: string = '';
 
   constructor(public datePipe : DatePipe) { }
 
   ngOnInit() {
-    if (this.shiftTemplate) {
+    if(this.isShiftBreakTemplate) {
+      this.shiftTemplate = this.shiftTemplate as ShiftBreakTemplateDTO;
+
+      this.templateName = this.shiftTemplate.shiftBreakTemplateName;
+      this.templateAlias = this.shiftTemplate.shiftBreakTypeDisplayValue;
       this.formattedStartTime = this.formatStartTime(this.shiftTemplate.shiftBreakStartHour);
       this.formattedDuration = this.formatDuration(this.shiftTemplate.shiftBreakDuration);
+    }
+
+    else {
+      this.templateName = this.shiftTemplate.shiftTemplateName;
+      this.templateAlias = this.shiftTemplate.shiftTemplateAlias;
+      this.formattedStartTime = this.formatStartTime(this.shiftTemplate.shiftStartHour);
+      this.formattedDuration = this.formatDuration(this.shiftTemplate.shiftDuration);
     }
   }
 

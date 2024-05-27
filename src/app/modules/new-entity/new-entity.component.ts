@@ -46,8 +46,7 @@ export class NewEntityComponent {
 
 
   async ngOnInit() {
-    let entityTypes = await this.auxDataService.getEntityTypes();
-    this.entityTypes = entityTypes.$values; // await this.auxDataService.getEntityTypes();
+    this.entityTypes = await this.auxDataService.getEntityTypes();
     this.subscription = this.loadingScreenService.currentIsLoading.subscribe(isLoading => this.isLoading = isLoading);
   }
 

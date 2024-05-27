@@ -7,6 +7,7 @@ export class ShiftTemplateDTO{
     shiftStartHour: Date;
     shiftDuration: Date;
     isPopular: boolean;
+    public readonly type = 'ShiftTemplateDTO';
     shiftBreakTemplates: ShiftBreakTemplateDTO [] = [];
 
     constructor(shiftTemplateId: number, shiftTemplateName: string, shiftTemplateAlias: string, shiftStartHour: Date, shiftDuration: Date, isPopular: boolean, shiftBreakTemplates: ShiftBreakTemplateDTO[] = []){
