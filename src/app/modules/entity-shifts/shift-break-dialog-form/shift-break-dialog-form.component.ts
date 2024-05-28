@@ -177,7 +177,7 @@ export class ShiftBreakDialogFormComponent {
           // If the API call was successful, emit the response
           if(response.success){
             this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Shift Break added successfully'));
-            response.result = this.shiftBreakDTO.shiftBreakTypeDisplay = this.selectedShiftBreakType.shiftBreakTypeLocalizedName;
+            response.result.shiftBreakTypeDisplay = this.selectedShiftBreakType.shiftBreakTypeLocalizedName;
             this.shiftBreakOp.emit(response);
           }
           else{

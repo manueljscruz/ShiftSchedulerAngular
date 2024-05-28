@@ -1,8 +1,7 @@
 #side-bar{
     display: flex;
     flex-direction: column;
-    height: 100%;
-    background-color: red;
+    height: calc(100vh - 40px);
     width: 260px;
     padding: 20px;
 }

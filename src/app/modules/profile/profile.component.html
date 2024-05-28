@@ -1,52 +1,50 @@
-<div class="container full-height">
-    <div class="elevated-card-container full-height">
-        <div class="header-and-actions">
-            <h1 i18n>Profile</h1>
-            <div class="actions">
-                <button mat-fab extended class="edit-color-bg"(click)="toggleEditProfile()">
-                    <mat-icon>edit</mat-icon>
-                    <span i18n>Edit</span>
-                </button>
-            </div>
-        </div>
-        <mat-divider></mat-divider>
-        <div class="elevated-card-container-content">
-            <form>
-                <!-- Name -->
-                <div class="form-input-spacer">
-                    <mat-form-field appearance="outline">
-                        <mat-label i18n>Name</mat-label>
-                        <input matInput placeholder="Name" [disabled]="!isEditing" [value]="loggedUser.workerName" i18n-placeholder>
-                    </mat-form-field>
-                </div>
-
-                <!-- Gender -->
-                <div class="form-input-spacer">
-                    <mat-form-field appearance="outline">
-                        <mat-label i18n>Gender</mat-label>
-                        <mat-select [(ngModel)]="selectedGender" [disabled]="!isEditing" name="gender" [ngModelOptions]="{standalone: true}">
-                            <mat-option *ngFor="let gender of gendersLocalized" [value]="gender">{{gender.genderLocalizedName}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-
-                <!-- Email -->
-                <div class="form-input-spacer">
-                    <mat-form-field appearance="outline">
-                        <mat-label i18n>Email</mat-label>
-                        <input matInput placeholder="Email" [disabled]="!isEditing" type="email" [value]="loggedUser.email" i18n-placeholder>
-                    </mat-form-field>
-                </div>
-
-                <div class="form-input-spacer end-form-actions" *ngIf="isEditing">
-                    <button class="action-submit-button secondary-color-bg" cdkFocusInitial (click)="saveProfile()">
-                        <mat-icon>save</mat-icon>
-                        <span i18n>Save</span>
-                    </button>
-                </div>
-
-            </form>
+<div class="elevated-card-container primary-card-container-height">
+    <div class="header-and-actions">
+        <h1 i18n>Profile</h1>
+        <div class="actions">
+            <button mat-fab extended class="edit-color-bg"(click)="toggleEditProfile()">
+                <mat-icon>edit</mat-icon>
+                <span i18n>Edit</span>
+            </button>
         </div>
     </div>
-    
+    <mat-divider></mat-divider>
+    <div class="elevated-card-container-content">
+        <form>
+            <!-- Name -->
+            <div class="form-input-spacer">
+                <mat-form-field appearance="outline">
+                    <mat-label i18n>Name</mat-label>
+                    <input matInput placeholder="Name" [disabled]="!isEditing" [value]="loggedUser.workerName" i18n-placeholder>
+                </mat-form-field>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-input-spacer">
+                <mat-form-field appearance="outline">
+                    <mat-label i18n>Gender</mat-label>
+                    <mat-select [(ngModel)]="selectedGender" [disabled]="!isEditing" name="gender" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let gender of gendersLocalized" [value]="gender">{{gender.genderLocalizedName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- Email -->
+            <div class="form-input-spacer">
+                <mat-form-field appearance="outline">
+                    <mat-label i18n>Email</mat-label>
+                    <input matInput placeholder="Email" [disabled]="!isEditing" type="email" [value]="loggedUser.email" i18n-placeholder>
+                </mat-form-field>
+            </div>
+
+            <div class="form-input-spacer end-form-actions" *ngIf="isEditing">
+                <button class="action-submit-button secondary-color-bg" cdkFocusInitial (click)="saveProfile()">
+                    <mat-icon>save</mat-icon>
+                    <span i18n>Save</span>
+                </button>
+            </div>
+
+        </form>
+    </div>
 </div>
+    

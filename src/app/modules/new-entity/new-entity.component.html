@@ -1,33 +1,31 @@
-<!--<loading-screen></loading-screen>-->
-<div class="container full-height">
-    <div class="elevated-card-container full-height">
-        <h1 i18n>New Work Entity</h1>
-        <mat-divider></mat-divider>
-        <form>
-                <mat-form-field class="div-top-down-spacer" appearance="outline">
-                    <mat-label i18n>Entity Name</mat-label>
-                    <input matInput placeholder_i18n placeholder="Insert name here" [(ngModel)]="entityNameInput" [ngModelOptions]="{standalone: true}">
-                    <mat-hint i18n>Minimum of 3 characters</mat-hint>
-                </mat-form-field>
+<div class="elevated-card-container primary-card-container-height">
+    <h1 i18n>New Work Entity</h1>
+    <mat-divider></mat-divider>
+    <form>
+        <mat-form-field class="div-top-down-spacer" appearance="outline">
+            <mat-label i18n>Entity Name</mat-label>
+            <input matInput placeholder_i18n placeholder="Insert name here" [(ngModel)]="entityNameInput" [ngModelOptions]="{standalone: true}">
+            <mat-hint i18n>Minimum of 3 characters</mat-hint>
+        </mat-form-field>
             
-                <mat-form-field appearance="outline"> 
-                    <mat-label i18n>Entity Type</mat-label>
-                    <mat-select [(ngModel)]="selectedEntityType" name="entityType" [ngModelOptions]="{ standalone: true }">
-                        <mat-option *ngFor="let entityType of entityTypes" [value]="entityType">{{entityType.entityTypeLocalizedName}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
+        <mat-form-field appearance="outline"> 
+            <mat-label i18n>Entity Type</mat-label>
+            <mat-select [(ngModel)]="selectedEntityType" name="entityType" [ngModelOptions]="{ standalone: true }">
+                <mat-option *ngFor="let entityType of entityTypes" [value]="entityType">{{entityType.entityTypeLocalizedName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
             
-                <mat-form-field appearance="outline">
-                    <mat-label i18n>Description</mat-label>
-                    <textarea matInput rows="8" [(ngModel)]="entityDescriptionInput" [ngModelOptions]="{standalone: true}" placeholder="Describe the entity so it others may know more about what services it provides." placeholder_i18n></textarea>
-                </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label i18n>Description</mat-label>
+            <textarea matInput rows="8" [(ngModel)]="entityDescriptionInput" [ngModelOptions]="{standalone: true}" placeholder="Describe the entity so it others may know more about what services it provides." placeholder_i18n></textarea>
+        </mat-form-field>
 
-            <div class="row">
-                <button mat-fab extended id="create-entity-btn" class="secondary-color-bg" cdkFocusInitial (click)="onCreateEntitySubmit()">
-                    <mat-icon>add</mat-icon>
-                    <span i18n>Create</span>
-                </button>
-            </div>
-        </form>
-    </div>
+        <div class="row">
+            <button mat-fab extended id="create-entity-btn" class="secondary-color-bg" cdkFocusInitial (click)="onCreateEntitySubmit()">
+                <mat-icon>add</mat-icon>
+                <span i18n>Create</span>
+            </button>
+        </div>
+    </form>
 </div>
+

@@ -78,7 +78,11 @@ export class ShiftService {
         let response = new BaseResponseModel(false, "", null);
 
         try{
-            response = await this.http.post<BaseResponseModel>(ADD_SHIFT_BREAK_URL, newShiftBreakDTO).toPromise() as BaseResponseModel;
+            let shiftBreakJson = JSON.parse(JSON.stringify(newShiftBreakDTO));
+            shiftBreakJson.ShiftBreakStartTime = this.auxConvertDateToTimeSpan(newShiftBreakDTO.ShiftBreakStartTime);
+            shiftBreakJson.ShiftBreakDuration = this.auxConvertDateToTimeSpan(newShiftBreakDTO.ShiftBreakDuration);
+
+            response = await this.http.post<BaseResponseModel>(ADD_SHIFT_BREAK_URL, shiftBreakJson).toPromise() as BaseResponseModel;
         }
         catch(error : any){
             console.error('Error fetching data:', error.message);

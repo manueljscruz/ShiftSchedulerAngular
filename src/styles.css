@@ -1,11 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+/*html, body { height: 100%; } */
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 .container{
-  padding: 20px;
   display: flex;
   flex-direction: column;
   z-index: 1;
@@ -21,6 +20,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-style: solid;
   border-color: var(--mdc-elevated-card-container-color);
   box-shadow: var(--mdc-elevated-card-container-elevation);
+}
+
+.primary-card-container-height{
+  height: calc(100vh - 140px);
 }
 
 .elevated-card-container-content{

@@ -1,5 +1,4 @@
-<div class="container full-height">
-    <div class="elevated-card-container full-height">
+<div class="elevated-card-container primary-card-container-height">
         <div class="header-and-actions">
             <h1 i18n>Shifts</h1>
             <div class="actions" *ngIf="isCurrentUserEntityOwner">
@@ -15,7 +14,6 @@
         </div>
         <mat-divider></mat-divider>
         <div class="elevated-card-container-content">
-            
             <!-- Shifts Table -->
             <div *ngIf="!isFormActive">
                 <mat-table #shiftTable [dataSource]="ShiftViewModel.shifts" class="mat-elevation-z8">
@@ -73,7 +71,7 @@
             <!-- Shift Form -->
             <div *ngIf="isFormActive">
                 <h2 i18n>{{ isEditing ? 'Edit Shift' : 'Create Shift' }}</h2>
-                <form>
+                <form id="shift-form">
                     <!-- Name -->
                     <div class="form-input-spacer">
                         <mat-form-field appearance="outline">
@@ -183,18 +181,19 @@
                         <mat-header-row *matHeaderRowDef="shiftBreakDisplayedColumns"></mat-header-row>
                         <mat-row *matRowDef="let row; columns: shiftBreakDisplayedColumns;"></mat-row>
                     </mat-table>
-                    <mat-divider></mat-divider>
-                    <div class="form-input-spacer end-form-actions">
-                        <button class="action-submit-button secondary-color-bg" cdkFocusInitial (click)="saveShift()">
-                            <mat-icon *ngIf="isEditing">save</mat-icon>
-                            <span *ngIf="isEditing" i18n>Save</span>
-
-                            <mat-icon *ngIf="!isEditing">add</mat-icon>
-                            <span *ngIf="!isEditing" i18n>Create</span>
-                        </button>
-                    </div>
+                    
+                    
                 </form>
+                <mat-divider></mat-divider>
+                <div class="form-input-spacer end-form-actions">
+                    <button class="action-submit-button secondary-color-bg" cdkFocusInitial (click)="saveShift()">
+                        <mat-icon *ngIf="isEditing">save</mat-icon>
+                        <span *ngIf="isEditing" i18n>Save</span>
+
+                        <mat-icon *ngIf="!isEditing">add</mat-icon>
+                        <span *ngIf="!isEditing" i18n>Create</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
