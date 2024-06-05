@@ -1,0 +1,11 @@
+.header-and-actions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

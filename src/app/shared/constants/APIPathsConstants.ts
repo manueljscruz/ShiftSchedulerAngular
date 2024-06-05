@@ -23,3 +23,11 @@ export const UPDATE_SHIFT_URL : string = BASE_API_URL + "Shift/update-entity-shi
 export const UPDATE_SHIFT_BREAK_URL : string = BASE_API_URL + "Shift/update-entity-shift-break";
 export const DELETE_SHIFT_URL : string = BASE_API_URL + "Shift/delete-entity-shift/{entityId}/{shiftId}";
 export const DELETE_SHIFT_BREAK_URL : string = BASE_API_URL + "Shift/delete-entity-shift-break/{shiftBreakId}";
+// Rules
+export const GET_ENTITY_RULES_VIEW_MODEL_URL : string = BASE_API_URL + "EntityRule/get-entity-rules-view-model";
+export const ADD_RULE_URL : string = BASE_API_URL + "EntityRule/add-entity-rule";
+export const ADD_RULE_SPEC_URL : string = BASE_API_URL + "EntityRule/add-entity-rule-spec";
+export const UPDATE_RULE_URL : string = BASE_API_URL + "EntityRule/update-entity-rule";
+export const UPDATE_RULE_SPEC_URL : string = BASE_API_URL + "EntityRule/update-entity-rule-spec";
+export const DELETE_RULE_URL : string = BASE_API_URL + "EntityRule/delete-entity-rule/{entityId}/{entityRuleId}";
+export const DELETE_RULE_SPEC_URL : string = BASE_API_URL + "EntityRule/delete-entity-rule-spec/{entityRuleId}/{specId}";

@@ -49,6 +49,7 @@ import { HeaderLessTabsDirective } from './shared/directives/header-less-tabs.di
 import { ShiftTemplateCardComponent } from './shared/components/shift-template-card/shift-template-card.component';
 import {MatTableModule} from '@angular/material/table';
 import { GenericDeleteWarningDialogComponent } from './shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
+import { EntityRulesComponent } from './modules/entity-rules/entity-rules.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { GenericDeleteWarningDialogComponent } from './shared/components/generic
     HeaderLessTabsDirective,
     ShiftTemplateCardComponent,
     GenericDeleteWarningDialogComponent,
+    EntityRulesComponent,
   ],
   imports: [
     BrowserModule,
