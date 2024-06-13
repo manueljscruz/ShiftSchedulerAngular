@@ -9,3 +9,35 @@
     flex-direction: row;
     align-items: center;
 }
+
+.end-form-actions{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+}
+
+.action-submit-button {
+    height: 48px;
+    border-radius: 10px;
+    border-color: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.action-submit-button:hover {
+    background-color: #5c8ad6;
+}
+
+.action-submit-button>mat-icon{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.action-submit-button>span{
+    padding-left: 5px;
+    padding-right: 10px;
+}

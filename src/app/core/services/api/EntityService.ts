@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
+import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
 import { EntityProfileViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityProfileViewModelRequestDTO';
 import { Entity } from '../../../shared/models/database/entity';
 import { FormEntityDTO } from '../../../shared/models/DTOs/Outgoing/FormEntityDTO';
@@ -78,6 +78,19 @@ export class EntityService {
         let userLanguage = this.languageService.returnLocalization();
         try {
             let url = GET_ENTITY_MEMBERS_VM.replace('{entityId}', entityId).replace('{lcode}', userLanguage);
+            const response = await this.http.get(url).toPromise();
+            return response;
+        }
+        catch (error : any) {
+            console.error('Error fetching data:', error.message);
+            // Handle the error appropriately (e.g., display an error message)
+        }
+    }
+
+    async getEntitySkills(entityId: string) : Promise<any> {
+        let userLanguage = this.languageService.returnLocalization();
+        try {
+            let url = GET_ENTITY_SKILLS.replace('{entityId}', entityId).replace('{lcode}', userLanguage);
             const response = await this.http.get(url).toPromise();
             return response;
         }
