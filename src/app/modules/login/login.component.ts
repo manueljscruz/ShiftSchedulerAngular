@@ -63,7 +63,6 @@ constructor(private loginRegisterService: WorkerService,
       // Call the login service here
       let loginResult : BaseResponseModel = await this.loginRegisterService.login(loginDTO);
 
-      console.log(loginResult);
       this.clearPassword();
 
       this.loadingScreenService.changeLoadingState(false);

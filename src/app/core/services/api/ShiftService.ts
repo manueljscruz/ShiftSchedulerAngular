@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LanguageServiceService } from '../language-service.service';
-import { GET_ENTITY_SHIFT_VIEW_MODEL_URL, ADD_SHIFT_URL, ADD_SHIFT_BREAK_URL, UPDATE_SHIFT_BREAK_URL, DELETE_SHIFT_URL, DELETE_SHIFT_BREAK_URL, UPDATE_SHIFT_URL } from '../../../shared/constants/APIPathsConstants';
+import { GET_ENTITY_SHIFT_VIEW_MODEL_URL, ADD_SHIFT_URL, ADD_SHIFT_BREAK_URL, UPDATE_SHIFT_BREAK_URL, DELETE_SHIFT_URL, DELETE_SHIFT_BREAK_URL, UPDATE_SHIFT_URL, GET_ENTITY_SHIFTS } from '../../../shared/constants/APIPathsConstants';
 import { ShiftViewModel } from '../../../shared/models/VM/ShiftViewModel';
 import { EntityShiftViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityShiftViewModelRequestDTO';
 import { ShiftBreakTypeLocalizedDTO } from '../../../shared/models/DTOs/Incoming/ShiftBreakTypeLocalizedDTO';
@@ -44,6 +44,19 @@ export class ShiftService {
             console.error('Error fetching data:', error.message);
         }
         return shiftVM;
+    }
+
+    async getEntityShifts(entityId: string): Promise<ShiftDTO[]> {
+        let shifts: ShiftDTO[] = [];
+
+        try {
+            shifts = await this.http.get<ShiftDTO[]>(GET_ENTITY_SHIFTS.replace('{entityId}', entityId)).toPromise
+            () as ShiftDTO[];
+        }
+        catch(error : any){
+            console.error('Error fetching data:', error.message);
+        }
+        return shifts;
     }
 
     /// <summary>

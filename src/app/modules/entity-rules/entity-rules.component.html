@@ -2,7 +2,7 @@
     <div class="header-and-actions">
         <h1 i18n>Rules</h1>
         <div class="actions" *ngIf="isCurrentUserEntityOwner">
-            <button *ngIf="!isFormActive" mat-fab extended class="edit-color-bg" (click)="toggleForm(false)">
+            <button *ngIf="!isFormActive" mat-fab extended class="edit-color-bg" (click)="toggleForm(true)">
                 <mat-icon>add</mat-icon>
                 <span i18n>Add Rule</span>
             </button>
@@ -13,4 +13,132 @@
         </div>
     </div>
     <mat-divider></mat-divider>
+    <div class="elevated-card-container-content">
+        <div *ngIf="!isFormActive">
+            <mat-table #ruleTable [dataSource]="rulesViewModel.entityRules" class="mat-elevation-z8">
+                <ng-container matColumnDef="RuleTypeDisplay">
+                    <mat-header-cell *matHeaderCellDef i18n>Rule Type</mat-header-cell>
+                    <mat-cell *matCellDef="let ruleType">{{ ruleType.ruleTypeDisplayValue }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="RuleTypeDescription">
+                    <mat-header-cell *matHeaderCellDef i18n>Description</mat-header-cell>
+                    <mat-cell *matCellDef="let ruleType">{{ ruleType.ruleTypeDescription }}</mat-cell>
+                </ng-container>
+
+                <!-- Actions Column -->
+                <ng-container matColumnDef="Actions">
+                    <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+                    <mat-cell *matCellDef="let rule">
+                        <button mat-icon-button color="primary" (click)="editRule(rule)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="openDeleteDialog('5000','5000', DELETE_RULE_TITLE, DELETE_RULE_CONTENT, rule, 'RuleDTO')">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="['RuleTypeDisplay', 'RuleTypeDescription', 'Actions']"></mat-header-row>
+                    <mat-row *matRowDef="let shift; columns: ['RuleTypeDisplay', 'RuleTypeDescription', 'Actions']"></mat-row>
+
+            </mat-table>
+        </div>
+        <div *ngIf="isFormActive">
+            <h2 i18n>{{ isEditing ? 'Edit Rule' : 'Create Rule' }}</h2>
+            <form id="rule-form">
+                <!-- Rule Type-->
+                <mat-form-field appearance="outline">
+                    <mat-label i18n>Rule Type</mat-label>
+                    <mat-select  name="ruleTypeSelect" [(ngModel)]="selectedRuleType" (selectionChange)="onRuleTypeChange($event)">
+                        <mat-option *ngFor="let ruleType of rulesViewModel.ruleTypeLocalizeds" [value]="ruleType">
+                            {{ruleType.ruleTypeLocalizedName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- Description-->
+                <div class="form-input-spacer">
+                    <mat-form-field appearance="outline">
+                        <mat-label i18n>Rule Description</mat-label>
+                        <textarea matInput placeholder="Rule Description" name="rule-description" rows="3" [(ngModel)]="selectedRule.ruleTypeDescription"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <h4>Manage Rule Specifications</h4>
+
+                <!-- Add Form -->
+                <div class="row col-gap">
+                    <div class="form-input-spacer flex-1" *ngIf="visibleSkillSelect">
+                        <mat-form-field appearance="outline">
+                            <mat-label i18n>Skill</mat-label>
+                            <mat-select  name="ruleSkillsSelect" [(ngModel)]="selectedSkill">
+                                <mat-option *ngFor="let skill of entitySkills" [value]="skill">
+                                    {{skill.skillLocalizedName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-input-spacer flex-1" *ngIf="visibleShiftSelect">
+                        <mat-form-field appearance="outline">
+                            <mat-label i18n>Shift</mat-label>
+                            <mat-select  name="ruleShiftsSelect" [(ngModel)]="selectedShift">
+                                <mat-option *ngFor="let shift of entityShifts" [value]="shift">
+                                    {{shift.shiftName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-input-spacer" *ngIf="visibleSpecValueInput">
+                        <mat-form-field appearance="outline">
+                            <mat-label i18n>Specification Value</mat-label>
+                            <input matInput type="number" placeholder="Value" name="spec-value" [value]="specificationValue">
+                        </mat-form-field>
+                    </div>
+                    <button mat-icon-button color="primary" (click)="addRuleSpec()" *ngIf="visibleSkillSelect || visibleShiftSelect || visibleSpecValueInput">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+                <!-- Specifications Table -->
+                <mat-table #ruleSpecTable [dataSource]="selectedRuleSpec" class="mat-elevation-z8">
+                    <ng-container matColumnDef="RefItem">
+                        <mat-header-cell *matHeaderCellDef i18n>Reference Item</mat-header-cell>
+                        <mat-cell *matCellDef="let ruleSpec">{{ruleSpec.referenceName}}</mat-cell>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="SpecValue">
+                        <mat-header-cell *matHeaderCellDef i18n>Specification Value</mat-header-cell>
+                        <mat-cell *matCellDef="let ruleSpec">{{ruleSpec.ruleSpecificationValue}}</mat-cell>
+                    </ng-container>
+    
+                    <!-- Actions Column -->
+                    <ng-container matColumnDef="Actions">
+                        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+                        <mat-cell *matCellDef="let spec">
+                            <button mat-icon-button color="primary" (click)="editRuleSpec(spec)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" (click)="openDeleteDialog('5000','5000', DELETE_RULE_SPEC_TITLE, DELETE_RULE_SPEC_CONTENT, spec, 'RuleSpecDTO')">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+    
+                    <mat-header-row *matHeaderRowDef="['RefItem', 'SpecValue', 'Actions']"></mat-header-row>
+                    <mat-row *matRowDef="let ruleSpec; columns: ['RefItem', 'SpecValue', 'Actions']"></mat-row>
+    
+                </mat-table>
+            </form>
+            <mat-divider></mat-divider>
+            <div class="form-input-spacer end-form-actions">
+                <button class="action-submit-button secondary-color-bg" cdkFocusInitial (click)="saveRule()">
+                    <mat-icon *ngIf="isEditing">save</mat-icon>
+                    <span *ngIf="isEditing" i18n>Save</span>
+
+                    <mat-icon *ngIf="!isEditing">add</mat-icon>
+                    <span *ngIf="!isEditing" i18n>Create</span>
+                </button>
+            </div>
+        </div>
 </div>
