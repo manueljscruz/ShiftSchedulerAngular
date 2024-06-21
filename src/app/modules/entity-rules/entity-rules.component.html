@@ -3,6 +3,7 @@
         <h1 i18n>Rules</h1>
         <div class="actions" *ngIf="isCurrentUserEntityOwner">
             <button *ngIf="!isFormActive" mat-fab extended class="edit-color-bg" (click)="toggleForm(true)">
+            <button *ngIf="!isFormActive" mat-fab extended class="edit-color-bg" (click)="toggleForm(true)">
                 <mat-icon>add</mat-icon>
                 <span i18n>Add Rule</span>
             </button>
