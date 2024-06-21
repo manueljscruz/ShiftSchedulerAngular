@@ -39,9 +39,7 @@ export class ProfileComponent{
     this.backupUser = { ...this.loggedUser };
     
     // Load the
-    let gendersLocalized = await this.auxDataService.getGenders();
-    //let genderArray = gendersLocalized.$values;
-    this.gendersLocalized = gendersLocalized.$values;
+    this.gendersLocalized = await this.auxDataService.getGenders();
     if (this.loggedUser != null && this.loggedUser.genderId != null) {
       
       this.selectedGender = this.gendersLocalized.find(g => g.genderId == this.loggedUser?.genderId);

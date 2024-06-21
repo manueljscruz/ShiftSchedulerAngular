@@ -27,6 +27,7 @@ import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { AddEntityRuleDTO } from '../../shared/models/DTOs/Outgoing/AddEntityRuleDTO';
 import { AddEntityRuleSpecificationDTO } from '../../shared/models/DTOs/Outgoing/AddEntityRuleSpecificationDTO';
 import e from 'express';
+import { RuleValidatorService } from '../../core/services/rule-validator.service';
 
 @Component({
   selector: 'entity-rules',
@@ -160,6 +161,7 @@ export class EntityRulesComponent {
     private ruleService: RuleService,
     private entityService: EntityService,
     private shiftService: ShiftService,
+    private ruleValidatorService: RuleValidatorService
   ) {
     this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
   }
@@ -190,6 +192,7 @@ export class EntityRulesComponent {
       this.selectedRuleType = undefined;
       this.previousSelectedRuleType = undefined;
       this.isEditingRule = false;
+      this.isRuleSpecEditing = false;
       this.clearSpecForm();
       this.toggleSpecUIElements(0);
     }
@@ -227,9 +230,11 @@ export class EntityRulesComponent {
   /// </summary>
   onRuleTypeChange($event: MatSelectChange) {
     console.log($event);
+    if(this.previousSelectedRuleType === undefined)
+      this.previousSelectedRuleType = this.selectedRuleType;
 
     // Check if the previous selected rule type is different from the current one
-    if(this.previousSelectedRuleType !== undefined && this.previousSelectedRuleType.ruleTypeId !== $event.value.ruleTypeId){
+    if(this.previousSelectedRuleType !== undefined && this.previousSelectedRuleType.ruleTypeId !== $event.value.ruleTypeId && this.selectedRuleSpecs.length > 0){
       let enterAnimationDuration = '5000';
       let exitAnimationDuration = '5000';
 
@@ -271,8 +276,6 @@ export class EntityRulesComponent {
     else{
       this.toggleSpecUIElements($event.value.ruleTypeId);
     }
-
-    
   }
 
   /// <summary>
@@ -313,6 +316,15 @@ export class EntityRulesComponent {
 
       this.selectedRule.entityRuleSpecificationDTOs = this.selectedRuleSpecs;
 
+      this.selectedRule.entityRuleSpecificationDTOs.forEach((specification : EntityRuleSpecificationDTO) => {
+        specification.referenceName = specification.referenceName || '';
+        specification.referenceName2 = specification.referenceName2 || '';
+        specification.aspectReferenceId = specification.aspectReferenceId || '';
+        specification.aspectReferenceId2 = specification.aspectReferenceId2 || '';
+        specification.businessAspectId = specification.businessAspectId || 0;
+        specification.businessAspectId2 = specification.businessAspectId2 || 0;
+      });
+
       this.loadingScreenService.changeLoadingState(true);
 
       let response : BaseResponseModel = await this.ruleService.updateEntityRule(this.selectedRule);
@@ -320,9 +332,9 @@ export class EntityRulesComponent {
       this.loadingScreenService.changeLoadingState(false);
 
       if(response.success){
-        response.result.ruleTypeDisplayValue = this.rulesViewModel.ruleTypeLocalizeds.find(x => x.ruleTypeId === response.result.ruleTypeId)?.ruleTypeLocalizedName || '';
-        this.selectedRule = response.result;
-        this.rulesViewModel.entityRules[ruleIndex] = response.result;
+        //response.result.ruleTypeDisplayValue = this.rulesViewModel.ruleTypeLocalizeds.find(x => x.ruleTypeId === response.result.ruleTypeId)?.ruleTypeLocalizedName || '';
+        // this.selectedRule = response.result;
+        // this.rulesViewModel.entityRules[ruleIndex] = response.result;
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, response.message));
         this.isFormActive = false;
         this.clearSpecForm();
@@ -385,8 +397,33 @@ export class EntityRulesComponent {
       return response;
     }
   
+    let checkMaxHourRuleExistenceResponse = this.ruleValidatorService.validateMaxHourPerShift(this.rulesViewModel.entityRules, this.selectedRule, this.isEditingRule)
+    
+    if(checkMaxHourRuleExistenceResponse.success === false) 
+      return checkMaxHourRuleExistenceResponse; 
+
     response.success = true;
   
+    return response;
+  }
+
+  validateRuleSpec(ruleSpecs : EntityRuleSpecificationDTO[], ruleSpecInstance : EntityRuleSpecificationDTO, isEditOp : boolean) : BaseResponseModel {
+    let response = new BaseResponseModel(false, '', null);
+
+    switch(this.selectedRuleType?.ruleTypeId) {
+      case 5:
+        response = this.ruleValidatorService.validateSkillPerShift(ruleSpecs, ruleSpecInstance, isEditOp);
+        break;
+
+      case 6:
+        response = this.ruleValidatorService.validateSkillQuantityPerShift(ruleSpecs, ruleSpecInstance, isEditOp);
+        break;
+
+      default:
+        response.success = true;
+        break;
+    }
+
     return response;
   }
 
@@ -471,6 +508,13 @@ export class EntityRulesComponent {
         return;
     }
 
+    let validationResponse = this.validateRuleSpec(this.selectedRuleSpecs, ruleSpecDTO, this.isRuleSpecEditing);
+
+    if(validationResponse.success === false){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResponse.message));
+      return;
+    }
+
     // If this rule already exists in the database, add the entityRuleId to the ruleSpecDTO
     if(this.selectedRule.entityRuleId != ''){
       ruleSpecDTO.entityRuleId = this.selectedRule.entityRuleId;
@@ -520,10 +564,16 @@ export class EntityRulesComponent {
     this.selectedRuleSpec = ruleSpec;
     this.isRuleSpecEditing = true;
     this.specificationValue = ruleSpec.ruleSpecificationValue;
+    this.isRuleSpecFormVisible = true;
 
     this.toggleSpecUIElements(this.selectedRuleType?.ruleTypeId || 0);
 
     switch(this.selectedRuleType?.ruleTypeId) {
+      case 1:
+      case 2:
+        this.specificationValue = ruleSpec.ruleSpecificationValue;
+        break;
+
       case 3:
       case 4:
         this.selectedShift = this.entityShifts.find(x => x.shiftId === ruleSpec.aspectReferenceId);
@@ -602,6 +652,13 @@ export class EntityRulesComponent {
           return;
       }
 
+      let validationResponse = this.validateRuleSpec(this.selectedRuleSpecs, this.selectedRuleSpec, this.isRuleSpecEditing);
+
+      if(validationResponse.success === false){
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResponse.message));
+        return;
+      }
+
       // If this rule already exists in the database, add the entityRuleId to the ruleSpecDTO
       if(this.selectedRuleSpec.entityRuleId != ''){
         this.loadingScreenService.changeLoadingState(true);
@@ -613,7 +670,6 @@ export class EntityRulesComponent {
 
         // If the response is successful, add the rule spec to the selectedRuleSpec array and render the table rows
         if(response.success){
-          this.selectedRuleSpecs[index] = response.result;
           this.ruleSpecTable.renderRows();
           this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, response.message));
           this.clearSpecForm();
@@ -627,6 +683,7 @@ export class EntityRulesComponent {
       else{
         this.selectedRuleSpecs[index] = this.selectedRuleSpec;
         this.ruleSpecTable.renderRows();
+        this.isRuleSpecEditing = false;
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'The rule specification has been updated successfully'));
         this.clearSpecForm();
       }
@@ -634,6 +691,10 @@ export class EntityRulesComponent {
   }    
 
   async deleteRuleSpec(objectToDelete: EntityRuleSpecificationDTO) {
+    if(this.isRuleSpecEditing == true){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'You cannot delete a rule specification while editing it'));
+      return;
+    }
     if(objectToDelete.entityRuleId === ''){
       let index = this.selectedRuleSpecs.indexOf(objectToDelete);
       this.selectedRuleSpecs.splice(index, 1);
