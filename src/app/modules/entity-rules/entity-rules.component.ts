@@ -181,18 +181,6 @@ export class EntityRulesComponent {
 
     // Turn off the loading spinner
     this.loadingScreenService.changeLoadingState(false);
-
-    // Turn on the loading spinner
-    this.loadingScreenService.changeLoadingState(true);
-
-    let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.workerId, '');
-    this.rulesViewModel = await this.ruleService.getRuleViewModel(entityRuleViewModelRequestDTO);
-
-    this.entityShifts = await this.shiftService.getEntityShifts(this.currentEntityId);
-    this.entitySkills = await this.entityService.getEntitySkills(this.currentEntityId);
-
-    // Turn off the loading spinner
-    this.loadingScreenService.changeLoadingState(false);
   }
 
   toggleForm(newValue : boolean) {
