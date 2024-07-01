@@ -12,3 +12,18 @@
     align-items: center;
     margin-bottom: 20px;
 }
+
+.menu{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+}
+
+#menu-entities-container{
+    flex-grow: 1;
+}
+
+#menu-bottom-options{
+    justify-content: flex-end;
+}

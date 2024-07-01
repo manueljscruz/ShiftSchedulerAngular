@@ -50,6 +50,7 @@ import { ShiftTemplateCardComponent } from './shared/components/shift-template-c
 import {MatTableModule} from '@angular/material/table';
 import { GenericDeleteWarningDialogComponent } from './shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 import { EntityRulesComponent } from './modules/entity-rules/entity-rules.component';
+import { EntityAbsencesComponent } from './modules/entity-absences/entity-absences.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { EntityRulesComponent } from './modules/entity-rules/entity-rules.compon
     ShiftTemplateCardComponent,
     GenericDeleteWarningDialogComponent,
     EntityRulesComponent,
+    EntityAbsencesComponent,
   ],
   imports: [
     BrowserModule,

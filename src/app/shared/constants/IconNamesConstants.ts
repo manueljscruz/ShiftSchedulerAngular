@@ -11,6 +11,9 @@ export const LOGOUT_ICON: string = BOOTSTRAP_ICON_PREFIX +  "box-arrow-in-left";
 export const SHIFT_ICON: string = BOOTSTRAP_ICON_PREFIX +  "clock";
 export const SHIFT_ADD_SCRATCH_ICON: string = BOOTSTRAP_ICON_PREFIX +  "clipboard2-plus";
 export const SHIFT_RULES_ICON: string = BOOTSTRAP_ICON_PREFIX + "file-ruled";
+export const ABSENCE_ICON: string = BOOTSTRAP_ICON_PREFIX + "calendar-x";
+export const SETTINGS_ICON: string = BOOTSTRAP_ICON_PREFIX + "gear";
+export const HELP_ICON: string = BOOTSTRAP_ICON_PREFIX + "question-circle";
 
 /// <summary>
 /// Angular Material Icons.

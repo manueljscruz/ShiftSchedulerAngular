@@ -4,8 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 import { EntityWorkerDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerDTO';
 import { Entity } from '../../../shared/models/database/entity';
 import { SIDEBAR_ITEM_GROUP_ID } from '../../../shared/constants/UiIDsContants';
-import { ENTITY_ADD_ICON, ENTITY_ICON, ENTITY_SCHEDULE_ICON, MEMBERS_ICON, SHIFT_ICON, SHIFT_RULES_ICON } from '../../../shared/constants/IconNamesConstants';
-import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE, NEW_ENTITY_ROUTE, ENTITY_SHIFTS_ROUTE, ENTITY_RULES_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
+import { ABSENCE_ICON, ENTITY_ADD_ICON, ENTITY_ICON, ENTITY_SCHEDULE_ICON, MEMBERS_ICON, SHIFT_ICON, SHIFT_RULES_ICON } from '../../../shared/constants/IconNamesConstants';
+import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE, NEW_ENTITY_ROUTE, ENTITY_SHIFTS_ROUTE, ENTITY_RULES_ROUTE, ENTITY_ABSENCES_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
 
 @Injectable({
   providedIn: 'root'
@@ -33,8 +33,6 @@ export class SidebarNavigationService {
     // Create general container
     let entityOptionsItems: SideBarItemModel[] = [];
 
-    entityOptionsItems.push(new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', 'new'), "New Entity", ENTITY_ADD_ICON, NEW_ENTITY_ROUTE, []));
-
     // For each entity, add a sidebar group
     entityWorkerDTOs.forEach(entityWorkerDTO => {
       let entityOptionItems: SideBarItemModel[] = [];
@@ -49,6 +47,8 @@ export class SidebarNavigationService {
       entityOptionItems.push(new SideBarItemModel('', "Shift Management", SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
       // Add Rules Options
       entityOptionItems.push(new SideBarItemModel('', "Rules", SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
+
+      entityOptionItems.push(new SideBarItemModel('', "Absences", ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
 
       entityOptionsItems.push(new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', entityWorkerDTO.entityId), entityWorkerDTO.entityName, ENTITY_ICON, "", entityOptionItems));
     
@@ -89,6 +89,8 @@ export class SidebarNavigationService {
 
     // Add Rules Options
     entityOptionItems.push(new SideBarItemModel('', "Rules", SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', newEntity.entityId), []));
+
+    entityOptionItems.push(new SideBarItemModel('', "Absences", ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', newEntity.entityId), []));
 
     let sidebarGroupModel = new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', newEntity.entityId), newEntity.entityName, ENTITY_ICON, "", entityOptionItems);
  

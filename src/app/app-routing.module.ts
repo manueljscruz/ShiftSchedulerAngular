@@ -12,6 +12,7 @@ import { UITestsComponent } from './modules/uitests/uitests.component';
 import { EntityFormComponent } from './modules/entity-form/entity-form.component';
 import { EntityShiftsComponent } from './modules/entity-shifts/entity-shifts.component';
 import { EntityRulesComponent } from './modules/entity-rules/entity-rules.component';
+import { EntityAbsencesComponent } from './modules/entity-absences/entity-absences.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -26,7 +27,8 @@ const routes: Routes = [
     { path: 'entity-workers/:entityId', component: EntityWorkersComponent},
     { path: 'entity-schedule/:entityId', component: EntityScheduleComponent},
     { path: 'entity-shifts/:entityId', component: EntityShiftsComponent},
-    { path: 'entity-rules/:entityId', component: EntityRulesComponent}
+    { path: 'entity-rules/:entityId', component: EntityRulesComponent},
+    { path: 'entity-absences/:entityId', component: EntityAbsencesComponent}
   ]},
 ];
 
