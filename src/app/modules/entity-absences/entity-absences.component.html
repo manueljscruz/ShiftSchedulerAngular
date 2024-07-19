@@ -1,10 +1,20 @@
 <div class="elevated-card-container primary-card-container-height">
     <div class="header-and-actions">
         <h1 i18n>Absences</h1>
+        <div class="actions">
+            <button *ngIf="!isFormActive" mat-fab extended class="edit-color-bg" (click)="toggleFormToCreate()">
+                <mat-icon>add</mat-icon>
+                <span i18n>Add Absence</span>
+            </button>
+            <button *ngIf="isFormActive" mat-fab extended class="secondary-color-bg" (click)="toggleForm(false)">
+                <mat-icon>close</mat-icon>
+                <span i18n>Cancel</span>
+            </button>
+        </div>
     </div>
     <mat-divider></mat-divider>
-
     <div class="elevated-card-container-content">
-
+        <entity-absences-view [entityWorkerAbsences]="entityWorkerAbsencesViewModel.entityWorkerAbsences" (editAbsenceEvent)="onAbsenceToEdit($event)" *ngIf="!isFormActive"/>
+        <entity-absences-form [entityWorkerAbsenceTypes]="entityWorkerAbsencesViewModel?.absenceTypeLocalizeds" *ngIf="isFormActive"/>
     </div>
 </div>

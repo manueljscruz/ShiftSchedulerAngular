@@ -1,0 +1,70 @@
+<mat-table #absenceTable [dataSource]="entityWorkerAbsences" class="mat-elevation-z8">
+    <ng-container matColumnDef="AbsenceTypeDisplay">
+        <mat-header-cell *matHeaderCellDef i18n>Absence Type</mat-header-cell>
+        <mat-cell *matCellDef="let absence">{{ absence.absenceTypeDisplayValue }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Observations">
+        <mat-header-cell *matHeaderCellDef i18n>Observations</mat-header-cell>
+        <mat-cell *matCellDef="let absence">{{ absence.observations }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="StartDate">
+        <mat-header-cell *matHeaderCellDef i18n>Start Date</mat-header-cell>
+        <mat-cell *matCellDef="let absence">{{ absence.absenceStartDate | date }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="EndDate">
+        <mat-header-cell *matHeaderCellDef i18n>End Date</mat-header-cell>
+        <mat-cell *matCellDef="let absence">{{ absence.absenceEndDate | date }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Status">
+        <mat-header-cell *matHeaderCellDef i18n>Status</mat-header-cell>
+        <mat-cell *matCellDef="let absence">
+            <!-- If its entity owner and there was no decision yet -->
+            <ng-container *ngIf="isEntityOwner && absence.absenceDecisionOwner === ''">
+                <button mat-icon-button color="success" (click)="applyDecision(absence, true)">
+                    <mat-icon>check</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="applyDecision(absence, false)">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </ng-container>
+
+            <!-- If its entity owner and a decision has been made -->
+            <ng-container *ngIf="isEntityOwner && absence.absenceDecisionOwner != ''">
+                <span>{{absence.absenceApproved ? 'Approved' : 'Not Approved'}}</span>
+                <button mat-icon-button (click)="editDecision(absence)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </ng-container>
+
+            <ng-container *ngIf="!isEntityOwner && absence.absenceDecisionOwner === ''">
+                <span i18n>Pending</span>
+            </ng-container>
+
+            <ng-container *ngIf="!isEntityOwner && absence.absenceDecisionOwner != ''">
+                <span i18n>{{absence.absenceApproved ? 'Approved' : 'Not Approved'}}</span>
+            </ng-container>
+            
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Actions">
+        <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let absence">
+            <button mat-icon-button (click)="editAbsence(absence)">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteAbsence(absence)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="['AbsenceTypeDisplay', 'Observations', 'StartDate', 'EndDate', 'Status', 'Actions']"></mat-header-row>
+    <mat-row *matRowDef="let shift; columns: ['AbsenceTypeDisplay', 'Observations', 'StartDate', 'EndDate', 'Status', 'Actions']"></mat-row>
+
+</mat-table>
+

@@ -168,7 +168,6 @@ export class EntityRulesComponent {
 
   async ngOnInit() {
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
-    this.isCurrentUserEntityOwner = true;
 
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);

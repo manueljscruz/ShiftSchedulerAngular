@@ -51,6 +51,8 @@ import {MatTableModule} from '@angular/material/table';
 import { GenericDeleteWarningDialogComponent } from './shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 import { EntityRulesComponent } from './modules/entity-rules/entity-rules.component';
 import { EntityAbsencesComponent } from './modules/entity-absences/entity-absences.component';
+import { EntityAbsencesViewComponent } from './modules/entity-absences/entity-absences-view/entity-absences-view.component';
+import { EntityAbsencesFormComponent } from './modules/entity-absences/entity-absences-form/entity-absences-form.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +86,8 @@ import { EntityAbsencesComponent } from './modules/entity-absences/entity-absenc
     GenericDeleteWarningDialogComponent,
     EntityRulesComponent,
     EntityAbsencesComponent,
+    EntityAbsencesViewComponent,
+    EntityAbsencesFormComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,46 @@
+<h2 i18n>{{ isEditing ? 'Edit Absence' : 'Create Absence' }}</h2>
+<form id="absence-form">
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label i18n>Absence Type</mat-label>
+            <mat-select name="absenceTypeSelect" [(ngModel)]="selectedAbsenceType" (selectionChange)="onAbsenceTypeChange($event)">
+                <mat-option *ngFor="let absenceType of entityWorkerAbsenceTypes" [value]="absenceType">
+                    {{absenceType.absenceTypeLocalizedName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label i18n>Description</mat-label>
+            <textarea matInput rows="8" name="absenceObs" [(ngModel)]="absenceToEdit.observations" placeholder="" placeholder_i18n></textarea>
+        </mat-form-field>
+
+        <!-- Absence Dates -->
+        <div class="row col-gap">
+            <!-- Start Date -->
+            <div class="form-input-spacer flex-1">
+                <mat-form-field appearance="outline">
+                    <mat-label i18n>Absence Start Date</mat-label>
+                    <input type="date" matInput required placeholder="Absence Start Date" required name="absence-start-date" [(ngModel)]="absenceToEdit.absenceStartDate">
+                </mat-form-field>
+            </div>
+            <!-- End Date -->
+            <div class="form-input-spacer flex-1">
+                <mat-form-field appearance="outline">
+                    <mat-label i18n>Absence End Date</mat-label>
+                    <input type="date" matInput required placeholder="Absence End Date" required name="absence-end-date" [(ngModel)]="absenceToEdit.absenceEndDate">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</form>
+<mat-divider></mat-divider>
+<div class="form-input-spacer end-form-actions">
+    <button class="action-submit-button secondary-color-bg" cdkFocusInitial (click)="saveAbsence()">
+        <mat-icon *ngIf="isEditing">save</mat-icon>
+        <span *ngIf="isEditing" i18n>Save</span>
+
+        <mat-icon *ngIf="!isEditing">add</mat-icon>
+        <span *ngIf="!isEditing" i18n>Create</span>
+    </button>
+</div>
