@@ -38,22 +38,25 @@
                         <div class="form-input-spacer flex-1">
                             <mat-form-field appearance="outline">
                                 <mat-label i18n>Absence Start Date</mat-label>
-                                <input type="date" matInput required placeholder="Absence Start Date" required name="absence-start-date" [ngModel]="selectedAbsence.absenceStartDate" (ngModelChange)="selectedAbsence.absenceStartDate = $event">
+                                <input matInput [matDatepicker]="absenceStartDate" readonly name="absence-start-date-picker" [(ngModel)]="selectedAbsence.absenceStartDate" (dateChange)="onAbsenceStartDateChange($event)">
+                                <mat-datepicker-toggle matIconSuffix [for]="absenceStartDate"></mat-datepicker-toggle>
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker #absenceStartDate></mat-datepicker>
                             </mat-form-field>
                         </div>
                         <!-- End Date -->
                         <div class="form-input-spacer flex-1">
                             <mat-form-field appearance="outline">
                                 <mat-label i18n>Absence End Date</mat-label>
-                                <input type="date" matInput required placeholder="Absence End Date" required name="absence-end-date" [ngModel]="selectedAbsence.absenceEndDate" (ngModelChange)="selectedAbsence.absenceEndDate = $event">
+                                <input matInput [matDatepicker]="absenceEndDate" readonly name="absence-end-date-picker" [(ngModel)]="selectedAbsence.absenceEndDate" (dateChange)="onAbsenceEndDateChange($event)">
+                                <mat-datepicker-toggle matIconSuffix [for]="absenceEndDate"></mat-datepicker-toggle>
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker #absenceEndDate></mat-datepicker>
                             </mat-form-field>
                         </div>
-                        <!-- [(ngModel)]="selectedAbsence.absenceStartDate" -->
-                        <!-- [(ngModel)]="selectedAbsence.absenceEndDate" -->
                     </div>
                 </div>
             </form>
-            <mat-divider></mat-divider>
             <div class="form-input-spacer end-form-actions">
                 <button class="action-submit-button secondary-color-bg" cdkFocusInitial (click)="saveAbsence()">
                     <mat-icon *ngIf="isEditing">save</mat-icon>

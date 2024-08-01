@@ -20,18 +20,17 @@ import { AbsenceApprovalDecisionDTO } from '../../shared/models/DTOs/Outgoing/Ab
 import { DateDisplayService } from '../../core/services/date-display.service';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from '../../shared/pipes/AppDateAdapter';
+import { MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'entity-absences',
   templateUrl: './entity-absences.component.html',
   styleUrl: './entity-absences.component.css',
-  providers: [
-    {provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
-  ]
+  providers: [provideNativeDateAdapter()],
 })
 export class EntityAbsencesComponent {
-
 
   DELETE_ABSENCE_TITLE = DELETE_ABSENCE_TITLE;
   DELETE_ABSENCE_CONTENT = DELETE_ABSENCE_CONTENT;
@@ -62,7 +61,9 @@ export class EntityAbsencesComponent {
   /// </summary>
   entityWorkerAbsencesViewModel : EntityWorkerAbsenceViewModel = new EntityWorkerAbsenceViewModel(false, [], []);
 
-  
+  /// <summary>
+  /// Absences data
+  /// </summary>
   entityWorkerAbsences: EntityWorkerAbsenceDTO[] = [];
 
   /// <summary>
@@ -70,16 +71,12 @@ export class EntityAbsencesComponent {
   /// </summary
   selectedAbsence : EntityWorkerAbsenceDTO = EntityWorkerAbsenceDTO.newEntityWorkerAbsenceDTO();
 
+  /// <summary>
+  /// Selected absence type for the absence
+  /// </summary>
   selectedAbsenceType?: AbsenceTypeLocalizedDTO;
 
   @ViewChild(MatTable) absenceTable!: MatTable<EntityWorkerAbsenceDTO>;
-dp: any;
-
-  /*
-  absenceStartDate: string = '';
-
-  absenceEndDate: string = '';
-  */
 
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -108,9 +105,6 @@ dp: any;
     this.selectedAbsence.absenceStartDate = new Date();
     this.selectedAbsence.absenceEndDate = new Date();
 
-    // this.absenceStartDate = this.dateDisplayService.getDisplayDate(this.selectedAbsence.absenceStartDate, this.selectedAbsence.dateOffset.toString());
-    // this.absenceEndDate = this.dateDisplayService.getDisplayDate(this.selectedAbsence.absenceEndDate, this.selectedAbsence.dateOffset.toString());
-
     this.isEditing = false;
     this.toggleForm(true);
   }
@@ -131,12 +125,9 @@ dp: any;
   /// Responsible for the event when an absence is selected to be edited
   /// </summary>
   onAbsenceToEdit(absence: EntityWorkerAbsenceDTO) {
-    this.selectedAbsence = absence;
+    this.selectedAbsence = { ...absence};
     this.selectedAbsenceType = this.entityWorkerAbsencesViewModel.absenceTypeLocalizeds.find(x => x.absenceTypeId === absence.absenceTypeId);
 
-    // this.absenceStartDate = this.dateDisplayService.getDisplayDate(this.selectedAbsence.absenceStartDate, this.selectedAbsence.dateOffset.toString());
-    // this.absenceEndDate = this.dateDisplayService.getDisplayDate(this.selectedAbsence.absenceEndDate, this.selectedAbsence.dateOffset.toString());
-    
     this.isEditing = true;
     this.toggleForm(true);
   }
@@ -369,23 +360,12 @@ dp: any;
     return response;
   }
 
-  
-  /*
-  get absenceStartDate(): string {
-    return this.dateDisplayService.getDisplayDate(this.selectedAbsence.absenceStartDate, this.selectedAbsence.dateOffset.toString());
+  onAbsenceStartDateChange(event: MatDatepickerInputEvent<Date>) {
+    this.selectedAbsence.absenceStartDate = event.value as Date;
   }
   
-  set absenceStartDate(value: string) {
-    this.selectedAbsence.absenceStartDate = new Date(value);
-  }
-  
-  get absenceEndDate(): string {
-    return this.dateDisplayService.getDisplayDate(this.selectedAbsence.absenceEndDate, this.selectedAbsence.dateOffset.toString());
-  }
 
-  set absenceEndDate(value: string) {
-    this.selectedAbsence.absenceEndDate = new Date(value);
+  onAbsenceEndDateChange(event: MatDatepickerInputEvent<Date>) {
+    this.selectedAbsence.absenceEndDate = event.value as Date;
   }
-  */
-
 }

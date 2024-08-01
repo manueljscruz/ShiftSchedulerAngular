@@ -53,6 +53,7 @@ import { EntityRulesComponent } from './modules/entity-rules/entity-rules.compon
 import { EntityAbsencesComponent } from './modules/entity-absences/entity-absences.component';
 import { EntityAbsencesViewComponent } from './modules/entity-absences/entity-absences-view/entity-absences-view.component';
 import { EntityAbsencesFormComponent } from './modules/entity-absences/entity-absences-form/entity-absences-form.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,8 @@ import { EntityAbsencesFormComponent } from './modules/entity-absences/entity-ab
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatRippleModule,
-    MatTableModule
+    MatTableModule,
+    MatDatepickerModule
   ],
   providers: [
     provideClientHydration(),
