@@ -11,7 +11,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-            <mat-label i18n>Description</mat-label>
+            <mat-label i18n>Observations</mat-label>
             <textarea matInput rows="8" name="absenceObs" [(ngModel)]="absenceToEdit.observations" placeholder="" placeholder_i18n></textarea>
         </mat-form-field>
 
@@ -21,14 +21,14 @@
             <div class="form-input-spacer flex-1">
                 <mat-form-field appearance="outline">
                     <mat-label i18n>Absence Start Date</mat-label>
-                    <input type="date" matInput required placeholder="Absence Start Date" required name="absence-start-date" [(ngModel)]="absenceToEdit.absenceStartDate">
+                    <input type="date" matInput required placeholder="Absence Start Date" required name="absence-start-date" [value]="formatDateString(absenceToEdit.absenceStartDate.toString())">
                 </mat-form-field>
             </div>
             <!-- End Date -->
             <div class="form-input-spacer flex-1">
                 <mat-form-field appearance="outline">
                     <mat-label i18n>Absence End Date</mat-label>
-                    <input type="date" matInput required placeholder="Absence End Date" required name="absence-end-date" [(ngModel)]="absenceToEdit.absenceEndDate">
+                    <input type="date" matInput required placeholder="Absence End Date" required name="absence-end-date" [value]="formatDateString(absenceToEdit.absenceEndDate.toString())">
                 </mat-form-field>
             </div>
         </div>

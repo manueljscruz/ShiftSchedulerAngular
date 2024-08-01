@@ -11,8 +11,22 @@ export class EntityWorkerAbsenceDTO{
     absenceDecisionOwner: string;
     absenceApproverName: string;
     absenceDateDecision: Date;
+    absenceDecisionBeingEdited : boolean = false;
+    dateOffset : Date;
 
-    constructor(entityWorkerAbsenceId: string, entityId: string, workerId: string, absenceTypeId: number, absenceTypeDisplayValue: string, observations: string, absenceStartDate: Date, absenceEndDate: Date, absenceApproved: boolean, absenceDecisionOwner: string, absenceApproverName: string, absenceDateDecision: Date){
+    constructor(entityWorkerAbsenceId: string, 
+        entityId: string, 
+        workerId: string, 
+        absenceTypeId: number, 
+        absenceTypeDisplayValue: string, 
+        observations: string, 
+        absenceStartDate: Date, 
+        absenceEndDate: Date, 
+        absenceApproved: boolean, 
+        absenceDecisionOwner: string, 
+        absenceApproverName: string, 
+        absenceDateDecision: Date,
+        dateOffset : Date){
         this.entityWorkerAbsenceId = entityWorkerAbsenceId;
         this.entityId = entityId;
         this.workerId = workerId;
@@ -25,9 +39,10 @@ export class EntityWorkerAbsenceDTO{
         this.absenceDecisionOwner = absenceDecisionOwner;
         this.absenceApproverName = absenceApproverName;
         this.absenceDateDecision = absenceDateDecision;
+        this.dateOffset = dateOffset;
     }
 
     public static newEntityWorkerAbsenceDTO(): EntityWorkerAbsenceDTO{
-        return new EntityWorkerAbsenceDTO('','','',0,'','',new Date(),new Date(),false,'', '', new Date());
+        return new EntityWorkerAbsenceDTO('','','',0,'','',new Date(),new Date(),false,'', '', new Date(), new Date());
     }
 }

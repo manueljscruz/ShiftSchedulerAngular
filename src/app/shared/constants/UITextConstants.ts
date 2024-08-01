@@ -1,5 +1,6 @@
 // General
 export const NA = 'N/A';
+export const NOT_OWNER_OF_INTANCE_CONTENT = 'You cannot edit this information.';
 
 // Shifts
 export const DELETE_SHIFT_BREAK_TITLE = 'Delete Shift Break';
@@ -11,3 +12,6 @@ export const DELETE_RULE_TITLE = 'Delete Rule';
 export const DELETE_RULE_CONTENT = 'Are you sure you want to delete this rule? All associated rule related data will be deleted.';
 export const DELETE_RULE_SPEC_TITLE = 'Delete Rule Specification';
 export const DELETE_RULE_SPEC_CONTENT = 'Are you sure you want to delete this rule specification?';
+// Absences
+export const DELETE_ABSENCE_TITLE = 'Delete Absence';
+export const DELETE_ABSENCE_CONTENT = 'Are you sure you want to delete this absence?';
