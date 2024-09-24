@@ -115,6 +115,11 @@ export class EntityRulesComponent {
   specificationValue: number = 0;
 
   /// <summary>
+  /// Rule specification boolean value 
+  /// </summary>
+  boolSpecValue: boolean = false;
+
+  /// <summary>
   /// Flag that shows the rule spec value input
   /// </summary>
   visibleSpecValueInput : boolean = false;
@@ -174,6 +179,7 @@ export class EntityRulesComponent {
 
     let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.workerId, '');
     this.rulesViewModel = await this.ruleService.getRuleViewModel(entityRuleViewModelRequestDTO);
+    this.isCurrentUserEntityOwner = this.rulesViewModel.allowEdit;
 
     this.entityShifts = await this.shiftService.getEntityShifts(this.currentEntityId);
     this.entitySkills = await this.entityService.getEntitySkills(this.currentEntityId);
@@ -396,10 +402,15 @@ export class EntityRulesComponent {
       return response;
     }
   
-    let checkMaxHourRuleExistenceResponse = this.ruleValidatorService.validateMaxHourPerShift(this.rulesViewModel.entityRules, this.selectedRule, this.isEditingRule)
+    // if selected rule type is Max Hour per Shift
+    else if(this.selectedRuleType.ruleTypeId === 1) {
+
+      // Check if the Max Hour per Day rule already exists
+      let checkMaxHourRuleExistenceResponse = this.ruleValidatorService.validateMaxHourPerDay(this.rulesViewModel.entityRules, this.selectedRule, this.isEditingRule)
     
-    if(checkMaxHourRuleExistenceResponse.success === false) 
-      return checkMaxHourRuleExistenceResponse; 
+      if(checkMaxHourRuleExistenceResponse.success === false) 
+        return checkMaxHourRuleExistenceResponse; 
+    }
 
     response.success = true;
   
@@ -464,7 +475,11 @@ export class EntityRulesComponent {
 
       case 3:
       case 4:
-        ruleSpecDTO.ruleSpecificationValue = this.specificationValue;
+      case 8:
+        if(this.selectedRuleType.isSpecValuesBoolean)
+          ruleSpecDTO.ruleSpecificationValue = this.boolSpecValue ? 1 : 0;
+        else
+          ruleSpecDTO.ruleSpecificationValue = this.specificationValue;
         ruleSpecDTO.aspectReferenceId = this.selectedShift?.shiftId || '';
         ruleSpecDTO.referenceName = this.selectedShift?.shiftName || '';
         ruleSpecDTO.businessAspectDisplayValue = this.rulesViewModel.businessAspectsLocalizeds.find(x => x.businessAspectId === BUSINESS_ASPECT_SHIFTS_ID)?.businessAspectLocalizedName || '';
@@ -495,6 +510,7 @@ export class EntityRulesComponent {
         break;
 
       case 7:
+      case 9:
         ruleSpecDTO.aspectReferenceId = this.selectedShift?.shiftId || '';
         ruleSpecDTO.referenceName = this.selectedShift?.shiftName || '';
         ruleSpecDTO.businessAspectId = BUSINESS_ASPECT_SHIFTS_ID;
@@ -575,6 +591,11 @@ export class EntityRulesComponent {
 
       case 3:
       case 4:
+      case 8:
+        if(this.selectedRuleType.isSpecValuesBoolean)
+          this.boolSpecValue = this.selectedRuleSpec.ruleSpecificationValue == 1 ? true : false;
+        else
+          this.selectedRuleSpec.ruleSpecificationValue = this.specificationValue;
         this.selectedShift = this.entityShifts.find(x => x.shiftId === ruleSpec.aspectReferenceId);
         break;
 
@@ -585,6 +606,7 @@ export class EntityRulesComponent {
         break;
 
       case 7:
+      case 9:
         this.selectedShift = this.entityShifts.find(x => x.shiftId === ruleSpec.aspectReferenceId);
         break;
 
@@ -608,7 +630,11 @@ export class EntityRulesComponent {
 
         case 3:
         case 4:
-          this.selectedRuleSpec.ruleSpecificationValue = this.specificationValue;
+        case 8:
+          if(this.selectedRuleType.isSpecValuesBoolean)
+            this.selectedRuleSpec.ruleSpecificationValue = this.boolSpecValue ? 1 : 0;
+          else
+            this.selectedRuleSpec.ruleSpecificationValue = this.specificationValue;
           this.selectedRuleSpec.aspectReferenceId = this.selectedShift?.shiftId || '';
           this.selectedRuleSpec.referenceName = this.selectedShift?.shiftName || '';
           this.selectedRuleSpec.businessAspectDisplayValue = this.rulesViewModel.businessAspectsLocalizeds.find(x => x.businessAspectId === BUSINESS_ASPECT_SHIFTS_ID)?.businessAspectLocalizedName || '';
@@ -639,6 +665,7 @@ export class EntityRulesComponent {
           break;
 
         case 7:
+        case 9:
           this.selectedRuleSpec.aspectReferenceId = this.selectedShift?.shiftId || '';
           this.selectedRuleSpec.referenceName = this.selectedShift?.shiftName || '';
           this.selectedRuleSpec.businessAspectId = BUSINESS_ASPECT_SHIFTS_ID;
@@ -736,6 +763,7 @@ export class EntityRulesComponent {
 
       case 3:
       case 4:
+      case 8:
         this.visibleSkillSelect = false;
         this.visibleShiftSelect = true;
         this.visibleSpecValueInput = true;
@@ -754,6 +782,7 @@ export class EntityRulesComponent {
         break;
 
       case 7:
+      case 9:
         this.visibleSkillSelect = false;
         this.visibleShiftSelect = true;
         this.visibleSpecValueInput = true;

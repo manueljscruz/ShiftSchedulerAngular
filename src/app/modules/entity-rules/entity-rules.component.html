@@ -92,10 +92,11 @@
                         </mat-form-field>
                     </div>
                     <div class="form-input-spacer" *ngIf="visibleSpecValueInput">
-                        <mat-form-field appearance="outline">
+                        <mat-form-field appearance="outline" *ngIf="selectedRuleType?.isSpecValuesBoolean == false">
                             <mat-label i18n>Specification Value</mat-label>
                             <input matInput type="number" placeholder="Value" name="spec-value" [(ngModel)]="specificationValue">
                         </mat-form-field>
+                        <mat-checkbox [(ngModel)]="boolSpecValue" name="spec-value-bool" *ngIf="selectedRuleType?.isSpecValuesBoolean == true"></mat-checkbox>
                     </div>
                     <button mat-icon-button color="primary" (click)="addRuleSpec()" *ngIf="!isRuleSpecEditing && visibleSkillSelect || !isRuleSpecEditing && visibleShiftSelect || !isRuleSpecEditing && visibleSpecValueInput">
                         <mat-icon>add</mat-icon>
@@ -129,7 +130,12 @@
     
                     <ng-container matColumnDef="SpecValue">
                         <mat-header-cell *matHeaderCellDef i18n>Specification Value</mat-header-cell>
-                        <mat-cell *matCellDef="let ruleSpec">{{ruleSpec.ruleSpecificationValue}}</mat-cell>
+                        <ng-container *ngIf="selectedRuleType?.isSpecValuesBoolean == false">
+                            <mat-cell *matCellDef="let ruleSpec">{{ruleSpec.ruleSpecificationValue}}</mat-cell>
+                        </ng-container>
+                        <ng-container *ngIf="selectedRuleType?.isSpecValuesBoolean == true">
+                            <mat-cell *matCellDef="let ruleSpec">{{ruleSpec.ruleSpecificationValue ? 'True' : 'False'}}</mat-cell>
+                        </ng-container>
                     </ng-container>
     
                     <!-- Actions Column -->

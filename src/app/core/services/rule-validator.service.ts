@@ -14,7 +14,7 @@ export class RuleValidatorService {
   /// Validates the max hour per shift rule
   /// Rule Type Id 1 is the max hour per shift and can only have 1 rule of this type
   /// </summary>
-  validateMaxHourPerShift(entityRules : EntityRuleDTO[], entityRuleInstance : EntityRuleDTO, isEditOp: boolean) : BaseResponseModel {
+  validateMaxHourPerDay(entityRules : EntityRuleDTO[], entityRuleInstance : EntityRuleDTO, isEditOp: boolean) : BaseResponseModel {
     let response : BaseResponseModel = new BaseResponseModel(false, '', null);
 
     // If there are no items, no need to check for any rules
@@ -30,19 +30,19 @@ export class RuleValidatorService {
       return response;
     }
 
-    // Check for existing Max Hour per Shift rule
+    // Check for existing Max Hour per Day rule
     let maxHourRuleExists = entityRules.some(rule => rule.ruleTypeId === 1);
     let otherMaxHourRuleExists = entityRules.some(rule => rule.ruleTypeId === 1 && rule.entityRuleId !== entityRuleInstance.entityRuleId);
 
-    // If it's an edit operation and another Max Hour per Shift rule exists
+    // If it's an edit operation and another Max Hour per Day rule exists
     if (isEditOp && otherMaxHourRuleExists) {
-        response.message = 'Max Hour per Shift rule already exists';
+        response.message = 'Max Hour per Day rule already exists';
         return response;
     }
 
-    // If it's an add operation and a Max Hour per Shift rule already exists
+    // If it's an add operation and a Max Hour per Day rule already exists
     if (!isEditOp && maxHourRuleExists) {
-        response.message = 'Max Hour per Shift rule already exists';
+        response.message = 'Max Hour per Day rule already exists';
         return response;
     }
     response.success = true;

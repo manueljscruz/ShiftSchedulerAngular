@@ -1,6 +1,9 @@
 // General
 export const NA = 'N/A';
 export const NOT_OWNER_OF_INTANCE_CONTENT = 'You cannot edit this information.';
+// Members
+export const DELETE_MEMBER_TITLE = 'Delete Member';
+export const DELETE_MEMBER_CONTENT = 'Are you sure you want to remove this member?';
 
 // Shifts
 export const DELETE_SHIFT_BREAK_TITLE = 'Delete Shift Break';

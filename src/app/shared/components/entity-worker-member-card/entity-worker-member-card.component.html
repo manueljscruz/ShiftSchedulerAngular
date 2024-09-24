@@ -6,6 +6,12 @@
                 <mat-panel-title>
                     <h3>{{entityWorkerMember?.workerName}}</h3>
                     <mat-icon *ngIf="entityWorkerMember?.isOwner">stars</mat-icon>
+                    <button *ngIf="allowActions" mat-icon-button color="primary" (click)="editWorker(entityWorkerMember)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button *ngIf="allowActions" mat-icon-button color="warn" (click)="removeWorker('5000','5000', entityWorkerMember, DELETE_MEMBER_TITLE, DELETE_MEMBER_CONTENT)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-chip-set>

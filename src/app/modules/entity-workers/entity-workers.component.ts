@@ -120,4 +120,13 @@ export class EntityWorkersComponent {
       }
     });
   }
+
+  onEditMember(editWorker: EntityWorkerMemberDTO) {
+    
+    
+  }
+
+  onDeleteMember(workerToDelete: EntityWorkerMemberDTO) {
+
+  }
 }

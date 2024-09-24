@@ -105,7 +105,6 @@ export class EntityShiftsComponent {
 
   async ngOnInit() {
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
-    this.isCurrentUserEntityOwner = true;
 
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
@@ -113,6 +112,7 @@ export class EntityShiftsComponent {
     // Get the shifts View Model
     let entityShiftVWRequest = new EntityShiftViewModelRequestDTO(this.currentEntityId, this.loggedUser.workerId, '');
     this.ShiftViewModel = await this.shiftService.getShiftViewModel(entityShiftVWRequest);
+    this.isCurrentUserEntityOwner = this.ShiftViewModel.allowEdit;
 
     // Turn off the loading spinner
     this.loadingScreenService.changeLoadingState(false);
