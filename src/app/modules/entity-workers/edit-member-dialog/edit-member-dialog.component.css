@@ -1,0 +1,12 @@
+#edit-member-dialog {
+    padding: 20px 20px;
+}
+
+.actions {
+    display: flex;
+    column-gap: 10px;
+}
+
+.actions button {
+    flex: 1;
+}

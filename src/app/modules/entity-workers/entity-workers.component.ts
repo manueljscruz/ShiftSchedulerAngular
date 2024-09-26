@@ -13,6 +13,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.component';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
+import { UI_DIALOG_ENTRANCE_DURATION, UI_DIALOG_EXIT_DURATION } from '../../shared/constants/UiContants';
+import { EditMemberDialogComponent } from './edit-member-dialog/edit-member-dialog.component';
 
 
 @Component({
@@ -21,6 +23,9 @@ import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
   styleUrl: './entity-workers.component.css'
 })
 export class EntityWorkersComponent {
+
+  UI_DIALOG_ENTRANCE_DURATION = UI_DIALOG_ENTRANCE_DURATION;
+  UI_DIALOG_EXIT_DURATION = UI_DIALOG_EXIT_DURATION;
 
   /// <summary>
   /// Constant filter icon name
@@ -122,7 +127,13 @@ export class EntityWorkersComponent {
   }
 
   onEditMember(editWorker: EntityWorkerMemberDTO) {
+    let skillList = this.entityMembersViewModel.skills;
+    let currentEntityId = this.currentEntityId;
     
+    const dialogRef = this.dialog.open(EditMemberDialogComponent, {
+      width: '500px',
+      data: { UI_DIALOG_ENTRANCE_DURATION, UI_DIALOG_EXIT_DURATION, editWorker, skillList, currentEntityId }
+    });
     
   }
 

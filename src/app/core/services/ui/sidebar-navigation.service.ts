@@ -3,7 +3,7 @@ import { SideBarItemModel } from '../../../shared/models/UI/SideBarItemModel';
 import { BehaviorSubject } from 'rxjs';
 import { EntityWorkerDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerDTO';
 import { Entity } from '../../../shared/models/database/entity';
-import { SIDEBAR_ITEM_GROUP_ID } from '../../../shared/constants/UiIDsContants';
+import { SIDEBAR_ITEM_GROUP_ID } from '../../../shared/constants/UiContants';
 import { ABSENCE_ICON, ENTITY_ADD_ICON, ENTITY_ICON, ENTITY_SCHEDULE_ICON, MEMBERS_ICON, SHIFT_ICON, SHIFT_RULES_ICON } from '../../../shared/constants/IconNamesConstants';
 import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE, NEW_ENTITY_ROUTE, ENTITY_SHIFTS_ROUTE, ENTITY_RULES_ROUTE, ENTITY_ABSENCES_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
 

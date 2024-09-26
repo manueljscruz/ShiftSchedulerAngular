@@ -16,6 +16,7 @@ export const GET_ENTITY_SKILLS : string = BASE_API_URL + "Entity/get-entity-skil
 export const UPDATE_ENTITY_URL : string = BASE_API_URL + "Entity/update";
 export const DELETE_ENTITY_URL : string = BASE_API_URL + "Entity/delete-by-id/{id}";
 export const ADD_NEW_ENTITY_MEMBER_URL : string = BASE_API_URL + "Entity/add-new-entity-member";
+export const UPDATE_ENTITY_MEMBER_URL : string = BASE_API_URL + "Entity/update-entity-member";
 // Shift
 export const GET_ENTITY_SHIFT_VIEW_MODEL_URL : string = BASE_API_URL + "Shift/get-entity-shift-view-model";
 export const GET_ENTITY_SHIFTS : string = BASE_API_URL + "Shift/get-entity-shifts/{entityId}";

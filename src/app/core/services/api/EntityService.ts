@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
+import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
 import { EntityProfileViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityProfileViewModelRequestDTO';
 import { Entity } from '../../../shared/models/database/entity';
 import { FormEntityDTO } from '../../../shared/models/DTOs/Outgoing/FormEntityDTO';
@@ -8,6 +8,7 @@ import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { response } from 'express';
 import { LanguageServiceService } from '../language-service.service';
 import { AddNewMemberDTO } from '../../../shared/models/DTOs/Outgoing/AddNewMemberDTO';
+import { EditMemberDTO } from '../../../shared/models/DTOs/Outgoing/EditMemberDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,7 @@ import { AddNewMemberDTO } from '../../../shared/models/DTOs/Outgoing/AddNewMemb
  * Service for managing entities.
  */
 export class EntityService {
+    
     constructor(private http: HttpClient,
         private languageService: LanguageServiceService
     ) {}
@@ -144,6 +146,19 @@ export class EntityService {
         let response = new BaseResponseModel(false, "", null);
         try {
              response = await this.http.post(ADD_NEW_ENTITY_MEMBER_URL, newMemberDTO).toPromise() as BaseResponseModel;
+            // Process the received data
+        } catch (error : any) {
+            console.error('Error fetching data:', error.message);
+            response.message = error.message;
+        }
+
+        return response;
+    }
+
+    async updateEntityMember(editWorkerDTO: EditMemberDTO) {
+        let response = new BaseResponseModel(false, "", null);
+        try {
+            response = await this.http.put(UPDATE_ENTITY_MEMBER_URL, editWorkerDTO).toPromise() as BaseResponseModel;
             // Process the received data
         } catch (error : any) {
             console.error('Error fetching data:', error.message);

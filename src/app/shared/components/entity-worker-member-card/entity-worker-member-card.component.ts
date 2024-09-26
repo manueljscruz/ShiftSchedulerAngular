@@ -14,7 +14,7 @@ export class EntityWorkerMemberCardComponent {
   DELETE_MEMBER_TITLE = DELETE_MEMBER_TITLE;
   DELETE_MEMBER_CONTENT = DELETE_MEMBER_CONTENT;
 
-  @Input() entityWorkerMember: EntityWorkerMemberDTO = new EntityWorkerMemberDTO('', '', false, false, []);
+  @Input() entityWorkerMember: EntityWorkerMemberDTO = new EntityWorkerMemberDTO('', '', false, false, false, []);
   @Input() allowActions: boolean = false;
   @Output() editWorkerTemplateEvent = new EventEmitter<EntityWorkerMemberDTO>();
   @Output() deleteWorkerTemplateEvent = new EventEmitter<EntityWorkerMemberDTO>();

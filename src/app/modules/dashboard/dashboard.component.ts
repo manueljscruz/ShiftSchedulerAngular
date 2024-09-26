@@ -7,7 +7,7 @@ import { SideBarItemModel } from '../../shared/models/UI/SideBarItemModel';
 import { ENTITY_ICON, ENTITY_ADD_ICON, MEMBERS_ICON, ENTITY_SCHEDULE_ICON } from '../../shared/constants/IconNamesConstants';
 import { LANDING_PAGE_ROUTE, LOGIN_ROUTE, DASHBOARD_ROUTE, DASHBOARD_HOME_ROUTE, NEW_ENTITY_ROUTE, ENTITY_WORKERS_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_FORM_ROUTE } from '../../shared/constants/ViewRoutesConstants';
 import { EntityService } from '../../core/services/api/EntityService';
-import { SIDEBAR_ITEM_GROUP_ID } from '../../shared/constants/UiIDsContants';
+import { SIDEBAR_ITEM_GROUP_ID } from '../../shared/constants/UiContants';
 import { SidebarNavigationService } from '../../core/services/ui/sidebar-navigation.service';
 
 @Component({

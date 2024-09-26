@@ -15,7 +15,7 @@ import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { Entity } from '../../shared/models/database/entity';
 import { FormEntityDTO } from '../../shared/models/DTOs/Outgoing/FormEntityDTO';
 import { DASHBOARD_HOME_ROUTE } from '../../shared/constants/ViewRoutesConstants';
-import { SIDEBAR_ITEM_GROUP_ID } from '../../shared/constants/UiIDsContants';
+import { SIDEBAR_ITEM_GROUP_ID } from '../../shared/constants/UiContants';
 import { SidebarNavigationService } from '../../core/services/ui/sidebar-navigation.service';
 import { LanguageServiceService } from '../../core/services/language-service.service';
 

@@ -1,0 +1,30 @@
+<div id="edit-member-dialog">
+    <h1 i18n>Edit Member</h1>
+    <form>
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label i18n>Name</mat-label>
+                <input matInput [readonly]="nameReadonly" placeholder="Name" [(ngModel)]="nameInput" name="worker-name">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label i18n>Skills</mat-label>
+                <mat-select [(ngModel)]="selectedSkills"  [compareWith]="compareSkills" multiple name="skill-selector">
+                    <mat-option *ngFor="let skill of localizedSkills" [value]="skill">{{skill.skillLocalizedName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </form>
+    <div class="actions">
+        <button mat-fab extended class="secondary-color-bg" [mat-dialog-close]="false">
+            <mat-icon>close</mat-icon>
+            <span i18n>Cancel</span>
+        </button>
+        <button mat-fab extended class="add-color-bg" (click)="editMember()">
+            <mat-icon>{{executeActionIcon}}</mat-icon>
+            <span i18n>{{executeActionText}}</span>
+        </button>
+    </div>
+</div>
+

@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE } from '../../shared/constants/ViewRoutesConstants';
 import { SideBarItemModel } from '../../shared/models/UI/SideBarItemModel';
 import { BOOTSTRAP_ICON_PREFIX, ENTITY_ICON, ENTITY_SCHEDULE_ICON, MEMBERS_ICON } from '../../shared/constants/IconNamesConstants';
-import { SIDEBAR_ITEM_GROUP_ID, SIDERBAR_ITEM_GROUP_ENTITIES_CONTAINER } from '../../shared/constants/UiIDsContants';
+import { SIDEBAR_ITEM_GROUP_ID, SIDERBAR_ITEM_GROUP_ENTITIES_CONTAINER } from '../../shared/constants/UiContants';
 import { SidebarNavigationService } from '../../core/services/ui/sidebar-navigation.service';
 
 @Component({
