@@ -4,6 +4,7 @@ import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { NewWorkerDTO } from '../../../shared/models/DTOs/Outgoing/NewWorkerDTO';
 import { GenderLocalizedDTO } from '../../../shared/models/DTOs/Incoming/GenderLocalizedDTO';
 import { WorkerService } from '../../../core/services/api/WorkerService';
+import { REGISTER_ICON } from '../../../shared/constants/IconNamesConstants';
 
 @Component({
   selector: 'app-register-dialog',
@@ -20,6 +21,7 @@ export class RegisterDialogComponent {
   emailInput: string = '';
   passwordInput: string = '';
   confirmPasswordInput: string = '';
+  executeActionIcon: string = REGISTER_ICON;
   
   // Holds the selected gender
   selectedGender? : GenderLocalizedDTO;

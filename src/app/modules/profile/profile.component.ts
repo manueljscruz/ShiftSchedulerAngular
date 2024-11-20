@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { EDIT_ICON } from '../../shared/constants/IconNamesConstants';
 import { GenderLocalizedDTO } from '../../shared/models/DTOs/Incoming/GenderLocalizedDTO';
-import { AuxiliaryDataService } from '../../core/services/api/AuxiliaryDataService';
+import { HomeService } from '../../core/services/api/HomeService';
 import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
@@ -26,7 +26,7 @@ export class ProfileComponent{
 
   isEditing: boolean = false;
 
-  constructor(private auxDataService: AuxiliaryDataService, 
+  constructor(private auxDataService: HomeService, 
     private snackbarManagerService: SnackbarManagerService, 
     private loadingScreenService: LoadingSpinnerManagerService,
     private workerService : WorkerService,

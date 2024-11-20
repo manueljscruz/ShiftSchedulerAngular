@@ -1,4 +1,7 @@
-export const BASE_API_URL: string = "https://localhost:7203/api/";
+export const BASE_API_URL: string = "http://localhost:5265/api/";
+// Home
+export const GET_HOME_VIEW_MODEL_URL : string = BASE_API_URL + "Home/get-home-view-model/{lcode}";
+
 // Gender
 export const GET_GENDERS_BY_LOCALIZATION_URL : string = BASE_API_URL + "gender/get-all-genders-by-localization/{lcode}";
 // Worker

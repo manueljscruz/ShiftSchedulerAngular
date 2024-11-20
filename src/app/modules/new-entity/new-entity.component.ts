@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { AuxiliaryDataService } from '../../core/services/api/AuxiliaryDataService';
+import { HomeService } from '../../core/services/api/HomeService';
 import { EntityTypeLocalizedDTO } from '../../shared/models/DTOs/Incoming/EntityTypeLocalizedDTO';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { FormEntityDTO } from '../../shared/models/DTOs/Outgoing/FormEntityDTO';
@@ -35,7 +35,7 @@ export class NewEntityComponent {
   subscription: Subscription = new Subscription();
 
   constructor(@Inject(LocalService) private localStore: LocalService, 
-  private auxDataService: AuxiliaryDataService, 
+  private auxDataService: HomeService, 
   private entityService: EntityService,
   private loadingScreenService: LoadingSpinnerManagerService, 
   private snackbarManagerService: SnackbarManagerService,

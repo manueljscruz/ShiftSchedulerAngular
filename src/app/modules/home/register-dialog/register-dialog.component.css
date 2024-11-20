@@ -1,7 +1,3 @@
-#register-dialog {
-  padding: 24px 0px;
-}
-
 mat-form-field {
   margin: 0;
   width: 100%;
@@ -11,17 +7,9 @@ h1 {
   text-align: center;
 }
 
-button {
-  border-radius: 15px;
-}
-
 .mat-dialog-actions{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0px 24px;
-}
-
-.mat-dialog-action-button{
-  flex: 1;
+  background-color: transparent;
+    padding: 20px 24px;
+    display: flex;
+    column-gap: 10px;
 }

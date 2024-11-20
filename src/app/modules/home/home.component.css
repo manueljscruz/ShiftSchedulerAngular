@@ -1,3 +1,18 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+section {
+    padding: 20px;
+}
+
+br {
+    clear: both;
+}
+
 #hero {
     background-color: #f2f2f2;
     background-image: url('../../../assets/images/hero_splash.jpg');
@@ -6,6 +21,7 @@
     background-repeat: no-repeat;
     height: 100vh;
     text-align: center;
+    display: flex;
 }
 
 #hero h1 {
@@ -14,7 +30,65 @@
     color: #333;
 }
 
+h2,h5{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
 #hero p {
     font-size: 16px;
     color: #666;
+}
+
+#services{
+    background-color: black;
+    color: white;
+}
+
+.service-box{
+    border-top: #666 1px solid;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.pricing-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: #666 1px solid;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.pricing-box .row {
+    display: flex; /* Force horizontal layout */
+    align-items: center; /* Vertically align items */
+    gap: 10px; /* Add spacing between elements */
+  }
+  
+  @media (max-width: 576px) {
+    .pricing-box h1 {
+      font-size: 1.5rem; /* Adjust font size for smaller screens */
+    }
+  }
+
+#contact{
+    background-color: black;
+    color: white;
+}
+
+#contact button{
+    width: 100px;
+}
+
+.form-group{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 20px;
 }

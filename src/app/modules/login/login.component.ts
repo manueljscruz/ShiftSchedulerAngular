@@ -67,6 +67,7 @@ constructor(private loginRegisterService: WorkerService,
 
       this.loadingScreenService.changeLoadingState(false);
 
+      console.log(loginResult);
       if (loginResult.success) {
         this.localStore.saveData("loggedUser", JSON.stringify(loginResult.result));
         this.router.navigate(['/dashboard']);

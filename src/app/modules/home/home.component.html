@@ -3,6 +3,172 @@
 
 <!-- Hero Section -->
 <section id="hero">
-  <h1 i18n>Welcome to our website!</h1>
-  <p i18n>Discover amazing features and services.</p>
+  <div class="container d-flex justify-content-center align-items-center text-center">
+    <h1 i18n>Welcome to our Shift Scheduler!</h1>
+    <p i18n>Effortlessly manage your team’s schedule and ensure seamless operations with Shift Scheduler—the all-in-one platform for smarter workforce management. Whether you're overseeing a small team or a large organization, Shift Scheduler simplifies scheduling, boosts productivity, and keeps everyone on the same page.</p>
+  </div>
 </section>
+
+<!-- About Section -->
+<section id="about">
+  <div class="container">
+    <h2 i18n>About Us</h2>
+    <h4 i18n>Revolutionizing Workforce Management</h4>
+    <p i18n>At Shift Scheduler, we understand the challenges of organizing and managing a dynamic workforce. That’s why we’ve created an intuitive, feature-rich platform designed to streamline your scheduling needs. Our mission is to save you time, minimize conflicts, and provide actionable insights, so you can focus on what really matters—growing your business.</p>
+    <br/>
+    <p i18n>With features that cater to managers and employees alike, Shift Scheduler ensures transparency, efficiency, and fairness in workforce scheduling. Join our growing community of businesses revolutionizing the way they manage teams</p>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services">
+  <div class="container">
+    <h2 i18n>Services</h2>
+    <h4 i18n>Discover the Features That Transform Scheduling</h4>
+
+    <!-- Services Row 1 - Worker Entities, Skills & Absences -->
+    <div class="row">
+      <div class="col-md-4">
+        <div class="service-box">
+          <h5 i18n>Create & Manage Worker Entities</h5>
+          <p i18n>Seamlessly register your account and create or join a company profile. Manage your workforce with ease.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="service-box">
+          <h5 i18n>Skill-Based Assignments</h5>
+          <p i18n>Assign specific skills to workers to ensure the right people are placed in the right shifts.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="service-box">
+          <h5 i18n>Absence Management</h5>
+          <p i18n>Keep track of who’s absent and approve or decline absentee notices with a click.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Services Row 2 - Shifts, Schedules & Manual Adjustments -->
+    <div class="row">
+      <div class="col-md-4">
+        <div class="service-box">
+          <h5 i18n>Customizable Shifts & Templates</h5>
+          <p i18n>Design shifts with designated breaks and utilize templates to save time and maintain consistency.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-box">
+          <h5 i18n>Automated Scheduling</h5>
+          <p i18n>Set custom rules—such as hourly limits—and let Shift Scheduler create efficient schedules for your team automatically.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-box">
+          <h5 i18n>Manual Adjustments</h5>
+          <p i18n>Need more control? Edit schedules manually to account for unique situations.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- End of Row 2-->
+  </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing">
+  <div class="container">
+    <h2 i18n>Pricing</h2>
+    <p i18n>We offer subscription-based pricing to ensure affordability and scalability as your business grows.</p>
+    <div class="row justify-content-md-center">
+      <div class="text-center">
+        <mat-button-toggle-group name="pricingOptions" [(ngModel)]="selectedPricingPlan" aria-label="Pricing Options">
+          <mat-button-toggle value="monthly" (change)="onPricingChange($event.value)" i18n>Monthly</mat-button-toggle>
+          <mat-button-toggle value="quarterly" (change)="onPricingChange($event.value)" i18n>Quarterly</mat-button-toggle>
+          <mat-button-toggle value="yearly" (change)="onPricingChange($event.value)" i18n>Yearly</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </div>
+    <br/>
+    <div class="row">
+      <div class="col-md-4 mb-3 d-flex">
+        <div class="pricing-box">
+          <h5 i18n>Starter</h5>
+          <p i18n>Perfect for small teams and startups. Includes up to 10 users, manual scheduling, and absence tracking.</p>
+          <div class="row align-items-center g-0">
+            <div class="col-auto">
+              <h1 i18n>$9.99</h1>
+            </div>
+            <div class="col">
+              <span i18n>per {{pricingDisplayText}}</span>
+              <span i18n>per entity</span>
+            </div>
+          </div>
+          <br/>
+          <a href="#" class="btn btn-success w-100" i18n>Start your free trial now</a>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3 d-flex">
+        <div class="pricing-box">
+          <h5 i18n>Growth</h5>
+          <p i18n>Ideal for mid-sized teams. Supports up to 50 users, includes automated scheduling, and access to skill-based assignments.</p>
+          <div class="row align-items-center g-0">
+            <div class="col-auto">
+              <h1 i18n>$19.99</h1>
+            </div>
+            <div class="col">
+              <span i18n>per {{pricingDisplayText}}</span>
+              <span i18n>per entity</span>
+            </div>
+          </div>
+          <br/>
+          <a href="#" class="btn btn-success w-100" i18n>Start your free trial now</a>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3 d-flex">
+        <div class="pricing-box ">
+          <h5 i18n>Enterprise</h5>
+          <p i18n>For large teams with complex needs. Includes unlimited users, advanced analytics, priority support, and enterprise-grade security. Contact us for a tailored quote.</p>
+          <p i18n> </p>
+          <a href="#contact" class="btn btn-success w-100"  i18n>Sends us a message</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+  <div class="container">
+    <h2 i18n>Contact Us</h2>
+    <p i18n>Get in touch with us for more information or support.</p>
+    <form>
+      <div class="form-group">
+        <label for="name" i18n>Name</label>
+        <input type="text" class="form-control" id="name" required name="nameEmailInput" [(ngModel)]="nameEmailInput"  placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label for="email" i18n>Email address</label>
+        <input type="email" class="form-control" id="email" required name="emailInput" [(ngModel)]="emailInput" placeholder="Your email">
+      </div>
+      <div class="form-group">
+        <label for="subject" i18n>Subject</label>
+        <input type="text" class="form-control" id="subject" required name="subjectInput" [(ngModel)]="subjectInput" placeholder="Message subject">
+      </div>
+      <div class="form-group">
+        <label for="message" i18n>Message</label>
+        <textarea class="form-control" id="message" rows="3" required name="messageInput" [(ngModel)]="messageInput" placeholder="Enter your message"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="onEmailSend()" i18n>Send</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p i18n>© 2024 Shift Scheduler. All rights reserved.</p>
+  </div>
+</footer>

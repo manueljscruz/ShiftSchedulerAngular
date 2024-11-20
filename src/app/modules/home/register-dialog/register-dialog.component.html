@@ -1,40 +1,39 @@
+<div>
+    <h1 mat-dialog-title i18n>Register</h1>
+    <form id="register-form">
+        <mat-dialog-content>
+            <mat-form-field appearance="outline" class="register-input w-100">
+                <input matInput placeholder="Name" [(ngModel)]="nameInput" id="nameInput" name="nameInput" i18n-placeholder required>
+            </mat-form-field>
+                
+            <mat-form-field appearance="outline" class="register-input">
+                <mat-label i18n>Gender</mat-label>
+                <mat-select [(ngModel)]="selectedGender" name="gender" name="genderSelect" id="genderSelect">
+                    <mat-option *ngFor="let gender of gendersLocalized" [value]="gender">{{gender.genderLocalizedName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
 
-<div id="register-dialog">
+            <mat-form-field appearance="outline">
+                <input matInput type="email" placeholder="Email" [(ngModel)]="emailInput" name="emailInput" id="emailInput" i18n-placeholder required>
+            </mat-form-field>
 
-<h1 mat-dialog-title i18n>Register</h1>
+            <mat-form-field appearance="outline">
+                <input matInput type="password" placeholder="Password" [(ngModel)]="passwordInput" name="passwordInput" id="passwordInput" i18n-placeholder required>
+            </mat-form-field>
 
-<form>
-    <mat-dialog-content>
-    
-        <mat-form-field class="register-input">
-            <input matInput placeholder="Name" [(ngModel)]="nameInput" [ngModelOptions]="{standalone: true}" i18n-placeholder required>
-        </mat-form-field>
-            
-        <mat-form-field class="register-input">
-            <mat-label i18n>Gender</mat-label>
-            <mat-select [(ngModel)]="selectedGender" name="gender" [ngModelOptions]="{ standalone: true }">
-                <mat-option *ngFor="let gender of gendersLocalized" [value]="gender">{{gender.genderLocalizedName}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-            <input matInput type="email" placeholder="Email" [(ngModel)]="emailInput" [ngModelOptions]="{standalone: true}" i18n-placeholder required>
-        </mat-form-field>
-
-        <mat-form-field>
-            <input matInput type="password" placeholder="Password" [(ngModel)]="passwordInput" [ngModelOptions]="{standalone: true}" i18n-placeholder required>
-        </mat-form-field>
-
-        <mat-form-field>
-            <input matInput type="password" placeholder="Confirm Password" [(ngModel)]="confirmPasswordInput" [ngModelOptions]="{standalone: true}" i18n-placeholder required>
-        </mat-form-field>
-    
-</mat-dialog-content>
-
-
-<mat-dialog-actions class="mat-dialog-actions">
-  <button class="mat-dialog-action-button" mat-raised-button mat-dialog-close i18n>Cancel</button>
-  <button class="mat-dialog-action-button" color="primary" mat-raised-button cdkFocusInitial (click)="onRegisterSubmit()" i18n>Register</button>
-</mat-dialog-actions>
-</form>
+            <mat-form-field appearance="outline">
+                <input matInput type="password" placeholder="Confirm Password" [(ngModel)]="confirmPasswordInput" id="confirmPasswordInput" name="confirmPasswordInput" i18n-placeholder required>
+            </mat-form-field>
+        </mat-dialog-content>
+        <mat-dialog-actions class="mat-dialog-actions">
+            <button mat-fab extended class="secondary-color-bg flex-1" mat-dialog-close  >
+                <mat-icon>keyboard_backspace</mat-icon>
+                <span i18n>Back</span>
+            </button>
+            <button mat-fab extended class="add-color-bg flex-1" (click)="onRegisterSubmit()">
+                <mat-icon>{{executeActionIcon}}</mat-icon>
+                <span i18n>Register</span>
+            </button>
+        </mat-dialog-actions>
+    </form>
 </div>

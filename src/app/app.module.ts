@@ -58,6 +58,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { EditMemberDialogComponent } from './modules/entity-workers/edit-member-dialog/edit-member-dialog.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { EditMemberDialogComponent } from './modules/entity-workers/edit-member-
     MatTableModule,
     MatDatepickerModule,
     BrowserAnimationsModule,
+    MatButtonToggleModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
