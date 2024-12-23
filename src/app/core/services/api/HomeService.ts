@@ -8,6 +8,7 @@ import { LanguageServiceService } from '../language-service.service';
 })
 
 export class HomeService {
+    
     constructor(private http: HttpClient,
         private languageService: LanguageServiceService
     ) {}
@@ -30,7 +31,6 @@ export class HomeService {
         } catch (error : any) {
             console.error('Error fetching data:', error.message);
         }
-
     }
 
     async getGenders() : Promise<any> {

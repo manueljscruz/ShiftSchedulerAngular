@@ -55,4 +55,8 @@ export class WorkerService {
             // Handle the error appropriately (e.g., display an error message)
         }
     }
+
+    confirmEmail(currentWorkerId: string): Promise<any> {
+        throw new Error('Method not implemented.');
+    }
 }

@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { NewWorkerDTO } from '../../../shared/models/DTOs/Outgoing/NewWorkerDTO';
 import { GenderLocalizedDTO } from '../../../shared/models/DTOs/Incoming/GenderLocalizedDTO';
 import { WorkerService } from '../../../core/services/api/WorkerService';
 import { REGISTER_ICON } from '../../../shared/constants/IconNamesConstants';
+import { GenericMessageDialogComponent } from '../../../shared/components/generic-message-dialog/generic-message-dialog.component';
 
 @Component({
   selector: 'app-register-dialog',
@@ -26,7 +27,9 @@ export class RegisterDialogComponent {
   // Holds the selected gender
   selectedGender? : GenderLocalizedDTO;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private loginRegisterService: WorkerService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, 
+  private loginRegisterService: WorkerService,
+  private dialog: MatDialog) {
     this.gendersLocalized = data.gendersLocalized;
   }
 
@@ -52,13 +55,15 @@ export class RegisterDialogComponent {
     let response : BaseResponseModel = await this.loginRegisterService.register(newRegister);
 
     // If successful, close the dialog
-    if(response.result){
-      alert(response.message);
-      
-    }
-    
+    this.openSuccessRegisterDialog('5000ms', '5000ms', 'Register Success', response.message);
   }
   
+  private openSuccessRegisterDialog(enterAnimationDuration: string, exitAnimationDuration: string, title : string, content : string){
+    const dialogRef = this.dialog.open(GenericMessageDialogComponent, {
+      width: '500px',
+      data: { enterAnimationDuration, exitAnimationDuration, messageTitle: title, messageText: content}
+    });
+  }
 
   validateRegisterForm() : BaseResponseModel{
     let emailRegex = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);

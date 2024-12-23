@@ -13,11 +13,13 @@ import { EntityFormComponent } from './modules/entity-form/entity-form.component
 import { EntityShiftsComponent } from './modules/entity-shifts/entity-shifts.component';
 import { EntityRulesComponent } from './modules/entity-rules/entity-rules.component';
 import { EntityAbsencesComponent } from './modules/entity-absences/entity-absences.component';
+import { ConfirmEmailComponent } from './modules/confirm-email/confirm-email.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'ui', component: UITestsComponent},
   { path: 'login', component: LoginComponent },
+  { path: 'confirm-email/:workerId', component: ConfirmEmailComponent },
   { path: 'dashboard', component: DashboardComponent, children: [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
     { path: 'home', component: DashboardHomeComponent},

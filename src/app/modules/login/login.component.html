@@ -1,38 +1,36 @@
 <div id="login-view">
     <mat-spinner id="loading-spinner" *ngIf="isLoading"></mat-spinner>
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <mat-card id="login-card">
-                    <div class="row" id="login-logo">
-                        <img src="https://placehold.co/100x80" alt="Logo">
+        <div class="col-sm d-flex justify-content-center">
+            <mat-card id="login-card">
+                <div class="row" id="login-logo">
+                    <img src="https://placehold.co/100x80" alt="Logo">
+                </div>
+                <form id="login-form">
+                    <span i18n>Email</span>
+                    <mat-form-field appearance="outline">
+                        <mat-icon matPrefix>alternate_email</mat-icon>
+                        <input matInput type="email" [(ngModel)]="email" name="email" required>
+                    </mat-form-field>
+    
+                    <span i18n>Password</span>
+                    <mat-form-field appearance="outline">
+                        <mat-icon matPrefix>lock</mat-icon>
+                        <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="password" name="password" required>
+                        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+                            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                    </mat-form-field>
+    
+                    <div class="row">
+                        <a (click)="forgotPassword()">
+                            <span i18n> Forgot Password?</span>
+                        </a>
                     </div>
-                    
-                        <form id="login-form">
-                            
-                            <span i18n>Email</span>
-                            <mat-form-field appearance="outline">
-                                <mat-icon matPrefix>alternate_email</mat-icon>
-                                <input matInput type="email" [(ngModel)]="email" name="email" required>
-                            </mat-form-field>
-
-                            <span i18n>Password</span>
-                            <mat-form-field appearance="outline">
-                                <mat-icon matPrefix>lock</mat-icon>
-                                <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="password" name="password" required>
-                                <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
-                                    <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-                                </button>
-                            </mat-form-field>
-
-                            <a (click)="forgotPassword()">
-                                <span i18n> Forgot Password?</span>
-                            </a>
-
-                            <button id="login-button" class="secondary-color-bg" mat-raised-button (click)="login()" i18n>Sign in</button>
-                        </form>
-                </mat-card>
-            </div>
+    
+                    <button id="login-button" class="secondary-color-bg w-100" mat-raised-button (click)="login()" i18n>Sign in</button>
+                </form>
+            </mat-card>
         </div>
     </div>
 </div>

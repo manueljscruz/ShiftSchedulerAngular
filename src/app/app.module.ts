@@ -59,6 +59,8 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { EditMemberDialogComponent } from './modules/entity-workers/edit-member-dialog/edit-member-dialog.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { GenericMessageDialogComponent } from './shared/components/generic-message-dialog/generic-message-dialog.component';
+import { ConfirmEmailComponent } from './modules/confirm-email/confirm-email.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +97,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     EntityAbsencesViewComponent,
     EntityAbsencesFormComponent,
     EditMemberDialogComponent,
+    GenericMessageDialogComponent,
+    ConfirmEmailComponent,
   ],
   imports: [
     BrowserModule,
