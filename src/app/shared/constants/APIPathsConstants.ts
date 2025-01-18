@@ -5,8 +5,8 @@ export const GET_HOME_VIEW_MODEL_URL : string = BASE_API_URL + "Home/get-home-vi
 // Gender
 export const GET_GENDERS_BY_LOCALIZATION_URL : string = BASE_API_URL + "gender/get-all-genders-by-localization/{lcode}";
 // Worker
-export const LOGIN_URL : string = BASE_API_URL + "worker/login";
-export const REGISTER_URL : string = BASE_API_URL + "worker/add";
+export const LOGIN_URL : string = BASE_API_URL + "Auth/login";
+export const REGISTER_URL : string = BASE_API_URL + "Auth/register";
 export const UPDATE_WORKER_URL : string = BASE_API_URL + "worker/update";
 // EntityType
 export const GET_ENTITY_TYPES_BY_LOCALIZATION_URL : string = BASE_API_URL + "EntityType/get-all-entity-types-by-localization/{lcode}";

@@ -67,11 +67,10 @@ constructor(private loginRegisterService: WorkerService,
 
       this.loadingScreenService.changeLoadingState(false);
 
-      console.log(loginResult);
       if (loginResult.success) {
-        this.localStore.saveData("loggedUser", JSON.stringify(loginResult.result));
+        this.localStore.saveData("loggedUser", JSON.stringify(loginResult.result.user));
+        this.localStore.saveData("tokenData", loginResult.result.tokenResponseDTO);
         this.router.navigate(['/dashboard']);
-
       } else {
         this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, loginResult.message));
       }

@@ -63,6 +63,7 @@ export class DashboardComponent {
 
   logout() {
     this.localStore.removeData("loggedUser");
+    this.localStore.removeData("tokenData");
     this.router.navigate([LOGIN_ROUTE]);
   }
 

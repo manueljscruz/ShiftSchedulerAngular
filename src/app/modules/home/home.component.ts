@@ -63,7 +63,7 @@ export class HomeComponent {
 
   async GetHomeViewModel(): Promise<void> {
     this.homeViewModel = await this.homeService.getHomeViewModel();
-    
+    console.log(this.genders);
   }
 
   /**
@@ -71,6 +71,7 @@ export class HomeComponent {
    */
   async GetGenders(): Promise<void> {
     this.genders = await this.homeService.getGenders();
+    console.log(this.genders);
   }
 
   /**

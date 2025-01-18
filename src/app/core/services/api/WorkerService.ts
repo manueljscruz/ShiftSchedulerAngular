@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginDTO } from '../../../shared/models/DTOs/Outgoing/LoginDTO';
-import { NewWorkerDTO } from '../../../shared/models/DTOs/Outgoing/NewWorkerDTO';
+import { NewUserDTO } from '../../../shared/models/DTOs/Outgoing/NewWorkerDTO';
 import { LOGIN_URL, REGISTER_URL, UPDATE_WORKER_URL } from '../../../shared/constants/APIPathsConstants';
 import { WorkerDTO } from '../../../shared/models/DTOs/Incoming/WorkerDTO';
 
@@ -31,7 +31,7 @@ export class WorkerService {
     /// <summary>
     /// Registers a new worker
     /// </summary>
-    async register(newWorkerDTO: NewWorkerDTO) : Promise<any> {
+    async register(newWorkerDTO: NewUserDTO) : Promise<any> {
         try {
             const response = await this.http.post(REGISTER_URL, newWorkerDTO).toPromise();
             return response;

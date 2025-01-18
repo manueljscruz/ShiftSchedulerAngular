@@ -1,11 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
-import { NewWorkerDTO } from '../../../shared/models/DTOs/Outgoing/NewWorkerDTO';
+import { NewUserDTO } from '../../../shared/models/DTOs/Outgoing/NewWorkerDTO';
 import { GenderLocalizedDTO } from '../../../shared/models/DTOs/Incoming/GenderLocalizedDTO';
 import { WorkerService } from '../../../core/services/api/WorkerService';
 import { REGISTER_ICON } from '../../../shared/constants/IconNamesConstants';
 import { GenericMessageDialogComponent } from '../../../shared/components/generic-message-dialog/generic-message-dialog.component';
+import { EMAIL_REGEX, ALPHA_NUMERIC_SPECIAL_REGEX } from '../../../shared/constants/DataConstants';
 
 @Component({
   selector: 'app-register-dialog',
@@ -49,7 +50,7 @@ export class RegisterDialogComponent {
     }
 
     // Register the user
-    let newRegister: NewWorkerDTO = new NewWorkerDTO(this.nameInput, this.selectedGender?.genderId ? this.selectedGender.genderId : 0, this.emailInput, this.passwordInput);
+    let newRegister: NewUserDTO = new NewUserDTO(this.nameInput, this.selectedGender?.genderId ? this.selectedGender.genderId : 0, this.emailInput, this.passwordInput);
 
     // Call the API to register the user
     let response : BaseResponseModel = await this.loginRegisterService.register(newRegister);
@@ -66,7 +67,6 @@ export class RegisterDialogComponent {
   }
 
   validateRegisterForm() : BaseResponseModel{
-    let emailRegex = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
     let response = new BaseResponseModel(false, '', null);
 
     if(this.nameInput.trim().length === 0){
@@ -84,13 +84,18 @@ export class RegisterDialogComponent {
       return response;
     }
 
-    if(!emailRegex.test(this.emailInput)){
+    if(!EMAIL_REGEX.test(this.emailInput)){
       response.message = 'Invalid Email address';
       return response;
     }
 
     if(this.passwordInput.trim().length === 0){
       response.message = 'Password is required';
+      return response;
+    }
+
+    if(!ALPHA_NUMERIC_SPECIAL_REGEX.test(this.passwordInput)){
+      response.message = 'Password must contain at least one letter, one number, and one special character';
       return response;
     }
 
