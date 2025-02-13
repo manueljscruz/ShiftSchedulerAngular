@@ -36,21 +36,23 @@ export class SidebarNavigationService {
     // For each entity, add a sidebar group
     entityWorkerDTOs.forEach(entityWorkerDTO => {
       let entityOptionItems: SideBarItemModel[] = [];
-      
+
+      let encodedEntityId = encodeURIComponent(entityWorkerDTO.entityId);
+
       // Add Home Button
-      entityOptionItems.push(new SideBarItemModel('', "Home", ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
+      entityOptionItems.push(new SideBarItemModel('', "Home", ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', encodedEntityId), []));
       // Add Members Button
-      entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
+      entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', encodedEntityId), []));
       // Add Schedule Button
-      entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
+      entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', encodedEntityId), []));
       // Add Shifts Options 
-      entityOptionItems.push(new SideBarItemModel('', "Shift Management", SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
+      entityOptionItems.push(new SideBarItemModel('', "Shift Management", SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', encodedEntityId), []));
       // Add Rules Options
-      entityOptionItems.push(new SideBarItemModel('', "Rules", SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
+      entityOptionItems.push(new SideBarItemModel('', "Rules", SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', encodedEntityId), []));
 
-      entityOptionItems.push(new SideBarItemModel('', "Absences", ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
+      entityOptionItems.push(new SideBarItemModel('', "Absences", ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', encodedEntityId), []));
 
-      entityOptionsItems.push(new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', entityWorkerDTO.entityId), entityWorkerDTO.entityName, ENTITY_ICON, "", entityOptionItems));
+      entityOptionsItems.push(new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', encodedEntityId), entityWorkerDTO.entityName, ENTITY_ICON, "", entityOptionItems));
     
     });
 
@@ -75,24 +77,26 @@ export class SidebarNavigationService {
   addNewWorkEntitySideBarItem(newEntity: Entity) {
     let entityOptionItems: SideBarItemModel[] = [];
       
+    let encodedEntityId = encodeURIComponent(newEntity.entityId);
+
     // Add Home Button
-    entityOptionItems.push(new SideBarItemModel('', "Home", ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', newEntity.entityId), []));
+    entityOptionItems.push(new SideBarItemModel('', "Home", ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', encodedEntityId), []));
 
     // Add Members Button
-    entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', newEntity.entityId), []));
+    entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', encodedEntityId), []));
 
     // Add Schedule Button
-    entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', newEntity.entityId), []));
+    entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', encodedEntityId), []));
 
     // Add Shifts Options 
-    entityOptionItems.push(new SideBarItemModel('', "Shift Management", SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', newEntity.entityId), []));
+    entityOptionItems.push(new SideBarItemModel('', "Shift Management", SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', encodedEntityId), []));
 
     // Add Rules Options
-    entityOptionItems.push(new SideBarItemModel('', "Rules", SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', newEntity.entityId), []));
+    entityOptionItems.push(new SideBarItemModel('', "Rules", SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', encodedEntityId), []));
 
-    entityOptionItems.push(new SideBarItemModel('', "Absences", ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', newEntity.entityId), []));
+    entityOptionItems.push(new SideBarItemModel('', "Absences", ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', encodedEntityId), []));
 
-    let sidebarGroupModel = new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', newEntity.entityId), newEntity.entityName, ENTITY_ICON, "", entityOptionItems);
+    let sidebarGroupModel = new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', encodedEntityId), newEntity.entityName, ENTITY_ICON, "", entityOptionItems);
  
     let currentItems = this.getWorkEntitiesSideBarItems().value;
     currentItems.push(sidebarGroupModel);
@@ -103,8 +107,9 @@ export class SidebarNavigationService {
   /// Updates a work entity name from the sidebar
   /// </summary>
   updateWorkEntitySideBarItem(entityId: string, newName: string) {
+    let encodedEntityId = encodeURIComponent(entityId);
     let currentItems = this.getWorkEntitiesSideBarItems().value;
-    let itemToUpdate = currentItems.find(item => item.sidebarItemId === SIDEBAR_ITEM_GROUP_ID.replace('{id}',entityId));
+    let itemToUpdate = currentItems.find(item => item.sidebarItemId === SIDEBAR_ITEM_GROUP_ID.replace('{id}',encodedEntityId));
     if(!itemToUpdate) return;
     itemToUpdate.updateName(newName);
     this.setWorkEntitiesSideBarItems(currentItems);
@@ -114,10 +119,11 @@ export class SidebarNavigationService {
   /// Deletes a work entity from the sidebar
   /// </summary>
   deleteWorkEntitySideBarItem(entityId: string) {
+    let encodedEntityId = encodeURIComponent(entityId);
     let currentItems = this.getWorkEntitiesSideBarItems().value;
-    let itemToDelete = currentItems.find(item => item.sidebarItemId === SIDEBAR_ITEM_GROUP_ID.replace('{id}',entityId));
+    let itemToDelete = currentItems.find(item => item.sidebarItemId === SIDEBAR_ITEM_GROUP_ID.replace('{id}',encodedEntityId));
     if(!itemToDelete) return;
-    currentItems = currentItems.filter(item => item.sidebarItemId !== SIDEBAR_ITEM_GROUP_ID.replace('{id}',entityId));
+    currentItems = currentItems.filter(item => item.sidebarItemId !== SIDEBAR_ITEM_GROUP_ID.replace('{id}',encodedEntityId));
     this.setWorkEntitiesSideBarItems(currentItems);
   }
 }

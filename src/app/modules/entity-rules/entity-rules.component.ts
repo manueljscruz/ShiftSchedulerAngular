@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
+import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { EntityRuleViewModel } from '../../shared/models/VM/EntityRuleViewModel';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -43,7 +43,7 @@ export class EntityRulesComponent {
   /// <summary>
   /// Logged user object
   /// </summary>
-  public loggedUser: WorkerDTO = new WorkerDTO();
+  public loggedUser: UserDTO = new UserDTO();
   
   /// <summary>
   /// Current entity id
@@ -168,7 +168,8 @@ export class EntityRulesComponent {
     private shiftService: ShiftService,
     private ruleValidatorService: RuleValidatorService
   ) {
-    this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
+    let decodedEntityId = decodeURIComponent(this.route.snapshot.paramMap.get('entityId') || '');
+    this.currentEntityId = decodedEntityId;
   }
 
   async ngOnInit() {
@@ -177,7 +178,7 @@ export class EntityRulesComponent {
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
 
-    let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.workerId, '');
+    let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '');
     this.rulesViewModel = await this.ruleService.getRuleViewModel(entityRuleViewModelRequestDTO);
     this.isCurrentUserEntityOwner = this.rulesViewModel.allowEdit;
 

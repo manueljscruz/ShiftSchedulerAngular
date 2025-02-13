@@ -4,7 +4,7 @@ import { EntityTypeLocalizedDTO } from '../../shared/models/DTOs/Incoming/Entity
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { FormEntityDTO } from '../../shared/models/DTOs/Outgoing/FormEntityDTO';
 import { LocalService } from '../../core/services/local.service';
-import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
+import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { EntityService } from '../../core/services/api/EntityService';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { Subscription } from 'rxjs';
@@ -26,7 +26,7 @@ export class NewEntityComponent {
 
   entityTypes: EntityTypeLocalizedDTO[] = [];
 
-  loggedInUser: WorkerDTO;
+  loggedInUser: UserDTO;
   entityNameInput : string = '';
   selectedEntityType?: EntityTypeLocalizedDTO;
   entityDescriptionInput : string = '';
@@ -66,7 +66,7 @@ export class NewEntityComponent {
     // Trigger loading screen
     this.isLoading = true;
 
-    let newEntity: FormEntityDTO = new FormEntityDTO('', this.entityNameInput, this.selectedEntityType?.entityTypeId ? this.selectedEntityType.entityTypeId : 0, this.entityDescriptionInput, this.loggedInUser.workerId);
+    let newEntity: FormEntityDTO = new FormEntityDTO('', this.entityNameInput, this.selectedEntityType?.entityTypeId ? this.selectedEntityType.entityTypeId : 0, this.entityDescriptionInput, this.loggedInUser.userId);
     console.log(newEntity);
 
     // Call the API to create the new entity

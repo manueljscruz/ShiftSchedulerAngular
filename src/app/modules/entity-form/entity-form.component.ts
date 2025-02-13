@@ -4,7 +4,7 @@ import { EntityService } from '../../core/services/api/EntityService';
 import { LocalService } from '../../core/services/local.service';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { EntityProfileViewModel } from '../../shared/models/VM/EntityProfileViewModel';
-import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
+import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { EntityDTO } from '../../shared/models/DTOs/Incoming/EntityDTO';
 import { EntityTypeLocalizedDTO } from '../../shared/models/DTOs/Incoming/EntityTypeLocalizedDTO';
 import { MatDialog } from '@angular/material/dialog';
@@ -40,7 +40,7 @@ export class EntityFormComponent {
   /// <summary>
   /// Logged user information
   /// </summary>
-  loggedUser: WorkerDTO = new WorkerDTO();
+  loggedUser: UserDTO = new UserDTO();
 
   /// <summary>
   /// User language
@@ -68,7 +68,8 @@ export class EntityFormComponent {
     private dialog: MatDialog,
     private router: Router 
   ) {
-    this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
+    let decodedEntityId = decodeURIComponent(this.route.snapshot.paramMap.get('entityId') || '');
+    this.currentEntityId = decodedEntityId;
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
     this.userLanguage = this.languageService.returnLocalization();
   }
@@ -79,7 +80,7 @@ export class EntityFormComponent {
     // Retrieve the entity profile view model
     let entityProfileViewModelRequestDTO = {
       entityId: this.currentEntityId,
-      workerId: this.loggedUser.workerId,
+      workerId: this.loggedUser.userId,
       languageCode: this.userLanguage
     };
     
@@ -122,7 +123,7 @@ export class EntityFormComponent {
     }
 
     this.loadingScreenService.changeLoadingState(true);
-    let entityToUpdate = new FormEntityDTO(this.currentEntityId, this.entityProfileViewModel.entityDTO.entityName, this.selectedEntityType?.entityTypeId || 0, this.entityProfileViewModel.entityDTO.entityDescription, this.loggedUser.workerId);
+    let entityToUpdate = new FormEntityDTO(this.currentEntityId, this.entityProfileViewModel.entityDTO.entityName, this.selectedEntityType?.entityTypeId || 0, this.entityProfileViewModel.entityDTO.entityDescription, this.loggedUser.userId);
 
     let response = await this.entityService.updateEntity(entityToUpdate);
     if(response.success){

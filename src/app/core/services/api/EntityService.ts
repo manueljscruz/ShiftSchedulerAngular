@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
+import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, DELETE_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
 import { EntityProfileViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityProfileViewModelRequestDTO';
 import { Entity } from '../../../shared/models/database/entity';
 import { FormEntityDTO } from '../../../shared/models/DTOs/Outgoing/FormEntityDTO';
@@ -9,6 +9,8 @@ import { response } from 'express';
 import { LanguageServiceService } from '../language-service.service';
 import { AddNewMemberDTO } from '../../../shared/models/DTOs/Outgoing/AddNewMemberDTO';
 import { EditMemberDTO } from '../../../shared/models/DTOs/Outgoing/EditMemberDTO';
+import { DeleteMemberDTO } from '../../../shared/models/DTOs/Outgoing/DeleteMemberDTO';
+import { HTTP_METHOD_DELETE, HTTP_STATUS_NO_CONTENT } from '../../../shared/constants/HttpConstants';
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +24,16 @@ export class EntityService {
     constructor(private http: HttpClient,
         private languageService: LanguageServiceService
     ) {}
+
+    //#region Constants
+
+    HTTP_METHOD_DELETE = HTTP_METHOD_DELETE;
+    HTTP_STATUS_NO_CONTENT = HTTP_STATUS_NO_CONTENT;
+
+    
+    //#endregion
+
+    //#region Add Entity
 
     /**
      * Adds a new entity.
@@ -39,6 +51,10 @@ export class EntityService {
         }
     }
 
+    //#endregion
+
+    //#region Get Entities By Worker ID
+
     /**
      * Retrieves entities by worker ID.
      * @param workerId - The ID of the worker.
@@ -55,6 +71,10 @@ export class EntityService {
         }
     }
 
+    //#endregion
+
+    //#region Get Entity Profile View Model
+
     /**
      * Retrieves the view model for an entity profile.
      * @param profileVMRequestDTO - The request data for the view model.
@@ -70,6 +90,10 @@ export class EntityService {
             // Handle the error appropriately (e.g., display an error message)
         }
     }
+
+    //#endregion
+
+    //#region Get Entity Members View Model
 
     /**
      * Retrieves the view model for entity members.
@@ -89,6 +113,10 @@ export class EntityService {
         }
     }
 
+    //#endregion
+
+    //#region Get Entity Skills
+
     async getEntitySkills(entityId: string) : Promise<any> {
         let userLanguage = this.languageService.returnLocalization();
         try {
@@ -101,6 +129,10 @@ export class EntityService {
             // Handle the error appropriately (e.g., display an error message)
         }
     }
+
+    //#endregion
+
+    //#region Update Entity
 
     /**
      * Updates an entity.
@@ -117,6 +149,10 @@ export class EntityService {
             // Handle the error appropriately (e.g., display an error message)
         }
     }
+
+    //#endregion
+
+    //#region Delete Entity
 
     /**
      * Deletes an entity.
@@ -137,6 +173,10 @@ export class EntityService {
         return response
     }
 
+    //#endregion
+
+    //#region Add Entity Member
+
     /**
      * Adds a new bot member to an entity or sends an invite to a new member.
      * @param newMemberDTO - The data of the new member.
@@ -155,6 +195,10 @@ export class EntityService {
         return response;
     }
 
+    //#endregion
+
+    //#region Update Entity Member
+
     async updateEntityMember(editWorkerDTO: EditMemberDTO) {
         let response = new BaseResponseModel(false, "", null);
         try {
@@ -167,4 +211,33 @@ export class EntityService {
 
         return response;
     }
+
+    //#endregion
+
+    //#region Delete Entity Member
+
+    async deleteEntityWorker(workerData: DeleteMemberDTO) {
+        let response = new BaseResponseModel(false, "", null);
+        try {
+            const httpResponse = await this.http.request<BaseResponseModel>(HTTP_METHOD_DELETE, DELETE_ENTITY_MEMBER_URL, {
+                body: workerData,
+                observe: 'response'  // Ensure we get the full HttpResponse
+            }).toPromise();
+    
+            if (httpResponse?.status === HTTP_STATUS_NO_CONTENT) {
+                response.success = true;
+                response.message = "Entity member succesfully deleted.";
+                return response;
+            }
+    
+            response = httpResponse?.body as BaseResponseModel || new BaseResponseModel(true, "No content returned", null);
+        } catch (error: any) {
+            console.error('Error fetching data:', error.message);
+            response.message = error.message;
+        }
+    
+        return response;
+    }
+    
+    //#endregion
 }

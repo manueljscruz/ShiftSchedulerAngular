@@ -4,7 +4,7 @@
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <h3>{{entityWorkerMember?.workerName}}</h3>
+                    <h4>{{entityWorkerMember?.workerName}}</h4>
                     <mat-icon *ngIf="entityWorkerMember?.isOwner">stars</mat-icon>
                     <button *ngIf="allowActions" mat-icon-button color="primary" (click)="editWorker(entityWorkerMember)">
                         <mat-icon>edit</mat-icon>

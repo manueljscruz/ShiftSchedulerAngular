@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
+import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { ActivatedRoute } from '@angular/router';
 import { ShiftDTO } from '../../shared/models/DTOs/Incoming/ShiftDTO';
 import { ShiftBreakDTO } from '../../shared/models/DTOs/Incoming/ShiftBreakDTO';
@@ -28,16 +28,21 @@ import { ShiftTemplateDTO } from '../../shared/models/DTOs/Incoming/ShiftTemplat
 })
 export class EntityShiftsComponent {
 
+  //#region CONSTANTS
   // CONSTANTS
   DELETE_SHIFT_TITLE = DELETE_SHIFT_TITLE;
   DELETE_SHIFT_CONTENT = DELETE_SHIFT_CONTENT;
   DELETE_SHIFT_BREAK_TITLE = DELETE_SHIFT_BREAK_TITLE;
   DELETE_SHIFT_BREAK_CONTENT = DELETE_SHIFT_BREAK_CONTENT;
 
+  //#endregion
+
+  //#region PROPERTIES
+
   /// <summary>
   /// Logged user object
   /// </summary>
-  public loggedUser: WorkerDTO = new WorkerDTO();
+  public loggedUser: UserDTO = new UserDTO();
   
   /// <summary>
   /// Current entity id
@@ -84,14 +89,16 @@ export class EntityShiftsComponent {
   /// </summary>
   public shiftBreakToChange: ShiftBreakDTO = ShiftBreakDTO.newShiftBreakDTO();
 
-  
-
   shiftBreakDisplayedColumns: string[] = ['ShiftBreakTypeDisplay', 'ShiftBreakDuration', 'ShiftBreakStartTime', 'IncludedInShift', 'IsTimeFlexible', 'Actions'];
 
   /// <summary>
   /// Reference to the selected shift breaks table in the create/edit shift form
   /// </summary>
   @ViewChild(MatTable) selectedShiftBreakTable!: MatTable<any>;
+
+  //#endregion
+
+  //#region CONSTRUCTOR
 
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -100,8 +107,13 @@ export class EntityShiftsComponent {
     private shiftService: ShiftService
   ) 
   { 
-    this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
+    let decodedEntityId = decodeURIComponent(this.route.snapshot.paramMap.get('entityId') || '');
+    this.currentEntityId = decodedEntityId;
   }
+
+  //#endregion
+
+  //#region METHODS
 
   async ngOnInit() {
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
@@ -110,7 +122,7 @@ export class EntityShiftsComponent {
     this.loadingScreenService.changeLoadingState(true);
 
     // Get the shifts View Model
-    let entityShiftVWRequest = new EntityShiftViewModelRequestDTO(this.currentEntityId, this.loggedUser.workerId, '');
+    let entityShiftVWRequest = new EntityShiftViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '');
     this.ShiftViewModel = await this.shiftService.getShiftViewModel(entityShiftVWRequest);
     this.isCurrentUserEntityOwner = this.ShiftViewModel.allowEdit;
 
@@ -127,6 +139,8 @@ export class EntityShiftsComponent {
     
   }
   
+  //#region Edit Shift
+
   /// <summary>
   /// Changes the shift form to edit mode
   /// </summary>
@@ -138,6 +152,10 @@ export class EntityShiftsComponent {
     this.toggleForm(true);
   }
   
+  //#endregion
+
+  //#region Delete Shift
+
   /// <summary>
   /// Deletes the shift
   /// </summary>
@@ -173,6 +191,8 @@ export class EntityShiftsComponent {
     }
   }
 
+  //#endregion
+
   onSelectShiftTemplate($event: ShiftTemplateDTO) {
     let shiftTemplateDTO = $event;
     if(shiftTemplateDTO != null){
@@ -203,6 +223,8 @@ export class EntityShiftsComponent {
   }
 
   // CREATING OR EDITING A SHIFT
+
+  //#region Save Shift
 
   /// <summary>
   /// Saves the shift
@@ -290,6 +312,10 @@ export class EntityShiftsComponent {
     
   }
 
+  //#endregion
+
+  //#region Validate Shift Form
+
   validateShiftForm() : BaseResponseModel {
     let response = new BaseResponseModel(false, '', null);
 
@@ -307,6 +333,8 @@ export class EntityShiftsComponent {
 
     return response;
   }
+
+//#endregion
 
   /// <summary>
   /// Opens the shift break dialog form to add or edit a shift break
@@ -420,3 +448,5 @@ export class EntityShiftsComponent {
     }
   }
 }
+
+//#endregion

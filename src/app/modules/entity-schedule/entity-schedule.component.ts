@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
-import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
+import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
@@ -25,7 +25,7 @@ export class EntityScheduleComponent {
   /// <summary>
   /// Logged user object
   /// </summary>
-  public loggedUser: WorkerDTO = new WorkerDTO();
+  public loggedUser: UserDTO = new UserDTO();
   
   /// <summary>
   /// Current entity id
@@ -70,7 +70,8 @@ export class EntityScheduleComponent {
     private snackbarManagerService: SnackbarManagerService,
     private loadingScreenService: LoadingSpinnerManagerService,
     private scheduleService: ScheduleService) { 
-      this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
+      let decodedEntityId = decodeURIComponent(this.route.snapshot.paramMap.get('entityId') || '');
+      this.currentEntityId = decodedEntityId;
       this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), 1);
       this.endDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1, 0);
   }
@@ -85,7 +86,7 @@ export class EntityScheduleComponent {
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
 
-    let entityScheduleViewModelRequestDTO = new ScheduleViewModelRequestDTO(this.currentEntityId, this.loggedUser.workerId, '', this.startDate, this.endDate );
+    let entityScheduleViewModelRequestDTO = new ScheduleViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '', this.startDate, this.endDate );
 
     // Get the schedule view model
     this.scheduleViewModel = await this.scheduleService.getScheduleViewModel(entityScheduleViewModelRequestDTO);

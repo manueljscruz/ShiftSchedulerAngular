@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { EDIT_ICON } from '../../shared/constants/IconNamesConstants';
 import { GenderLocalizedDTO } from '../../shared/models/DTOs/Incoming/GenderLocalizedDTO';
 import { HomeService } from '../../core/services/api/HomeService';
-import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
+import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
@@ -21,8 +21,8 @@ export class ProfileComponent{
 
   public gendersLocalized: GenderLocalizedDTO[] = [];
   selectedGender? : GenderLocalizedDTO;
-  loggedUser: WorkerDTO = new WorkerDTO();
-  backupUser: WorkerDTO = new WorkerDTO();
+  loggedUser: UserDTO = new UserDTO();
+  backupUser: UserDTO = new UserDTO();
 
   isEditing: boolean = false;
 
@@ -40,9 +40,9 @@ export class ProfileComponent{
     
     // Load the
     this.gendersLocalized = await this.auxDataService.getGenders();
-    if (this.loggedUser != null && this.loggedUser.genderId != null) {
+    if (this.backupUser != null && this.backupUser.genderId != null) {
       
-      this.selectedGender = this.gendersLocalized.find(g => g.genderId == this.loggedUser?.genderId);
+      this.selectedGender = this.gendersLocalized.find(g => g.genderId == this.backupUser?.genderId);
     }
   }
 
@@ -56,19 +56,19 @@ export class ProfileComponent{
 
     if(validationResult.result){
 
-      this.loggedUser.genderId = this.selectedGender?.genderId || 0;
+      this.backupUser.genderId = this.selectedGender?.genderId || 0;
       // Save the profile
       this.loadingScreenService.changeLoadingState(true);
 
       // Call the API to save the profile
-      let response : BaseResponseModel = await this.workerService.updateWorker(this.loggedUser);
+      let response : BaseResponseModel = await this.workerService.updateWorker(this.backupUser);
 
       this.loadingScreenService.changeLoadingState(false);
 
       if(response.result){
         this.toggleEditProfile();
-        this.localStore.saveData("loggedUser", JSON.stringify(this.loggedUser));
-        this.backupUser = { ...this.loggedUser };
+        this.localStore.saveData("loggedUser", JSON.stringify(this.backupUser));
+        this.loggedUser = { ...this.backupUser };
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Profile saved successfully'));
       }
       else{
@@ -85,7 +85,7 @@ export class ProfileComponent{
     let emailRegex = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
     let response = new BaseResponseModel(false, '', null);
 
-    if(this.loggedUser.workerName.trim().length === 0)
+    if(this.backupUser.userDisplayName.trim().length === 0)
     {
       response.message = 'A name is required';
       return response;
@@ -96,12 +96,12 @@ export class ProfileComponent{
       return response;
     }
 
-    else if(this.loggedUser.email.trim().length === 0){
+    else if(this.backupUser.email.trim().length === 0){
       response.message = 'Email is required';
       return response;
     }
 
-    else if(!emailRegex.test(this.loggedUser.email)){
+    else if(!emailRegex.test(this.backupUser.email)){
       response.message = 'Invalid Email address';
       return response;
     }

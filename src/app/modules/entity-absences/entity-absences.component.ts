@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { EntityWorkerAbsenceViewModel } from '../../shared/models/VM/EntityWorkerAbsenceViewModel';
 import { EntityWorkerAbsenceDTO } from '../../shared/models/DTOs/Incoming/EntityWorkerAbsenceDTO';
-import { WorkerDTO } from '../../shared/models/DTOs/Incoming/WorkerDTO';
+import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
@@ -39,7 +39,7 @@ export class EntityAbsencesComponent {
   /// <summary>
   /// Logged user object
   /// </summary>
-  public loggedUser: WorkerDTO = new WorkerDTO();
+  public loggedUser: UserDTO = new UserDTO();
 
   /// <summary>
   /// Current entity id
@@ -84,7 +84,8 @@ export class EntityAbsencesComponent {
     private loadingScreenService: LoadingSpinnerManagerService,
     private absenceService: AbsenceService,
     private dateDisplayService: DateDisplayService) { 
-      this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
+      let decodedEntityId = decodeURIComponent(this.route.snapshot.paramMap.get('entityId') || '');
+      this.currentEntityId = decodedEntityId;
   }
 
   async ngOnInit() {
@@ -93,7 +94,7 @@ export class EntityAbsencesComponent {
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
     
-    let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.workerId, '');
+    let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '');
     this.entityWorkerAbsencesViewModel = await this.absenceService.getAbsenceViewModel(entityRuleViewModelRequestDTO);
     this.entityWorkerAbsences = this.entityWorkerAbsencesViewModel.entityWorkerAbsences;
 
@@ -181,7 +182,7 @@ export class EntityAbsencesComponent {
   /// Edits an absence from the list of absences
   /// </summary
   editAbsence(absenceInstance: EntityWorkerAbsenceDTO) {
-    if(absenceInstance.workerId !== this.loggedUser.workerId){
+    if(absenceInstance.workerId !== this.loggedUser.userId){
       this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, NOT_OWNER_OF_INTANCE_CONTENT));
     }
     else{
@@ -201,7 +202,7 @@ export class EntityAbsencesComponent {
       return;
     }
     else{
-      let absenceApprovalDecision : AbsenceApprovalDecisionDTO = new AbsenceApprovalDecisionDTO(absence.entityWorkerAbsenceId, decisionResult, this.loggedUser.workerId, '');
+      let absenceApprovalDecision : AbsenceApprovalDecisionDTO = new AbsenceApprovalDecisionDTO(absence.entityWorkerAbsenceId, decisionResult, this.loggedUser.userId, '');
 
       this.loadingScreenService.changeLoadingState(true);
 
@@ -274,7 +275,7 @@ export class EntityAbsencesComponent {
     else{
       let newAbsence = new AddEntityWorkerAbsenceDTO(
         this.currentEntityId,
-        this.loggedUser.workerId,
+        this.loggedUser.userId,
         this.selectedAbsenceType?.absenceTypeId ?? 0,
         this.selectedAbsence.observations,
         this.selectedAbsence.absenceStartDate,

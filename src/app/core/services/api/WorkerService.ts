@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginDTO } from '../../../shared/models/DTOs/Outgoing/LoginDTO';
 import { NewUserDTO } from '../../../shared/models/DTOs/Outgoing/NewWorkerDTO';
-import { LOGIN_URL, REGISTER_URL, UPDATE_WORKER_URL } from '../../../shared/constants/APIPathsConstants';
-import { WorkerDTO } from '../../../shared/models/DTOs/Incoming/WorkerDTO';
+import { LOGIN_URL, REGISTER_URL, UPDATE_USER_URL } from '../../../shared/constants/APIPathsConstants';
+import { UserDTO } from '../../../shared/models/DTOs/Incoming/UserDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -45,9 +45,9 @@ export class WorkerService {
     /// <summary>
     /// Updates a worker instance
     /// </summary>
-    async updateWorker(workerDTO: WorkerDTO) : Promise<any> {
+    async updateWorker(workerDTO: UserDTO) : Promise<any> {
         try {
-            const response = await this.http.put(UPDATE_WORKER_URL, workerDTO).toPromise();
+            const response = await this.http.put(UPDATE_USER_URL, workerDTO).toPromise();
             return response;
             // Process the received data
         } catch (error : any) {
