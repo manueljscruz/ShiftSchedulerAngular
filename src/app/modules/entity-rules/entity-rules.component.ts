@@ -28,6 +28,7 @@ import { AddEntityRuleDTO } from '../../shared/models/DTOs/Outgoing/AddEntityRul
 import { AddEntityRuleSpecificationDTO } from '../../shared/models/DTOs/Outgoing/AddEntityRuleSpecificationDTO';
 import e from 'express';
 import { RuleValidatorService } from '../../core/services/rule-validator.service';
+import { SingleIdentifierDTO } from '../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 
 @Component({
   selector: 'entity-rules',
@@ -182,8 +183,10 @@ export class EntityRulesComponent {
     this.rulesViewModel = await this.ruleService.getRuleViewModel(entityRuleViewModelRequestDTO);
     this.isCurrentUserEntityOwner = this.rulesViewModel.allowEdit;
 
-    this.entityShifts = await this.shiftService.getEntityShifts(this.currentEntityId);
-    this.entitySkills = await this.entityService.getEntitySkills(this.currentEntityId);
+    let singleIdentifierDto = new SingleIdentifierDTO(this.currentEntityId);
+    this.entityShifts = await this.shiftService.getEntityShifts(singleIdentifierDto);
+    let baseVMRequest = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '');
+    this.entitySkills = await this.entityService.getEntitySkills(baseVMRequest);
 
     // Turn off the loading spinner
     this.loadingScreenService.changeLoadingState(false);

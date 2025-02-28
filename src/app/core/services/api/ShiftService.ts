@@ -9,6 +9,8 @@ import { AddShiftBreakDTO } from '../../../shared/models/DTOs/Outgoing/AddShiftB
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { ShiftBreakDTO } from '../../../shared/models/DTOs/Incoming/ShiftBreakDTO';
 import { AddShiftDTO } from '../../../shared/models/DTOs/Outgoing/AddShiftDTO';
+import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
+import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +23,9 @@ export class ShiftService {
         private languageService: LanguageServiceService) 
         { }
 
+
+    //#region Get Shift View Model
+
     /// <summary>
     /// Get the shift view model for the entity:
     /// - Shifts of the Entity
@@ -29,7 +34,7 @@ export class ShiftService {
     /// - ShiftBreakTemplates
     /// - ShiftTemplates
     /// </summary>
-    async getShiftViewModel(entityShiftViewModelRequestDTO : EntityShiftViewModelRequestDTO) : Promise<ShiftViewModel> {
+    async getShiftViewModel(entityShiftViewModelRequestDTO : BaseViewModelRequestDTO) : Promise<ShiftViewModel> {
         let shiftVM : ShiftViewModel = new ShiftViewModel([], [], false, []);
 
         entityShiftViewModelRequestDTO.languageCode = this.languageService.returnLocalization();
@@ -42,18 +47,25 @@ export class ShiftService {
         return shiftVM;
     }
 
-    async getEntityShifts(entityId: string): Promise<ShiftDTO[]> {
+    //#endregion
+
+    //#region Get Entity Shifts
+
+    async getEntityShifts(identifier: SingleIdentifierDTO): Promise<ShiftDTO[]> {
         let shifts: ShiftDTO[] = [];
 
         try {
-            shifts = await this.http.get<ShiftDTO[]>(GET_ENTITY_SHIFTS.replace('{entityId}', entityId)).toPromise
-            () as ShiftDTO[];
+            shifts = await this.http.post<ShiftDTO[]>(GET_ENTITY_SHIFTS, identifier).toPromise() || []
         }
         catch(error : any){
             console.error('Error fetching data:', error.message);
         }
         return shifts;
     }
+
+    //#endregion
+
+    //#region Add Shift
 
     /// <summary>
     /// Add a new entity shift
@@ -80,6 +92,10 @@ export class ShiftService {
 
     }
 
+    //#endregion
+
+    //#region Add Shift Break
+
     /// <summary>
     /// Add a new shift break
     /// </summary>
@@ -100,6 +116,10 @@ export class ShiftService {
         return response;
     }
 
+    //#endregion
+
+    //#region Update Shift
+
     async updateShift(SelectedShift: ShiftDTO): Promise<BaseResponseModel> {
         let response = new BaseResponseModel(false, "", null);
 
@@ -112,6 +132,10 @@ export class ShiftService {
 
         return response;
     }
+
+    //#endregion
+
+    //#region Update Shift Break
 
     /// <summary>
     /// Update a shift break
@@ -129,6 +153,10 @@ export class ShiftService {
         return response;
     }
 
+    //#endregion
+
+    //#region Delete Shift
+
     /// <summary>
     /// Delete a shift
     /// </summary>
@@ -145,6 +173,10 @@ export class ShiftService {
         return response;
     }
 
+    //#endregion
+
+    //#region Delete Shift Break
+
     /// <summary>
     /// Delete a shift break
     /// </summary>
@@ -160,33 +192,10 @@ export class ShiftService {
 
         return response;
     }
-    /*
-    convertDatesToTimeSpanStrings(obj: any): any {
-        if (obj === null || obj === undefined) {
-            return obj;
-        }
-        
-        if (obj instanceof Date) {
-            return this.auxConvertDateToTimeSpan(obj);
-        }
-    
-        if (Array.isArray(obj)) {
-            return obj.map(item => this.convertDatesToTimeSpanStrings(item));
-        }
-    
-        if (typeof obj === 'object') {
-            const newObj = {};
-            for (const key in obj) {
-                if (obj.hasOwnProperty(key)) {
-                    newObj[key] = this.convertDatesToTimeSpanStrings(obj[key]);
-                }
-            }
-            return newObj;
-        }
-    
-        return obj;
-    }
-    */
+
+    //#endregion
+
+    //#region Convert Dates to Time Span Strings
 
     convertDatesToTimeSpanStrings(obj: any): any {
         const newObj = { ...obj };
@@ -202,6 +211,9 @@ export class ShiftService {
         return newObj;
     }
     
+    //#endregion
+
+    //#region Shift Break Array to JSON
 
     shiftBreakArrayToJson(shiftBreaks: AddShiftBreakDTO[]): any {
         let shiftBreaksJson : string = "[";
@@ -220,7 +232,9 @@ export class ShiftService {
         return shiftBreaksJson;
     }
 
-    
+    //#endregion
+
+    //#region Aux Convert Date to Time Span
 
     auxConvertDateToTimeSpan(date: Date): string {
         let dateSplit = date.toString().split(":");
@@ -229,5 +243,7 @@ export class ShiftService {
         else
             return dateSplit[0] + ":" + dateSplit[1] + ":" + dateSplit[2];
     }
+
+    //#endregion
 
 }

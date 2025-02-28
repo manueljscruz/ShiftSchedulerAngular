@@ -18,6 +18,7 @@ import { EditMemberDialogComponent } from './edit-member-dialog/edit-member-dial
 import { DeleteMemberDTO } from '../../shared/models/DTOs/Outgoing/DeleteMemberDTO';
 import { GenericDeleteWarningDialogComponent } from '../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 import { DELETE_MEMBER_CONTENT, DELETE_MEMBER_TITLE } from '../../shared/constants/UITextConstants';
+import { BaseViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 
 
 @Component({
@@ -87,7 +88,6 @@ export class EntityWorkersComponent {
     private route: ActivatedRoute
   ) {
     this.entityMembersViewModel = new EntityMembersViewModel("", [], []);
-    let decodedEntityId = decodeURIComponent(this.route.snapshot.paramMap.get('entityId') || '');
     this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || ''; // decodedEntityId;
   }
 
@@ -100,7 +100,14 @@ export class EntityWorkersComponent {
   async ngOnInit() {
     this.loadingScreenService.changeLoadingState(true);
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
-    this.entityMembersViewModel = await this.entityService.getEntityMembersViewModel(this.currentEntityId);
+
+    let baseViewModelRequestDTO : BaseViewModelRequestDTO = {
+      entityId: this.currentEntityId,
+      workerId: this.loggedUser.userId,
+      languageCode: ''
+    };
+
+    this.entityMembersViewModel = await this.entityService.getEntityMembersViewModel(baseViewModelRequestDTO);
 
     this.isCurrentUserEntityOwner = this.entityMembersViewModel.entityOwnerId === this.loggedUser.userId ? true : false;
     this.loadingScreenService.changeLoadingState(false);
@@ -168,21 +175,12 @@ export class EntityWorkersComponent {
 
   //#region On Delete Member
 
-  onDeleteMember(workerToDelete: EntityWorkerMemberDTO, enterAnimationDuration: string, exitAnimationDuration: string, title : string, content : string) {
+  onDeleteMember(workerToDelete: EntityWorkerMemberDTO) {
     if(workerToDelete == null){
       return;
     }
 
-    const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
-      width: '500px',
-      data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: title, deleteWarningMessage: content}
-    });
-
-    dialogRef.afterClosed().subscribe(async result =>{
-      if(result){
-        await this.deleteMember(workerToDelete);
-      }
-    });
+    this.deleteMember(workerToDelete);
   }
 
   //#endregion
@@ -190,7 +188,7 @@ export class EntityWorkersComponent {
   //#region Delete Member
 
   async deleteMember(workerToDelete: EntityWorkerMemberDTO){
-    let workerData = new DeleteMemberDTO(this.loggedUser.userId, workerToDelete.workerId, workerToDelete.isBot);
+    let workerData = new DeleteMemberDTO(workerToDelete.workerId, this.currentEntityId,  workerToDelete.isBot);
 
     this.loadingScreenService.changeLoadingState(true);
 

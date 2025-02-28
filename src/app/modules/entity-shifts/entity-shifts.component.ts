@@ -20,6 +20,7 @@ import { DELETE_SHIFT_BREAK_CONTENT, DELETE_SHIFT_BREAK_TITLE, DELETE_SHIFT_CONT
 import e from 'express';
 import { ShiftBreakTemplateDTO } from '../../shared/models/DTOs/Incoming/ShiftBreakTemplateDTO';
 import { ShiftTemplateDTO } from '../../shared/models/DTOs/Incoming/ShiftTemplateDTO';
+import { BaseViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 
 @Component({
   selector: 'app-entity-shifts',
@@ -107,8 +108,7 @@ export class EntityShiftsComponent {
     private shiftService: ShiftService
   ) 
   { 
-    let decodedEntityId = decodeURIComponent(this.route.snapshot.paramMap.get('entityId') || '');
-    this.currentEntityId = decodedEntityId;
+    this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
   }
 
   //#endregion
@@ -122,7 +122,7 @@ export class EntityShiftsComponent {
     this.loadingScreenService.changeLoadingState(true);
 
     // Get the shifts View Model
-    let entityShiftVWRequest = new EntityShiftViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '');
+    let entityShiftVWRequest = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '');
     this.ShiftViewModel = await this.shiftService.getShiftViewModel(entityShiftVWRequest);
     this.isCurrentUserEntityOwner = this.ShiftViewModel.allowEdit;
 

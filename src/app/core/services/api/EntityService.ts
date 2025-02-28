@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, DELETE_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
 import { EntityProfileViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityProfileViewModelRequestDTO';
@@ -10,7 +10,8 @@ import { LanguageServiceService } from '../language-service.service';
 import { AddNewMemberDTO } from '../../../shared/models/DTOs/Outgoing/AddNewMemberDTO';
 import { EditMemberDTO } from '../../../shared/models/DTOs/Outgoing/EditMemberDTO';
 import { DeleteMemberDTO } from '../../../shared/models/DTOs/Outgoing/DeleteMemberDTO';
-import { HTTP_METHOD_DELETE, HTTP_STATUS_NO_CONTENT } from '../../../shared/constants/HttpConstants';
+import { HTTP_METHOD_DELETE, HTTP_METHOD_GET, HTTP_STATUS_NO_CONTENT, HTTP_STATUS_OK } from '../../../shared/constants/HttpConstants';
+import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -100,28 +101,51 @@ export class EntityService {
      * @param entityId - The ID of the entity.
      * @returns A promise that resolves to the response from the server.
      */
-    async getEntityMembersViewModel(entityId: string) : Promise<any> {
-        let userLanguage = this.languageService.returnLocalization();
+    async getEntityMembersViewModel(baseViewModelRequestDTO: BaseViewModelRequestDTO) : Promise<any> {
+        
+        let response = new BaseResponseModel(false, "", null);
+        baseViewModelRequestDTO.languageCode = this.languageService.returnLocalization();
+
         try {
-            let url = GET_ENTITY_MEMBERS_VM.replace('{entityId}', entityId).replace('{lcode}', userLanguage);
-            const response = await this.http.get(url).toPromise();
+            const response = await this.http.post(GET_ENTITY_MEMBERS_VM, baseViewModelRequestDTO).toPromise();
             return response;
+        }
+        catch (error : any) {
+            console.error('Error fetching data:', error.message);
+            response.message = error.message;
+        }
+
+        /*
+        try {
+            let url = GET_ENTITY_MEMBERS_VM.replace('{lcode}', userLanguage); // .replace('{entityId}', entityId)
+            const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+            
+            var httpResponse = this.http.get(url, {
+                headers,
+                params: { entityId: entityId } // Sending entityId as a query parameter
+              });
+
+            console.log(httpResponse);
+            response = await httpResponse.toPromise() as BaseResponseModel;
         }
         catch (error : any) {
             console.error('Error fetching data:', error.message);
             // Handle the error appropriately (e.g., display an error message)
         }
+        */
+        return response;
     }
 
     //#endregion
 
     //#region Get Entity Skills
 
-    async getEntitySkills(entityId: string) : Promise<any> {
+    async getEntitySkills(baseViewModelRequest: BaseViewModelRequestDTO) : Promise<any> {
         let userLanguage = this.languageService.returnLocalization();
         try {
-            let url = GET_ENTITY_SKILLS.replace('{entityId}', entityId).replace('{lcode}', userLanguage);
-            const response = await this.http.get(url).toPromise();
+            let url = GET_ENTITY_SKILLS;
+            baseViewModelRequest.languageCode = userLanguage;
+            const response = await this.http.post(url,baseViewModelRequest).toPromise();
             return response;
         }
         catch (error : any) {

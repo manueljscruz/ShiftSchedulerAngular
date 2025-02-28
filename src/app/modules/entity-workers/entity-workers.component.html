@@ -42,7 +42,7 @@
             <!-- Entity Worker List -->
             <div id="entity-worker-list-container">
                 <div class="entity-worker-list-item" *ngFor="let member of entityMembersViewModel.entityMembers">
-                    <entity-worker-member-card [entityWorkerMember]="member" [allowActions]="isCurrentUserEntityOwner" (editWorkerTemplateEvent)="onEditMember($event)" (deleteWorkerTemplateEvent)="onDeleteMember($event, '5000', '5000', DELETE_MEMBER_TITLE, DELETE_MEMBER_CONTENT)"></entity-worker-member-card>
+                    <entity-worker-member-card [entityWorkerMember]="member" [allowActions]="isCurrentUserEntityOwner" (editWorkerTemplateEvent)="onEditMember($event)" (deleteWorkerTemplateEvent)="onDeleteMember($event)"></entity-worker-member-card>
                 </div>
             </div>
         </div>

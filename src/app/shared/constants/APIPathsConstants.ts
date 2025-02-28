@@ -16,9 +16,9 @@ export const GET_ENTITY_TYPES_BY_LOCALIZATION_URL : string = BASE_API_URL + "Ent
 //#region ENTITY
 export const ADD_ENTITY_URL : string = BASE_API_URL + "Entity/add";
 export const GET_ENTITIES_BY_WORKER_URL : string = BASE_API_URL + "Entity/get-entities-by-worker-id/{workerId}";
-export const GET_ENTITY_MEMBERS_VM : string = BASE_API_URL + "Entity/get-entities-members-view-model/{entityId}/{lcode}";
+export const GET_ENTITY_MEMBERS_VM : string = BASE_API_URL + "Entity/get-entities-members-view-model";
 export const GET_ENTITY_PROFILE_VM : string = BASE_API_URL + "Entity/get-entity-profile-view-model";
-export const GET_ENTITY_SKILLS : string = BASE_API_URL + "Entity/get-entity-skills/{entityId}/{lcode}";
+export const GET_ENTITY_SKILLS : string = BASE_API_URL + "Entity/get-entity-skills";
 export const UPDATE_ENTITY_URL : string = BASE_API_URL + "Entity/update";
 export const DELETE_ENTITY_URL : string = BASE_API_URL + "Entity/delete-by-id/{id}";
 export const ADD_NEW_ENTITY_MEMBER_URL : string = BASE_API_URL + "Entity/add-new-entity-member";
@@ -27,7 +27,7 @@ export const DELETE_ENTITY_MEMBER_URL : string = BASE_API_URL + "Entity/delete-e
 
 //#region SHIFT
 export const GET_ENTITY_SHIFT_VIEW_MODEL_URL : string = BASE_API_URL + "Shift/get-entity-shift-view-model";
-export const GET_ENTITY_SHIFTS : string = BASE_API_URL + "Shift/get-entity-shifts/{entityId}";
+export const GET_ENTITY_SHIFTS : string = BASE_API_URL + "Shift/get-entity-shifts";
 export const ADD_SHIFT_URL : string = BASE_API_URL + "Shift/add-entity-shift";
 export const ADD_SHIFT_BREAK_URL : string = BASE_API_URL + "Shift/add-entity-shift-break";
 export const UPDATE_SHIFT_URL : string = BASE_API_URL + "Shift/update-entity-shift";
