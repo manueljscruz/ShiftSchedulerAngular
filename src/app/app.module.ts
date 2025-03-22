@@ -61,6 +61,7 @@ import { EditMemberDialogComponent } from './modules/entity-workers/edit-member-
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { GenericMessageDialogComponent } from './shared/components/generic-message-dialog/generic-message-dialog.component';
 import { ConfirmEmailComponent } from './modules/confirm-email/confirm-email.component';
+import { ShiftRotationDialogFormComponent } from './modules/entity-shifts/shift-rotation-dialog-form/shift-rotation-dialog-form.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { ConfirmEmailComponent } from './modules/confirm-email/confirm-email.com
     EditMemberDialogComponent,
     GenericMessageDialogComponent,
     ConfirmEmailComponent,
+    ShiftRotationDialogFormComponent
   ],
   imports: [
     BrowserModule,

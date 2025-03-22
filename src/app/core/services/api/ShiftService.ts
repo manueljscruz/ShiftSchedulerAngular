@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LanguageServiceService } from '../language-service.service';
-import { GET_ENTITY_SHIFT_VIEW_MODEL_URL, ADD_SHIFT_URL, ADD_SHIFT_BREAK_URL, UPDATE_SHIFT_BREAK_URL, DELETE_SHIFT_URL, DELETE_SHIFT_BREAK_URL, UPDATE_SHIFT_URL, GET_ENTITY_SHIFTS } from '../../../shared/constants/APIPathsConstants';
+import { GET_ENTITY_SHIFT_VIEW_MODEL_URL, ADD_SHIFT_URL, ADD_SHIFT_BREAK_URL, UPDATE_SHIFT_BREAK_URL, DELETE_SHIFT_URL, DELETE_SHIFT_BREAK_URL, UPDATE_SHIFT_URL, GET_ENTITY_SHIFTS, ADD_SHIFT_ROTATION_URL } from '../../../shared/constants/APIPathsConstants';
 import { ShiftViewModel } from '../../../shared/models/VM/ShiftViewModel';
 import { EntityShiftViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityShiftViewModelRequestDTO';
 import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
@@ -11,6 +11,7 @@ import { ShiftBreakDTO } from '../../../shared/models/DTOs/Incoming/ShiftBreakDT
 import { AddShiftDTO } from '../../../shared/models/DTOs/Outgoing/AddShiftDTO';
 import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
+import { AddShiftRotationDTO } from '../../../shared/models/DTOs/Outgoing/AddShiftRotationDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -35,7 +36,7 @@ export class ShiftService {
     /// - ShiftTemplates
     /// </summary>
     async getShiftViewModel(entityShiftViewModelRequestDTO : BaseViewModelRequestDTO) : Promise<ShiftViewModel> {
-        let shiftVM : ShiftViewModel = new ShiftViewModel([], [], false, []);
+        let shiftVM : ShiftViewModel = new ShiftViewModel([], [], [], false, []);
 
         entityShiftViewModelRequestDTO.languageCode = this.languageService.returnLocalization();
         try{
@@ -242,6 +243,27 @@ export class ShiftService {
             return dateSplit[0] + ":" + dateSplit[1] + ":" + "00";
         else
             return dateSplit[0] + ":" + dateSplit[1] + ":" + dateSplit[2];
+    }
+
+    //#endregion
+
+    //#region Add Shift Rotation
+
+    
+    async addShiftRotation(newRotation: AddShiftRotationDTO): Promise<BaseResponseModel> {
+        let response = new BaseResponseModel(false, "", null);
+
+        try{
+            let rotationJSON = JSON.parse(JSON.stringify(newRotation));
+            rotationJSON.leaveDuration = newRotation.leaveDuration.toISOString().substring(11, 19); // this.auxConvertDateToTimeSpan(newRotation.leaveDuration);
+
+            response = await this.http.post<BaseResponseModel>(ADD_SHIFT_ROTATION_URL, rotationJSON).toPromise() as BaseResponseModel;
+        }
+        catch(error : any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
     }
 
     //#endregion

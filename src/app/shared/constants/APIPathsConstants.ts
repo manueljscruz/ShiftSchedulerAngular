@@ -34,6 +34,7 @@ export const UPDATE_SHIFT_URL : string = BASE_API_URL + "Shift/update-entity-shi
 export const UPDATE_SHIFT_BREAK_URL : string = BASE_API_URL + "Shift/update-entity-shift-break";
 export const DELETE_SHIFT_URL : string = BASE_API_URL + "Shift/delete-entity-shift/{entityId}/{shiftId}";
 export const DELETE_SHIFT_BREAK_URL : string = BASE_API_URL + "Shift/delete-entity-shift-break/{shiftBreakId}";
+export const ADD_SHIFT_ROTATION_URL : string = BASE_API_URL + "Shift/add-shift-rotation";
 
 //#region RULES
 export const GET_ENTITY_RULES_VIEW_MODEL_URL : string = BASE_API_URL + "EntityRule/get-entity-rules-view-model";

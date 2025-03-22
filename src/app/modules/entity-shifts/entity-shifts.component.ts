@@ -21,6 +21,7 @@ import e from 'express';
 import { ShiftBreakTemplateDTO } from '../../shared/models/DTOs/Incoming/ShiftBreakTemplateDTO';
 import { ShiftTemplateDTO } from '../../shared/models/DTOs/Incoming/ShiftTemplateDTO';
 import { BaseViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
+import { ShiftRotationDialogFormComponent } from './shift-rotation-dialog-form/shift-rotation-dialog-form.component';
 
 @Component({
   selector: 'app-entity-shifts',
@@ -68,12 +69,14 @@ export class EntityShiftsComponent {
   /// <summary>
   /// Shift view model object
   /// </summary>
-  ShiftViewModel: ShiftViewModel = new ShiftViewModel([], [], false, []);
+  public ShiftViewModel: ShiftViewModel = new ShiftViewModel([], [], [], false, []);
 
   /// <summary>
   /// Reference to the shifts table
   /// </summary>
   @ViewChild(MatTable) shiftTable!: MatTable<any>;
+
+  @ViewChild(MatTable) shiftRotationTable!: MatTable<any>;
 
   /// <summary>
   /// Selected shift object
@@ -115,6 +118,8 @@ export class EntityShiftsComponent {
 
   //#region METHODS
 
+  //#region On Init
+
   async ngOnInit() {
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
 
@@ -130,10 +135,16 @@ export class EntityShiftsComponent {
     this.loadingScreenService.changeLoadingState(false);
   }
 
+  //#endregion
+
+  //#region Toggle Form
+
   toggleForm(isEditing: boolean) {
     this.isFormActive = !this.isFormActive;
     this.isEditing = isEditing;
   }
+
+  //#endregion
 
   expandRow(_t95: any) {
     
@@ -193,6 +204,8 @@ export class EntityShiftsComponent {
 
   //#endregion
 
+  //#region On Select Shift Template
+
   onSelectShiftTemplate($event: ShiftTemplateDTO) {
     let shiftTemplateDTO = $event;
     if(shiftTemplateDTO != null){
@@ -221,6 +234,8 @@ export class EntityShiftsComponent {
       }
     }
   }
+
+  //#endregion
 
   // CREATING OR EDITING A SHIFT
 
@@ -334,7 +349,7 @@ export class EntityShiftsComponent {
     return response;
   }
 
-//#endregion
+  //#endregion
 
   /// <summary>
   /// Opens the shift break dialog form to add or edit a shift break
@@ -447,6 +462,47 @@ export class EntityShiftsComponent {
       this.loadingScreenService.changeLoadingState(false);
     }
   }
-}
+  
+  //#endregion
+
+  //#region Change Rotation
+
+  changeRotation() {
+    this.openShiftRotationDialog('5000', '5000');
+  }
+
+  //#endregion
+
+  //#region Open Shift Rotation Dialog
+
+  openShiftRotationDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
+    const dialogRef = this.dialog.open(ShiftRotationDialogFormComponent, {
+      width: '600px',
+      data:{
+        entityId: this.currentEntityId,
+        shifts: this.ShiftViewModel.shifts
+      }
+    });
+
+    dialogRef.componentInstance.shiftRotationOp.subscribe((result : BaseResponseModel) => {
+      dialogRef.close();
+
+      if(result.success && result.result != null){
+        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, result.message));
+        // this.shiftTable.renderRows();
+      }
+      else if(result.success && result.result == null){
+
+      }
+      else{
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, result.message));
+      }
+    });
+  }
 
 //#endregion
+}
+
+
+
+

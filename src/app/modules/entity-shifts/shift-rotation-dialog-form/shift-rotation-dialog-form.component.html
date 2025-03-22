@@ -1,0 +1,33 @@
+<div id="shift-rotation-dialog">
+    <h1 i18n>Shift Rotation</h1>
+    <form>
+        <mat-checkbox [checked]="isLeave" name="isLeaveCheckbox" [(ngModel)]="isLeave">
+            <span i18n>Is Leave</span>
+        </mat-checkbox>
+        <ng-container *ngIf="isLeave">
+            <mat-form-field appearance="outline">
+                <mat-label i18n>Leave Duration</mat-label>
+                <input type="time" matInput required placeholder="Leave Duration" required min="00:00" max="24:00" name="leave-duration-timer" [(ngModel)]="leaveDuration">
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="!isLeave">
+            <mat-form-field appearance="outline">
+                <mat-label i18n>Shift</mat-label>
+                <mat-select name="shift-selector" [(ngModel)]="selectShift" required>
+                    <mat-option *ngFor="let shift of shifts" [value]="shift">{{ shift.shiftName }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+    </form>
+    <div class="actions">
+        <button mat-fab extended class="secondary-color-bg flex-1" (click)="closeDialog()"> <!-- (click)="handleBackButton()" -->
+            <mat-icon>keyboard_backspace</mat-icon>
+            <span i18n>Back</span>
+        </button>
+        <button mat-fab extended class="add-color-bg flex-1" (click)="addShiftRotation()"> <!-- (click)="handleShiftRotationSubmission()" -->
+            <!--<mat-icon>{{executeActionIcon}}</mat-icon>-->
+            <span i18n>Set</span>
+        </button>
+    </div>
+</div>

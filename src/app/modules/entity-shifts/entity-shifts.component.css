@@ -104,3 +104,8 @@
 mat-table{
     overflow-y: auto;
 }
+
+#shift-table-rotation-separator{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

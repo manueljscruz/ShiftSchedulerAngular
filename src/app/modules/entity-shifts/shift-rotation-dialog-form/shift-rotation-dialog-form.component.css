@@ -1,0 +1,10 @@
+#shift-rotation-dialog{
+    padding: 20px;
+}
+
+.actions {
+    background-color: transparent;
+    padding-top: 20px;
+    display: flex;
+    column-gap: 10px;
+}
