@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LanguageServiceService } from '../language-service.service';
-import { GET_ENTITY_SHIFT_VIEW_MODEL_URL, ADD_SHIFT_URL, ADD_SHIFT_BREAK_URL, UPDATE_SHIFT_BREAK_URL, DELETE_SHIFT_URL, DELETE_SHIFT_BREAK_URL, UPDATE_SHIFT_URL, GET_ENTITY_SHIFTS, ADD_SHIFT_ROTATION_URL } from '../../../shared/constants/APIPathsConstants';
+import { GET_ENTITY_SHIFT_VIEW_MODEL_URL, ADD_SHIFT_URL, ADD_SHIFT_BREAK_URL, UPDATE_SHIFT_BREAK_URL, DELETE_SHIFT_URL, DELETE_SHIFT_BREAK_URL, UPDATE_SHIFT_URL, GET_ENTITY_SHIFTS, ADD_SHIFT_ROTATION_URL, UPDATE_SHIFT_ROTATION_URL, DELETE_SHIFT_ROTATION_URL } from '../../../shared/constants/APIPathsConstants';
 import { ShiftViewModel } from '../../../shared/models/VM/ShiftViewModel';
 import { EntityShiftViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityShiftViewModelRequestDTO';
 import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
@@ -12,6 +12,8 @@ import { AddShiftDTO } from '../../../shared/models/DTOs/Outgoing/AddShiftDTO';
 import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 import { AddShiftRotationDTO } from '../../../shared/models/DTOs/Outgoing/AddShiftRotationDTO';
+import { UpdateShiftRotationDTO } from '../../../shared/models/DTOs/Outgoing/UpdateShiftRotationDTO';
+import { EntityShiftRotationDTO } from '../../../shared/models/DTOs/Incoming/EntityShiftRotationDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -255,8 +257,6 @@ export class ShiftService {
 
         try{
             let rotationJSON = JSON.parse(JSON.stringify(newRotation));
-            rotationJSON.leaveDuration = newRotation.leaveDuration.toISOString().substring(11, 19); // this.auxConvertDateToTimeSpan(newRotation.leaveDuration);
-
             response = await this.http.post<BaseResponseModel>(ADD_SHIFT_ROTATION_URL, rotationJSON).toPromise() as BaseResponseModel;
         }
         catch(error : any){
@@ -264,6 +264,60 @@ export class ShiftService {
         }
 
         return response;
+    }
+
+    //#endregion
+
+    //#region Update Shift Rotation
+
+    async updateShiftRotation(rotation: UpdateShiftRotationDTO): Promise<BaseResponseModel> {
+        let response = new BaseResponseModel(false, "", null);
+
+        try{
+            let httpResponse = await this.http.put<BaseResponseModel>(UPDATE_SHIFT_ROTATION_URL, rotation, {observe: 'response'}).toPromise();
+        
+            // Check for update success
+            if(httpResponse?.status === 204){
+                response = new BaseResponseModel(true, "Success", null);
+            }
+            else 
+                response = new BaseResponseModel(false, "Error", null);
+            
+        }
+        catch(error : any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
+    }
+
+    //#endregion
+
+    //#region Delete Shift Rotation
+
+    async deleteShiftRotation(shiftRotation : EntityShiftRotationDTO): Promise<BaseResponseModel> {
+        let response = new BaseResponseModel(false, "", null);
+
+        try{
+            let httpResponse = await this.http.delete<BaseResponseModel>(DELETE_SHIFT_ROTATION_URL, {
+                body: shiftRotation,
+                observe: 'response',
+                responseType: 'json'
+            }).toPromise();
+        
+            // Check for update success
+            if(httpResponse?.status === 204){
+                response = new BaseResponseModel(true, "Success", null);
+            }
+            else 
+                response = new BaseResponseModel(false, "Error", null);
+        }
+        catch(error : any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
+
     }
 
     //#endregion

@@ -93,7 +93,7 @@
                         <p i18n>No Shift Rotations have been created yet.</p>
                     </div>
                 </ng-container>
-                <ng-container *ngIfElse="ShiftViewModel.shiftRotations.length > 0">
+                <ng-container *ngIf="ShiftViewModel.shiftRotations.length > 0">
                     <mat-table #shiftRotationTable [dataSource]="ShiftViewModel.shiftRotations" class="mat-elevation-z8">
                         <!-- Rotation Order Column -->
                         <ng-container matColumnDef="OrderNo">
@@ -113,16 +113,16 @@
                             <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
                             <!-- UP -->
                             <mat-cell *matCellDef="let rotation">
-                                <button mat-icon-button color="primary" (click)="expandRow(rotation)">
+                                <button mat-icon-button color="primary" (click)="goUp(rotation)">
                                     <mat-icon>expand_more</mat-icon>
                                 </button>
                             
-                                <button mat-icon-button color="primary" (click)="expandRow(rotation)">
-                                    <mat-icon>expand_more</mat-icon>
+                                <button mat-icon-button color="primary" (click)="goDown(rotation)">
+                                    <mat-icon>expand_less</mat-icon>
                                 </button>
                             
                                 <!-- REMOVE -->
-                                <button mat-icon-button color="warn" (click)="openDeleteDialog('5000','5000', DELETE_SHIFT_TITLE, DELETE_SHIFT_CONTENT, rotation, 'ShiftDTO')">
+                                <button mat-icon-button color="warn" (click)="openDeleteDialog('5000','5000', DELETE_SHIFT_ROTATION_TITLE, DELETE_SHIFT_ROTATION_CONTENT, rotation, 'ShiftRotationDTO')">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                             </mat-cell>

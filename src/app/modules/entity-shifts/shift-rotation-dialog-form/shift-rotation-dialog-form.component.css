@@ -8,3 +8,12 @@
     display: flex;
     column-gap: 10px;
 }
+
+#leave-duration-slider{
+    width: 100%;
+}
+
+#duration-label{
+    display: flex;
+    justify-content: center;
+}

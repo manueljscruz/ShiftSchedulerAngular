@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { ActivatedRoute } from '@angular/router';
 import { ShiftDTO } from '../../shared/models/DTOs/Incoming/ShiftDTO';
@@ -16,12 +16,14 @@ import { MatTable } from '@angular/material/table';
 import { AddShiftDTO } from '../../shared/models/DTOs/Outgoing/AddShiftDTO';
 import { AddShiftBreakDTO } from '../../shared/models/DTOs/Outgoing/AddShiftBreakDTO';
 import { GenericDeleteWarningDialogComponent } from '../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
-import { DELETE_SHIFT_BREAK_CONTENT, DELETE_SHIFT_BREAK_TITLE, DELETE_SHIFT_CONTENT, DELETE_SHIFT_TITLE } from '../../shared/constants/UITextConstants';
+import { DELETE_SHIFT_BREAK_CONTENT, DELETE_SHIFT_BREAK_TITLE, DELETE_SHIFT_CONTENT, DELETE_SHIFT_ROTATION_CONTENT, DELETE_SHIFT_ROTATION_TITLE, DELETE_SHIFT_TITLE } from '../../shared/constants/UITextConstants';
 import e from 'express';
 import { ShiftBreakTemplateDTO } from '../../shared/models/DTOs/Incoming/ShiftBreakTemplateDTO';
 import { ShiftTemplateDTO } from '../../shared/models/DTOs/Incoming/ShiftTemplateDTO';
 import { BaseViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { ShiftRotationDialogFormComponent } from './shift-rotation-dialog-form/shift-rotation-dialog-form.component';
+import { EntityShiftRotationDTO } from '../../shared/models/DTOs/Incoming/EntityShiftRotationDTO';
+import { UpdateShiftRotationDTO } from '../../shared/models/DTOs/Outgoing/UpdateShiftRotationDTO';
 
 @Component({
   selector: 'app-entity-shifts',
@@ -36,6 +38,8 @@ export class EntityShiftsComponent {
   DELETE_SHIFT_CONTENT = DELETE_SHIFT_CONTENT;
   DELETE_SHIFT_BREAK_TITLE = DELETE_SHIFT_BREAK_TITLE;
   DELETE_SHIFT_BREAK_CONTENT = DELETE_SHIFT_BREAK_CONTENT;
+  DELETE_SHIFT_ROTATION_TITLE = DELETE_SHIFT_ROTATION_TITLE;
+  DELETE_SHIFT_ROTATION_CONTENT = DELETE_SHIFT_ROTATION_CONTENT;
 
   //#endregion
 
@@ -108,7 +112,8 @@ export class EntityShiftsComponent {
     private dialog: MatDialog,
     private snackbarManagerService: SnackbarManagerService,
     private loadingScreenService: LoadingSpinnerManagerService,
-    private shiftService: ShiftService
+    private shiftService: ShiftService,
+    private cdRef: ChangeDetectorRef
   ) 
   { 
     this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
@@ -351,6 +356,8 @@ export class EntityShiftsComponent {
 
   //#endregion
 
+  //#region Open Shift Break Dialog Form
+
   /// <summary>
   /// Opens the shift break dialog form to add or edit a shift break
   /// </summary>
@@ -394,12 +401,20 @@ export class EntityShiftsComponent {
     });
   }
 
+  //#endregion
+
+  //#region New Shift Break
+
   /// <summary>
   /// Opens the dialog form for adding a new shift break
   /// </summary>
   newShiftBreak() {
     this.openShiftBreakDialogForm('5000', '5000', true, ShiftBreakDTO.newShiftBreakDTO());
   }
+
+  //#endregion
+
+  //#region Edit Shift Break
 
   /// <summary>
   /// Opens the dialog to edit the shift break
@@ -408,6 +423,10 @@ export class EntityShiftsComponent {
     this.shiftBreakToChange = shiftBreakDTO;
     this.openShiftBreakDialogForm('5000', '5000', false, this.shiftBreakToChange);
   }
+
+  //#endregion
+
+  //#region Open Delete Dialog
 
   async openDeleteDialog(enterAnimationDuration: string, exitAnimationDuration: string, title : string, content : string, objectToDelete: any, type: string){
     const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
@@ -424,10 +443,18 @@ export class EntityShiftsComponent {
         else if(type === 'ShiftBreakDTO'){
           await this.deleteShiftBreak(objectToDelete);
         }
+
+        else if(type === 'ShiftRotationDTO'){
+          await this.deleteRotation(objectToDelete);
+        }
+
       };
     });
   }
 
+  //#endregion
+
+  //#region Delete Shift Break
 
   async deleteShiftBreak(shiftBreakDTO: ShiftBreakDTO) {
     // If no shift break id, remove from the selected shift breaks
@@ -489,7 +516,8 @@ export class EntityShiftsComponent {
 
       if(result.success && result.result != null){
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, result.message));
-        // this.shiftTable.renderRows();
+        this.ShiftViewModel.shiftRotations = [...this.ShiftViewModel.shiftRotations, result.result];
+        this.shiftRotationTable.renderRows();
       }
       else if(result.success && result.result == null){
 
@@ -500,7 +528,143 @@ export class EntityShiftsComponent {
     });
   }
 
-//#endregion
+  //#region Go Up Shift Rotation
+  async goUp(shiftRotationDTO : EntityShiftRotationDTO){
+    await this.updateShiftRotation(shiftRotationDTO, 1);
+  }
+
+  //#endregion
+
+  //#region Go Down Shift Rotation
+
+  async goDown(shiftRotationDTO : EntityShiftRotationDTO){
+    await this.updateShiftRotation(shiftRotationDTO, -1);
+  }
+
+  //#endregion
+
+  async updateShiftRotation(shiftRotationDTO : EntityShiftRotationDTO, indexChange: number){
+    let validationResponse = this.validateShiftRotationChange(shiftRotationDTO, indexChange);
+
+    if(validationResponse.success){
+      let updateShiftRotationDTO = new UpdateShiftRotationDTO(
+        shiftRotationDTO.entityId,
+        shiftRotationDTO.orderNo,
+        shiftRotationDTO.isLeave,
+        shiftRotationDTO.orderNo + indexChange
+      );
+
+      this.loadingScreenService.changeLoadingState(true);
+      let apiResponse = await this.shiftService.updateShiftRotation(updateShiftRotationDTO);
+      this.loadingScreenService.changeLoadingState(false);
+
+      if(apiResponse.success){
+        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, apiResponse.message));
+        
+        // Get this instance's index in the array
+        let indexOrigin = this.ShiftViewModel.shiftRotations.findIndex(x => x.entityId === shiftRotationDTO.entityId && x.orderNo === shiftRotationDTO.orderNo);
+        let indexDest = this.ShiftViewModel.shiftRotations.findIndex(x => x.entityId === shiftRotationDTO.entityId && x.orderNo === shiftRotationDTO.orderNo + indexChange);
+        
+        console.log("Index Origin:", indexOrigin, "Index Dest:", indexDest);
+
+        // If both indexes are not found, then the order numbers are swapped
+        if(indexOrigin !== -1 && indexDest !== -1){
+          
+          console.log("Before swap:", [...this.ShiftViewModel.shiftRotations]);
+          [this.ShiftViewModel.shiftRotations[indexOrigin].orderNo, this.ShiftViewModel.shiftRotations[indexDest].orderNo] =
+          [this.ShiftViewModel.shiftRotations[indexDest].orderNo, this.ShiftViewModel.shiftRotations[indexOrigin].orderNo];
+
+          [this.ShiftViewModel.shiftRotations[indexOrigin], this.ShiftViewModel.shiftRotations[indexDest]] =
+          [this.ShiftViewModel.shiftRotations[indexDest], this.ShiftViewModel.shiftRotations[indexOrigin]];
+          console.log("After swap:", [...this.ShiftViewModel.shiftRotations]);
+
+          this.ShiftViewModel.shiftRotations = [...this.ShiftViewModel.shiftRotations];
+        }
+      }
+      else{
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, apiResponse.message));
+      }
+    }
+    else{
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResponse.message));
+    }
+
+  }
+
+  //#region Delete Shift Rotation
+
+  async deleteRotation(shiftRotationDTO : EntityShiftRotationDTO){
+    this.loadingScreenService.changeLoadingState(true);
+
+    let apiResponse = await this.shiftService.deleteShiftRotation(shiftRotationDTO);
+
+    this.loadingScreenService.changeLoadingState(false);
+
+    if(apiResponse.success){
+      this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, apiResponse.message));
+
+      // Remove the shift break from the selected shift breaks
+      let index = this.ShiftViewModel.shiftRotations.findIndex(x => x == shiftRotationDTO);
+      this.ShiftViewModel.shiftRotations.splice(index, 1);
+
+      this.shiftRotationTable.renderRows();
+
+      this.reorderShiftRotations();
+    }
+    else{
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, apiResponse.message));
+    }
+  }
+
+  //#endregion
+
+  //#region Validate Shift Rotation Change
+
+  validateShiftRotationChange(shiftRotationDTO : EntityShiftRotationDTO, variation: number) : BaseResponseModel{
+    let response = new BaseResponseModel(false, '', null);
+
+    if(this.ShiftViewModel.shiftRotations.length === 1){
+      response.message = 'There is only one shift rotation';
+      return response;
+    }
+
+    // If current order is at 1 and trying to go up
+    if(variation > 0 && shiftRotationDTO.orderNo == this.ShiftViewModel.shiftRotations.length){
+      response.message = 'Order is at the maximum value';
+      return response;
+    }
+
+    // If current order is at the last order and trying to go down
+    if(variation < 0 && shiftRotationDTO.orderNo == 1){
+      response.message = 'Order is at the minimum value';
+      return response;
+    }
+
+    response.success = true;
+
+    return response;
+  }
+
+  //#endregion
+
+  //#region Reorder Shift Rotations
+
+  reorderShiftRotations(){
+
+    let orderNo : number = 1;
+
+    this.ShiftViewModel.shiftRotations.forEach((shiftRotation) => {
+      if(shiftRotation.orderNo !== orderNo)
+        shiftRotation.orderNo = orderNo;
+      orderNo++;
+    });
+
+    this.ShiftViewModel.shiftRotations = [...this.ShiftViewModel.shiftRotations];
+  }
+
+  //#endregion
+
+
 }
 
 

@@ -7,6 +7,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
 import { AddShiftRotationDTO } from '../../../shared/models/DTOs/Outgoing/AddShiftRotationDTO';
 import { SnackbarUIModel } from '../../../shared/models/UI/SnackbarUIModel';
+import {MatSliderModule} from '@angular/material/slider';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'shift-rotation-dialog-form',
@@ -17,6 +19,12 @@ export class ShiftRotationDialogFormComponent {
 
   //#region Properties
 
+  /*
+  shiftRotationForm: FormGroup = new FormGroup({
+    leaveDurationSlider: new FormControl(0)
+  });
+*/
+
   currentEntityId : string = "";
 
   shifts: ShiftDTO[] = [];
@@ -25,7 +33,11 @@ export class ShiftRotationDialogFormComponent {
 
   isLeave: boolean = false;
 
-  leaveDuration: Date = new Date();
+  leaveDurationInput: number = 0;
+
+  leaveDurationLabel: string = '';
+
+  leaveDuration: string = '';
 
   @Output() shiftRotationOp = new EventEmitter<BaseResponseModel>();
 
@@ -43,7 +55,6 @@ export class ShiftRotationDialogFormComponent {
   ) {
     this.currentEntityId = data.entityId;
     this.shifts = data.shifts;
-    this.leaveDuration.setHours(0,0,0,0);
   }
 
   //#endregion
@@ -72,6 +83,21 @@ export class ShiftRotationDialogFormComponent {
   closeDialog() {
     this.shiftRotationOp.emit(new BaseResponseModel(true, '', null));
   }
+
+  onDurationChange(event: any) {
+    this.leaveDurationLabel = this.setDurationAndLabel(this.leaveDurationInput);
+  }
+
+  setDurationAndLabel(value: number): string {
+    let days = Math.floor(value / 24);
+    let hours = Math.floor(value) - (days * 24);
+    let minutes = (value % 1) * 60;
+
+    this.leaveDuration = days != 0 ? days +' ' + hours + ':' + minutes : hours + ':' + minutes;
+
+    return days != 0 ? `${days}d ${hours}h ${minutes}m` : `${hours}h ${minutes}m`;
+  }
+
 
   //#endregion
 
