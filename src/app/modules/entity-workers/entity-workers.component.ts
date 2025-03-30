@@ -87,7 +87,7 @@ export class EntityWorkersComponent {
     private dialog: MatDialog,
     private route: ActivatedRoute
   ) {
-    this.entityMembersViewModel = new EntityMembersViewModel("", [], []);
+    this.entityMembersViewModel = new EntityMembersViewModel("", [], [], []);
     this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || ''; // decodedEntityId;
   }
 
@@ -162,11 +162,12 @@ export class EntityWorkersComponent {
 
   onEditMember(editWorker: EntityWorkerMemberDTO) {
     let skillList = this.entityMembersViewModel.skills;
+    let shiftsList = this.entityMembersViewModel.shifts;
     let currentEntityId = this.currentEntityId;
     
     const dialogRef = this.dialog.open(EditMemberDialogComponent, {
       width: '500px',
-      data: { UI_DIALOG_ENTRANCE_DURATION, UI_DIALOG_EXIT_DURATION, editWorker, skillList, currentEntityId }
+      data: { UI_DIALOG_ENTRANCE_DURATION, UI_DIALOG_EXIT_DURATION, editWorker, skillList, currentEntityId, shiftsList }
     });
     
   }

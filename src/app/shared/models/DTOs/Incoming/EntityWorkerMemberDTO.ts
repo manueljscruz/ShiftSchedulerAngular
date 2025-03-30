@@ -1,3 +1,4 @@
+import { ShiftDTO } from "./ShiftDTO";
 import { SkillDTO } from "./SkillDTO";
 
 export class EntityWorkerMemberDTO{
@@ -7,13 +8,18 @@ export class EntityWorkerMemberDTO{
     canCreateSchedules: boolean;
     isOwner: boolean;
     skillSet: SkillDTO[];
+    partOfRotation: boolean;
+    assignedShifts: ShiftDTO[];
 
-    constructor(workerId: string, workerName: string, isBot: boolean, canCreateSchedules: boolean, isOwner : boolean, skillSet: SkillDTO[]) {
+    constructor(workerId: string, workerName: string, isBot: boolean, canCreateSchedules: boolean, isOwner : boolean, skillSet: SkillDTO[], partOfRotation: boolean, assignedShifts: ShiftDTO[]){ {
         this.workerId = workerId;
         this.workerName = workerName;
         this.isBot = isBot;
         this.canCreateSchedules = canCreateSchedules;
         this.isOwner = isOwner;
         this.skillSet = skillSet;
+        this.partOfRotation = partOfRotation;
+        this.assignedShifts = assignedShifts;
     }
+}
 }

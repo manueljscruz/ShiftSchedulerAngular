@@ -11,6 +11,7 @@ import { SnackbarManagerService } from '../../../core/services/ui/snackbar-manag
 import { SnackbarUIModel } from '../../../shared/models/UI/SnackbarUIModel';
 import { EditMemberDTO } from '../../../shared/models/DTOs/Outgoing/EditMemberDTO';
 import { EntityService } from '../../../core/services/api/EntityService';
+import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
 
 @Component({
   selector: 'app-edit-member-dialog',
@@ -24,7 +25,7 @@ export class EditMemberDialogComponent {
   /// <summary>
   /// The entity worker member to be edited
   /// </summary
-  entityWorkerMember: EntityWorkerMemberDTO = new EntityWorkerMemberDTO('', '', false, false, false, []);
+  entityWorkerMember: EntityWorkerMemberDTO = new EntityWorkerMemberDTO('', '', false, false, false, [], false, []);
 
   /// <summary>
   /// The current entity identifier
@@ -47,9 +48,24 @@ export class EditMemberDialogComponent {
   localizedSkills : SkillDTO[] = [];
 
   /// <summary>
+  /// The list of shifts to be displayed in the dropdown
+  /// </summary
+  entityShifts: ShiftDTO[] = [];
+
+  /// <summary>
   /// The list of selected skills
   /// </summary
   selectedSkills: SkillDTO[] = [];
+
+  /// <summary>
+  /// The list of selected shifts
+  
+  selectedShifts: ShiftDTO[] = [];
+
+  /// <summary>
+  /// Flag to determine if the user/bot is part of the shift rotation
+  /// </summary
+  partOfRotation: boolean = false;
 
   /// <summary>
   /// The text to display on the execute action button.
@@ -85,6 +101,7 @@ export class EditMemberDialogComponent {
     this.entityWorkerMember = this.data.editWorker;
     this.localizedSkills = this.data.skillList;
     this.currentEntityId = this.data.currentEntityId;
+    this.entityShifts = this.data.shiftsList;
 
     this.nameInput = this.entityWorkerMember.workerName;
 
@@ -93,7 +110,10 @@ export class EditMemberDialogComponent {
     else
       this.nameReadonly = true;
 
-    this.selectedSkills = [...this.entityWorkerMember.skillSet];
+    this.partOfRotation = this.entityWorkerMember.partOfRotation;
+
+    this.selectedSkills = this.entityWorkerMember.skillSet != undefined ? [...this.entityWorkerMember.skillSet] : [];
+    this.selectedShifts = this.entityWorkerMember.assignedShifts != undefined ? [...this.entityWorkerMember.assignedShifts] : [];
   }
 
   //#endregion
@@ -102,6 +122,14 @@ export class EditMemberDialogComponent {
 
   compareSkills(skill1: SkillDTO, skill2: SkillDTO): boolean {
     return skill1 && skill2 ? skill1.skillId === skill2.skillId : skill1 === skill2;
+  }
+
+  //#endregion
+
+  //#region Compare Shifts
+
+  compareShifts(shift1: ShiftDTO, shift2: ShiftDTO): boolean {
+    return shift1 && shift2 ? shift1.shiftId === shift2.shiftId : shift1 === shift2;
   }
 
   //#endregion
@@ -118,7 +146,7 @@ export class EditMemberDialogComponent {
     else{
       this.loadingScreenService.changeLoadingState(true);
 
-      let editWorkerDTO = new EditMemberDTO(this.entityWorkerMember.workerId, this.currentEntityId, this.entityWorkerMember.isBot, this.nameInput, this.selectedSkills);
+      let editWorkerDTO = new EditMemberDTO(this.entityWorkerMember.workerId, this.currentEntityId, this.entityWorkerMember.isBot, this.nameInput, this.selectedSkills, this.partOfRotation, this.selectedShifts);
       
       let apiResponse = await this.entityService.updateEntityMember(editWorkerDTO);
 
@@ -151,6 +179,10 @@ export class EditMemberDialogComponent {
     if(this.selectedSkills.length === 0){
       response.message = 'Please select at least one skill.';
       return response;
+    }
+
+    if(!this.partOfRotation && this.selectedShifts.length === 0){
+      response.message = 'Please select at least one shift.';
     }
 
     response.success = true;
