@@ -1,3 +1,4 @@
+import { ShiftDTO } from "../Incoming/ShiftDTO";
 import { SkillDTO } from "../Incoming/SkillDTO";
 
 export class AddNewMemberDTO {
@@ -27,14 +28,20 @@ export class AddNewMemberDTO {
     /// </summary>
     assignedSkills: SkillDTO[];
 
+    partOfRotation: boolean = false;
+
+    assignedShifts: ShiftDTO[] = [];
+
     languageCode: string;
 
-    constructor(isBot: boolean, destinationEntityId : string, name: string, email: string, skills: SkillDTO[], languageCode: string){
+    constructor(isBot: boolean, destinationEntityId : string, name: string, email: string, skills: SkillDTO[], shifts: ShiftDTO[], partOfRotation: boolean, languageCode: string){
         this.isBot = isBot;
         this.destinationEntityId = destinationEntityId;
         this.memberName = name;
         this.memberEmail = email;
         this.assignedSkills = skills;
+        this.assignedShifts = shifts;
+        this.partOfRotation = partOfRotation;
         this.languageCode = languageCode;
     }
 }

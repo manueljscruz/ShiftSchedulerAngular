@@ -156,6 +156,8 @@ export class EditMemberDialogComponent {
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Member successfully updated.'));
         this.entityWorkerMember.workerName = this.nameInput;
         this.entityWorkerMember.skillSet = this.selectedSkills;
+        this.entityWorkerMember.partOfRotation = this.partOfRotation;
+        this.entityWorkerMember.assignedShifts = this.selectedShifts;
         this.onMemberEdited.emit(this.entityWorkerMember);
       }
       else{

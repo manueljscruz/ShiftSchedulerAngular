@@ -11,6 +11,7 @@ import { SnackbarUIModel } from '../../../shared/models/UI/SnackbarUIModel';
 import { AddNewMemberDTO } from '../../../shared/models/DTOs/Outgoing/AddNewMemberDTO';
 import { LanguageServiceService } from '../../../core/services/language-service.service';
 import { EntityService } from '../../../core/services/api/EntityService';
+import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
 
 @Component({
   selector: 'add-member-dialog',
@@ -43,6 +44,11 @@ export class AddMemberDialogComponent {
   localizedSkills: SkillDTO[] = [];
 
   /// <summary>
+  /// The list of shifts to be displayed in the dropdown
+  /// </summary
+  entityShifts: ShiftDTO[] = [];
+
+  /// <summary>
   /// The list of skills that the user has selected.
   /// </summary>
   selectedSkills: SkillDTO[] = [];
@@ -73,6 +79,16 @@ export class AddMemberDialogComponent {
   currentEntityId: string = '';
 
   /// <summary>
+  /// Whether the user is part of the shift rotation.
+  /// </summary>
+  partOfRotation: boolean = false;
+
+  /// <summary>
+    /// The list of selected shifts
+    
+    selectedShifts: ShiftDTO[] = [];
+
+  /// <summary>
   /// Event emitter for when a member is added or invited.
   /// </summary>
   @Output() onMemberAdded: EventEmitter<any> = new EventEmitter<any>();
@@ -84,6 +100,7 @@ export class AddMemberDialogComponent {
   private languageService: LanguageServiceService) {
     this.localizedSkills = data.skillList;
     this.currentEntityId = data.currentEntityId;
+    this.entityShifts = data.shiftList;
   }
 
   ngOnInit() {
@@ -106,6 +123,18 @@ export class AddMemberDialogComponent {
     this.specifySkills = $event.checked;
   }
 
+  compareSkills(skill1: SkillDTO, skill2: SkillDTO): boolean {
+    return skill1 && skill2 ? skill1.skillId === skill2.skillId : skill1 === skill2;
+  }
+
+  //#region Compare Shifts
+
+  compareShifts(shift1: ShiftDTO, shift2: ShiftDTO): boolean {
+    return shift1 && shift2 ? shift1.shiftId === shift2.shiftId : shift1 === shift2;
+  }
+
+  //#endregion
+
   /// <summary>
   /// Creates or send an invite to a new member.
   /// </summary>
@@ -124,8 +153,8 @@ export class AddMemberDialogComponent {
       }
 
 
-      let newMember : AddNewMemberDTO = this.selectedTabIndex === 1 ? new AddNewMemberDTO(true, this.currentEntityId, this.memberNameInput, '', this.selectedSkills, this.languageService.returnLocalization())
-      :  new AddNewMemberDTO(false, this.currentEntityId, '', this.emailInput, this.selectedSkills, this.languageService.returnLocalization());
+      let newMember : AddNewMemberDTO = this.selectedTabIndex === 1 ? new AddNewMemberDTO(true, this.currentEntityId, this.memberNameInput, '', this.selectedSkills, this.selectedShifts, this.partOfRotation, this.languageService.returnLocalization())
+      :  new AddNewMemberDTO(false, this.currentEntityId, '', this.emailInput, this.selectedSkills, this.selectedShifts, this.partOfRotation, this.languageService.returnLocalization());
 
       let apiResponse = await this.entityService.addNewEntityMember(newMember);
 

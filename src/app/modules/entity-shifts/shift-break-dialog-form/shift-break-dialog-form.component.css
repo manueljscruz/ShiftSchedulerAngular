@@ -36,7 +36,7 @@
 #shift-break-template-selection-grid{
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Always 3 columns */
-    grid-template-rows: repeat(2, 120px); /* Always 2 rows with fixed height */
+    grid-template-rows: auto;
     gap: 10px;
     max-height: calc(2 * 120px + 10px); /* Two rows of 120px plus one gap of 10px */
     overflow-y: auto;

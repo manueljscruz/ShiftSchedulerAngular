@@ -135,7 +135,7 @@ export class EntityWorkersComponent {
     let currentEntityId = this.currentEntityId;
     const dialogRef = this.dialog.open(AddMemberDialogComponent, {
       width: '500px',
-      data: { enterAnimationDuration, exitAnimationDuration, skillList, currentEntityId }
+      data: { enterAnimationDuration, exitAnimationDuration, skillList, currentEntityId, shiftList: this.entityMembersViewModel.shifts }
     });
 
     dialogRef.componentInstance.onMemberAdded.subscribe((result: BaseResponseModel) => {
@@ -170,6 +170,22 @@ export class EntityWorkersComponent {
       data: { UI_DIALOG_ENTRANCE_DURATION, UI_DIALOG_EXIT_DURATION, editWorker, skillList, currentEntityId, shiftsList }
     });
     
+    dialogRef.componentInstance.onMemberEdited.subscribe((result: BaseResponseModel) => {
+      dialogRef.close();
+
+      if(result.success){
+        this.snackManagerService.showSuccessSnackbar(new SnackbarUIModel(5, result.message));
+
+        editWorker = result.result;
+        let index = this.entityMembersViewModel.entityMembers.findIndex(x => x.workerId === editWorker.workerId);
+        if(index >= 0){
+          this.entityMembersViewModel.entityMembers[index] = editWorker as EntityWorkerMemberDTO;
+        }
+        else{
+          this.snackManagerService.showFailSnackbar(new SnackbarUIModel(5, result.message));
+        }
+      }
+    });
   }
 
   //#endregion

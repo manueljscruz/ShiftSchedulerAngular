@@ -11,7 +11,7 @@ export class EntityWorkerMemberDTO{
     partOfRotation: boolean;
     assignedShifts: ShiftDTO[];
 
-    constructor(workerId: string, workerName: string, isBot: boolean, canCreateSchedules: boolean, isOwner : boolean, skillSet: SkillDTO[], partOfRotation: boolean, assignedShifts: ShiftDTO[]){ {
+    constructor(workerId: string, workerName: string, isBot: boolean, canCreateSchedules: boolean, isOwner : boolean, skillSet: SkillDTO[], partOfRotation: boolean, assignedShifts: ShiftDTO[]){ 
         this.workerId = workerId;
         this.workerName = workerName;
         this.isBot = isBot;
@@ -21,5 +21,4 @@ export class EntityWorkerMemberDTO{
         this.partOfRotation = partOfRotation;
         this.assignedShifts = assignedShifts;
     }
-}
 }

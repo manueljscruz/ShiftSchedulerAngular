@@ -16,28 +16,46 @@
         <mat-tab label="Create Profile">
             <mat-divider></mat-divider>
             <div class="tab-content" >
-                <form>
-                    <mat-form-field appearance="outline">
-                        <mat-label i18n>Name</mat-label>
-                        <input matInput placeholder="Name" [(ngModel)]="memberNameInput" [ngModelOptions]="{standalone: true}">
-                    </mat-form-field>
-                </form>
+                <mat-form-field appearance="outline" class="d-flex align-items-center justify-content-center"> 
+                    <mat-label i18n>Name</mat-label>
+                    <input matInput placeholder="Name" [(ngModel)]="memberNameInput" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
             </div>
         </mat-tab>
     </mat-tab-group>
 
-    <!-- Specify Skills -->
-    <div id="specify-skills-checkbox">
-        <mat-checkbox (change)="toggleSpecifySkills($event)">Assign Specific Skills</mat-checkbox>
-    </div>
-    <div class="row" *ngIf="specifySkills">
-        <mat-form-field appearance="outline">
-            <mat-label i18n>Skills</mat-label>
-            <mat-select [(ngModel)]="selectedSkills" multiple >
-                <mat-option *ngFor="let skill of localizedSkills" [value]="skill">{{skill.skillLocalizedName}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
+    <form>
+        <!-- Specify Skills -->
+        <div id="specify-skills-checkbox">
+            <mat-checkbox (change)="toggleSpecifySkills($event)">Assign Specific Skills</mat-checkbox>
+        </div>
+
+        <!-- Skill Selector -->
+        <div class="row" *ngIf="specifySkills">
+            <mat-form-field appearance="outline">
+                <mat-label i18n>Skills</mat-label>
+                <mat-select [(ngModel)]="selectedSkills" multiple name="skills-selector" [compareWith]="compareSkills">
+                    <mat-option *ngFor="let skill of localizedSkills" [value]="skill">{{skill.skillLocalizedName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <div class="col-auto d-flex align-items-center">
+                <mat-label i18n>Part of Rotation</mat-label>
+                <mat-checkbox [(ngModel)]="partOfRotation" name="rotation-value-bool"></mat-checkbox>
+            </div>
+        </div>
+        <div class="row" *ngIf="!partOfRotation && selectedTabIndex != 0">
+            <mat-form-field appearance="outline">
+                <mat-label i18n>Shifts</mat-label>
+                <mat-select [(ngModel)]="selectedShifts" [compareWith]="compareShifts" multiple name="shifts-selector">
+                    <mat-option *ngFor="let shift of entityShifts" [value]="shift">{{shift.shiftName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+    </form>
 
     <div class="actions">
         <button mat-fab extended class="secondary-color-bg" [mat-dialog-close]="false">
