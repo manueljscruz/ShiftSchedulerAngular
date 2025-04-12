@@ -70,8 +70,9 @@
                 <h4>Manage Rule Specifications</h4>
 
                 <!-- Add Form -->
-                <div class="row col-gap" *ngIf="isRuleSpecFormVisible">
-                    <div class="form-input-spacer flex-1" *ngIf="visibleSkillSelect">
+                <!-- Skill Selector -->
+                <div class="row" id="spec-form-row" *ngIf="isRuleSpecFormVisible">
+                    <div *ngIf="visibleSkillSelect" class="col">
                         <mat-form-field appearance="outline">
                             <mat-label i18n>Skill</mat-label>
                             <mat-select  name="ruleSkillsSelect" [(ngModel)]="selectedSkill">
@@ -81,7 +82,9 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="form-input-spacer flex-1" *ngIf="visibleShiftSelect">
+
+                    <!-- Shift Selector -->
+                    <div *ngIf="visibleShiftSelect" class="col">
                         <mat-form-field appearance="outline">
                             <mat-label i18n>Shift</mat-label>
                             <mat-select  name="ruleShiftsSelect" [(ngModel)]="selectedShift">
@@ -91,13 +94,17 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="form-input-spacer" *ngIf="visibleSpecValueInput">
+
+                    <!-- Specification Value Input -->
+                    <div *ngIf="visibleSpecValueInput" class="col-md-auto">
                         <mat-form-field appearance="outline" *ngIf="selectedRuleType?.isSpecValuesBoolean == false">
                             <mat-label i18n>Specification Value</mat-label>
                             <input matInput type="number" placeholder="Value" name="spec-value" [(ngModel)]="specificationValue">
                         </mat-form-field>
                         <mat-checkbox [(ngModel)]="boolSpecValue" name="spec-value-bool" *ngIf="selectedRuleType?.isSpecValuesBoolean == true"></mat-checkbox>
                     </div>
+
+                    <!-- Add / Save Rule Specification Buttons -->
                     <button mat-icon-button color="primary" (click)="addRuleSpec()" *ngIf="!isRuleSpecEditing && visibleSkillSelect || !isRuleSpecEditing && visibleShiftSelect || !isRuleSpecEditing && visibleSpecValueInput">
                         <mat-icon>add</mat-icon>
                     </button>

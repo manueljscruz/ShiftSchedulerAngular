@@ -68,8 +68,7 @@ export class EntityFormComponent {
     private dialog: MatDialog,
     private router: Router 
   ) {
-    let decodedEntityId = decodeURIComponent(this.route.snapshot.paramMap.get('entityId') || '');
-    this.currentEntityId = decodedEntityId;
+    this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
     this.userLanguage = this.languageService.returnLocalization();
   }

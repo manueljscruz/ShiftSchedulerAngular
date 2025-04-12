@@ -169,9 +169,12 @@ export class EntityRulesComponent {
     private shiftService: ShiftService,
     private ruleValidatorService: RuleValidatorService
   ) {
-    let decodedEntityId = decodeURIComponent(this.route.snapshot.paramMap.get('entityId') || '');
-    this.currentEntityId = decodedEntityId;
+    this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
   }
+
+  //#region Methods
+
+  //#region On Init
 
   async ngOnInit() {
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
@@ -192,6 +195,10 @@ export class EntityRulesComponent {
     this.loadingScreenService.changeLoadingState(false);
   }
 
+  //#endregion
+
+  //#region Toggle Form
+
   toggleForm(newValue : boolean) {
     this.isFormActive = newValue;
 
@@ -210,6 +217,10 @@ export class EntityRulesComponent {
       this.isRuleSpecFormVisible = true;
     }
   }
+
+  //#endregion
+
+  //#region Edit Rule
 
   editRule(rule: EntityRuleDTO) {
     this.toggleForm(true);
@@ -232,6 +243,10 @@ export class EntityRulesComponent {
       this.toggleSpecUIElements(this.selectedRuleType?.ruleTypeId || 0);
     }
   }
+
+  //#endregion
+
+  //#region On Rule Type Change
 
   /// <summary>
   /// Method that handles the change of the rule type
@@ -287,6 +302,10 @@ export class EntityRulesComponent {
     }
   }
 
+  //#endregion
+
+  //#region Open Delete Dialog
+
   /// <summary>
   /// Method that opens a dialog to confirm the deletion of a rule or rule spec
   /// </summary>
@@ -308,6 +327,10 @@ export class EntityRulesComponent {
       };
     });
   }
+
+  //#endregion
+
+  //#region Save Rule
 
   async saveRule() {
 
@@ -385,6 +408,10 @@ export class EntityRulesComponent {
     }
   }
 
+  //#endregion
+
+  //#region Validate Rule
+
   /// <summary>
   /// Method that validates the rule submission
   /// </summary>
@@ -421,6 +448,10 @@ export class EntityRulesComponent {
     return response;
   }
 
+  //#endregion
+
+  //#region Validate Rule Spec
+
   validateRuleSpec(ruleSpecs : EntityRuleSpecificationDTO[], ruleSpecInstance : EntityRuleSpecificationDTO, isEditOp : boolean) : BaseResponseModel {
     let response = new BaseResponseModel(false, '', null);
 
@@ -440,6 +471,10 @@ export class EntityRulesComponent {
 
     return response;
   }
+
+  //#endregion
+
+  //#region Delete Rule
 
   async deleteRule(objectToDelete: EntityRuleDTO) {
     if(objectToDelete.entityRuleId != ''){
@@ -464,6 +499,10 @@ export class EntityRulesComponent {
       await this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'This rule is cannot be deleted without the required data'));
     }
   }
+
+  //#endregion
+
+  //#region Add Rule Specification
 
   async addRuleSpec() {
     let ruleSpecDTO = new EntityRuleSpecificationDTO('', 0, 0, '', '', 0, '', '', '', 0, '', '');
@@ -565,6 +604,10 @@ export class EntityRulesComponent {
     }
   }
 
+  //#endregion
+
+  //#region Clear Spec Form
+
   clearSpecForm() {
     this.specificationValue = 0;
     this.selectedShift = undefined;
@@ -578,6 +621,9 @@ export class EntityRulesComponent {
     }
   }
 
+  //#endregion
+
+  //#region Edit Rule Specification
 
   editRuleSpec(ruleSpec: EntityRuleSpecificationDTO) {
     this.selectedRuleSpec = ruleSpec;
@@ -618,6 +664,10 @@ export class EntityRulesComponent {
         break;
     }
   }
+
+  //#endregion
+
+  //#region Save Rule Specification
 
   async saveRuleSpec() {
     let index = this.selectedRuleSpecs.indexOf(this.selectedRuleSpec? this.selectedRuleSpec : new EntityRuleSpecificationDTO('', 0, 0, '', '', 0, '', '', '', 0, '', ''));
@@ -720,6 +770,10 @@ export class EntityRulesComponent {
     }
   }    
 
+  //#endregion
+
+  //#region Delete Rule Specification
+
   async deleteRuleSpec(objectToDelete: EntityRuleSpecificationDTO) {
     if(this.isRuleSpecEditing == true){
       this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'You cannot delete a rule specification while editing it'));
@@ -752,6 +806,10 @@ export class EntityRulesComponent {
       }
     }
   }
+
+  //#endregion
+
+  //#region Toggle Spec UI Elements
 
   /// <summary>
   /// Method that toggles the visibility of the UI elements based on the selected rule type
@@ -799,4 +857,6 @@ export class EntityRulesComponent {
         break;
     }
   }
+
+  //#endregion
 }
