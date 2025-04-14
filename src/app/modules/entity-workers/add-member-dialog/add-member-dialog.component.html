@@ -43,18 +43,27 @@
         <div class="row">
             <div class="col-auto d-flex align-items-center">
                 <mat-label i18n>Part of Rotation</mat-label>
-                <mat-checkbox [(ngModel)]="partOfRotation" name="rotation-value-bool"></mat-checkbox>
+                <mat-checkbox [(ngModel)]="partOfRotation" (change)="onRotationChange($event)" name="rotation-value-bool"></mat-checkbox>
             </div>
         </div>
         <div class="row" *ngIf="!partOfRotation && selectedTabIndex != 0">
-            <mat-form-field appearance="outline">
-                <mat-label i18n>Shifts</mat-label>
-                <mat-select [(ngModel)]="selectedShifts" [compareWith]="compareShifts" multiple name="shifts-selector">
-                    <mat-option *ngFor="let shift of entityShifts" [value]="shift">{{shift.shiftName}}</mat-option>
-                </mat-select>
-            </mat-form-field>
+            <div class="col">
+                <mat-form-field appearance="outline">
+                    <mat-label i18n>Shifts</mat-label>
+                    <mat-select [(ngModel)]="selectedShifts" [compareWith]="compareShifts" multiple name="shifts-selector">
+                        <mat-option *ngFor="let shift of entityShifts" [value]="shift">{{shift.shiftName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-label i18n>Works on Weekdays</mat-label>
+                <mat-checkbox [(ngModel)]="worksWeekDays" name="week-days-value-bool"></mat-checkbox>
+            </div>
+            <div class="col">
+                <mat-label i18n>Works on Weekends</mat-label>
+                <mat-checkbox [(ngModel)]="worksWeekends" name="week-ends-value-bool"></mat-checkbox>
+            </div>
         </div>
-
     </form>
 
     <div class="actions">

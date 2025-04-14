@@ -83,6 +83,10 @@ export class AddMemberDialogComponent {
   /// </summary>
   partOfRotation: boolean = false;
 
+  worksWeekDays: boolean = false;
+
+  worksWeekends: boolean = false;
+
   /// <summary>
     /// The list of selected shifts
     
@@ -135,6 +139,8 @@ export class AddMemberDialogComponent {
 
   //#endregion
 
+  //#region Execute Action
+
   /// <summary>
   /// Creates or send an invite to a new member.
   /// </summary>
@@ -153,8 +159,8 @@ export class AddMemberDialogComponent {
       }
 
 
-      let newMember : AddNewMemberDTO = this.selectedTabIndex === 1 ? new AddNewMemberDTO(true, this.currentEntityId, this.memberNameInput, '', this.selectedSkills, this.selectedShifts, this.partOfRotation, this.languageService.returnLocalization())
-      :  new AddNewMemberDTO(false, this.currentEntityId, '', this.emailInput, this.selectedSkills, this.selectedShifts, this.partOfRotation, this.languageService.returnLocalization());
+      let newMember : AddNewMemberDTO = this.selectedTabIndex === 1 ? new AddNewMemberDTO(true, this.currentEntityId, this.memberNameInput, '', this.selectedSkills, this.worksWeekDays, this.worksWeekends,  this.selectedShifts, this.partOfRotation,  this.languageService.returnLocalization())
+      :  new AddNewMemberDTO(false, this.currentEntityId, '', this.emailInput, this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.selectedShifts, this.partOfRotation, this.languageService.returnLocalization());
 
       let apiResponse = await this.entityService.addNewEntityMember(newMember);
 
@@ -169,6 +175,21 @@ export class AddMemberDialogComponent {
       this.loadingScreenService.changeLoadingState(false);
     }
   }
+
+  //#endregion
+
+  //#region On Rotation Change
+
+  onRotationChange($event: MatCheckboxChange) {
+    if($event.checked){
+      this.worksWeekDays = false;
+      this.worksWeekends = false;
+    }
+  }
+
+  //#endregion
+
+  //#region Validate Submissions
 
   /// <summary>
   /// Validates the submissions for the dialog.
@@ -204,7 +225,21 @@ export class AddMemberDialogComponent {
       return response;
     }
 
+    // Check if the user has specified shifts assigned
+    if(!this.partOfRotation && this.selectedShifts.length === 0) {
+      response.message = 'Please select at least one shift.';
+      return response;
+    }
+
+    // If not part of the rotation, check if the user has selected at least one of the two options
+    if(!this.partOfRotation && !this.worksWeekDays && !this.worksWeekends) {
+      response.message = 'Please select at least one of the two options.';
+      return response;
+    }
+
     response.success = true;
     return response;
   }
+
+  //#endregion
 }

@@ -12,6 +12,7 @@ import { SnackbarUIModel } from '../../../shared/models/UI/SnackbarUIModel';
 import { EditMemberDTO } from '../../../shared/models/DTOs/Outgoing/EditMemberDTO';
 import { EntityService } from '../../../core/services/api/EntityService';
 import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-edit-member-dialog',
@@ -25,7 +26,7 @@ export class EditMemberDialogComponent {
   /// <summary>
   /// The entity worker member to be edited
   /// </summary
-  entityWorkerMember: EntityWorkerMemberDTO = new EntityWorkerMemberDTO('', '', false, false, false, [], false, []);
+  entityWorkerMember: EntityWorkerMemberDTO = new EntityWorkerMemberDTO('', '', false, false, false, [], false, false, false, []);
 
   /// <summary>
   /// The current entity identifier
@@ -66,6 +67,10 @@ export class EditMemberDialogComponent {
   /// Flag to determine if the user/bot is part of the shift rotation
   /// </summary
   partOfRotation: boolean = false;
+
+  worksWeekDays: boolean = false;
+
+  worksWeekends: boolean = false;
 
   /// <summary>
   /// The text to display on the execute action button.
@@ -111,6 +116,8 @@ export class EditMemberDialogComponent {
       this.nameReadonly = true;
 
     this.partOfRotation = this.entityWorkerMember.partOfRotation;
+    this.worksWeekDays = this.entityWorkerMember.worksWeekDays;
+    this.worksWeekends = this.entityWorkerMember.worksWeekends;
 
     this.selectedSkills = this.entityWorkerMember.skillSet != undefined ? [...this.entityWorkerMember.skillSet] : [];
     this.selectedShifts = this.entityWorkerMember.assignedShifts != undefined ? [...this.entityWorkerMember.assignedShifts] : [];
@@ -146,7 +153,7 @@ export class EditMemberDialogComponent {
     else{
       this.loadingScreenService.changeLoadingState(true);
 
-      let editWorkerDTO = new EditMemberDTO(this.entityWorkerMember.workerId, this.currentEntityId, this.entityWorkerMember.isBot, this.nameInput, this.selectedSkills, this.partOfRotation, this.selectedShifts);
+      let editWorkerDTO = new EditMemberDTO(this.entityWorkerMember.workerId, this.currentEntityId, this.entityWorkerMember.isBot, this.nameInput, this.selectedSkills, this.partOfRotation, this.worksWeekDays, this.worksWeekends, this.selectedShifts);
       
       let apiResponse = await this.entityService.updateEntityMember(editWorkerDTO);
 
@@ -168,6 +175,18 @@ export class EditMemberDialogComponent {
 
   //#endregion
 
+  //#region On Rotation Change
+  
+    onRotationChange($event: MatCheckboxChange) {
+      if($event.checked){
+        this.worksWeekDays = false;
+        this.worksWeekends = false;
+        this.selectedShifts = [];
+      }
+    }
+  
+    //#endregion
+
   //#region Validate Submissions
 
   private validateSubmissions() : BaseResponseModel{
@@ -185,6 +204,12 @@ export class EditMemberDialogComponent {
 
     if(!this.partOfRotation && this.selectedShifts.length === 0){
       response.message = 'Please select at least one shift.';
+    }
+
+    // If not part of the rotation, check if the user has selected at least one of the two options
+    if(!this.partOfRotation && !this.worksWeekDays && !this.worksWeekends) {
+      response.message = 'Please select at least one of the two options.';
+      return response;
     }
 
     response.success = true;

@@ -9,9 +9,11 @@ export class EntityWorkerMemberDTO{
     isOwner: boolean;
     skillSet: SkillDTO[];
     partOfRotation: boolean;
+    worksWeekDays: boolean;
+    worksWeekends: boolean;
     assignedShifts: ShiftDTO[];
 
-    constructor(workerId: string, workerName: string, isBot: boolean, canCreateSchedules: boolean, isOwner : boolean, skillSet: SkillDTO[], partOfRotation: boolean, assignedShifts: ShiftDTO[]){ 
+    constructor(workerId: string, workerName: string, isBot: boolean, canCreateSchedules: boolean, isOwner : boolean, skillSet: SkillDTO[], partOfRotation: boolean, worksWeekDays: boolean, worksWeekends: boolean, assignedShifts: ShiftDTO[]){ 
         this.workerId = workerId;
         this.workerName = workerName;
         this.isBot = isBot;
@@ -20,5 +22,7 @@ export class EntityWorkerMemberDTO{
         this.skillSet = skillSet;
         this.partOfRotation = partOfRotation;
         this.assignedShifts = assignedShifts;
+        this.worksWeekDays = worksWeekDays;
+        this.worksWeekends = worksWeekends;
     }
 }

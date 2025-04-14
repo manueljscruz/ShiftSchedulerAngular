@@ -30,11 +30,15 @@ export class AddNewMemberDTO {
 
     partOfRotation: boolean = false;
 
+    worksWeekDays: boolean = false;
+
+    worksWeekends: boolean = false;
+
     assignedShifts: ShiftDTO[] = [];
 
     languageCode: string;
 
-    constructor(isBot: boolean, destinationEntityId : string, name: string, email: string, skills: SkillDTO[], shifts: ShiftDTO[], partOfRotation: boolean, languageCode: string){
+    constructor(isBot: boolean, destinationEntityId : string, name: string, email: string, skills: SkillDTO[], worksWeekDays: boolean, worksWeekends: boolean, shifts: ShiftDTO[], partOfRotation: boolean, languageCode: string){
         this.isBot = isBot;
         this.destinationEntityId = destinationEntityId;
         this.memberName = name;
@@ -43,5 +47,7 @@ export class AddNewMemberDTO {
         this.assignedShifts = shifts;
         this.partOfRotation = partOfRotation;
         this.languageCode = languageCode;
+        this.worksWeekDays = worksWeekDays;
+        this.worksWeekends = worksWeekends;
     }
 }

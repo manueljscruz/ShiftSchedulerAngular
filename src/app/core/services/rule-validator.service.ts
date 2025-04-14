@@ -125,7 +125,7 @@ export class RuleValidatorService {
   }
 
   /// <summary>
-  /// Validates the skill quantity per shift rule
+  /// Validates the skill quantity per shift rule (including weekdays and weekend)
   /// Aspect Reference Id 1 is the skill
   /// Aspect Reference Id 2 is the shift
   /// </summary>

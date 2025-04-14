@@ -461,6 +461,8 @@ export class EntityRulesComponent {
         break;
 
       case 6:
+      case 10:
+      case 11:
         response = this.ruleValidatorService.validateSkillQuantityPerShift(ruleSpecs, ruleSpecInstance, isEditOp);
         break;
 
@@ -541,6 +543,8 @@ export class EntityRulesComponent {
         break;
 
       case 6:
+      case 10:
+      case 11:
         ruleSpecDTO.aspectReferenceId = this.selectedSkill?.skillId.toString() || '';
         ruleSpecDTO.referenceName = this.selectedSkill?.skillLocalizedName || '';
         ruleSpecDTO.businessAspectId = BUSINESS_ASPECT_SKILLS_ID;
@@ -651,6 +655,8 @@ export class EntityRulesComponent {
 
       case 5:
       case 6:
+      case 10:
+      case 11:
         this.selectedSkill = this.entitySkills.find(x => x.skillId.toString() === ruleSpec.aspectReferenceId);
         this.selectedShift = this.entityShifts.find(x => x.shiftId === ruleSpec.aspectReferenceId2);
         break;
@@ -707,6 +713,8 @@ export class EntityRulesComponent {
           break;
 
         case 6:
+        case 10:
+        case 11:
           this.selectedRuleSpec.aspectReferenceId = this.selectedSkill?.skillId.toString() || '';
           this.selectedRuleSpec.referenceName = this.selectedSkill?.skillLocalizedName || '';
           this.selectedRuleSpec.businessAspectId = BUSINESS_ASPECT_SKILLS_ID;
@@ -838,6 +846,8 @@ export class EntityRulesComponent {
         break;
 
       case 6:
+      case 10:
+      case 11:
         this.visibleSkillSelect = true;
         this.visibleShiftSelect = true;
         this.visibleSpecValueInput = true;
