@@ -2,7 +2,7 @@
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
 /*html, body { height: 100%; } */
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { height: 100%; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 .container{
@@ -21,12 +21,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-style: solid;
   border-color: var(--mdc-elevated-card-container-color);
   box-shadow: var(--mdc-elevated-card-container-elevation);
+  flex: 1;
   overflow-y: auto;
+  max-height: 100%;
 }
 
+
 .primary-card-container-height{
-  height: calc(100vh - 140px);
-}
+  height: calc(100vh - 60px);
+} 
 
 .elevated-card-container-content{
   padding: 20px;

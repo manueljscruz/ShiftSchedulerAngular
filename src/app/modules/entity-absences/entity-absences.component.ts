@@ -23,6 +23,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from '../../shared/pipes/AppDateAdap
 import { MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { formatDate } from '@angular/common';
+import { SingleIdentifierDTO } from '../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 
 @Component({
   selector: 'entity-absences',
@@ -84,8 +85,7 @@ export class EntityAbsencesComponent {
     private loadingScreenService: LoadingSpinnerManagerService,
     private absenceService: AbsenceService,
     private dateDisplayService: DateDisplayService) { 
-      let decodedEntityId = decodeURIComponent(this.route.snapshot.paramMap.get('entityId') || '');
-      this.currentEntityId = decodedEntityId;
+      this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
   }
 
   async ngOnInit() {
@@ -164,7 +164,8 @@ export class EntityAbsencesComponent {
 
     this.loadingScreenService.changeLoadingState(true);
 
-    let response : BaseResponseModel = await this.absenceService.deleteAbsence(absenceInstance.entityWorkerAbsenceId);
+    let absenceId = new SingleIdentifierDTO(absenceInstance.entityWorkerAbsenceId);
+    let response : BaseResponseModel = await this.absenceService.deleteAbsence(absenceId);
 
     this.loadingScreenService.changeLoadingState(false);
 

@@ -11,6 +11,7 @@ import { SnackbarManagerService } from '../../../core/services/ui/snackbar-manag
 import { LoadingSpinnerManagerService } from '../../../core/services/ui/loading-spinner-manager.service';
 import { SnackbarUIModel } from '../../../shared/models/UI/SnackbarUIModel';
 import { OperationCompletedPayload } from '../../../shared/models/interfaces/OperationCompletedPayload';
+import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 
 @Component({
   selector: 'entity-absences-view',
@@ -69,7 +70,8 @@ export class EntityAbsencesViewComponent {
 
     this.loadingScreenService.changeLoadingState(true);
 
-    let response : BaseResponseModel = await this.absenceService.deleteAbsence(absenceInstance.entityWorkerAbsenceId);
+    let absenceId = new SingleIdentifierDTO(absenceInstance.entityWorkerAbsenceId);
+    let response : BaseResponseModel = await this.absenceService.deleteAbsence(absenceId);
 
     this.loadingScreenService.changeLoadingState(false);
 

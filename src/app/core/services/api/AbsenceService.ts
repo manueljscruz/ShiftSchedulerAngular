@@ -9,6 +9,7 @@ import { AddEntityWorkerAbsenceDTO } from '../../../shared/models/DTOs/Outgoing/
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { EntityWorkerAbsenceDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerAbsenceDTO';
 import { AbsenceApprovalDecisionDTO } from '../../../shared/models/DTOs/Outgoing/AbsenceApprovalDecisionDTO';
+import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -72,11 +73,11 @@ export class AbsenceService {
     /// <summary>
     /// Deletes an absence instance
     /// </summary>
-    async deleteAbsence(entityWorkerAbsenceId : string) : Promise<BaseResponseModel> {
+    async deleteAbsence(absenceId : SingleIdentifierDTO) : Promise<BaseResponseModel> {
         let response : BaseResponseModel = new BaseResponseModel(false, '', null);
 
         try{
-            response = await this.http.delete<BaseResponseModel>(DELETE_ENTITY_ABSENCE_URL.replace('{absenceId}', entityWorkerAbsenceId)).toPromise() as BaseResponseModel;
+            response = await this.http.post<BaseResponseModel>(DELETE_ENTITY_ABSENCE_URL, absenceId).toPromise() || {} as BaseResponseModel;
         }
         catch(error: any){
             console.error('Error fetching data:', error.message);

@@ -19,7 +19,7 @@ import { SkillDTO } from '../../shared/models/DTOs/Incoming/SkillDTO';
 import { EntityService } from '../../core/services/api/EntityService';
 import { ShiftService } from '../../core/services/api/ShiftService';
 import { MatSelectChange } from '@angular/material/select';
-import { BUSINESS_ASPECT_SHIFTS_ID, BUSINESS_ASPECT_SKILLS_ID } from '../../shared/constants/DataConstants';
+import { BUSINESS_ASPECT_SHIFTS_ID, BUSINESS_ASPECT_SKILLS_ID, MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID, MAX_CONSECUTIVE_SHIFTS_ID, MAX_HOURS_DAY_ID, MAX_HOURS_WEEK_ID, MAX_WORKERS_SHIFT_ID, MIN_DAYS_OFF_WEEK_ID, MIN_WEEKENDS_OFF_MONTH_ID, MIN_WORKERS_SHIFT_ID, POST_SHIFT_REST_HOURS_ID, REQ_QTY_SKILL_SHIFT_ID, REQ_QTY_SKILL_SHIFT_WEEKDAYS_ID, REQ_QTY_SKILL_SHIFT_WEEKENDS_ID, REQ_SKILLSET_SHIFT_ID, SHIFT_INCLUDES_WEEKENDS_ID } from '../../shared/constants/DataConstants';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { MatTab } from '@angular/material/tabs';
 import { MatTable } from '@angular/material/table';
@@ -434,13 +434,31 @@ export class EntityRulesComponent {
     }
   
     // if selected rule type is Max Hour per Shift
-    else if(this.selectedRuleType.ruleTypeId === 1) {
+    else if(this.selectedRuleType.ruleTypeId === MAX_HOURS_DAY_ID) {
 
       // Check if the Max Hour per Day rule already exists
       let checkMaxHourRuleExistenceResponse = this.ruleValidatorService.validateMaxHourPerDay(this.rulesViewModel.entityRules, this.selectedRule, this.isEditingRule)
     
       if(checkMaxHourRuleExistenceResponse.success === false) 
         return checkMaxHourRuleExistenceResponse; 
+    }
+
+    else if(this.selectedRuleType.ruleTypeId === MIN_DAYS_OFF_WEEK_ID) {
+
+      // Check if the Min Days Off per Week rule already exists
+      let checkMinDaysOffRuleExistenceResponse = this.ruleValidatorService.validateRuleMinDaysOffPerWeek(this.rulesViewModel.entityRules, this.selectedRule, this.isEditingRule)
+    
+      if(checkMinDaysOffRuleExistenceResponse.success === false) 
+        return checkMinDaysOffRuleExistenceResponse; 
+    }
+
+    else if(this.selectedRuleType.ruleTypeId === MIN_WEEKENDS_OFF_MONTH_ID) {
+        
+        // Check if the Min Weekends Off per Month rule already exists
+        let checkMinWeekendsOffRuleExistenceResponse = this.ruleValidatorService.validateRuleWeekendsOffPerMonth(this.rulesViewModel.entityRules, this.selectedRule, this.isEditingRule)
+      
+        if(checkMinWeekendsOffRuleExistenceResponse.success === false) 
+          return checkMinWeekendsOffRuleExistenceResponse; 
     }
 
     response.success = true;
@@ -456,14 +474,23 @@ export class EntityRulesComponent {
     let response = new BaseResponseModel(false, '', null);
 
     switch(this.selectedRuleType?.ruleTypeId) {
-      case 5:
+      
+      case REQ_SKILLSET_SHIFT_ID:
         response = this.ruleValidatorService.validateSkillPerShift(ruleSpecs, ruleSpecInstance, isEditOp);
         break;
 
-      case 6:
-      case 10:
-      case 11:
+      case REQ_QTY_SKILL_SHIFT_ID:
+      case REQ_QTY_SKILL_SHIFT_WEEKDAYS_ID:
+      case REQ_QTY_SKILL_SHIFT_WEEKENDS_ID:
         response = this.ruleValidatorService.validateSkillQuantityPerShift(ruleSpecs, ruleSpecInstance, isEditOp);
+        break;
+
+      case MIN_DAYS_OFF_WEEK_ID:
+        response = this.ruleValidatorService.validateSpecMinDaysOffPerWeek(ruleSpecs, ruleSpecInstance, isEditOp);
+        break;
+
+      case MIN_WEEKENDS_OFF_MONTH_ID:
+        response = this.ruleValidatorService.validateSpecMinWeekendsOffPerMonth(ruleSpecs, ruleSpecInstance, isEditOp);
         break;
 
       default:
@@ -511,16 +538,19 @@ export class EntityRulesComponent {
 
     // Apply different logic based on the selected rule type
     switch(this.selectedRuleType?.ruleTypeId) {
-      case 1:
-      case 2:
+      case MAX_HOURS_DAY_ID:
+      case MAX_HOURS_WEEK_ID:
+      case MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID:
+      case MIN_DAYS_OFF_WEEK_ID:
+      case MIN_WEEKENDS_OFF_MONTH_ID:
         ruleSpecDTO.ruleSpecificationValue = this.specificationValue;
         ruleSpecDTO.referenceName = NA;
         ruleSpecDTO.referenceName2 = NA;
         break;
 
-      case 3:
-      case 4:
-      case 8:
+      case MIN_WORKERS_SHIFT_ID:
+      case MAX_WORKERS_SHIFT_ID:
+      case SHIFT_INCLUDES_WEEKENDS_ID:
         if(this.selectedRuleType.isSpecValuesBoolean)
           ruleSpecDTO.ruleSpecificationValue = this.boolSpecValue ? 1 : 0;
         else
@@ -531,7 +561,7 @@ export class EntityRulesComponent {
         ruleSpecDTO.referenceName2 = NA;
         break;
       
-      case 5:
+      case REQ_SKILLSET_SHIFT_ID:
         ruleSpecDTO.aspectReferenceId = this.selectedSkill?.skillId.toString() || '';
         ruleSpecDTO.referenceName = this.selectedSkill?.skillLocalizedName || '';
         ruleSpecDTO.businessAspectId = BUSINESS_ASPECT_SKILLS_ID;
@@ -542,9 +572,9 @@ export class EntityRulesComponent {
         ruleSpecDTO.businessAspect2DisplayValue = this.rulesViewModel.businessAspectsLocalizeds.find(x => x.businessAspectId === BUSINESS_ASPECT_SHIFTS_ID)?.businessAspectLocalizedName || '';
         break;
 
-      case 6:
-      case 10:
-      case 11:
+      case REQ_QTY_SKILL_SHIFT_ID:
+      case REQ_QTY_SKILL_SHIFT_WEEKDAYS_ID:
+      case REQ_QTY_SKILL_SHIFT_WEEKENDS_ID:
         ruleSpecDTO.aspectReferenceId = this.selectedSkill?.skillId.toString() || '';
         ruleSpecDTO.referenceName = this.selectedSkill?.skillLocalizedName || '';
         ruleSpecDTO.businessAspectId = BUSINESS_ASPECT_SKILLS_ID;
@@ -556,8 +586,8 @@ export class EntityRulesComponent {
         ruleSpecDTO.ruleSpecificationValue = this.specificationValue;
         break;
 
-      case 7:
-      case 9:
+      case MAX_CONSECUTIVE_SHIFTS_ID:
+      case POST_SHIFT_REST_HOURS_ID:
         ruleSpecDTO.aspectReferenceId = this.selectedShift?.shiftId || '';
         ruleSpecDTO.referenceName = this.selectedShift?.shiftName || '';
         ruleSpecDTO.businessAspectId = BUSINESS_ASPECT_SHIFTS_ID;
@@ -638,14 +668,17 @@ export class EntityRulesComponent {
     this.toggleSpecUIElements(this.selectedRuleType?.ruleTypeId || 0);
 
     switch(this.selectedRuleType?.ruleTypeId) {
-      case 1:
-      case 2:
+      case MAX_HOURS_DAY_ID:
+      case MAX_HOURS_WEEK_ID:
+      case MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID:
+      case MIN_DAYS_OFF_WEEK_ID:
+      case MIN_WEEKENDS_OFF_MONTH_ID:
         this.specificationValue = ruleSpec.ruleSpecificationValue;
         break;
 
-      case 3:
-      case 4:
-      case 8:
+      case MIN_WORKERS_SHIFT_ID:
+      case MAX_WORKERS_SHIFT_ID:
+      case SHIFT_INCLUDES_WEEKENDS_ID:
         if(this.selectedRuleType.isSpecValuesBoolean)
           this.boolSpecValue = this.selectedRuleSpec.ruleSpecificationValue == 1 ? true : false;
         else
@@ -653,16 +686,16 @@ export class EntityRulesComponent {
         this.selectedShift = this.entityShifts.find(x => x.shiftId === ruleSpec.aspectReferenceId);
         break;
 
-      case 5:
-      case 6:
-      case 10:
-      case 11:
+      case REQ_SKILLSET_SHIFT_ID:
+      case REQ_QTY_SKILL_SHIFT_ID:
+      case REQ_QTY_SKILL_SHIFT_WEEKDAYS_ID:
+      case REQ_QTY_SKILL_SHIFT_WEEKENDS_ID:
         this.selectedSkill = this.entitySkills.find(x => x.skillId.toString() === ruleSpec.aspectReferenceId);
         this.selectedShift = this.entityShifts.find(x => x.shiftId === ruleSpec.aspectReferenceId2);
         break;
 
-      case 7:
-      case 9:
+      case MAX_CONSECUTIVE_SHIFTS_ID:
+      case POST_SHIFT_REST_HOURS_ID:
         this.selectedShift = this.entityShifts.find(x => x.shiftId === ruleSpec.aspectReferenceId);
         break;
 
@@ -681,16 +714,19 @@ export class EntityRulesComponent {
     if(this.selectedRuleSpec != undefined){
       // Apply different logic based on the selected rule type
       switch(this.selectedRuleType?.ruleTypeId) {
-        case 1:
-        case 2:
+        case MAX_HOURS_DAY_ID:
+        case MAX_HOURS_WEEK_ID:
+        case MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID:
+        case MIN_DAYS_OFF_WEEK_ID:
+        case MIN_WEEKENDS_OFF_MONTH_ID:
           this.selectedRuleSpec.ruleSpecificationValue = this.specificationValue;
           this.selectedRuleSpec.referenceName = NA;
           this.selectedRuleSpec.referenceName2 = NA;
           break;
 
-        case 3:
-        case 4:
-        case 8:
+        case MIN_WORKERS_SHIFT_ID:
+        case MAX_WORKERS_SHIFT_ID:
+        case SHIFT_INCLUDES_WEEKENDS_ID:
           if(this.selectedRuleType.isSpecValuesBoolean)
             this.selectedRuleSpec.ruleSpecificationValue = this.boolSpecValue ? 1 : 0;
           else
@@ -701,7 +737,7 @@ export class EntityRulesComponent {
           this.selectedRuleSpec.referenceName2 = NA;
           break;
         
-        case 5:
+        case REQ_SKILLSET_SHIFT_ID:
           this.selectedRuleSpec.aspectReferenceId = this.selectedSkill?.skillId.toString() || '';
           this.selectedRuleSpec.referenceName = this.selectedSkill?.skillLocalizedName || '';
           this.selectedRuleSpec.businessAspectId = BUSINESS_ASPECT_SKILLS_ID;
@@ -712,9 +748,9 @@ export class EntityRulesComponent {
           this.selectedRuleSpec.businessAspect2DisplayValue = this.rulesViewModel.businessAspectsLocalizeds.find(x => x.businessAspectId === BUSINESS_ASPECT_SHIFTS_ID)?.businessAspectLocalizedName || '';
           break;
 
-        case 6:
-        case 10:
-        case 11:
+        case REQ_QTY_SKILL_SHIFT_ID:
+        case REQ_QTY_SKILL_SHIFT_WEEKDAYS_ID:
+        case REQ_QTY_SKILL_SHIFT_WEEKENDS_ID:
           this.selectedRuleSpec.aspectReferenceId = this.selectedSkill?.skillId.toString() || '';
           this.selectedRuleSpec.referenceName = this.selectedSkill?.skillLocalizedName || '';
           this.selectedRuleSpec.businessAspectId = BUSINESS_ASPECT_SKILLS_ID;
@@ -726,8 +762,8 @@ export class EntityRulesComponent {
           this.selectedRuleSpec.ruleSpecificationValue = this.specificationValue;
           break;
 
-        case 7:
-        case 9:
+        case MAX_CONSECUTIVE_SHIFTS_ID:
+        case POST_SHIFT_REST_HOURS_ID:
           this.selectedRuleSpec.aspectReferenceId = this.selectedShift?.shiftId || '';
           this.selectedRuleSpec.referenceName = this.selectedShift?.shiftName || '';
           this.selectedRuleSpec.businessAspectId = BUSINESS_ASPECT_SHIFTS_ID;
@@ -824,37 +860,40 @@ export class EntityRulesComponent {
   /// </summary>
   toggleSpecUIElements(ruleTypeID : number) {
     switch(ruleTypeID) {
-      case 1:
-      case 2:
+      case MAX_HOURS_DAY_ID:
+      case MAX_HOURS_WEEK_ID:
+      case MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID:
+      case MIN_DAYS_OFF_WEEK_ID:
+      case MIN_WEEKENDS_OFF_MONTH_ID:
         this.visibleSkillSelect = false;
         this.visibleShiftSelect = false;
         this.visibleSpecValueInput = true;
         break;
 
-      case 3:
-      case 4:
-      case 8:
+      case MIN_WORKERS_SHIFT_ID:
+      case MAX_WORKERS_SHIFT_ID:
+      case SHIFT_INCLUDES_WEEKENDS_ID:
         this.visibleSkillSelect = false;
         this.visibleShiftSelect = true;
         this.visibleSpecValueInput = true;
         break;
 
-      case 5:
+      case REQ_SKILLSET_SHIFT_ID:
         this.visibleSkillSelect = true;
         this.visibleShiftSelect = true;
         this.visibleSpecValueInput = false;
         break;
 
-      case 6:
-      case 10:
-      case 11:
+      case REQ_QTY_SKILL_SHIFT_ID:
+      case REQ_QTY_SKILL_SHIFT_WEEKDAYS_ID:
+      case REQ_QTY_SKILL_SHIFT_WEEKENDS_ID:
         this.visibleSkillSelect = true;
         this.visibleShiftSelect = true;
         this.visibleSpecValueInput = true;
         break;
 
-      case 7:
-      case 9:
+      case MAX_CONSECUTIVE_SHIFTS_ID:
+      case POST_SHIFT_REST_HOURS_ID:
         this.visibleSkillSelect = false;
         this.visibleShiftSelect = true;
         this.visibleSpecValueInput = true;
