@@ -58,3 +58,4 @@ export const ENTITY_ABSENCE_APPROVAL_DECISION_URL : string = BASE_API_URL + "Ent
 //#region SCHEDULE
 export const GET_ENTITY_SCHEDULE_VIEW_MODEL_URL : string = BASE_API_URL + "EntitySchedule/get-entity-schedule-view-model";
 export const GET_ENTITY_SCHEDULES : string = BASE_API_URL + "EntitySchedule/get-entity-schedules";
+export const GENERATE_ENTITY_SCHEDULE : string = BASE_API_URL + "EntitySchedule/generate-entity-schedule";

@@ -1,7 +1,14 @@
 <div class="elevated-card-container primary-card-container-height">
     <div class="header-and-actions">
         <h1 i18n>Schedule</h1>
-        
+        <div class="actions">
+            <input type="date" matInput required placeholder="Start Date" required name="schedule-start-date" [value]="formatDateString(startDate.toString())">
+            <input type="date" matInput required placeholder="End Date" required name="schedule-end-date" [value]="formatDateString(endDate.toString())">
+            <button *ngIf="isCurrentUserEntityOwner" mat-fab extended color="primary" (click)="createSchedule()">
+                <mat-icon>build</mat-icon>
+                <span i18n>Create Schedule</span>
+            </button>
+        </div>
     </div>
     <mat-divider></mat-divider>
     <div class="elevated-card-container-content">
@@ -10,8 +17,9 @@
             <mwl-calendar-month-view
                 [viewDate]="viewDate"
                 [events]="events"
+                (eventClicked)="handleEventClicked($event)"
             >
-  </mwl-calendar-month-view>
+            </mwl-calendar-month-view>
         </div>
     </div>
 </div>
