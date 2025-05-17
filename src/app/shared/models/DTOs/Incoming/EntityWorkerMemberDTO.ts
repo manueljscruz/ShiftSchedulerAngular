@@ -12,6 +12,7 @@ export class EntityWorkerMemberDTO{
     worksWeekDays: boolean;
     worksWeekends: boolean;
     assignedShifts: ShiftDTO[];
+    isSelected: boolean = false;
 
     constructor(workerId: string, workerName: string, isBot: boolean, canCreateSchedules: boolean, isOwner : boolean, skillSet: SkillDTO[], partOfRotation: boolean, worksWeekDays: boolean, worksWeekends: boolean, assignedShifts: ShiftDTO[]){ 
         this.workerId = workerId;

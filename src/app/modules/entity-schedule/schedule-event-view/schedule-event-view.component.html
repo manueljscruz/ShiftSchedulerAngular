@@ -1,0 +1,33 @@
+<div id="event-view-dialog">
+    <mat-dialog-content>
+        <h1 i18n>Event Details</h1>
+        <div class="event-details">
+            <p><strong i18n="@@event-name">Event Name:</strong> {{ scheduleEntry.shiftDTO.shiftName }}</p>
+            <p><strong i18n="@@event-start">Start:</strong> {{ scheduleEntry.scheduleStartDate | date: 'short' }}</p>
+            <p><strong i18n="@@event-end">End:</strong> {{ scheduleEntry.scheduleEndDate | date: 'short' }}</p>
+        </div>
+
+        <div class="event-participants">
+            <h2 i18n="@@event-participants">Participants</h2>
+            <table mat-table [dataSource]="scheduleEntry.scheduleParticipants" class="mat-elevation-z8">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let participant"> {{ participant.workerName }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="role">
+                    <th mat-header-cell *matHeaderCellDef> Role </th>
+                    <td mat-cell *matCellDef="let participant"> 
+                        {{ participant.role }} 
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="['name', 'role']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['name', 'role'];"></tr>
+            </table>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="closeDialog()" i18n="@@close">Close</button>
+    </mat-dialog-actions>
+</div>

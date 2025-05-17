@@ -23,7 +23,7 @@ export class ScheduleService {
 
 
     async getScheduleViewModel(entityScheduleViewModelRequestDTO : ScheduleViewModelRequestDTO) : Promise<EntityScheduleViewModel> {
-        let scheduleViewModel : EntityScheduleViewModel = new EntityScheduleViewModel([], false, [], []);
+        let scheduleViewModel : EntityScheduleViewModel = new EntityScheduleViewModel([], false, [], [], []);
     
         entityScheduleViewModelRequestDTO.languageCode = this.languageService.returnLocalization();
 
@@ -62,6 +62,7 @@ export class ScheduleService {
 
         try{
             schedules = await this.http.post<ScheduleEntryDTO[]>(GENERATE_ENTITY_SCHEDULE, createEntityScheduleDTO).toPromise();
+            
         }
         catch(error: any){
             console.error('Error fetching data:', error.message);

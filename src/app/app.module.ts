@@ -63,6 +63,8 @@ import { GenericMessageDialogComponent } from './shared/components/generic-messa
 import { ConfirmEmailComponent } from './modules/confirm-email/confirm-email.component';
 import { ShiftRotationDialogFormComponent } from './modules/entity-shifts/shift-rotation-dialog-form/shift-rotation-dialog-form.component';
 import { MatSlider } from '@angular/material/slider';
+import { ScheduleEventViewComponent } from './modules/entity-schedule/schedule-event-view/schedule-event-view.component';
+import { ScheduleCreatorMenuComponent } from './modules/entity-schedule/schedule-creator-menu/schedule-creator-menu.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +103,9 @@ import { MatSlider } from '@angular/material/slider';
     EditMemberDialogComponent,
     GenericMessageDialogComponent,
     ConfirmEmailComponent,
-    ShiftRotationDialogFormComponent
+    ShiftRotationDialogFormComponent,
+    ScheduleEventViewComponent,
+    ScheduleCreatorMenuComponent
   ],
   imports: [
     BrowserModule,
