@@ -65,6 +65,8 @@ import { ShiftRotationDialogFormComponent } from './modules/entity-shifts/shift-
 import { MatSlider } from '@angular/material/slider';
 import { ScheduleEventViewComponent } from './modules/entity-schedule/schedule-event-view/schedule-event-view.component';
 import { ScheduleCreatorMenuComponent } from './modules/entity-schedule/schedule-creator-menu/schedule-creator-menu.component';
+import { NgxColorsModule } from 'ngx-colors';
+
 
 @NgModule({
   declarations: [
@@ -133,6 +135,7 @@ import { ScheduleCreatorMenuComponent } from './modules/entity-schedule/schedule
     BrowserAnimationsModule,
     MatButtonToggleModule,
     MatSlider,
+    NgxColorsModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,

@@ -93,7 +93,7 @@ export class EntityScheduleComponent {
 
   viewDate: Date = new Date();
 
-  dataSource: any;
+  scheduleList: any;
 
   calendarListColumns: string[] = [];
 
@@ -111,7 +111,7 @@ export class EntityScheduleComponent {
       this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
       this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), 1);
       this.endDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1, 0);
-      this.dataSource = [];
+      this.scheduleList = [];
   }
 
   //#endregion
@@ -327,7 +327,7 @@ export class EntityScheduleComponent {
 
     // Clear the calendar list columns
     this.calendarListColumns = [];
-    this.dataSource = [];
+    this.scheduleList = [];
 
     // Add the employee column
     this.calendarListColumns.push(this.EMPLOYEE_COLUMN);
@@ -357,7 +357,7 @@ export class EntityScheduleComponent {
       while (dateMonitor <= this.endDate) {
         let date = this.formatDateString(dateMonitor.toISOString());
         let assignment = '';
-
+        let color = '#FFFFFF';
         // Filter the schedule entries for the current date
         let filteredScheduleEntries = this.scheduleEntries.filter((scheduleEntry) => 
           new Date(scheduleEntry.scheduleStartDate).toISOString().split('T')[0] === date
@@ -374,6 +374,10 @@ export class EntityScheduleComponent {
                   // If the worker is assigned, add the shift alias to the assignment
                   assignment += ' ' + scheduleEntry.shiftDTO.shiftAlias + ' ';
 
+                  if(scheduleEntry.shiftDTO.shiftAlias != ''){
+                    color = scheduleEntry.shiftDTO.shiftColorHex || '#FFFFFF';
+                  }
+                  
                   // Assuming shiftDuration is a Date object representing the duration, calculate hours
                   let duration : Date = scheduleEntry.shiftDTO.shiftDuration;
                   let hours = 0;
@@ -395,16 +399,37 @@ export class EntityScheduleComponent {
           assignment = 'NA';
         }
 
-        workerData = {... workerData, [date]: assignment};
+        workerData = {... workerData, 
+          [date]: {
+            alias: assignment.trim() || 'NA',
+            color: color
+          }
+        };
         // this.dataSource.push(workerData);
         dateMonitor.setDate(dateMonitor.getDate() + 1);
       }
 
-      this.dataSource = [...this.dataSource, workerData];
+      this.scheduleList = [...this.scheduleList, workerData];
     });
 
-    // console.log(this.dataSource);
   }
+
+  getCellStyle(column: string, cellValue: any): { [klass: string]: any } {
+  // Skip special columns
+  if (column === this.EMPLOYEE_COLUMN || column === this.TIME_COLUMN) {
+    return {};
+  }
+
+  // If cellValue is an object with a color, use it
+  if (cellValue && typeof cellValue === 'object' && cellValue.color) {
+    return {
+      'background-color': cellValue.color
+    };
+  }
+
+  return {};
+}
+
 
   //#endregion
 

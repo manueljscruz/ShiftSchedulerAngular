@@ -3,3 +3,8 @@
     flex-direction: row;
     align-items: center;
 }
+
+#schedule-list{
+    max-height: 600px !important;
+    overflow-y: auto;
+}

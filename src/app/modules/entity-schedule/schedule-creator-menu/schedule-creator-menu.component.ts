@@ -6,14 +6,28 @@ import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
 import { EntityRuleDTO } from '../../../shared/models/DTOs/Incoming/EntityRuleDTO';
 import { CreateEntityScheduleDTO } from '../../../shared/models/DTOs/Outgoing/CreateEntityScheduleDTO';
 
+export enum FilterType{
+    Members = 'Members',
+    Shifts = 'Shifts',
+    Rules = 'Rules'
+};
+
 @Component({
   selector: 'schedule-creator-menu',
   templateUrl: './schedule-creator-menu.component.html',
   styleUrl: './schedule-creator-menu.component.css'
 })
 
+
 export class ScheduleCreatorMenuComponent {
 
+  //#region Constants
+
+  MEMBER_FILTER_TYPE: FilterType = FilterType.Members;
+  SHIFT_FILTER_TYPE: FilterType = FilterType.Shifts;
+  RULE_FILTER_TYPE: FilterType = FilterType.Rules;
+
+  //#endregion
 
   //#region Properties
 
@@ -26,6 +40,11 @@ export class ScheduleCreatorMenuComponent {
   /// Flag that indicates that the schedule should be created with the existing schedule or should be created from scratch.
   /// </summary>
   clearExistingSchedule : boolean = false;
+
+  /// <summary>
+  /// Flag that indicates that the schedule should be created with the filtered options
+  /// </summary>
+  isFilterable: boolean = false;
 
   /// <summary>
   /// Flag that indicates that the schedule should be created with the filtered options
@@ -72,8 +91,29 @@ export class ScheduleCreatorMenuComponent {
   /// </summary>
   selectedEntityRules: string[] = [];
 
+  /// <summary>
+  /// Flag that indicates that all entity worker members are selected
+  /// </summary>
+  isMembersAllSelected: boolean = false;
+
+  /// <summary>
+  /// Flag that indicates that all entity shifts are selected
+  /// </summary>
+  isShiftsAllSelected: boolean = false;
+
+  /// <summary>
+  /// Flag that indicates that all entity rules are selected
+  /// </summary>
+  isRulesAllSelected: boolean = false;
+
+  /// <summary>
+  /// Index of the selected tab
+  /// </summary>
   selectedTabIndex: number = 0;
 
+  /// <summary>
+  /// Output event that is emitted when the schedule is created
+  /// </summary>
   @Output() createScheduleOp = new EventEmitter<BaseResponseModel>();
   
   //#endregion
@@ -122,18 +162,82 @@ export class ScheduleCreatorMenuComponent {
 
   //#endregion
 
-  toggleSelection(_t34: any) {
-  throw new Error('Method not implemented.');
+  //#region Toggle Selection
+
+  toggleSelection(MEMBER_FILTER_TYPE: FilterType, element: any) {
+    element.isSelected = !element.isSelected;
+
+    if (MEMBER_FILTER_TYPE === this.MEMBER_FILTER_TYPE) {
+      
+      if (element.isSelected) {
+        this.selectedEntityWorkerMembers.push(element.workerId);
+      }
+      else{
+        const index = this.selectedEntityWorkerMembers.indexOf(element.workerId);
+        if (index > -1) {
+          this.selectedEntityWorkerMembers.splice(index, 1);
+        }
+      }
+    }
+  
+    else if (MEMBER_FILTER_TYPE === this.SHIFT_FILTER_TYPE) {
+      
+      if (element.isSelected) {
+        this.selectedEntityShifts.push(element.shiftId);
+      }
+      else{
+        const index = this.selectedEntityShifts.indexOf(element.shiftId);
+        if (index > -1) {
+          this.selectedEntityShifts.splice(index, 1);
+        }
+      }
+    }
+
+    else if (MEMBER_FILTER_TYPE === this.RULE_FILTER_TYPE) {
+      if (element.isSelected) {
+        this.selectedEntityRules.push(element.entityRuleId);
+      }
+      else{
+        const index = this.selectedEntityRules.indexOf(element.entityRuleId);
+        if (index > -1) {
+          this.selectedEntityRules.splice(index, 1);
+        }
+      }
+    }
   }
-  isSomeSelected(): unknown {
-  throw new Error('Method not implemented.');
+
+  //#endregion
+
+  //#region Master Toggle
+
+  masterToggle(MEMBER_FILTER_TYPE: FilterType) {
+
+    if (MEMBER_FILTER_TYPE === this.MEMBER_FILTER_TYPE) {
+      this.isMembersAllSelected = !this.isMembersAllSelected;
+      this.entityWorkerMembers.forEach((item: EntityWorkerMemberDTO) => {
+        item.isSelected = this.isMembersAllSelected;
+      });
+      this.selectedEntityWorkerMembers = this.isMembersAllSelected ? this.entityWorkerMembers.map(item => item.workerId) : [];
+    }
+
+    else if (MEMBER_FILTER_TYPE === this.SHIFT_FILTER_TYPE) {
+      this.isShiftsAllSelected = !this.isShiftsAllSelected;
+      this.entityShifts.forEach((item: ShiftDTO) => {
+        item.isSelected = this.isShiftsAllSelected;
+      });
+      this.selectedEntityShifts = this.isShiftsAllSelected ? this.entityShifts.map(item => item.shiftId) : [];
+    }
+
+    else if (MEMBER_FILTER_TYPE === this.RULE_FILTER_TYPE) {
+      this.isRulesAllSelected = !this.isRulesAllSelected;
+      this.entityRules.forEach((item: EntityRuleDTO) => {
+        item.isSelected = this.isRulesAllSelected;
+      });
+      this.selectedEntityRules = this.isRulesAllSelected ? this.entityRules.map(item => item.entityRuleId) : [];
+    }
   }
-  isAllSelected(): unknown {
-  throw new Error('Method not implemented.');
-  }
-  masterToggle() {
-  throw new Error('Method not implemented.');
-  }
+
+  //#endregion
 
   //#endregion
 

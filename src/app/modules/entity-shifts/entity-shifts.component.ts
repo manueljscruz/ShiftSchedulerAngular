@@ -9,7 +9,6 @@ import { ShiftViewModel } from '../../shared/models/VM/ShiftViewModel';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { ShiftService } from '../../core/services/api/ShiftService';
-import { EntityShiftViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/EntityShiftViewModelRequestDTO';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { MatTable } from '@angular/material/table';
@@ -17,8 +16,6 @@ import { AddShiftDTO } from '../../shared/models/DTOs/Outgoing/AddShiftDTO';
 import { AddShiftBreakDTO } from '../../shared/models/DTOs/Outgoing/AddShiftBreakDTO';
 import { GenericDeleteWarningDialogComponent } from '../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 import { DELETE_SHIFT_BREAK_CONTENT, DELETE_SHIFT_BREAK_TITLE, DELETE_SHIFT_CONTENT, DELETE_SHIFT_ROTATION_CONTENT, DELETE_SHIFT_ROTATION_TITLE, DELETE_SHIFT_TITLE } from '../../shared/constants/UITextConstants';
-import e from 'express';
-import { ShiftBreakTemplateDTO } from '../../shared/models/DTOs/Incoming/ShiftBreakTemplateDTO';
 import { ShiftTemplateDTO } from '../../shared/models/DTOs/Incoming/ShiftTemplateDTO';
 import { BaseViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { ShiftRotationDialogFormComponent } from './shift-rotation-dialog-form/shift-rotation-dialog-form.component';
@@ -31,7 +28,6 @@ import { UpdateShiftRotationDTO } from '../../shared/models/DTOs/Outgoing/Update
   styleUrl: './entity-shifts.component.css'
 })
 export class EntityShiftsComponent {
-
   //#region CONSTANTS
   // CONSTANTS
   DELETE_SHIFT_TITLE = DELETE_SHIFT_TITLE;
@@ -147,6 +143,14 @@ export class EntityShiftsComponent {
   toggleForm(isEditing: boolean) {
     this.isFormActive = !this.isFormActive;
     this.isEditing = isEditing;
+  }
+
+  //#endregion
+
+  //#region 
+
+  changeShiftColor($event: string) {
+    this.SelectedShift.shiftColorHex = $event;
   }
 
   //#endregion
@@ -288,6 +292,7 @@ export class EntityShiftsComponent {
           this.SelectedShift.shiftDescription,
           this.SelectedShift.shiftStartHour,
           this.SelectedShift.shiftDuration,
+          '',
           addShiftBreaks
         );
 

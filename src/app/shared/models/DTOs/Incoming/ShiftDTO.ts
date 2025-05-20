@@ -38,13 +38,20 @@ export class ShiftDTO
     public shiftDuration: Date;
 
     /// <summary>
+    /// Shift color
+    /// </summary>
+    public shiftColorHex : string;
+
+    /// <summary>
     /// Shift breaks
     /// </summary>
     public shiftBreakDTOs: ShiftBreakDTO[];
 
+    public isSelected: boolean = false;
+
     public readonly type = 'ShiftDTO';
 
-    constructor(shiftId: string, entityId: string, shiftName: string, shiftAlias: string, shiftDescription: string, shiftStartHour: Date, shiftDuration: Date, shiftBreaks: ShiftBreakDTO[])
+    constructor(shiftId: string, entityId: string, shiftName: string, shiftAlias: string, shiftDescription: string, shiftStartHour: Date, shiftDuration: Date, shiftColorHex: string, shiftBreaks: ShiftBreakDTO[], isSelected: boolean = false)
     {
         this.shiftId = shiftId;
         this.entityId = entityId;
@@ -53,12 +60,14 @@ export class ShiftDTO
         this.shiftDescription = shiftDescription;
         this.shiftStartHour = shiftStartHour;
         this.shiftDuration = shiftDuration;
+        this.shiftColorHex = shiftColorHex;
         this.shiftBreakDTOs = shiftBreaks;
+        this.isSelected = isSelected;
     }
 
     public static newShiftDTO(): ShiftDTO
     {
-        return new ShiftDTO('', '', '', '', '', new Date(), new Date(), []);
+        return new ShiftDTO('', '', '', '', '', new Date(), new Date(), '000000', []);
     }
 
     /*

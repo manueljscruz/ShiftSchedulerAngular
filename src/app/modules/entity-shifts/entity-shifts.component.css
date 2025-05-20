@@ -110,3 +110,24 @@ mat-table{
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+#shift-color-picker {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #9e9e9e;
+    border: 1px solid #9e9e9e;
+    border-radius: 4px;
+    min-width: 40px;
+    padding: 0px 12px;
+    height: 57px;
+    margin: 0 12px 0 12px;
+}
+
+#shift-color-picker mat-label {
+    margin-right: 10px;
+}
+
+#shift-color-picker:hover {
+    border: 1px solid #000;
+}
