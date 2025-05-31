@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FILTER_ICON } from '../../shared/constants/IconNamesConstants';
 import { EntityMembersViewModel } from '../../shared/models/VM/EntityMembersViewModel';
 import { EntityService } from '../../core/services/api/EntityService';
@@ -19,6 +19,8 @@ import { DeleteMemberDTO } from '../../shared/models/DTOs/Outgoing/DeleteMemberD
 import { GenericDeleteWarningDialogComponent } from '../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 import { DELETE_MEMBER_CONTENT, DELETE_MEMBER_TITLE } from '../../shared/constants/UITextConstants';
 import { BaseViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { MatSort } from '@angular/material/sort';
 
 
 @Component({
@@ -75,6 +77,16 @@ export class EntityWorkersComponent {
   /// </summary>
   public isCurrentUserEntityOwner: boolean = false;
   
+  /// <summary>
+  /// Flag to determine if the view is in grid mode
+  /// </summary>
+  public isGridView: boolean = true;
+
+  /// <summary>
+  /// Flag to determine if the view is in list mode
+  /// </summary>
+  public isListView: boolean = false;
+
   //#endregion
   
   //#region Constructor
@@ -226,6 +238,27 @@ export class EntityWorkersComponent {
   }
 
   //#endregion
+
+  onViewChange($event: MatButtonToggleChange) {
+    switch ($event.value) {
+      case 'grid':
+        this.isGridView = true;
+        this.isListView = false;
+        break;
+
+      case 'list':
+        this.isGridView = false;
+        this.isListView = true;
+        break;
+
+      default:
+        this.isGridView = true;
+        this.isListView = false;
+        break;
+    }
+  }
+
+
 
   //#endregion
 

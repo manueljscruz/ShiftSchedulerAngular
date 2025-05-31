@@ -69,17 +69,4 @@ export class ShiftDTO
     {
         return new ShiftDTO('', '', '', '', '', new Date(), new Date(), '000000', []);
     }
-
-    /*
-    public getFormattedStartTime(): string {
-        const splitTime = this.shiftStartHour.toTimeString().split(':');
-        return `${splitTime[0]}:${splitTime[1]}`;
-    }
-
-    public getFormattedDuration(): string {
-        const hours = this.shiftDuration.getUTCHours();
-        const minutes = this.shiftDuration.getUTCMinutes();
-        return `${hours > 0 ? hours + ' hour' + (hours > 1 ? 's' : '') : ''} ${minutes > 0 ? minutes + ' minute' + (minutes > 1 ? 's' : '') : ''}`.trim();
-    }
-    */
 }

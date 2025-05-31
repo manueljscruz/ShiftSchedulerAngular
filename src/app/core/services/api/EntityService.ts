@@ -12,6 +12,8 @@ import { EditMemberDTO } from '../../../shared/models/DTOs/Outgoing/EditMemberDT
 import { DeleteMemberDTO } from '../../../shared/models/DTOs/Outgoing/DeleteMemberDTO';
 import { HTTP_METHOD_DELETE, HTTP_METHOD_GET, HTTP_STATUS_NO_CONTENT, HTTP_STATUS_OK } from '../../../shared/constants/HttpConstants';
 import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
+import { DeleteEntityObjectDTO } from '../../../shared/models/DTOs/Outgoing/DeleteEntityObjectDTO';
+import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -115,24 +117,6 @@ export class EntityService {
             response.message = error.message;
         }
 
-        /*
-        try {
-            let url = GET_ENTITY_MEMBERS_VM.replace('{lcode}', userLanguage); // .replace('{entityId}', entityId)
-            const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-            
-            var httpResponse = this.http.get(url, {
-                headers,
-                params: { entityId: entityId } // Sending entityId as a query parameter
-              });
-
-            console.log(httpResponse);
-            response = await httpResponse.toPromise() as BaseResponseModel;
-        }
-        catch (error : any) {
-            console.error('Error fetching data:', error.message);
-            // Handle the error appropriately (e.g., display an error message)
-        }
-        */
         return response;
     }
 
@@ -185,8 +169,12 @@ export class EntityService {
      */
     async deleteEntity(entityId: string) : Promise<BaseResponseModel> {
         let response = new BaseResponseModel(false, "", null);
+
+        let deleteEntityObject : SingleIdentifierDTO = new SingleIdentifierDTO(entityId);
         try {
-            let apiResponse = await this.http.delete(DELETE_ENTITY_URL.replace("{id}", entityId)).toPromise();
+            let apiResponse = await this.http.delete(DELETE_ENTITY_URL, {
+                body: deleteEntityObject,
+            }).toPromise();
             response = apiResponse as BaseResponseModel;
             // Process the received data
         } catch (error : any) {

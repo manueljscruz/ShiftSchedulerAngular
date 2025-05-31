@@ -136,6 +136,12 @@ export class ScheduleCreatorMenuComponent {
 
   onCreate() {
 
+    if(!this.isFilterable){
+      this.selectedEntityWorkerMembers = [];
+      this.selectedEntityShifts = [];
+      this.selectedEntityRules = []; 
+    }
+
     let createParameters : CreateEntityScheduleDTO = new CreateEntityScheduleDTO(
       '',
       '',

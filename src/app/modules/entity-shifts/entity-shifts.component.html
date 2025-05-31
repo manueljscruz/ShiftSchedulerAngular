@@ -156,21 +156,10 @@
                                 <input matInput placeholder="Shift Name" name="shift-name" required [(ngModel)]="SelectedShift.shiftName">
                             </mat-form-field>
                         </div>
-                        <!-- 
-                        <div class="col-md-auto justify-content-center">
-                            <mat-label i18n>Shift Color</mat-label>
-                             
-                        </div>
-                        -->
                         <div class="col-md-auto" id="shift-color-picker">
                             <mat-label i18n>Shift Color</mat-label>
                             <ngx-colors ngx-colors-trigger [(ngModel)]="this.SelectedShift.shiftColorHex" name="shift-color-picker"></ngx-colors>
                         </div>
-                            <!--
-                            <ngx-colors  [style.width.px]="50" [style.height.px]="50" [style.border-radius.px]="5" [style.border]="'1px solid #ccc'" [style.cursor]="'pointer'" [style.margin]="'0 5px'">
-                            </ngx-colors>
-                            -->
-                            <!-- [formControl]="colorFormControl" style="display: inline-block; margin:5px;" -->
                     </div>
                     <div class="row col-gap">
                         <!-- Alias -->

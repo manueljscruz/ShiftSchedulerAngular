@@ -9,6 +9,9 @@ import { EntityRuleSpecificationDTO } from '../../../shared/models/DTOs/Incoming
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { AddEntityRuleDTO } from '../../../shared/models/DTOs/Outgoing/AddEntityRuleDTO';
 import { EntityRuleDTO } from '../../../shared/models/DTOs/Incoming/EntityRuleDTO';
+import { DeleteEntityObjectDTO } from '../../../shared/models/DTOs/Outgoing/DeleteEntityObjectDTO';
+import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
+import { DeleteEntityRuleSpecDTO } from '../../../shared/models/DTOs/Outgoing/DeleteEntityRuleSpecDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -112,8 +115,13 @@ export class RuleService {
     async deleteRule(entityId: string, entityRuleId: string) : Promise<BaseResponseModel> {
         let response : BaseResponseModel = new BaseResponseModel(false, '', null);
 
+        let deleteObject : DeleteEntityObjectDTO = new DeleteEntityObjectDTO(entityId, entityRuleId);
         try{
-            response = await this.http.delete<BaseResponseModel>(DELETE_RULE_URL.replace('{entityId}', entityId).replace('{entityRuleId}', entityRuleId)).toPromise() as BaseResponseModel;
+            response = await this.http.delete<BaseResponseModel>(DELETE_RULE_URL, 
+                {
+                    body: deleteObject
+                }
+            ).toPromise() as BaseResponseModel;
         }
         catch(error : any){
             console.error('Error fetching data:', error.message);
@@ -124,11 +132,17 @@ export class RuleService {
     /// <summary>
     /// Delete a rule specification from the entity rule
     /// </summary>
-    async deleteRuleSpecification(entityRuleId: string, specId: string) : Promise<BaseResponseModel> {
+    async deleteRuleSpecification(entityId: string, entityRuleId: string, specId: string) : Promise<BaseResponseModel> {
         let response : BaseResponseModel = new BaseResponseModel(false, '', null);
 
+        let deleteRuleSpecDTO : DeleteEntityRuleSpecDTO = new DeleteEntityRuleSpecDTO(entityId, entityRuleId, parseInt(specId));
+
         try{
-            response = await this.http.delete<BaseResponseModel>(DELETE_RULE_SPEC_URL.replace('{entityRuleId}', entityRuleId).replace('{specId}', specId)).toPromise() as BaseResponseModel;
+            response = await this.http.delete<BaseResponseModel>(DELETE_RULE_SPEC_URL, 
+                {
+                    body: deleteRuleSpecDTO
+                }
+            ).toPromise() as BaseResponseModel;
         }
         catch(error : any){
             console.error('Error fetching data:', error.message);
@@ -142,8 +156,12 @@ export class RuleService {
     async deleteRuleSpecifications(entityRuleId: string) : Promise<BaseResponseModel>{
         let response : BaseResponseModel = new BaseResponseModel(false, '', null);
 
+        let singleIdentifier : SingleIdentifierDTO = new SingleIdentifierDTO(entityRuleId);
         try{
-            response = await this.http.delete<BaseResponseModel>(DELETE_RULE_SPECS_URL.replace('{entityRuleId}', entityRuleId)).toPromise() as BaseResponseModel;
+            response = await this.http.delete<BaseResponseModel>(DELETE_RULE_SPECS_URL, 
+                {
+                    body: singleIdentifier
+                }).toPromise() as BaseResponseModel;
         }
         catch(error : any){
             console.error('Error fetching data:', error.message);

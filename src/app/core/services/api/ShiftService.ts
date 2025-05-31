@@ -14,6 +14,7 @@ import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/Single
 import { AddShiftRotationDTO } from '../../../shared/models/DTOs/Outgoing/AddShiftRotationDTO';
 import { UpdateShiftRotationDTO } from '../../../shared/models/DTOs/Outgoing/UpdateShiftRotationDTO';
 import { EntityShiftRotationDTO } from '../../../shared/models/DTOs/Incoming/EntityShiftRotationDTO';
+import { DeleteEntityObjectDTO } from '../../../shared/models/DTOs/Outgoing/DeleteEntityObjectDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -166,8 +167,11 @@ export class ShiftService {
     async deleteShift(entityId: string, shiftId: string): Promise<BaseResponseModel> {
         let response = new BaseResponseModel(false, "", null);
 
+        let deleteShift : DeleteEntityObjectDTO = new DeleteEntityObjectDTO(entityId, shiftId);
         try{
-            response = await this.http.delete<BaseResponseModel>(DELETE_SHIFT_URL.replace('{entityId}', entityId).replace('{shiftId}', shiftId)).toPromise() as BaseResponseModel;
+            response = await this.http.delete<BaseResponseModel>(DELETE_SHIFT_URL,{
+                body: deleteShift
+            }).toPromise() as BaseResponseModel;
         }
         catch(error : any){
             console.error('Error fetching data:', error.message);
@@ -186,8 +190,11 @@ export class ShiftService {
     async deleteShiftBreak(shiftBreakId: string) : Promise<BaseResponseModel>{
         let response = new BaseResponseModel(false, "", null);
 
+        let deleteShiftBreakId : SingleIdentifierDTO = new SingleIdentifierDTO(shiftBreakId);
         try{
-            response = await this.http.delete<BaseResponseModel>(DELETE_SHIFT_BREAK_URL.replace('{shiftBreakId}', shiftBreakId)).toPromise() as BaseResponseModel;
+            response = await this.http.delete<BaseResponseModel>(DELETE_SHIFT_BREAK_URL, {
+                body: deleteShiftBreakId
+            }).toPromise() as BaseResponseModel;
         }
         catch(error : any){
             console.error('Error fetching data:', error.message);

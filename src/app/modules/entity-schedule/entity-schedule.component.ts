@@ -218,6 +218,7 @@ export class EntityScheduleComponent {
     const date = new Date(dateString);
     // Convert to local time
     const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    
     return localDate.toISOString().split('T')[0];
   }
 
@@ -310,7 +311,7 @@ export class EntityScheduleComponent {
         start: new Date(schedule.scheduleStartDate),
         end: new Date(schedule.scheduleEndDate),
         title: schedule.shiftDTO.shiftName,
-        color: { primary: '#1e90ff', secondary: '#D1E8FF' },
+        color: { primary: schedule.shiftDTO.shiftColorHex, secondary: schedule.shiftDTO.shiftColorHex },
         allDay: true
       }));
   }
@@ -348,7 +349,7 @@ export class EntityScheduleComponent {
       let workerData = {
         id : workerMember.workerId,
         isBot: workerMember.isBot,
-        employee: workerMember.workerName,
+        employee: workerMember.partOfRotation ? workerMember.workerName + ' (RT)' : workerMember.workerName,
         time: 0
       };
 

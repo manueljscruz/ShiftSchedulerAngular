@@ -364,9 +364,6 @@ export class EntityRulesComponent {
       this.loadingScreenService.changeLoadingState(false);
 
       if(response.success){
-        //response.result.ruleTypeDisplayValue = this.rulesViewModel.ruleTypeLocalizeds.find(x => x.ruleTypeId === response.result.ruleTypeId)?.ruleTypeLocalizedName || '';
-        // this.selectedRule = response.result;
-        // this.rulesViewModel.entityRules[ruleIndex] = response.result;
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, response.message));
         this.isFormActive = false;
         this.clearSpecForm();
@@ -555,6 +552,7 @@ export class EntityRulesComponent {
           ruleSpecDTO.ruleSpecificationValue = this.boolSpecValue ? 1 : 0;
         else
           ruleSpecDTO.ruleSpecificationValue = this.specificationValue;
+        ruleSpecDTO.businessAspectId = BUSINESS_ASPECT_SHIFTS_ID;
         ruleSpecDTO.aspectReferenceId = this.selectedShift?.shiftId || '';
         ruleSpecDTO.referenceName = this.selectedShift?.shiftName || '';
         ruleSpecDTO.businessAspectDisplayValue = this.rulesViewModel.businessAspectsLocalizeds.find(x => x.businessAspectId === BUSINESS_ASPECT_SHIFTS_ID)?.businessAspectLocalizedName || '';
@@ -733,6 +731,7 @@ export class EntityRulesComponent {
             this.selectedRuleSpec.ruleSpecificationValue = this.specificationValue;
           this.selectedRuleSpec.aspectReferenceId = this.selectedShift?.shiftId || '';
           this.selectedRuleSpec.referenceName = this.selectedShift?.shiftName || '';
+          this.selectedRuleSpec.businessAspectId = BUSINESS_ASPECT_SHIFTS_ID;
           this.selectedRuleSpec.businessAspectDisplayValue = this.rulesViewModel.businessAspectsLocalizeds.find(x => x.businessAspectId === BUSINESS_ASPECT_SHIFTS_ID)?.businessAspectLocalizedName || '';
           this.selectedRuleSpec.referenceName2 = NA;
           break;
@@ -833,7 +832,7 @@ export class EntityRulesComponent {
       // Turn on the loading spinner
       this.loadingScreenService.changeLoadingState(true);
 
-      let apiResponse = await this.ruleService.deleteRuleSpecification(objectToDelete.entityRuleId, objectToDelete.specificationId.toString());
+      let apiResponse = await this.ruleService.deleteRuleSpecification(this.currentEntityId, objectToDelete.entityRuleId, objectToDelete.specificationId.toString());
 
       this.loadingScreenService.changeLoadingState(false);
       if(apiResponse.success){
