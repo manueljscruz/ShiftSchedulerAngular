@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { EntityRuleSpecificationDTO } from '../../shared/models/DTOs/Incoming/EntityRuleSpecificationDTO';
 import { EntityRuleDTO } from '../../shared/models/DTOs/Incoming/EntityRuleDTO';
-import { MAX_HOURS_WEEK_ID, MIN_DAYS_OFF_WEEK_ID, MIN_WEEKENDS_OFF_MONTH_ID } from '../../shared/constants/DataConstants';
+import { AVG_HOURS_MONTH_ID, AVG_HOURS_WEEK_ID, MAX_HOURS_WEEK_ID, MIN_DAYS_OFF_WEEK_ID, MIN_WEEKENDS_OFF_MONTH_ID } from '../../shared/constants/DataConstants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RuleValidatorService {
+  
 
   constructor() { }
 
@@ -274,6 +275,8 @@ export class RuleValidatorService {
 
   //#endregion
 
+  //#region Validate Rule Weekends Off Per Month
+
   validateRuleWeekendsOffPerMonth(entityRules : EntityRuleDTO[], entityRuleInstance : EntityRuleDTO, isEditOp: boolean) : BaseResponseModel {
     let response : BaseResponseModel = new BaseResponseModel(false, '', null);
 
@@ -309,4 +312,88 @@ export class RuleValidatorService {
     response.success = true;
     return response;
   }
+
+  //#endregion
+
+  //#region Validate Avg Hours Per Month
+
+  validateAvgHoursPerMonth(entityRules: EntityRuleDTO[], selectedRule: EntityRuleDTO, isEditingRule: boolean) : BaseResponseModel {
+    let response : BaseResponseModel = new BaseResponseModel(false, '', null);
+
+     // If there are no items, no need to check for any rules
+    if (entityRules.length === 0) {
+      response.success = true;
+      return response;
+    }
+
+    // If it is an edit operation, there is only 1 record and the rule type is different
+    else if(isEditingRule && entityRules.length == 1 && entityRules[0].ruleTypeId != AVG_HOURS_MONTH_ID)
+    {
+      response.success = true;
+      return response;
+    }
+
+    // Check for existing Avg Hours per Month rule
+    let avgHoursMonthRuleExists = entityRules.some(rule => rule.ruleTypeId === AVG_HOURS_MONTH_ID);
+    let otherAvgHoursMonthRuleExists = entityRules.some(rule => rule.ruleTypeId === AVG_HOURS_MONTH_ID && rule.entityRuleId !== selectedRule.entityRuleId);
+
+    // If it's an edit operation and another Min Days Off per Month rule exists
+    if (isEditingRule && otherAvgHoursMonthRuleExists) {
+        response.message = 'Avg Hours per Month rule already exists';
+        return response;
+    }
+
+    // If it's an add operation and a Min Days Off per Month rule already exists
+    if (!isEditingRule && avgHoursMonthRuleExists) {
+        response.message = 'Avg Hours per Month rule already exists';
+        return response;
+    }
+
+    response.success = true;
+
+    return response;
+  }
+
+  //#endregion
+
+  //#region Validate Avg Hours Per Week
+
+  validateAvgHoursPerWeek(entityRules: EntityRuleDTO[], selectedRule: EntityRuleDTO, isEditingRule: boolean) : BaseResponseModel {
+    let response : BaseResponseModel = new BaseResponseModel(false, '', null);
+
+     // If there are no items, no need to check for any rules
+    if (entityRules.length === 0) {
+      response.success = true;
+      return response;
+    }
+
+    // If it is an edit operation, there is only 1 record and the rule type is different
+    else if(isEditingRule && entityRules.length == 1 && entityRules[0].ruleTypeId != AVG_HOURS_WEEK_ID)
+    {
+      response.success = true;
+      return response;
+    }
+
+    // Check for existing Min Days Off per Month rule
+    let avgWeeksHoursRuleExists = entityRules.some(rule => rule.ruleTypeId === AVG_HOURS_WEEK_ID);
+    let otherAvgWeekHoursRuleExists = entityRules.some(rule => rule.ruleTypeId === AVG_HOURS_WEEK_ID && rule.entityRuleId !== selectedRule.entityRuleId);
+
+    // If it's an edit operation and another Min Days Off per Month rule exists
+    if (isEditingRule && otherAvgWeekHoursRuleExists) {
+        response.message = 'Avg Hours per Week rule already exists';
+        return response;
+    }
+
+    // If it's an add operation and a Min Days Off per Month rule already exists
+    if (!isEditingRule && avgWeeksHoursRuleExists) {
+        response.message = 'Avg Hours per Week rule already exists';
+        return response;
+    }
+
+    response.success = true;
+
+    return response;
+  }
+
+  //#endregion
 }

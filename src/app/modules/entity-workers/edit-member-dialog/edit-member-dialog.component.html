@@ -20,6 +20,10 @@
                 <mat-label i18n>Part of Rotation</mat-label>
                 <mat-checkbox [(ngModel)]="partOfRotation" (change)="onRotationChange($event)" name="rotation-value-bool"></mat-checkbox>
             </div>
+            <div class="col-auto d-flex">
+                <mat-label i18n>Multiple Shifts Assignments</mat-label>
+                <mat-checkbox [(ngModel)]="multipleShiftAssignments" name="multiple-shifts-value-bool"></mat-checkbox>
+            </div>
         </div>
         <div class="row" *ngIf="!partOfRotation">
             <div class="col">

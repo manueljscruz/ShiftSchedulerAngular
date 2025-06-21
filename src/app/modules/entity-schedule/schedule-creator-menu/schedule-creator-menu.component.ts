@@ -137,9 +137,7 @@ export class ScheduleCreatorMenuComponent {
   onCreate() {
 
     if(!this.isFilterable){
-      this.selectedEntityWorkerMembers = [];
-      this.selectedEntityShifts = [];
-      this.selectedEntityRules = []; 
+      this.clearSelections();
     }
 
     let createParameters : CreateEntityScheduleDTO = new CreateEntityScheduleDTO(
@@ -163,10 +161,33 @@ export class ScheduleCreatorMenuComponent {
   //#region On Close
 
   onClose() {
+    this.clearSelections();
     this.createScheduleOp.emit(new BaseResponseModel(false, "Canceled", null));
   }
 
   //#endregion
+
+//#region Clear Selections
+
+clearSelections(){
+  this.selectedEntityWorkerMembers = [];
+  this.selectedEntityShifts = [];
+  this.selectedEntityRules = []; 
+
+  this.entityWorkerMembers.forEach(element => {
+    element.isSelected = false;
+  });
+
+  this.entityShifts.forEach(element => {
+    element.isSelected = false;
+  });
+
+  this.entityRules.forEach(element => {
+    element.isSelected = false;
+  });
+}
+
+//#endregion
 
   //#region Toggle Selection
 

@@ -87,10 +87,12 @@ export class AddMemberDialogComponent {
 
   worksWeekends: boolean = false;
 
+  multipleShifts: boolean = false;
+
   /// <summary>
-    /// The list of selected shifts
-    
-    selectedShifts: ShiftDTO[] = [];
+  /// The list of selected shifts
+  /// </summary>
+  selectedShifts: ShiftDTO[] = [];
 
   /// <summary>
   /// Event emitter for when a member is added or invited.
@@ -159,8 +161,8 @@ export class AddMemberDialogComponent {
       }
 
 
-      let newMember : AddNewMemberDTO = this.selectedTabIndex === 1 ? new AddNewMemberDTO(true, this.currentEntityId, this.memberNameInput, '', this.selectedSkills, this.worksWeekDays, this.worksWeekends,  this.selectedShifts, this.partOfRotation,  this.languageService.returnLocalization())
-      :  new AddNewMemberDTO(false, this.currentEntityId, '', this.emailInput, this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.selectedShifts, this.partOfRotation, this.languageService.returnLocalization());
+      let newMember : AddNewMemberDTO = this.selectedTabIndex === 1 ? new AddNewMemberDTO(true, this.currentEntityId, this.memberNameInput, '', this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.multipleShifts,  this.selectedShifts, this.partOfRotation,  this.languageService.returnLocalization())
+      :  new AddNewMemberDTO(false, this.currentEntityId, '', this.emailInput, this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.multipleShifts, this.selectedShifts, this.partOfRotation, this.languageService.returnLocalization());
 
       let apiResponse = await this.entityService.addNewEntityMember(newMember);
 

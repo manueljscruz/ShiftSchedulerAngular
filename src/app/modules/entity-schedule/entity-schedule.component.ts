@@ -84,12 +84,12 @@ export class EntityScheduleComponent {
   /// <summary>
   /// Flag to determine if the calendar view is selected
   /// </summary>
-  isCalendarView: boolean = true;
+  isCalendarView: boolean = false;
 
   /// <summary>
   /// Flag to determine if the list view is selected
   /// </summary>
-  isListView: boolean = false;
+  isListView: boolean = true;
 
   viewDate: Date = new Date();
 

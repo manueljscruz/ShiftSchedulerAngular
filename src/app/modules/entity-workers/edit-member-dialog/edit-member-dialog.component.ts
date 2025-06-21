@@ -26,7 +26,7 @@ export class EditMemberDialogComponent {
   /// <summary>
   /// The entity worker member to be edited
   /// </summary
-  entityWorkerMember: EntityWorkerMemberDTO = new EntityWorkerMemberDTO('', '', false, false, false, [], false, false, false, []);
+  entityWorkerMember: EntityWorkerMemberDTO = new EntityWorkerMemberDTO('', '', false, false, false, [], false, false, false, false, []);
 
   /// <summary>
   /// The current entity identifier
@@ -71,6 +71,8 @@ export class EditMemberDialogComponent {
   worksWeekDays: boolean = false;
 
   worksWeekends: boolean = false;
+
+  multipleShiftAssignments : boolean = false;
 
   /// <summary>
   /// The text to display on the execute action button.
@@ -118,6 +120,7 @@ export class EditMemberDialogComponent {
     this.partOfRotation = this.entityWorkerMember.partOfRotation;
     this.worksWeekDays = this.entityWorkerMember.worksWeekDays;
     this.worksWeekends = this.entityWorkerMember.worksWeekends;
+    this.multipleShiftAssignments = this.entityWorkerMember.multipleShiftAssignments;
 
     this.selectedSkills = this.entityWorkerMember.skillSet != undefined ? [...this.entityWorkerMember.skillSet] : [];
     this.selectedShifts = this.entityWorkerMember.assignedShifts != undefined ? [...this.entityWorkerMember.assignedShifts] : [];
@@ -153,7 +156,7 @@ export class EditMemberDialogComponent {
     else{
       this.loadingScreenService.changeLoadingState(true);
 
-      let editWorkerDTO = new EditMemberDTO(this.entityWorkerMember.workerId, this.currentEntityId, this.entityWorkerMember.isBot, this.nameInput, this.selectedSkills, this.partOfRotation, this.worksWeekDays, this.worksWeekends, this.selectedShifts);
+      let editWorkerDTO = new EditMemberDTO(this.entityWorkerMember.workerId, this.currentEntityId, this.entityWorkerMember.isBot, this.nameInput, this.selectedSkills, this.partOfRotation, this.worksWeekDays, this.worksWeekends, this.multipleShiftAssignments, this.selectedShifts);
       
       let apiResponse = await this.entityService.updateEntityMember(editWorkerDTO);
 

@@ -19,7 +19,7 @@ import { SkillDTO } from '../../shared/models/DTOs/Incoming/SkillDTO';
 import { EntityService } from '../../core/services/api/EntityService';
 import { ShiftService } from '../../core/services/api/ShiftService';
 import { MatSelectChange } from '@angular/material/select';
-import { BUSINESS_ASPECT_SHIFTS_ID, BUSINESS_ASPECT_SKILLS_ID, MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID, MAX_CONSECUTIVE_SHIFTS_ID, MAX_HOURS_DAY_ID, MAX_HOURS_WEEK_ID, MAX_WORKERS_SHIFT_ID, MIN_DAYS_OFF_WEEK_ID, MIN_WEEKENDS_OFF_MONTH_ID, MIN_WORKERS_SHIFT_ID, POST_SHIFT_REST_HOURS_ID, REQ_QTY_SKILL_SHIFT_ID, REQ_QTY_SKILL_SHIFT_WEEKDAYS_ID, REQ_QTY_SKILL_SHIFT_WEEKENDS_ID, REQ_SKILLSET_SHIFT_ID, SHIFT_INCLUDES_WEEKENDS_ID } from '../../shared/constants/DataConstants';
+import { AVG_HOURS_MONTH_ID, AVG_HOURS_WEEK_ID, BUSINESS_ASPECT_SHIFTS_ID, BUSINESS_ASPECT_SKILLS_ID, MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID, MAX_CONSECUTIVE_SHIFTS_ID, MAX_HOURS_DAY_ID, MAX_HOURS_WEEK_ID, MAX_WORKERS_SHIFT_ID, MIN_DAYS_OFF_WEEK_ID, MIN_WEEKENDS_OFF_MONTH_ID, MIN_WORKERS_SHIFT_ID, POST_SHIFT_REST_HOURS_ID, REQ_QTY_SKILL_SHIFT_ID, REQ_QTY_SKILL_SHIFT_WEEKDAYS_ID, REQ_QTY_SKILL_SHIFT_WEEKENDS_ID, REQ_SKILLSET_SHIFT_ID, SHIFT_INCLUDES_WEEKENDS_ID } from '../../shared/constants/DataConstants';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { MatTab } from '@angular/material/tabs';
 import { MatTable } from '@angular/material/table';
@@ -458,6 +458,22 @@ export class EntityRulesComponent {
           return checkMinWeekendsOffRuleExistenceResponse; 
     }
 
+    else if(this.selectedRuleType.ruleTypeId === AVG_HOURS_WEEK_ID){
+      // Check if the Avg Hours per Week rule already exists
+      let checkAvgHoursWeekRuleExistenceResponse = this.ruleValidatorService.validateAvgHoursPerWeek(this.rulesViewModel.entityRules, this.selectedRule, this.isEditingRule);
+      
+      if(checkAvgHoursWeekRuleExistenceResponse.success === false) 
+        return checkAvgHoursWeekRuleExistenceResponse; 
+    }
+
+    else if(this.selectedRuleType.ruleTypeId === AVG_HOURS_MONTH_ID){
+      // Check if the Avg Hours per Month rule already exists
+      let checkAvgHoursMonthRuleExistenceResponse = this.ruleValidatorService.validateAvgHoursPerMonth(this.rulesViewModel.entityRules, this.selectedRule, this.isEditingRule);
+      
+      if(checkAvgHoursMonthRuleExistenceResponse.success === false) 
+        return checkAvgHoursMonthRuleExistenceResponse; 
+    }
+
     response.success = true;
   
     return response;
@@ -540,6 +556,8 @@ export class EntityRulesComponent {
       case MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID:
       case MIN_DAYS_OFF_WEEK_ID:
       case MIN_WEEKENDS_OFF_MONTH_ID:
+      case AVG_HOURS_WEEK_ID:
+      case AVG_HOURS_MONTH_ID:
         ruleSpecDTO.ruleSpecificationValue = this.specificationValue;
         ruleSpecDTO.referenceName = NA;
         ruleSpecDTO.referenceName2 = NA;
@@ -671,6 +689,8 @@ export class EntityRulesComponent {
       case MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID:
       case MIN_DAYS_OFF_WEEK_ID:
       case MIN_WEEKENDS_OFF_MONTH_ID:
+      case AVG_HOURS_WEEK_ID:
+      case AVG_HOURS_MONTH_ID:
         this.specificationValue = ruleSpec.ruleSpecificationValue;
         break;
 
@@ -717,6 +737,8 @@ export class EntityRulesComponent {
         case MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID:
         case MIN_DAYS_OFF_WEEK_ID:
         case MIN_WEEKENDS_OFF_MONTH_ID:
+        case AVG_HOURS_WEEK_ID:
+        case AVG_HOURS_MONTH_ID:
           this.selectedRuleSpec.ruleSpecificationValue = this.specificationValue;
           this.selectedRuleSpec.referenceName = NA;
           this.selectedRuleSpec.referenceName2 = NA;
@@ -864,6 +886,8 @@ export class EntityRulesComponent {
       case MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID:
       case MIN_DAYS_OFF_WEEK_ID:
       case MIN_WEEKENDS_OFF_MONTH_ID:
+      case AVG_HOURS_WEEK_ID:
+      case AVG_HOURS_MONTH_ID:
         this.visibleSkillSelect = false;
         this.visibleShiftSelect = false;
         this.visibleSpecValueInput = true;

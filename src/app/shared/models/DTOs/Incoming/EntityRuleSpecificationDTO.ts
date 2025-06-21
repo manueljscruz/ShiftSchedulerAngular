@@ -2,6 +2,9 @@ export class EntityRuleSpecificationDTO{
     entityRuleId: string;
     specificationId: number;
     ruleSpecificationValue: number;
+    // <summary>
+    // Reference Identifier to the aspect that this rule applies to
+    // </summary>
     aspectReferenceId: string;
     referenceName: string;
     businessAspectId: number;

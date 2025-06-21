@@ -80,12 +80,12 @@ export class EntityWorkersComponent {
   /// <summary>
   /// Flag to determine if the view is in grid mode
   /// </summary>
-  public isGridView: boolean = true;
+  public isGridView: boolean = false;
 
   /// <summary>
   /// Flag to determine if the view is in list mode
   /// </summary>
-  public isListView: boolean = false;
+  public isListView: boolean = true;
 
   //#endregion
   
