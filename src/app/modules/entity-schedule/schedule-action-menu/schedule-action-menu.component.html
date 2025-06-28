@@ -1,0 +1,142 @@
+<div id="schedule-action-menu">
+    <mat-dialog-content class="flex-grow-1 d-flex flex-column" style="min-height: 0;">
+        <h1 i18n>{{ workingDate | date: 'dd/MM/yyyy' }}</h1>
+        <!-- Top Bar -->
+        <div class="row align-items-center mb-3">
+            <div class="col" *ngIf="scheduleEntries.length > 0">
+                <mat-form-field appearance="fill" class="w-100">
+                <mat-label i18n>Selected Entry</mat-label>
+                <mat-select [(value)]="selectedScheduleEntry">
+                    <mat-option *ngFor="let entry of scheduleEntries" [value]="entry">
+                    {{ entry.shiftDTO.shiftName }}
+                    </mat-option>
+                </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col">
+                <mat-form-field appearance="fill" class="w-100">
+                <mat-label i18n>Shift Name</mat-label>
+                <mat-select [(value)]="selectedShift">
+                    <mat-option *ngFor="let shift of filteredShifts" [value]="shift">
+                    {{ shift.shiftName }}
+                    </mat-option>
+                </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-auto" *ngIf="filteredShifts.length > 0">
+                <button mat-raised-button color="primary" (click)="onAddEntry()" i18n>
+                Add Entry
+                </button>
+            </div>
+        </div>
+
+        <!-- End of Top Bar -->
+        <mat-divider></mat-divider>
+
+        <!-- Workers Table and Assignments-->
+        <div class="row">
+            <div class="col">
+                <table #notSelectedTable mat-table [dataSource]="notSelectedWorkers" class="mat-elevation-z8">
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let worker">
+                            <mat-checkbox (click)="$event.stopPropagation()" 
+                                (change)="toggleWorkerAssignment(worker)"
+                                [checked]="worker.isSelected">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <!-- Worker Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef i18n>Worker Name</th>
+                        <td mat-cell *matCellDef="let worker">{{ worker.workerName }}</td>
+                    </ng-container>
+
+                    <!-- Skills Column -->
+                    <ng-container matColumnDef="skills">
+                        <th mat-header-cell *matHeaderCellDef i18n>Skills</th>
+                        <td mat-cell *matCellDef="let worker">
+                            <mat-chip-set>
+                                <mat-chip  *ngFor="let skill of worker?.skillSet" [color]="skill.skillHexFontColor" [ngStyle]="{ 'background-color': skill.skillHexBGColor, '--mdc-chip-label-text-color': skill.skillHexFontColor}">{{skill.skillLocalizedName}}</mat-chip>
+                            </mat-chip-set>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="['select', 'name', 'skills']"></tr>
+                    <tr mat-row *matRowDef="let row; columns: ['select', 'name', 'skills'];"></tr>
+                </table>
+            </div>
+
+            <!-- Actions -->
+
+            <div class="col-auto d-flex align-items-stretch">
+                <div class="vr"></div> <!-- vertical rule -->
+            </div>
+            <div class="col-auto d-flex flex-column align-items-center justify-content-start" style="min-width: 80px;">
+                <div class="d-flex flex-column align-items-center" style="position: sticky; top: 0;">
+                    <button mat-icon-button aria-label="Remove All" (click)="onRemoveAllWorkers()">
+                        <mat-icon>first_page</mat-icon>
+                    </button>
+                    <button mat-icon-button aria-label="Remove" (click)="onRemoveWorker()">
+                        <mat-icon>chevron_left</mat-icon>
+                    </button>
+                    <button mat-icon-button aria-label="Assign" (click)="onAssignWorker()">
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+                    <button mat-icon-button aria-label="Assign All" (click)="onAssignAllWorkers()">
+                        <mat-icon>last_page</mat-icon>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="col-auto d-flex align-items-stretch">
+                <div class="vr"></div> <!-- vertical rule -->
+            </div>
+
+            <!-- Assigned Workers Table -->
+
+            <div class="col">
+                <table mat-table #selectedTable [dataSource]="selectedWorkers" class="mat-elevation-z8">
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let worker">
+                            <mat-checkbox (click)="$event.stopPropagation()" 
+                                (change)="toggleWorkerAssignment(worker)"
+                                [checked]="worker.isSelected">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <!-- Worker Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef i18n>Worker Name</th>
+                        <td mat-cell *matCellDef="let worker">{{ worker.workerName }}</td>
+                    </ng-container>
+
+                    <!-- Skills Column -->
+                    <ng-container matColumnDef="skills">
+                        <th mat-header-cell *matHeaderCellDef i18n>Skills</th>
+                        <td mat-cell *matCellDef="let worker">
+                            <mat-chip-set>
+                                <mat-chip  *ngFor="let skill of worker?.skillSet" [color]="skill.skillHexFontColor" [ngStyle]="{ 'background-color': skill.skillHexBGColor, '--mdc-chip-label-text-color': skill.skillHexFontColor}">{{skill.skillLocalizedName}}</mat-chip>
+                            </mat-chip-set>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="['select', 'name', 'skills']"></tr>
+                    <tr mat-row *matRowDef="let row; columns: ['select', 'name', 'skills'];"></tr>
+                </table>
+            </div>
+        </div>
+
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="onClose()">Close</button>
+        <button mat-raised-button color="primary" (click)="onSave()" i18n>
+            Save
+        </button>
+    </mat-dialog-actions>
+</div>

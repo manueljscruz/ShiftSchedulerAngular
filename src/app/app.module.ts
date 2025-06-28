@@ -66,7 +66,9 @@ import { MatSlider } from '@angular/material/slider';
 import { ScheduleEventViewComponent } from './modules/entity-schedule/schedule-event-view/schedule-event-view.component';
 import { ScheduleCreatorMenuComponent } from './modules/entity-schedule/schedule-creator-menu/schedule-creator-menu.component';
 import { NgxColorsModule } from 'ngx-colors';
-
+import { ScheduleActionMenuComponent } from './modules/entity-schedule/schedule-action-menu/schedule-action-menu.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { ScheduleEventViewHolderComponent } from './modules/entity-schedule/schedule-event-view-holder/schedule-event-view-holder.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +109,9 @@ import { NgxColorsModule } from 'ngx-colors';
     ConfirmEmailComponent,
     ShiftRotationDialogFormComponent,
     ScheduleEventViewComponent,
-    ScheduleCreatorMenuComponent
+    ScheduleCreatorMenuComponent,
+    ScheduleActionMenuComponent,
+    ScheduleEventViewHolderComponent
   ],
   imports: [
     BrowserModule,
@@ -136,6 +140,7 @@ import { NgxColorsModule } from 'ngx-colors';
     MatButtonToggleModule,
     MatSlider,
     NgxColorsModule,
+    MatMenuModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,

@@ -32,8 +32,69 @@
                 
                     <ng-container *ngFor="let column of calendarListColumns" [matColumnDef]="column">
                         <th mat-header-cell *matHeaderCellDef> {{ column  }} </th>
-                        <td mat-cell *matCellDef="let element" [ngStyle]="getCellStyle(column, element[column])">
-                            {{ element[column]?.alias || element[column] }}
+                        <td mat-cell *matCellDef="let element" [ngStyle]="getCellStyle(column, element[column])" > <!-- (click)="onScheduleListCellClick(element, column)" -->
+                            
+                            <!-- If its a manager/owner that is using this view -->
+                            <ng-container *ngIf="isCurrentUserEntityOwner">
+
+                                <!-- If the column is not the employee column, allow for actions -->
+                                <ng-container *ngIf="column != EMPLOYEE_COLUMN">
+                                    <div [matMenuTriggerFor]="menu">
+                                        <span>
+                                            {{ element[column]?.alias || element[column] }}
+                                        </span>
+                                    </div>
+                                </ng-container>
+
+                                <!-- If the column is the employee column, show just text -->
+                                <ng-container *ngIf="column === EMPLOYEE_COLUMN">
+                                    <span>
+                                        {{ element[column]?.alias || element[column] }}
+                                    </span>
+                                </ng-container>
+                                
+                                <!-- Action Menu for the schedule entry-->
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="onOpenEntry(element.id, column)">
+                                        <mat-icon>{{SCHEDULE_ICON}}</mat-icon>
+                                        <span>View Day Schedule</span>
+                                    </button>
+                                    <button mat-menu-item (click)="onManageDaySchedule(element.id, column)">
+                                        <mat-icon>{{MAT_EDIT_ICON}}</mat-icon>
+                                        <span>Manage Day Schedule</span>
+                                    </button>
+                                    <mat-divider></mat-divider>
+                                    <button mat-menu-item>
+                                        <mat-icon>{{CLOSE_ICON}}</mat-icon>
+                                        <span>Clear Assignments</span>
+                                    </button>
+                                </mat-menu>
+                            </ng-container>
+
+                            <!-- If its a regular user that is using this view -->
+                            <ng-container *ngIf="!isCurrentUserEntityOwner">
+                                <ng-container *ngIf="loggedUser.userId === element.id">
+                                    <div [matMenuTriggerFor]="userMenu">
+                                        <span>
+                                            {{ element[column]?.alias || element[column] }}
+                                        </span>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="loggedUser.userId !== element.id">
+                                    <span>
+                                        {{ element[column]?.alias || element[column] }}
+                                    </span>
+                                </ng-container>
+
+                                <!-- Action Menu for the schedule entry-->
+                                <mat-menu #userMenu="matMenu">
+                                    <button mat-menu-item (click)="onOpenEntry(element.id, column)">
+                                        <mat-icon>{{SCHEDULE_ICON}}</mat-icon>
+                                        <span>View Entry</span>
+                                    </button>
+                                </mat-menu>
+
+                            </ng-container>
                         </td>
                     </ng-container>
 

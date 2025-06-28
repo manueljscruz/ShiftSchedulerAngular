@@ -17,6 +17,10 @@ import { ScheduleEventViewComponent } from './schedule-event-view/schedule-event
 import { ScheduleCreatorMenuComponent } from './schedule-creator-menu/schedule-creator-menu.component';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { start } from 'repl';
+import { ScheduleActionMenuComponent } from './schedule-action-menu/schedule-action-menu.component';
+import { CLOSE_ICON, MAT_EDIT_ICON, SCHEDULE_ICON, SWAP_ICON } from '../../shared/constants/IconNamesConstants';
+import { EntityWorkerMemberDTO } from '../../shared/models/DTOs/Incoming/EntityWorkerMemberDTO';
+import { ScheduleEventViewHolderComponent } from './schedule-event-view-holder/schedule-event-view-holder.component';
 
 /*
 interface ScheduleList{
@@ -36,6 +40,11 @@ export class EntityScheduleComponent {
 
   EMPLOYEE_COLUMN: string = 'employee';
   TIME_COLUMN: string = 'time';
+  SCHEDULE_ICON: string = SCHEDULE_ICON;
+  SWAP_ICON: string = SWAP_ICON;
+  MAT_EDIT_ICON: string = MAT_EDIT_ICON;
+  CLOSE_ICON: string = CLOSE_ICON;
+  
 
   //#endregion
 
@@ -96,9 +105,6 @@ export class EntityScheduleComponent {
   scheduleList: any;
 
   calendarListColumns: string[] = [];
-
-
-  
 
   //#endregion
 
@@ -237,9 +243,9 @@ export class EntityScheduleComponent {
 
       if(scheduleEntry != null){
         
-        const dialogRef = this.dialog.open(ScheduleEventViewComponent, {
+        const dialogRef = this.dialog.open(ScheduleEventViewHolderComponent, {
               width: '500px',
-              data: { scheduleEntry: scheduleEntry, isCurrentUserEntityOwner: this.isCurrentUserEntityOwner } 
+              data: { scheduleEntries: scheduleEntry, isCurrentUserEntityOwner: this.isCurrentUserEntityOwner } 
         });
 
         dialogRef.componentInstance.closeOp.subscribe((result : boolean) => {
@@ -317,10 +323,6 @@ export class EntityScheduleComponent {
   }
 
   //#endregion
-
-  
-
-
 
   //#region Build Table
 
@@ -415,25 +417,134 @@ export class EntityScheduleComponent {
 
   }
 
+  //#endregion
+
+  //#region Get Cell Style
+
   getCellStyle(column: string, cellValue: any): { [klass: string]: any } {
-  // Skip special columns
-  if (column === this.EMPLOYEE_COLUMN || column === this.TIME_COLUMN) {
+    // Skip special columns
+    if (column === this.EMPLOYEE_COLUMN || column === this.TIME_COLUMN) {
+      return {};
+    }
+
+    // If cellValue is an object with a color, use it
+    if (cellValue && typeof cellValue === 'object' && cellValue.color) {
+      return {
+        'background-color': cellValue.color
+      };
+    }
+
     return {};
   }
 
-  // If cellValue is an object with a color, use it
-  if (cellValue && typeof cellValue === 'object' && cellValue.color) {
-    return {
-      'background-color': cellValue.color
-    };
+  //#endregion
+
+  //#region On Schedule List Cell Click
+
+  onScheduleListCellClick(element: any, column: string): void {
+    console.log('Cell clicked:', element, column);
+    console.log('Column value:', element[column]);
+    console.log("Element ID:", element.id);
+    console.log("Date", column);
+
+    let selectedWorkerId = element.id;
+    let selectedDate = column;
+
+    // If not the manager, and the selected worker is not the logged user, show an error message 
+    if(!this.isCurrentUserEntityOwner && this.loggedUser.userId !== selectedWorkerId) {
+      // this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'You are not allowed to perform this action'));
+      return;
+    }
+
+    // Implement your logic here
+    const dialogRef = this.dialog.open(ScheduleActionMenuComponent, {
+      width: '500px',
+      data: { isCurrentUserEntityOwner: this.isCurrentUserEntityOwner } 
+    });
+
+    dialogRef.componentInstance.onScheduleActionOp.subscribe((result: BaseResponseModel) => {
+      if (result.success) {
+        // Handle successful action
+        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Action completed successfully'));
+      } else {
+        // Handle failed action
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Action failed'));
+      }
+      dialogRef.close();
+    });
   }
 
-  return {};
-}
+  //#endregion
 
+  //#region On Open Entry
+
+  onOpenEntry(id: string,date: string) {
+    let worker = this.scheduleViewModel.entityWorkerMembers.find(x => x.workerId === id);
+    
+    if(worker != null){
+
+      let workerDayEntries = this.scheduleEntries.filter(x => this.formatDate(x.scheduleStartDate) === this.formatDate(new Date(date)) && x.scheduleParticipants.some(p => p.workerId === id));
+      
+      if(workerDayEntries != null){
+        const dialogRef = this.dialog.open(ScheduleEventViewHolderComponent, {
+          width: '500px',
+          data: { scheduleEntries: workerDayEntries, isCurrentUserEntityOwner: this.isCurrentUserEntityOwner } 
+        });
+
+        dialogRef.componentInstance.closeOp.subscribe((result : boolean) => {
+          if (result) {
+            // Close the dialog
+            dialogRef.close();
+          }
+        });
+      }
+    }
+  }
+
+  //#endregion
+
+  //#region On Manage Day Schedule
+
+  onManageDaySchedule(id: string, date: string) {
+    let worker = this.scheduleViewModel.entityWorkerMembers.find(x => x.workerId === id);
+
+    if(worker != null) {
+      let dayEntries = this.scheduleEntries.filter(x => this.formatDate(x.scheduleStartDate) === this.formatDate(new Date(date)));
+
+      if(dayEntries != null){
+        const dialogRef = this.dialog.open(ScheduleActionMenuComponent, {
+          width: '1280px',
+          height: '720px',
+          data: { 
+            workingDate: new Date(date),
+            scheduleEntries: dayEntries, 
+            entityMembers : this.scheduleViewModel.entityWorkerMembers,
+            entityShifts : this.scheduleViewModel.shifts,
+            entityRules : this.scheduleViewModel.entityRules,
+          } 
+        });
+
+        
+        dialogRef.componentInstance.onScheduleActionOp.subscribe((result : boolean) => {
+          if (result) {
+            // Close the dialog
+            dialogRef.close();
+          }
+        });
+      }
+    }
+  }
+
+  //#endregion
+
+  //#region Format Date
+
+  formatDate = (d: Date | string) => {
+    const date = new Date(d);
+    return date.toISOString().split('T')[0]; // Retorna 'yyyy-mm-dd'
+  };
 
   //#endregion
 
   //#endregion
-
 }

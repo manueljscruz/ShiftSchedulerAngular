@@ -1,0 +1,24 @@
+<div id="event-view-dialog">
+    <mat-dialog-content>
+        <ng-container *ngIf="scheduleEntries.length > 0">
+            <ng-container *ngIf="scheduleEntries.length === 1">
+                <schedule-event-view [scheduleEntry]="scheduleEntries[0]"></schedule-event-view>
+            </ng-container>
+            <ng-container *ngIf="scheduleEntries.length > 1">
+                <mat-tab-group>
+                    <div *ngFor="let entry of scheduleEntries">
+                        <mat-tab label="{{ entry.shiftDTO.shiftName }}">
+                            <schedule-event-view [scheduleEntry]="entry"></schedule-event-view>
+                        </mat-tab>
+                    </div>
+                </mat-tab-group>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngelse>
+            <p i18n="@@no-schedule-entries">No schedule entries found.</p>
+        </ng-container>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="closeDialog()" i18n="@@close">Close</button>
+    </mat-dialog-actions>
+</div>
