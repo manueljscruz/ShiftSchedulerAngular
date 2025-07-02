@@ -6,7 +6,7 @@
             <div class="col" *ngIf="scheduleEntries.length > 0">
                 <mat-form-field appearance="fill" class="w-100">
                 <mat-label i18n>Selected Entry</mat-label>
-                <mat-select [(value)]="selectedScheduleEntry">
+                <mat-select [(value)]="selectedScheduleEntry" (selectionChange)="onScheduleEntryChange($event.value)">
                     <mat-option *ngFor="let entry of scheduleEntries" [value]="entry">
                     {{ entry.shiftDTO.shiftName }}
                     </mat-option>
@@ -14,7 +14,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="col">
+            <div class="col" *ngIf="filteredShifts.length > 0">
                 <mat-form-field appearance="fill" class="w-100">
                 <mat-label i18n>Shift Name</mat-label>
                 <mat-select [(value)]="selectedShift">
@@ -26,18 +26,17 @@
             </div>
 
             <div class="col-auto" *ngIf="filteredShifts.length > 0">
-                <button mat-raised-button color="primary" (click)="onAddEntry()" i18n>
-                Add Entry
+                <button mat-fab extended class="edit-color-bg" (click)="onAddEntry()">
+                    <mat-icon>add</mat-icon>
+                    <span i18n>Add Entry</span>
                 </button>
             </div>
         </div>
 
-        <!-- End of Top Bar -->
-        <mat-divider></mat-divider>
-
         <!-- Workers Table and Assignments-->
-        <div class="row">
+        <div class="row flex-nowrap">
             <div class="col">
+                <h4 i18n>Available Workers</h4>
                 <table #notSelectedTable mat-table [dataSource]="notSelectedWorkers" class="mat-elevation-z8">
                     <ng-container matColumnDef="select">
                         <th mat-header-cell *matHeaderCellDef></th>
@@ -72,9 +71,10 @@
 
             <!-- Actions -->
 
-            <div class="col-auto d-flex align-items-stretch">
-                <div class="vr"></div> <!-- vertical rule -->
+            <div class="col-auto d-flex align-items-stretch" style="height: 100%;">
+                <div class="vr flex-grow-1"></div>
             </div>
+
             <div class="col-auto d-flex flex-column align-items-center justify-content-start" style="min-width: 80px;">
                 <div class="d-flex flex-column align-items-center" style="position: sticky; top: 0;">
                     <button mat-icon-button aria-label="Remove All" (click)="onRemoveAllWorkers()">
@@ -92,19 +92,21 @@
                 </div>
             </div>
             
-            <div class="col-auto d-flex align-items-stretch">
-                <div class="vr"></div> <!-- vertical rule -->
+            <div class="col-auto d-flex align-items-stretch" style="height: 100%;">
+                <div class="vr flex-grow-1"></div>
             </div>
+
 
             <!-- Assigned Workers Table -->
 
             <div class="col">
+                <h4 i18n>Assigned Workers</h4>
                 <table mat-table #selectedTable [dataSource]="selectedWorkers" class="mat-elevation-z8">
                     <ng-container matColumnDef="select">
                         <th mat-header-cell *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let worker">
                             <mat-checkbox (click)="$event.stopPropagation()" 
-                                (change)="toggleWorkerAssignment(worker)"
+                                (change)="toggleWorkerForUnassignment(worker)"
                                 [checked]="worker.isSelected">
                             </mat-checkbox>
                         </td>
@@ -113,7 +115,7 @@
                     <!-- Worker Name Column -->
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef i18n>Worker Name</th>
-                        <td mat-cell *matCellDef="let worker">{{ worker.workerName }}</td>
+                        <td mat-cell *matCellDef="let worker">{{ worker.worker.workerName }}</td>
                     </ng-container>
 
                     <!-- Skills Column -->
@@ -121,7 +123,24 @@
                         <th mat-header-cell *matHeaderCellDef i18n>Skills</th>
                         <td mat-cell *matCellDef="let worker">
                             <mat-chip-set>
-                                <mat-chip  *ngFor="let skill of worker?.skillSet" [color]="skill.skillHexFontColor" [ngStyle]="{ 'background-color': skill.skillHexBGColor, '--mdc-chip-label-text-color': skill.skillHexFontColor}">{{skill.skillLocalizedName}}</mat-chip>
+                                <mat-chip *ngFor="let skill of worker?.assignedSkills"
+                                    (removed)="onSkillClicked(worker, skill)" 
+                                    [color]="skill.skillHexFontColor" 
+                                    [ngStyle]="{ 'background-color': skill.skillHexBGColor, '--mdc-chip-label-text-color': skill.skillHexFontColor}">
+                                    {{skill.skillLocalizedName}}
+
+                                    <ng-container *ngIf="skill.skillId === ADD_SKILL.skillId">
+                                        <span i18n (click)="onSkillClicked(worker, skill)">Add Skill</span>
+                                        <button matChipTrailingIcon (click)="onSkillClicked(worker, skill)">
+                                            <mat-icon>{{ADD_ICON}}</mat-icon>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="skill.skillId !== ADD_SKILL.skillId">
+                                        <button matChipRemove>
+                                            <mat-icon>{{CANCEL_ICON}}</mat-icon>
+                                        </button>
+                                    </ng-container>
+                                </mat-chip>
                             </mat-chip-set>
                         </td>
                     </ng-container>
@@ -134,9 +153,13 @@
 
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button mat-button (click)="onClose()">Close</button>
-        <button mat-raised-button color="primary" (click)="onSave()" i18n>
-            Save
+        <button mat-fab extended class="secondary-color-bg flex-1" (click)="onClose()">
+            <mat-icon>{{CLOSE_ICON}}</mat-icon>
+            <span i18n>Back</span>
+        </button>
+        <button mat-fab extended class="add-color-bg flex-1" (click)="onSave()">
+            <mat-icon>{{SAVE_ICON}}</mat-icon>
+            <span i18n>Save</span>
         </button>
     </mat-dialog-actions>
 </div>

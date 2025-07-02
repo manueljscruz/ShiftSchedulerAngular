@@ -145,7 +145,9 @@ export class EntityScheduleComponent {
     this.buildViews();
   }
 
-//#endregion
+  //#endregion
+
+  //#region On Create Schedule
 
   async onCreateSchedule(){
     // Open the schedule creator menu
@@ -182,6 +184,8 @@ export class EntityScheduleComponent {
     });
 
   }
+
+  //#endregion
 
   //#region Create Schedule
 
@@ -372,7 +376,7 @@ export class EntityScheduleComponent {
             if(scheduleEntry.scheduleParticipants.length > 0){
               scheduleEntry.scheduleParticipants.forEach((participant) => {
                 // Check if the participant is the current worker member
-                if(participant.workerId === workerMember.workerId){
+                if(participant.worker.workerId === workerMember.workerId){
 
                   // If the worker is assigned, add the shift alias to the assignment
                   assignment += ' ' + scheduleEntry.shiftDTO.shiftAlias + ' ';
@@ -442,11 +446,6 @@ export class EntityScheduleComponent {
   //#region On Schedule List Cell Click
 
   onScheduleListCellClick(element: any, column: string): void {
-    console.log('Cell clicked:', element, column);
-    console.log('Column value:', element[column]);
-    console.log("Element ID:", element.id);
-    console.log("Date", column);
-
     let selectedWorkerId = element.id;
     let selectedDate = column;
 
@@ -483,7 +482,7 @@ export class EntityScheduleComponent {
     
     if(worker != null){
 
-      let workerDayEntries = this.scheduleEntries.filter(x => this.formatDate(x.scheduleStartDate) === this.formatDate(new Date(date)) && x.scheduleParticipants.some(p => p.workerId === id));
+      let workerDayEntries = this.scheduleEntries.filter(x => this.formatDate(x.scheduleStartDate) === this.formatDate(new Date(date)) && x.scheduleParticipants.some(p => p.worker.workerId === id));
       
       if(workerDayEntries != null){
         const dialogRef = this.dialog.open(ScheduleEventViewHolderComponent, {
@@ -525,11 +524,29 @@ export class EntityScheduleComponent {
         });
 
         
-        dialogRef.componentInstance.onScheduleActionOp.subscribe((result : boolean) => {
-          if (result) {
+        dialogRef.componentInstance.onScheduleActionOp.subscribe((result : BaseResponseModel) => {
+          if (result.success) {
+            let newUpdatedEntries = result.result as ScheduleEntryDTO[];
+
+            newUpdatedEntries.forEach(scheduleEntry => {
+              let entry = this.scheduleEntries.find(x => x.scheduleEntryId === scheduleEntry.scheduleEntryId 
+                && x.shiftDTO.shiftId === scheduleEntry.shiftDTO.shiftId);
+              if (entry) {
+                // Update the existing entry
+                Object.assign(entry, scheduleEntry);
+              } else {
+                // Add the new entry
+                this.scheduleEntries.push(scheduleEntry);
+              }
+            });
+
             // Close the dialog
-            dialogRef.close();
+            
+
+            this.buildViews();
           }
+
+          dialogRef.close();
         });
       }
     }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Output, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { EntityWorkerMemberDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerMemberDTO';
 import { ScheduleEntryDTO } from '../../../shared/models/DTOs/Incoming/ScheduleEntryDTO';
@@ -10,6 +10,11 @@ import { SnackbarManagerService } from '../../../core/services/ui/snackbar-manag
 import { SnackbarUIModel } from '../../../shared/models/UI/SnackbarUIModel';
 import { Entity } from '../../../shared/models/database/entity';
 import { MatTable } from '@angular/material/table';
+import { ADD_ICON, CANCEL_ICON, CLOSE_ICON, SAVE_ICON } from '../../../shared/constants/IconNamesConstants';
+import { SkillDTO } from '../../../shared/models/DTOs/Incoming/SkillDTO';
+import { ADD_SKILL } from '../../../shared/constants/DataConstants';
+import { WorkerSkillSelectorComponent } from '../worker-skill-selector/worker-skill-selector.component';
+import { ScheduleEntryParticipantDTO } from '../../../shared/models/DTOs/Incoming/ScheduleEntryParticipantDTO';
 
 @Component({
   selector: 'schedule-action-menu',
@@ -19,6 +24,12 @@ import { MatTable } from '@angular/material/table';
 
 export class ScheduleActionMenuComponent {
 
+  CLOSE_ICON : string = CLOSE_ICON;
+  SAVE_ICON: string = SAVE_ICON;
+  CANCEL_ICON : string = CANCEL_ICON;
+  ADD_ICON: string = ADD_ICON;
+  ADD_SKILL: SkillDTO = ADD_SKILL;
+
   //#region Properties
 
   workingDate: Date = new Date();
@@ -26,7 +37,7 @@ export class ScheduleActionMenuComponent {
   /// <summary>
   /// List of entity workers this entity has.
   /// </summary>
-  entityWorkers: EntityWorkerMemberDTO[] = [];
+  readonly entityWorkers: EntityWorkerMemberDTO[] = [];
 
   /// <summary>
   /// List of schedule entries for the entity on this day.
@@ -46,7 +57,20 @@ export class ScheduleActionMenuComponent {
   /// <summary>
   /// The selected schedule entry for the action.
   /// </summary>
-  selectedScheduleEntry: ScheduleEntryDTO | null = null;
+  private _selectedScheduleEntry : ScheduleEntryDTO | null = null;
+
+  public get selectedScheduleEntry() : ScheduleEntryDTO {
+    return this._selectedScheduleEntry? this._selectedScheduleEntry : ScheduleEntryDTO.newScheduleEntryDTO();
+  }
+
+  public set selectedScheduleEntry(v : ScheduleEntryDTO) {
+    if(this.selectedScheduleEntry != null)
+    {
+      this.saveScheduleDataInternally();
+      this.selectedWorkers = [];
+    }
+    this._selectedScheduleEntry = v;
+  }
 
   /// <summary>
   /// The selected shift for the action.
@@ -56,16 +80,34 @@ export class ScheduleActionMenuComponent {
   /// </remarks>
   selectedShift: ShiftDTO | null = null;
 
+  /// <summary>
+  /// List of shifts that are not already scheduled for the selected date.
+  /// </summary>
+  /// <remarks>
+  /// This is used to filter the shifts that are available for selection.
+  /// </remarks>
   filteredShifts: ShiftDTO[] = [];
 
-  selectedWorker: EntityWorkerMemberDTO | null = null;
-
+  /// <summary>
+  /// List of workers not selected for the schedule entry.
+  /// </summary>
   notSelectedWorkers: EntityWorkerMemberDTO[] = [];
 
-  selectedWorkers: EntityWorkerMemberDTO[] = [];
+  /// <summary>
+  /// List of workers selected for the schedule entry.
+  /// </summary>
+  selectedWorkers: ScheduleEntryParticipantDTO[] = [];
 
+  entity: Entity | null = null;
+
+  /// <summary>
+  /// Not selected workers table reference
+  /// </summary>
   @ViewChild(MatTable) notSelectedTable!: MatTable<any>;
 
+  /// <summary>
+  /// Selected workers table reference
+  /// </summary>
   @ViewChild(MatTable) selectedTable!: MatTable<any>;
 
   /// <summary>
@@ -81,6 +123,7 @@ export class ScheduleActionMenuComponent {
   //#region Constructor
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+    private dialog: MatDialog,
     private snackbarManagerService: SnackbarManagerService) {
     // Initialization logic can go here if needed
     this.workingDate = data.workingDate || new Date();
@@ -88,19 +131,22 @@ export class ScheduleActionMenuComponent {
     this.scheduleEntries = data.scheduleEntries || [];
     this.entityShifts = data.entityShifts || [];
     this.entityRules = data.entityRules || [];
-
-    this.initialUi();
   }
 
   //#endregion
 
   //#region Methods
 
+  ngOnInit() {
+    this.initialUi();
+  }
+
   //#region Initial UI
 
   initialUi() {
     if(this.scheduleEntries.length > 0) {
       this.selectedScheduleEntry = this.scheduleEntries[0];
+      this.loadScheduleEntry(this.selectedScheduleEntry);
     }
 
     this.filterShifts();
@@ -111,9 +157,20 @@ export class ScheduleActionMenuComponent {
   //#region Filter Shifts
 
   filterShifts() {
-    this.filteredShifts = this.entityShifts.filter(shift => {
-      return !this.scheduleEntries.some(entry => entry.shiftId === shift.shiftId);
-    });
+    this.filteredShifts = this.entityShifts
+      .filter(shift => {
+        return !this.scheduleEntries.some(entry => entry.shiftId === shift.shiftId);
+      })
+      .sort((a, b) => {
+        const [aHours, aMinutes] = a?.shiftStartHour.toString().split(':').map(Number) || [0, 0];
+        const [bHours, bMinutes] = b?.shiftStartHour.toString().split(':').map(Number) || [0, 0];
+        // Assumes shiftStartHour is a Date object
+        const aHour = aHours;
+        const aMin = aMinutes;
+        const bHour = bHours;
+        const bMin = bMinutes;
+        return aHour !== bHour ? aHour - bHour : aMin - bMin;
+      });
   }
 
   //#endregion
@@ -121,9 +178,11 @@ export class ScheduleActionMenuComponent {
   //#region Filter Workers
 
   filterWorkers() {
-    this.notSelectedWorkers = this.entityWorkers.filter(worker => {
-      return !this.selectedWorkers.some(selected => selected.workerId === worker.workerId);
-    });
+    this.notSelectedWorkers = this.entityWorkers
+      .filter(worker => {
+        return !this.selectedWorkers.some(selected => selected.worker.workerId === worker.workerId);
+      })
+      .sort((a, b) => a.workerName.localeCompare(b.workerName));
   }
 
   //#endregion
@@ -139,7 +198,15 @@ export class ScheduleActionMenuComponent {
   //#region On Save
 
   onSave() {
-  throw new Error('Method not implemented.');
+    if(this.scheduleEntries.length === 0) {
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'No schedule entries to save'));
+      return;
+    }
+
+    this.saveScheduleDataInternally();
+
+    // TO DO: MAKE API CALL TO SAVE SCHEDULE ENTRIES
+    this.onScheduleActionOp.emit(new BaseResponseModel(true, "Schedule entries saved successfully", this.scheduleEntries));
   }
 
   //#endregion
@@ -160,13 +227,13 @@ export class ScheduleActionMenuComponent {
     }
 
     // Set the start date and end date based on the selected shift
-    let startDate = this.workingDate;
+    let startDate = new Date(this.workingDate.getTime());
     // Extract hours and minutes from the shift start hour
     // Note: The shiftStartHour is expected to be in the format "HH:mm".
     const [hours, minutes] = this.selectedShift?.shiftStartHour.toString().split(':').map(Number) || [0, 0];
     startDate.setHours(hours, minutes, 0, 0);
 
-    let endDate = new Date(startDate);
+    let endDate = new Date(startDate.getTime());
     // Extract hours and minutes from the shift duration
     // Note: The shiftDuration is expected to be in the format "HH:mm".
     const [durationHours, durationMinutes] = this.selectedShift?.shiftDuration.toString().split(':').map(Number) || [0, 0];
@@ -181,6 +248,7 @@ export class ScheduleActionMenuComponent {
     // and set it as the selected schedule entry.
     // Note: This will not persist the entry to the backend, it is just for UI purposes.
     this.scheduleEntries.push(newScheduleEntry);
+
     this.selectedScheduleEntry = newScheduleEntry;
 
     // Filter the shifts to remove the selected shift from the list of available shifts
@@ -204,7 +272,7 @@ export class ScheduleActionMenuComponent {
     }
 
     allSelectedWorkers.forEach(worker => {
-      this.notSelectedWorkers = [...this.notSelectedWorkers, worker]; // Add the worker to the not selected workers list
+      this.notSelectedWorkers = [...this.notSelectedWorkers, worker.worker]; // Add the worker to the not selected workers list
       worker.isSelected = false; // Uncheck the worker after adding to not selected workers
     });
 
@@ -226,8 +294,13 @@ export class ScheduleActionMenuComponent {
     }
 
     checkedWorkers.forEach(element => {
-      this.notSelectedWorkers = [...this.notSelectedWorkers, element]; // Add the worker to the not selected workers list
-      element.isSelected = false; // Uncheck the worker after adding to not selected workers
+
+      let worker = this.entityWorkers.find(w => w.workerId === element.worker.workerId);
+
+      if (worker) {
+        this.notSelectedWorkers = [...this.notSelectedWorkers, worker]; // Add the worker to the not selected workers list
+        worker.isSelected = false; // Uncheck the worker after adding to not selected workers
+      }
 
       // Remove the worker from the selected workers list
       let index = this.selectedWorkers.indexOf(element);  
@@ -236,8 +309,12 @@ export class ScheduleActionMenuComponent {
       }
     });
 
+    this.selectedWorkers = [...this.selectedWorkers]; 
+
     this.selectedTable.renderRows();
     this.notSelectedTable.renderRows(); 
+
+    this.filterWorkers();
   }
   
   //#endregion
@@ -253,9 +330,9 @@ export class ScheduleActionMenuComponent {
     }
 
     allRemaingWorkers.forEach(worker => {
-      this.selectedWorkers = [...this.selectedWorkers, worker]; // Add the worker to the selected workers list
+      let newParticipant = new ScheduleEntryParticipantDTO(worker, false, [...worker.skillSet]); // Create a new participant with the worker and their skills
+      this.selectedWorkers = [...this.selectedWorkers, newParticipant]; // Add the worker to the selected workers list
       worker.isSelected = false; // Uncheck the worker after adding to selected workers
-
     });
 
     this.notSelectedWorkers = [];
@@ -276,7 +353,9 @@ export class ScheduleActionMenuComponent {
     }
 
     checkedWorkers.forEach(element => {
-      this.selectedWorkers = [...this.selectedWorkers, element]; // Add the worker to the selected workers list
+      let newParticipant = new ScheduleEntryParticipantDTO(element, false, [...element.skillSet]); // Create a new participant with the worker and their skills
+
+      this.selectedWorkers = [...this.selectedWorkers, newParticipant]; // Add the worker to the selected workers list
 
       element.isSelected = false; // Uncheck the worker after adding to selected workers
 
@@ -295,10 +374,118 @@ export class ScheduleActionMenuComponent {
 
   //#endregion
 
+  //#region Toggle Worker Assignment
+
   toggleWorkerAssignment(worker: EntityWorkerMemberDTO) {
     worker.isSelected = !worker.isSelected;
   }
 
+  //#endregion
+
+  //#region On Schedule Entry Change
+
+  onScheduleEntryChange(scheduleEntry: any) {
+    this.loadScheduleEntry(scheduleEntry);
+  }
+
+  //#endregion
+
+  //#region Load Schedule Entry
+
+  loadScheduleEntry(scheduleEntry: ScheduleEntryDTO) {
+    this.notSelectedWorkers = this.entityWorkers.filter(worker => {
+      return !scheduleEntry.scheduleParticipants.some(selected => selected.worker.workerId === worker.workerId);
+    });
+
+    this.selectedWorkers = [...scheduleEntry.scheduleParticipants];
+
+    // this.selectedTable.renderRows();
+    // this.notSelectedTable.renderRows();
+  }
+
+  //#endregion
+
+  //#region On Skill Clicked
+
+  onSkillClicked(worker: ScheduleEntryParticipantDTO, skill: SkillDTO) {
+
+    if(skill.skillId === ADD_SKILL.skillId) {
+      // If the skill is the ADD_SKILL
+      
+      let availableSkills = worker.worker.skillSet.filter(s => !worker.assignedSkills.some(selected => selected.skillId === s.skillId));
+
+      const dialogRef = this.dialog.open(WorkerSkillSelectorComponent, {
+        data: { workerSkills: availableSkills },
+      });
+
+      dialogRef.componentInstance.onSkillSelectedOp.subscribe((result: BaseResponseModel) => {
+
+        if (result && result.success) {
+          let selectedSkill = result.result as SkillDTO;
+          if(selectedSkill != null)
+          {
+            if(worker.assignedSkills.some(s => s.skillId === selectedSkill.skillId)) {
+              this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Skill already selected'));
+              return;
+            }
+
+            worker.assignedSkills = [...worker.assignedSkills, selectedSkill]; // Add the selected skill to the worker's selected skills
+
+            // If all skills are selected, remove the ADD_SKILL from the selected skills
+            if(worker.assignedSkills.some(s => s.skillId === ADD_SKILL.skillId) && worker.assignedSkills.length-1 === worker.worker.skillSet.length) {
+              // If all skills are selected, remove the ADD_SKILL from the selected skills
+              let indexOfAddSkill = worker.assignedSkills.findIndex(s => s.skillId === ADD_SKILL.skillId);
+              if (indexOfAddSkill > -1) {
+                worker.assignedSkills.splice(indexOfAddSkill, 1); // Remove the ADD_SKILL from the selected skills
+              }
+            }
+          }
+        }
+
+        dialogRef.close();
+      });
+
+      return;
+    }
+
+    else {
+      let indexOfSkill = worker.assignedSkills.findIndex(s => s.skillId === skill.skillId);
+      if (indexOfSkill > -1) {
+        worker.assignedSkills.splice(indexOfSkill, 1); // Remove the skill from the selected skills
+      } else {
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Skill not found in selected skills'));
+        return;
+      }
+    }
+
+    // If not all skills are selected and the ADD_SKILL is NOT present, remove it
+    if(worker.assignedSkills.length != worker.worker.skillSet.length && !worker.assignedSkills.some(s => s.skillId === ADD_SKILL.skillId)) {
+      worker.assignedSkills = [...worker.assignedSkills, ADD_SKILL]; // Add the ADD_SKILL to the selected skills
+    }
+
+  }
+
+  //#endregion
+
+  //#region Save Schedule Data Internally
+
+  saveScheduleDataInternally(){
+    if(this.selectedWorkers.length != 0){
+      if(this.selectedScheduleEntry != null) {
+        this.selectedScheduleEntry.scheduleParticipants = [...this.selectedWorkers];
+      }
+    }
+  }
+
+  //#endregion
+
+  //#region Toggle Worker for Unassignment
+
+  toggleWorkerForUnassignment(participant: ScheduleEntryParticipantDTO) {
+    participant.isSelected = !participant.isSelected;
+  }
+
+  //#endregion
 
   //#endregion
 

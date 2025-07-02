@@ -1,10 +1,7 @@
 <div id="event-view-dialog">
     <mat-dialog-content>
         <ng-container *ngIf="scheduleEntries.length > 0">
-            <ng-container *ngIf="scheduleEntries.length === 1">
-                <schedule-event-view [scheduleEntry]="scheduleEntries[0]"></schedule-event-view>
-            </ng-container>
-            <ng-container *ngIf="scheduleEntries.length > 1">
+            <!-- <ng-container *ngIf="scheduleEntries.length > 1">-->
                 <mat-tab-group>
                     <div *ngFor="let entry of scheduleEntries">
                         <mat-tab label="{{ entry.shiftDTO.shiftName }}">
@@ -12,9 +9,9 @@
                         </mat-tab>
                     </div>
                 </mat-tab-group>
-            </ng-container>
+            <!--</ng-container>-->
         </ng-container>
-        <ng-container *ngelse>
+        <ng-container *ngIf="scheduleEntries.length === 0">
             <p i18n="@@no-schedule-entries">No schedule entries found.</p>
         </ng-container>
     </mat-dialog-content>

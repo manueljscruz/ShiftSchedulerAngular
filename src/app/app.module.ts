@@ -69,6 +69,7 @@ import { NgxColorsModule } from 'ngx-colors';
 import { ScheduleActionMenuComponent } from './modules/entity-schedule/schedule-action-menu/schedule-action-menu.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { ScheduleEventViewHolderComponent } from './modules/entity-schedule/schedule-event-view-holder/schedule-event-view-holder.component';
+import { WorkerSkillSelectorComponent } from './modules/entity-schedule/worker-skill-selector/worker-skill-selector.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +112,8 @@ import { ScheduleEventViewHolderComponent } from './modules/entity-schedule/sche
     ScheduleEventViewComponent,
     ScheduleCreatorMenuComponent,
     ScheduleActionMenuComponent,
-    ScheduleEventViewHolderComponent
+    ScheduleEventViewHolderComponent,
+    WorkerSkillSelectorComponent
   ],
   imports: [
     BrowserModule,

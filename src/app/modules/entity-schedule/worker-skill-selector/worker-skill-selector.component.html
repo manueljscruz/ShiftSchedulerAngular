@@ -1,0 +1,17 @@
+<h2>Add Skill</h2>
+<mat-dialog-content>
+    <p i18n>Select a skill to add to the worker:</p>
+    <mat-form-field appearance="fill">
+        <mat-label>Skill</mat-label>
+        <mat-select [(value)]="selectedSkill" (selectionChange)="onSkillSelected($event.value)">
+            <mat-option value="" disabled>Select a skill</mat-option>
+        <mat-option *ngFor="let skill of workerSkills" [value]="skill">{{ skill.skillLocalizedName }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+    <div class="dialog-actions">
+        <button mat-button (click)="onAddSkill()">Add</button>
+        <button mat-button (click)="onCancel()">Cancel</button>
+    </div>
+</mat-dialog-content>
+

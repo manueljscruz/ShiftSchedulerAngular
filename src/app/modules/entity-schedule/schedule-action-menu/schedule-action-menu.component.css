@@ -1,5 +1,10 @@
+html, body {
+  height: 100%;
+}
+
 #schedule-action-menu{
     display: flex;
     flex-direction: column;
     height: 100%;
+    padding: 20px 20px;
 }

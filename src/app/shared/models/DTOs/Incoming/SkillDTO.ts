@@ -3,6 +3,8 @@ export class SkillDTO {
     skillLocalizedName: string;
     skillHexBGColor: string;
     skillHexFontColor: string;
+    // Additional properties
+    isActive: boolean = true; // Default to true, can be set later if needed
     
     constructor(id: number, skillLocalizedName: string, hexBGColor: string, hexFontColor: string) {
         this.skillId = id;

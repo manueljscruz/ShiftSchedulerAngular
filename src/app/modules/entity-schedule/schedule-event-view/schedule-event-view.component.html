@@ -10,13 +10,15 @@
     <table mat-table [dataSource]="scheduleEntry.scheduleParticipants" class="mat-elevation-z8">
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let participant"> {{ participant.workerName }} </td>
+            <td mat-cell *matCellDef="let participant"> {{ participant.worker.workerName }} </td>
         </ng-container>
 
         <ng-container matColumnDef="role">
             <th mat-header-cell *matHeaderCellDef> Role </th>
             <td mat-cell *matCellDef="let participant"> 
-                {{ participant.role }} 
+                <mat-chip-set>
+                    <mat-chip *ngFor="let skill of participant.assignedSkills" [color]="skill.skillHexFontColor" [ngStyle]="{ 'background-color': skill.skillHexBGColor, '--mdc-chip-label-text-color': skill.skillHexFontColor}">{{skill.skillLocalizedName}}</mat-chip>
+                </mat-chip-set>
             </td>
         </ng-container>
 

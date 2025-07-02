@@ -1,5 +1,6 @@
 import { EntityWorkerDTO } from "./EntityWorkerDTO";
 import { EntityWorkerMemberDTO } from "./EntityWorkerMemberDTO";
+import { ScheduleEntryParticipantDTO } from "./ScheduleEntryParticipantDTO";
 import { ShiftDTO } from "./ShiftDTO";
 
 export class ScheduleEntryDTO{
@@ -8,9 +9,9 @@ export class ScheduleEntryDTO{
     scheduleStartDate: Date;
     scheduleEndDate: Date;
     shiftDTO: ShiftDTO;
-    scheduleParticipants: EntityWorkerMemberDTO[];
+    scheduleParticipants: ScheduleEntryParticipantDTO[];
 
-    constructor(scheduleEntryId: string, shiftId: string, scheduleStartDate: Date, scheduleEndDate: Date, shiftDTO: ShiftDTO, scheduleParticipants: EntityWorkerMemberDTO[]){
+    constructor(scheduleEntryId: string, shiftId: string, scheduleStartDate: Date, scheduleEndDate: Date, shiftDTO: ShiftDTO, scheduleParticipants: ScheduleEntryParticipantDTO[]){
         this.scheduleEntryId = scheduleEntryId;
         this.shiftId = shiftId;
         this.scheduleStartDate = scheduleStartDate;

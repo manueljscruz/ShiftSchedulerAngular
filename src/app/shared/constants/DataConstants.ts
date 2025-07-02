@@ -1,3 +1,5 @@
+import { SkillDTO } from "../models/DTOs/Incoming/SkillDTO";
+
 // Business Aspect Constants
 export const BUSINESS_ASPECT_WORKER_ID: number = 1;
 export const BUSINESS_ASPECT_SKILLS_ID: number = 2;
@@ -25,3 +27,6 @@ export const MIN_WEEKENDS_OFF_MONTH_ID: number = 14;
 export const AVG_HOURS_WEEK_ID: number = 15;
 export const AVG_HOURS_MONTH_ID: number = 16;
 
+
+// SKILL CONSTANTS
+export const ADD_SKILL : SkillDTO = new SkillDTO(0, "", "#FFFFFF", "#000000");
