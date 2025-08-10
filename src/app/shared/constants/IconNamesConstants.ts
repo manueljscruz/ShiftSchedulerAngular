@@ -25,6 +25,7 @@ export const ADD_MEMBER_ICON: string = "person-fill-add";
 export const ADD_NPC_MEMBER_ICON: string = "person-add";
 export const REGISTER_ICON: string = "how_to_reg";
 export const SCHEDULE_ICON: string = "calendar_today";
+export const DONE_ICON: string = "done";
 export const SWAP_ICON : string = "swap_horiz";
 export const MAT_EDIT_ICON : string = "edit";
 export const CLOSE_ICON: string = "close";

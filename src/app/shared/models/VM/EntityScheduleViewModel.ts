@@ -1,5 +1,4 @@
 import { EntityRuleDTO } from "../DTOs/Incoming/EntityRuleDTO";
-import { EntityWorkerDTO } from "../DTOs/Incoming/EntityWorkerDTO";
 import { EntityWorkerMemberDTO } from "../DTOs/Incoming/EntityWorkerMemberDTO";
 import { ScheduleEntryDTO } from "../DTOs/Incoming/ScheduleEntryDTO";
 import { ShiftDTO } from "../DTOs/Incoming/ShiftDTO";

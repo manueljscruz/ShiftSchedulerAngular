@@ -30,4 +30,9 @@ export class EntityWorkerMemberDTO{
         this.worksWeekends = worksWeekends;
         this.multipleShiftAssignments = multipleShiftAssignments;
     }
+
+
+    public static newInstance(): EntityWorkerMemberDTO {
+        return new EntityWorkerMemberDTO("", "", false, false, false, [], false, true, true, false, []);
+    }
 }

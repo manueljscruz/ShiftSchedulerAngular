@@ -2,6 +2,7 @@ import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { SkillDTO } from '../../../shared/models/DTOs/Incoming/SkillDTO';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
+import { ADD_ICON, CANCEL_ICON } from '../../../shared/constants/IconNamesConstants';
 
 @Component({
   selector: 'worker-skill-selector',
@@ -9,6 +10,9 @@ import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
   styleUrl: './worker-skill-selector.component.css'
 })
 export class WorkerSkillSelectorComponent {
+
+  ADD_ICON = ADD_ICON;
+  CANCEL_ICON = CANCEL_ICON;
 
   selectedSkill? : SkillDTO;
 

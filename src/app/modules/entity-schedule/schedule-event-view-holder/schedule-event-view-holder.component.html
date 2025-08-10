@@ -12,10 +12,15 @@
             <!--</ng-container>-->
         </ng-container>
         <ng-container *ngIf="scheduleEntries.length === 0">
-            <p i18n="@@no-schedule-entries">No schedule entries found.</p>
+            <div style="display: flex; align-items: center; justify-content: center; height: 150px;">
+                <p i18n style="margin: 0;">No schedule entries found.</p>
+            </div>
         </ng-container>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button mat-button (click)="closeDialog()" i18n="@@close">Close</button>
+        <button mat-fab extended class="secondary-color-bg flex-1" (click)="closeDialog()">
+            <mat-icon>{{CANCEL_ICON}}</mat-icon>
+            <span i18n>Close</span>
+        </button>
     </mat-dialog-actions>
 </div>

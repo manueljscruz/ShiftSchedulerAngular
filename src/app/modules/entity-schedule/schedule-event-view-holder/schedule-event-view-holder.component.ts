@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ScheduleEntryDTO } from '../../../shared/models/DTOs/Incoming/ScheduleEntryDTO';
+import { CANCEL_ICON } from '../../../shared/constants/IconNamesConstants';
 
 @Component({
   selector: 'schedule-event-view-holder',
@@ -9,6 +10,7 @@ import { ScheduleEntryDTO } from '../../../shared/models/DTOs/Incoming/ScheduleE
 })
 export class ScheduleEventViewHolderComponent {
 
+  CANCEL_ICON = CANCEL_ICON;
   scheduleEntries: ScheduleEntryDTO[] = [];
 
   isCurrentUserEntityOwner: boolean = false;

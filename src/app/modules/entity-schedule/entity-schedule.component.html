@@ -6,8 +6,12 @@
                 <mat-button-toggle value="calendar">Calendar</mat-button-toggle>
                 <mat-button-toggle value="list">List</mat-button-toggle>
             </mat-button-toggle-group>
-            <input type="date" matInput required placeholder="Start Date" required name="schedule-start-date" [value]="formatDateString(startDate.toString())">
-            <input type="date" matInput required placeholder="End Date" required name="schedule-end-date" [value]="formatDateString(endDate.toString())">
+            <input type="date" matInput required placeholder="Start Date" required name="schedule-start-date"  [value]="formatDateString(startDate.toString())" (change)="onStartDateChange($event)">
+            <input type="date" matInput required placeholder="End Date" required name="schedule-end-date" [value]="formatDateString(endDate.toString())" (change)="onEndDateChange($event)">
+            <button mat-fab extended color="primary" (click)="onApplySearch()">
+                <mat-icon>search</mat-icon>
+                <span i18n>Search</span>
+            </button>
             <button *ngIf="isCurrentUserEntityOwner" mat-fab extended color="primary" (click)="onCreateSchedule()">
                 <mat-icon>build</mat-icon>
                 <span i18n>Create Schedule</span>
@@ -55,7 +59,7 @@
                                 
                                 <!-- Action Menu for the schedule entry-->
                                 <mat-menu #menu="matMenu">
-                                    <button mat-menu-item (click)="onOpenEntry(element.id, column)">
+                                    <button mat-menu-item (click)="onOpenEntry(element, column)"> <!-- .id -->
                                         <mat-icon>{{SCHEDULE_ICON}}</mat-icon>
                                         <span>View Day Schedule</span>
                                     </button>
@@ -64,10 +68,37 @@
                                         <span>Manage Day Schedule</span>
                                     </button>
                                     <mat-divider></mat-divider>
+                                    <button mat-menu-item [matMenuTriggerFor]="shiftMenu">
+                                        <mat-icon>{{SCHEDULE_ICON}}</mat-icon>
+                                        <span>Assign Shift</span>
+                                    </button>
+                                    <ng-container *ngIf="element.isPartOfRotation">
+                                        <button mat-menu-item (click)="onStartRotationCycle(element.id, column)" [disabled]="isCycleTracking">
+                                            <mat-icon>{{MAT_EDIT_ICON}}</mat-icon>
+                                            <span>Start Rotation Cycle</span>
+                                        </button>
+                                        <button mat-menu-item (click)="onCancelCycleOp()" [disabled]="!isCycleTracking">
+                                            <mat-icon>{{CANCEL_ICON}}</mat-icon>
+                                            <span>Cancel Rotation</span>
+                                        </button>
+                                        <button mat-menu-item (click)="onEndRotationCycle(element.id, column)" [disabled]="!isCycleTracking">
+                                            <mat-icon>{{DONE_ICON}}</mat-icon>
+                                            <span>End Rotation Cycle</span>
+                                        </button>
+                                    </ng-container> 
                                     <button mat-menu-item>
                                         <mat-icon>{{CLOSE_ICON}}</mat-icon>
                                         <span>Clear Assignments</span>
                                     </button>
+                                </mat-menu>
+
+                                <mat-menu #shiftMenu="matMenu">
+                                    <ng-container *ngFor="let option of scheduleViewModel.shifts">
+                                        <button mat-menu-item (click)="assignShiftToEmployee(element.id, column, option.shiftId)">
+                                            <mat-icon>{{ SCHEDULE_ICON }}</mat-icon>
+                                            <span>{{ option.shiftName }}</span>
+                                        </button>
+                                    </ng-container>
                                 </mat-menu>
                             </ng-container>
 

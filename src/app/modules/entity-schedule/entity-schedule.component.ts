@@ -18,9 +18,14 @@ import { ScheduleCreatorMenuComponent } from './schedule-creator-menu/schedule-c
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { start } from 'repl';
 import { ScheduleActionMenuComponent } from './schedule-action-menu/schedule-action-menu.component';
-import { CLOSE_ICON, MAT_EDIT_ICON, SCHEDULE_ICON, SWAP_ICON } from '../../shared/constants/IconNamesConstants';
+import { CANCEL_ICON, CLOSE_ICON, DONE_ICON, MAT_EDIT_ICON, SCHEDULE_ICON, SWAP_ICON } from '../../shared/constants/IconNamesConstants';
 import { EntityWorkerMemberDTO } from '../../shared/models/DTOs/Incoming/EntityWorkerMemberDTO';
 import { ScheduleEventViewHolderComponent } from './schedule-event-view-holder/schedule-event-view-holder.component';
+import { ScheduleAuxService } from '../../core/services/schedule-aux.service';
+import { formatDate } from '@angular/common';
+import { ScheduleEntryParticipantDTO } from '../../shared/models/DTOs/Incoming/ScheduleEntryParticipantDTO';
+import { AssignEntryDTO } from '../../shared/models/DTOs/Outgoing/AssignEntryDTO';
+import { ApplyRotationCycleDTO } from '../../shared/models/DTOs/Outgoing/ApplyRotationCycleDTO';
 
 /*
 interface ScheduleList{
@@ -43,6 +48,8 @@ export class EntityScheduleComponent {
   SCHEDULE_ICON: string = SCHEDULE_ICON;
   SWAP_ICON: string = SWAP_ICON;
   MAT_EDIT_ICON: string = MAT_EDIT_ICON;
+  CANCEL_ICON: string = CANCEL_ICON;
+  DONE_ICON: string = DONE_ICON;
   CLOSE_ICON: string = CLOSE_ICON;
   
 
@@ -68,7 +75,26 @@ export class EntityScheduleComponent {
   /// <summary>
   /// Entity schedule view model
   /// </summary>
-  scheduleViewModel : EntityScheduleViewModel = new EntityScheduleViewModel([], false, [], [], []);
+  private _scheduleViewModel : EntityScheduleViewModel = new EntityScheduleViewModel([], false, [], [], []);
+
+  public get scheduleViewModel() : EntityScheduleViewModel {
+    return this._scheduleViewModel;
+  }
+  public set scheduleViewModel(v : EntityScheduleViewModel) {
+    // Sort Workers and Shifts by shiftStartHour
+    v.entityWorkerMembers = v.entityWorkerMembers.sort((a, b) => a.workerName.localeCompare(b.workerName));
+    v.shifts = v.shifts.sort((a, b) => {
+          const [aHours, aMinutes] = a?.shiftStartHour.toString().split(':').map(Number) || [0, 0];
+          const [bHours, bMinutes] = b?.shiftStartHour.toString().split(':').map(Number) || [0, 0];
+          // Assumes shiftStartHour is a Date object
+          const aHour = aHours;
+          const aMin = aMinutes;
+          const bHour = bHours;
+          const bMin = bMinutes;
+          return aHour !== bHour ? aHour - bHour : aMin - bMin;
+        });
+    this._scheduleViewModel = v;
+  }
 
   /// <summary>
   /// The start date of the calendar component
@@ -106,6 +132,12 @@ export class EntityScheduleComponent {
 
   calendarListColumns: string[] = [];
 
+  isCycleTracking : boolean = false;
+
+  workerCycleTracking: EntityWorkerMemberDTO = EntityWorkerMemberDTO.newInstance();
+
+  cycleStartDate: Date = new Date();
+
   //#endregion
 
   //#region Constructor
@@ -113,7 +145,8 @@ export class EntityScheduleComponent {
     private dialog: MatDialog,
     private snackbarManagerService: SnackbarManagerService,
     private loadingScreenService: LoadingSpinnerManagerService,
-    private scheduleService: ScheduleService) { 
+    private scheduleService: ScheduleService,
+    private scheduleAuxService: ScheduleAuxService) { 
       this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
       this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), 1);
       this.endDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1, 0);
@@ -136,6 +169,8 @@ export class EntityScheduleComponent {
 
     // Get the schedule view model
     this.scheduleViewModel = await this.scheduleService.getScheduleViewModel(entityScheduleViewModelRequestDTO);
+
+    this.scheduleEntries = this.scheduleViewModel.scheduleEntries;
 
     this.isCurrentUserEntityOwner = this.scheduleViewModel.allowEdit;
 
@@ -307,8 +342,10 @@ export class EntityScheduleComponent {
   //#region Build Views
 
   buildViews() {
+    this.loadingScreenService.changeLoadingState(true);
     this.buildTable();
     this.buildCalendar();
+    this.loadingScreenService.changeLoadingState(false);
   }
 
   //#endregion
@@ -355,6 +392,7 @@ export class EntityScheduleComponent {
       let workerData = {
         id : workerMember.workerId,
         isBot: workerMember.isBot,
+        isPartOfRotation: workerMember.partOfRotation,
         employee: workerMember.partOfRotation ? workerMember.workerName + ' (RT)' : workerMember.workerName,
         time: 0
       };
@@ -443,41 +481,10 @@ export class EntityScheduleComponent {
 
   //#endregion
 
-  //#region On Schedule List Cell Click
-
-  onScheduleListCellClick(element: any, column: string): void {
-    let selectedWorkerId = element.id;
-    let selectedDate = column;
-
-    // If not the manager, and the selected worker is not the logged user, show an error message 
-    if(!this.isCurrentUserEntityOwner && this.loggedUser.userId !== selectedWorkerId) {
-      // this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'You are not allowed to perform this action'));
-      return;
-    }
-
-    // Implement your logic here
-    const dialogRef = this.dialog.open(ScheduleActionMenuComponent, {
-      width: '500px',
-      data: { isCurrentUserEntityOwner: this.isCurrentUserEntityOwner } 
-    });
-
-    dialogRef.componentInstance.onScheduleActionOp.subscribe((result: BaseResponseModel) => {
-      if (result.success) {
-        // Handle successful action
-        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Action completed successfully'));
-      } else {
-        // Handle failed action
-        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Action failed'));
-      }
-      dialogRef.close();
-    });
-  }
-
-  //#endregion
-
   //#region On Open Entry
 
-  onOpenEntry(id: string,date: string) {
+  onOpenEntry(element: any,date: string) {
+    let id = element.id;
     let worker = this.scheduleViewModel.entityWorkerMembers.find(x => x.workerId === id);
     
     if(worker != null){
@@ -545,11 +552,313 @@ export class EntityScheduleComponent {
 
             this.buildViews();
           }
-
+          this.loadingScreenService.changeLoadingState(false);
           dialogRef.close();
         });
       }
     }
+  }
+
+  //#endregion
+
+  //#region Assign Shift to Employee
+
+  async assignShiftToEmployee(workerId: string, date: string, shiftId: string){
+    // Find the worker in the entity members
+    let worker = this.scheduleViewModel.entityWorkerMembers.find(x => x.workerId === workerId);
+
+    // Worker not found
+    if(worker == null) {
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Worker not found'));
+      return;
+    }
+
+    // Find the shift to make sure it exists
+    let shift = this.scheduleViewModel.shifts.find(x => x.shiftId === shiftId);
+
+    // Shift not found
+    if(shift == null) {
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Shift not found'));
+      return;
+    }
+
+    let scheduleEntryId : string = '';
+    let dayEntryDate : Date = new Date(date);
+
+    let dayEntries = this.scheduleEntries.filter(x => this.formatDate(x.scheduleStartDate) === this.formatDate(new Date(date)));
+
+    // If there are no entries for the selected date, we can create a new entry
+    if(dayEntries == null || dayEntries.length === 0) {
+      // Create a new schedule entry for the worker on the selected date
+      scheduleEntryId = '';
+    }
+    // If there are entries for the selected date, we need to check if the shift already exists
+    else{
+      // Check if there is already an entry for this shift on this date
+      let dayShiftEntry = dayEntries.find(x => x.shiftDTO.shiftId === shiftId);
+
+      if(dayShiftEntry != null)
+        scheduleEntryId = dayShiftEntry.scheduleEntryId;
+    }
+
+    let assignEntryDTO : AssignEntryDTO = new AssignEntryDTO(worker.workerId, this.currentEntityId, '', worker.isBot, scheduleEntryId, shift.shiftId, dayEntryDate);
+  
+    this.loadingScreenService.changeLoadingState(true);
+
+    let apiResponse = await this.scheduleService.assignEntry(assignEntryDTO);
+  
+    this.loadingScreenService.changeLoadingState(false);
+
+    if(apiResponse.success){
+      let scheduleEntry : ScheduleEntryDTO = apiResponse.result;
+
+      let index = this.scheduleEntries.findIndex(x => x.scheduleEntryId === scheduleEntry.scheduleEntryId);
+      if (index !== -1) {
+        this.scheduleEntries[index] = scheduleEntry;
+      }
+      else{
+        this.scheduleEntries = [... this.scheduleEntries, scheduleEntry];
+      }
+
+      this.buildViews();
+    }
+    else{
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Unable to assign entry'));
+      return;
+    }
+  }
+
+  //#endregion
+
+  // #region Assign Shift To Employee V1 NOT USED
+  async _assignShiftToEmployee(workerId: string, date: string, shiftId: string) {
+    console.log(`Assigning shift ${shiftId} to worker ${workerId} on date ${date}`);
+
+    // Find the worker in the entity members
+    let worker = this.scheduleViewModel.entityWorkerMembers.find(x => x.workerId === workerId);
+
+    // Worker not found
+    if(worker == null) {
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Worker not found'));
+      return;
+    }
+
+    this.loadingScreenService.changeLoadingState(true);
+    // Find existing schedule entries for the selected date
+    let dayEntries = this.scheduleEntries.filter(x => this.formatDate(x.scheduleStartDate) === this.formatDate(new Date(date)));
+
+    let entry : ScheduleEntryDTO | null = null;
+    let createNewEntry = false;
+
+    // If there are no entries for the selected date, we can create a new entry
+    if(dayEntries == null || dayEntries.length === 0) {
+      // Create a new schedule entry for the worker on the selected date
+      createNewEntry = true;
+    }
+    // If there are entries for the selected date, we need to check if the shift already exists
+    else{
+      // Check if there is already an entry for this shift on this date
+      let dayShiftEntry = dayEntries.find(x => x.shiftDTO.shiftId === shiftId);
+      
+      // If there is an entry for this shift, we can add the worker to the existing entry
+      if(dayShiftEntry != null) {
+        // Check if the worker is already assigned to this shift
+        if(dayShiftEntry.scheduleParticipants.some(p => p.worker.workerId === workerId)) {
+          this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Worker already assigned to this shift'));
+          this.loadingScreenService.changeLoadingState(false);
+          return;
+        }
+        else {
+          // If the worker is not assigned, we can add the worker to the existing entry
+          entry = dayShiftEntry;
+        }
+      }
+      else {
+        // If there is no entry for this shift, we can create a new entry
+        createNewEntry = true;
+      }
+    }
+
+    // Create a new entry if needed
+    if(createNewEntry) {
+      let shift = this.scheduleViewModel.shifts.find(x => x.shiftId === shiftId);
+
+      if(shift == null) {
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Shift not found'));
+        this.loadingScreenService.changeLoadingState(false);
+        return;
+      }
+      // Create a new schedule entry
+      entry = this.scheduleAuxService.createNewScheduleEntry(new Date(date), shift);
+    }
+
+    // Add the worker to the entry
+    let schedulePartipant : ScheduleEntryParticipantDTO = new ScheduleEntryParticipantDTO(worker, false, worker.skillSet);
+    entry?.scheduleParticipants.push(schedulePartipant);
+
+    if(createNewEntry && entry != null) {
+      // If we created a new entry, we need to add it to the schedule entries
+      this.scheduleEntries.push(entry);
+      this.buildViews();
+    }
+    else if(entry != null) {
+      // If we updated an existing entry, we need to update the schedule entries
+      let index = this.scheduleEntries.findIndex(x => x.scheduleEntryId === entry?.scheduleEntryId);
+      if(index !== -1) {
+        this.scheduleEntries[index] = entry;
+      }
+      else {
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Entry not found'));
+        this.loadingScreenService.changeLoadingState(false);
+        return;
+      }
+
+      this.buildViews();
+    }
+    this.loadingScreenService.changeLoadingState(false);
+  }
+
+  //#endregion
+
+  //#endregion
+
+  //#region On End Rotation Cycle
+
+  async onEndRotationCycle(workerId: string, date: string) {
+    if(workerId != null && workerId !== this.workerCycleTracking.workerId){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Wrong worker selected for rotation cycle end'));
+      return;
+    }
+
+    let endDate = new Date(date);
+    if(endDate < this.cycleStartDate){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'End date cannot be before start date'));
+      return;
+    }
+
+    this.loadingScreenService.changeLoadingState(true);
+
+    let applyRotationCycleDTO : ApplyRotationCycleDTO = new ApplyRotationCycleDTO(
+      this.currentEntityId,
+      this.workerCycleTracking.workerId,
+      this.workerCycleTracking.isBot,
+      '',
+      this.cycleStartDate,
+      endDate);
+
+
+    let response = await this.scheduleService.ApplyRotationCycle(applyRotationCycleDTO);
+
+    this.loadingScreenService.changeLoadingState(false);
+
+    if(response.success){
+
+      this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Rotation cycle applied successfully'));
+
+      // Reset the cycle tracking
+      this.onCancelCycleOp();
+
+      // this.scheduleEntries = response.result as ScheduleEntryDTO[];
+
+      let previousEntries = this.scheduleEntries.filter(x => new Date(x.scheduleStartDate) < this.cycleStartDate || new Date(x.scheduleEndDate) > endDate);
+
+      this.scheduleEntries = [
+        ...previousEntries,
+        ...response.result as ScheduleEntryDTO[],
+      ];
+      
+      this.buildViews();
+    }
+
+    else{
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to apply rotation cycle'));
+    }
+
+
+  }
+
+  //#endregion
+
+  //#region On Cancel Cycle Op
+
+  onCancelCycleOp() {
+    // Cancel the cycle tracking
+    this.isCycleTracking = false;
+    this.workerCycleTracking = EntityWorkerMemberDTO.newInstance();
+    this.cycleStartDate = new Date();
+  }
+
+  //#endregion
+
+  //#region On Start Rotation Cycle
+
+  onStartRotationCycle(workerId: string, date: string) {
+  
+    if(!this.isCycleTracking){
+      // Start the cycle tracking
+      this.isCycleTracking = true;
+      this.cycleStartDate = new Date(date);
+      this.workerCycleTracking = this.scheduleViewModel.entityWorkerMembers.find(x => x.workerId === workerId) || EntityWorkerMemberDTO.newInstance();
+      if(this.workerCycleTracking == null || this.workerCycleTracking.workerId === ''){
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Worker not found'));
+        this.isCycleTracking = false;
+        return;
+      }
+      this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, "Select the end date for the rotation cycle."));
+    }
+  }
+
+  //#endregion
+
+  //#region On Apply Search
+
+  async onApplySearch() {
+    // Get the start and end dates from the input fields
+    // const startDateInput = (document.querySelector('input[name="schedule-start-date"]') as HTMLInputElement).value;
+    // const endDateInput = (document.querySelector('input[name="schedule-end-date"]') as HTMLInputElement).value;
+
+    // Parse the dates
+    // this.startDate = new Date(startDateInput);
+    //this.endDate = new Date(endDateInput);
+
+    // Validate the dates
+    if (this.startDate > this.endDate) {
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Start date cannot be after end date'));
+      return;
+    }
+
+    this.loadingScreenService.changeLoadingState(true);
+
+    let scheduleRequestDTO = new ScheduleViewModelRequestDTO(
+      this.currentEntityId,
+      this.loggedUser.userId,
+      '',
+      this.startDate,
+      this.endDate
+    );
+
+    this.scheduleEntries = await this.scheduleService.getSchedules(scheduleRequestDTO);
+
+    this.loadingScreenService.changeLoadingState(false);
+
+    // Rebuild the views with the new dates
+    this.buildViews();
+  }
+
+  //#endregion
+
+  //#region Format Date
+
+  onStartDateChange($event: Event) {
+    const input = $event.target as HTMLInputElement;
+    console.log(input.value);
+    this.startDate = new Date(input.value);
+  }
+
+  onEndDateChange($event: Event) {
+    const input = $event.target as HTMLInputElement;
+    console.log(input.value);
+    this.endDate = new Date(input.value);
   }
 
   //#endregion

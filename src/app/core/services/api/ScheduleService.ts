@@ -4,10 +4,13 @@ import { LanguageServiceService } from "../language-service.service";
 import { BaseViewModelRequestDTO } from "../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO";
 import { ScheduleViewModelRequestDTO } from "../../../shared/models/DTOs/Outgoing/ScheduleViewModelRequestDTO";
 import { EntityScheduleViewModel } from "../../../shared/models/VM/EntityScheduleViewModel";
-import { GENERATE_ENTITY_SCHEDULE, GET_ENTITY_SCHEDULE_VIEW_MODEL_URL, GET_ENTITY_SCHEDULES } from "../../../shared/constants/APIPathsConstants";
+import { APPLY_ROTATION_CYCLE_URL, ASSIGN_ENTRY_URL, GENERATE_ENTITY_SCHEDULE, GET_ENTITY_SCHEDULE_VIEW_MODEL_URL, GET_ENTITY_SCHEDULES_URL } from "../../../shared/constants/APIPathsConstants";
 import { ScheduleEntryDTO } from "../../../shared/models/DTOs/Incoming/ScheduleEntryDTO";
 import { CreateEntityScheduleDTO } from "../../../shared/models/DTOs/Outgoing/CreateEntityScheduleDTO";
 import { BaseResponseModel } from "../../../shared/models/baseResponseModel";
+import { AssignEntryDTO } from "../../../shared/models/DTOs/Outgoing/AssignEntryDTO";
+import { ApplyRotationCycleDTO } from "../../../shared/models/DTOs/Outgoing/ApplyRotationCycleDTO";
+import { app } from "../../../../../server";
 
 
 
@@ -21,7 +24,13 @@ export class ScheduleService {
         private languageService: LanguageServiceService) 
         { }
 
+    //#region Get Schedule View Model
 
+    /// <summary>
+    /// Returns the schedule view model for the entity
+    /// </summary>
+    /// <param name="entityScheduleViewModelRequestDTO">The request DTO containing the entity ID and other parameters</param>
+    /// <returns>A promise that resolves to the EntityScheduleViewModel</returns>
     async getScheduleViewModel(entityScheduleViewModelRequestDTO : ScheduleViewModelRequestDTO) : Promise<EntityScheduleViewModel> {
         let scheduleViewModel : EntityScheduleViewModel = new EntityScheduleViewModel([], false, [], [], []);
     
@@ -37,23 +46,9 @@ export class ScheduleService {
         return scheduleViewModel;
     }
 
-    /// <summary>
-    /// Returns a list of schedules for the entity
-    /// </summary>
-    async getSchedules(entityScheduleViewModelRequestDTO : ScheduleViewModelRequestDTO) : Promise<ScheduleEntryDTO[]> {
-        let schedules : ScheduleEntryDTO[] = [];
-    
-        entityScheduleViewModelRequestDTO.languageCode = this.languageService.returnLocalization();
+    //#endregion
 
-        try{
-            schedules = await this.http.post<ScheduleEntryDTO[]>(GET_ENTITY_SCHEDULES, entityScheduleViewModelRequestDTO).toPromise() as ScheduleEntryDTO[];
-        }
-        catch(error: any){
-            console.error('Error fetching data:', error.message);
-        }
-    
-        return schedules;
-    }
+    //#region Create Schedule
 
     async createSchedule(createEntityScheduleDTO : CreateEntityScheduleDTO) : Promise<BaseResponseModel> {
         let schedules : any;
@@ -61,8 +56,7 @@ export class ScheduleService {
         createEntityScheduleDTO.languageCode = this.languageService.returnLocalization();
 
         try{
-            schedules = await this.http.post<ScheduleEntryDTO[]>(GENERATE_ENTITY_SCHEDULE, createEntityScheduleDTO).toPromise();
-            
+            schedules = await this.http.post<ScheduleEntryDTO[]>(GENERATE_ENTITY_SCHEDULE, createEntityScheduleDTO);
         }
         catch(error: any){
             console.error('Error fetching data:', error.message);
@@ -70,4 +64,73 @@ export class ScheduleService {
     
         return schedules;
     }
+
+    //#endregion
+
+    //#region Assign Entry
+
+    async assignEntry(assignEntryDTO: AssignEntryDTO): Promise<BaseResponseModel> {
+        let response: any;
+
+        assignEntryDTO.languageCode = this.languageService.returnLocalization();
+        
+        try{
+            response = await this.http.post<ScheduleEntryDTO>(ASSIGN_ENTRY_URL, assignEntryDTO).toPromise() as ScheduleEntryDTO;;
+        }
+        catch(error : any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
+
+    }
+
+    //#endregion
+
+    //#region Get Schedules
+
+    async getSchedules(schedulesRequest : ScheduleViewModelRequestDTO) : Promise<ScheduleEntryDTO[]> {
+        let schedules: ScheduleEntryDTO[] = [];
+
+        schedulesRequest.languageCode = this.languageService.returnLocalization();
+
+        try{
+            schedules = await this.http.post<ScheduleEntryDTO[]>(GET_ENTITY_SCHEDULES_URL, schedulesRequest).toPromise() as ScheduleEntryDTO[];
+        }
+        catch(error: any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return schedules;
+    }
+
+    //#endregion
+
+    //#region Save Schedules
+
+
+    //#endregion
+
+    //#region Apply Rotation Cylce
+
+    async ApplyRotationCycle(rotationCycleRequestDTO : ApplyRotationCycleDTO) : Promise<BaseResponseModel> {
+        let response: any;
+
+        rotationCycleRequestDTO.languageCode = this.languageService.returnLocalization();
+
+        try{
+            response = await this.http.post<BaseResponseModel>(APPLY_ROTATION_CYCLE_URL, rotationCycleRequestDTO).toPromise() as BaseResponseModel;
+        }
+        catch(error: any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
+    }
+
+    //#endregion
+
+    //#region Delete Schedule
+
+    //#endregion
 }
