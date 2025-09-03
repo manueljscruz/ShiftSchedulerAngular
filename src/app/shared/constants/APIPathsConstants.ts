@@ -38,6 +38,7 @@ export const UPDATE_SHIFT_BREAK_URL : string = BASE_API_URL + SHIFT_CONTROLLER +
 export const DELETE_SHIFT_URL : string = BASE_API_URL + SHIFT_CONTROLLER + "/delete-entity-shift";
 export const DELETE_SHIFT_BREAK_URL : string = BASE_API_URL + SHIFT_CONTROLLER + "/delete-entity-shift-break";
 export const ADD_SHIFT_ROTATION_URL : string = BASE_API_URL + SHIFT_CONTROLLER + "/add-shift-rotation";
+export const UPDATE_SHIFT_ROTATION_ORDER_URL : string = BASE_API_URL + SHIFT_CONTROLLER + "/update-shift-rotation-order";
 export const UPDATE_SHIFT_ROTATION_URL : string = BASE_API_URL + SHIFT_CONTROLLER + "/update-shift-rotation";
 export const DELETE_SHIFT_ROTATION_URL : string = BASE_API_URL + SHIFT_CONTROLLER + "/delete-shift-rotation";
 

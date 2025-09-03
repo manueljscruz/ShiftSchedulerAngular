@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LanguageServiceService } from '../language-service.service';
-import { GET_ENTITY_SHIFT_VIEW_MODEL_URL, ADD_SHIFT_URL, ADD_SHIFT_BREAK_URL, UPDATE_SHIFT_BREAK_URL, DELETE_SHIFT_URL, DELETE_SHIFT_BREAK_URL, UPDATE_SHIFT_URL, GET_ENTITY_SHIFTS, ADD_SHIFT_ROTATION_URL, UPDATE_SHIFT_ROTATION_URL, DELETE_SHIFT_ROTATION_URL } from '../../../shared/constants/APIPathsConstants';
+import { GET_ENTITY_SHIFT_VIEW_MODEL_URL, ADD_SHIFT_URL, ADD_SHIFT_BREAK_URL, UPDATE_SHIFT_BREAK_URL, DELETE_SHIFT_URL, DELETE_SHIFT_BREAK_URL, UPDATE_SHIFT_URL, GET_ENTITY_SHIFTS, ADD_SHIFT_ROTATION_URL, UPDATE_SHIFT_ROTATION_URL, DELETE_SHIFT_ROTATION_URL, UPDATE_SHIFT_ROTATION_ORDER_URL } from '../../../shared/constants/APIPathsConstants';
 import { ShiftViewModel } from '../../../shared/models/VM/ShiftViewModel';
 import { EntityShiftViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityShiftViewModelRequestDTO';
 import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
@@ -275,13 +275,13 @@ export class ShiftService {
 
     //#endregion
 
-    //#region Update Shift Rotation
+    //#region Update Shift Rotation Order
 
-    async updateShiftRotation(rotation: UpdateShiftRotationDTO): Promise<BaseResponseModel> {
+    async updateShiftRotationOrder(rotation: UpdateShiftRotationDTO): Promise<BaseResponseModel> {
         let response = new BaseResponseModel(false, "", null);
 
         try{
-            let httpResponse = await this.http.put<BaseResponseModel>(UPDATE_SHIFT_ROTATION_URL, rotation, {observe: 'response'}).toPromise();
+            let httpResponse = await this.http.put<BaseResponseModel>(UPDATE_SHIFT_ROTATION_ORDER_URL, rotation, {observe: 'response'}).toPromise();
         
             // Check for update success
             if(httpResponse?.status === 204){
@@ -290,6 +290,23 @@ export class ShiftService {
             else 
                 response = new BaseResponseModel(false, "Error", null);
             
+        }
+        catch(error : any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
+    }
+
+    //#endregion
+
+    //#region Update Shift Rotation
+
+    async updateShiftRotation(shiftRotationDTO: EntityShiftRotationDTO): Promise<BaseResponseModel> {
+        let response = new BaseResponseModel(false, "", null);
+
+        try{
+            response = await this.http.put<BaseResponseModel>(UPDATE_SHIFT_ROTATION_URL, shiftRotationDTO).toPromise() as BaseResponseModel;
         }
         catch(error : any){
             console.error('Error fetching data:', error.message);

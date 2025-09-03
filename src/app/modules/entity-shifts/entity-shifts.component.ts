@@ -28,6 +28,7 @@ import { UpdateShiftRotationDTO } from '../../shared/models/DTOs/Outgoing/Update
   styleUrl: './entity-shifts.component.css'
 })
 export class EntityShiftsComponent {
+
   //#region CONSTANTS
   // CONSTANTS
   DELETE_SHIFT_TITLE = DELETE_SHIFT_TITLE;
@@ -147,17 +148,13 @@ export class EntityShiftsComponent {
 
   //#endregion
 
-  //#region 
-
-  changeShiftColor($event: string) {
-    this.SelectedShift.shiftColorHex = $event;
-  }
-
-  //#endregion
+  //#region Expand Row
 
   expandRow(_t95: any) {
     
   }
+
+  //#endregion
   
   //#region Edit Shift
 
@@ -507,12 +504,16 @@ export class EntityShiftsComponent {
 
   //#region Open Shift Rotation Dialog
 
-  openShiftRotationDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
+  openShiftRotationDialog(enterAnimationDuration: string, exitAnimationDuration: string, shiftRotationDTO?: EntityShiftRotationDTO) {
+
+    let isEdit = shiftRotationDTO != null;
+
     const dialogRef = this.dialog.open(ShiftRotationDialogFormComponent, {
       width: '600px',
       data:{
         entityId: this.currentEntityId,
-        shifts: this.ShiftViewModel.shifts
+        shifts: this.ShiftViewModel.shifts,
+        shiftRotationDTO: isEdit ? shiftRotationDTO : null,
       }
     });
 
@@ -521,9 +522,19 @@ export class EntityShiftsComponent {
 
       if(result.success && result.result != null){
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, result.message));
-        this.ShiftViewModel.shiftRotations = [...this.ShiftViewModel.shiftRotations, result.result];
-        this.shiftRotationTable.renderRows();
+
+        if(isEdit){
+          let index = this.ShiftViewModel.shiftRotations.findIndex(x => x.entityId === result.result.entityId && x.orderNo === result.result.orderNo);
+          this.ShiftViewModel.shiftRotations[index] = result.result;
+          this.shiftRotationTable.renderRows();
+          return;
+        }
+        else{
+          this.ShiftViewModel.shiftRotations = [...this.ShiftViewModel.shiftRotations, result.result];
+          this.shiftRotationTable.renderRows();
+        }
       }
+
       else if(result.success && result.result == null){
 
       }
@@ -533,9 +544,12 @@ export class EntityShiftsComponent {
     });
   }
 
+  //#endregion
+
   //#region Go Up Shift Rotation
+
   async goUp(shiftRotationDTO : EntityShiftRotationDTO){
-    await this.updateShiftRotation(shiftRotationDTO, 1);
+    await this.updateShiftRotationOrder(shiftRotationDTO, 1);
   }
 
   //#endregion
@@ -543,12 +557,22 @@ export class EntityShiftsComponent {
   //#region Go Down Shift Rotation
 
   async goDown(shiftRotationDTO : EntityShiftRotationDTO){
-    await this.updateShiftRotation(shiftRotationDTO, -1);
+    await this.updateShiftRotationOrder(shiftRotationDTO, -1);
   }
 
   //#endregion
 
-  async updateShiftRotation(shiftRotationDTO : EntityShiftRotationDTO, indexChange: number){
+  //#region Edit Shift Rotation
+
+  editRotation(shiftRotationDTO : EntityShiftRotationDTO) {
+    this.openShiftRotationDialog('5000', '5000', shiftRotationDTO);
+  }
+
+  //#endregion
+
+  //#region Update Shift Rotation
+
+  async updateShiftRotationOrder(shiftRotationDTO : EntityShiftRotationDTO, indexChange: number){
     let validationResponse = this.validateShiftRotationChange(shiftRotationDTO, indexChange);
 
     if(validationResponse.success){
@@ -560,7 +584,7 @@ export class EntityShiftsComponent {
       );
 
       this.loadingScreenService.changeLoadingState(true);
-      let apiResponse = await this.shiftService.updateShiftRotation(updateShiftRotationDTO);
+      let apiResponse = await this.shiftService.updateShiftRotationOrder(updateShiftRotationDTO);
       this.loadingScreenService.changeLoadingState(false);
 
       if(apiResponse.success){
@@ -595,6 +619,8 @@ export class EntityShiftsComponent {
     }
 
   }
+
+  //#endregion
 
   //#region Delete Shift Rotation
 
@@ -669,7 +695,7 @@ export class EntityShiftsComponent {
 
   //#endregion
 
-
+  //#endregion
 }
 
 

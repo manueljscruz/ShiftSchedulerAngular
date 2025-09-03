@@ -11,6 +11,7 @@ import { BaseResponseModel } from "../../../shared/models/baseResponseModel";
 import { AssignEntryDTO } from "../../../shared/models/DTOs/Outgoing/AssignEntryDTO";
 import { ApplyRotationCycleDTO } from "../../../shared/models/DTOs/Outgoing/ApplyRotationCycleDTO";
 import { app } from "../../../../../server";
+import { firstValueFrom } from "rxjs";
 
 
 
@@ -56,7 +57,7 @@ export class ScheduleService {
         createEntityScheduleDTO.languageCode = this.languageService.returnLocalization();
 
         try{
-            schedules = await this.http.post<ScheduleEntryDTO[]>(GENERATE_ENTITY_SCHEDULE, createEntityScheduleDTO);
+            schedules = await firstValueFrom( this.http.post<ScheduleEntryDTO[]>(GENERATE_ENTITY_SCHEDULE, createEntityScheduleDTO));
         }
         catch(error: any){
             console.error('Error fetching data:', error.message);

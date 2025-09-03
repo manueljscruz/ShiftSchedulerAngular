@@ -96,10 +96,13 @@
                 <ng-container *ngIf="ShiftViewModel.shiftRotations.length > 0">
                     <mat-table #shiftRotationTable [dataSource]="ShiftViewModel.shiftRotations" class="mat-elevation-z8">
                         <!-- Rotation Order Column -->
-                        <ng-container matColumnDef="OrderNo">
-                            <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
-                            <mat-cell *matCellDef="let rotation">{{ rotation.orderNo }}</mat-cell>
+                         <div style="width: 35px;">
+                            <ng-container matColumnDef="order-no">
+                                <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
+                                <mat-cell *matCellDef="let rotation">{{ rotation.orderNo }}</mat-cell>
                         </ng-container>
+                         </div>
+                        
                         <ng-container matColumnDef="DisplayName">
                             <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
                             <mat-cell *matCellDef="let rotation">{{ rotation.displayName }}</mat-cell>
@@ -109,7 +112,7 @@
                             <mat-cell *matCellDef="let rotation">{{ rotation.alias }}</mat-cell>
                         </ng-container>
                         <!-- Actions Column -->
-                        <ng-container matColumnDef="Actions">
+                        <ng-container matColumnDef="rotation-actions">
                             <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
                             <!-- UP -->
                             <mat-cell *matCellDef="let rotation">
@@ -121,6 +124,10 @@
                                     <mat-icon>expand_less</mat-icon>
                                 </button>
                             
+                                <button *ngIf="rotation.isLeave" mat-icon-button color="primary" (click)="editRotation(rotation)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+
                                 <!-- REMOVE -->
                                 <button mat-icon-button color="warn" (click)="openDeleteDialog('5000','5000', DELETE_SHIFT_ROTATION_TITLE, DELETE_SHIFT_ROTATION_CONTENT, rotation, 'ShiftRotationDTO')">
                                     <mat-icon>delete</mat-icon>
@@ -128,8 +135,8 @@
                             </mat-cell>
                         </ng-container> 
 
-                        <mat-header-row *matHeaderRowDef="['OrderNo', 'DisplayName', 'Alias', 'Actions']"></mat-header-row>
-                        <mat-row *matRowDef="let rotation; columns: ['OrderNo', 'DisplayName', 'Alias', 'Actions']"></mat-row>
+                        <mat-header-row *matHeaderRowDef="['order-no', 'DisplayName', 'Alias', 'rotation-actions']"></mat-header-row>
+                        <mat-row *matRowDef="let rotation; columns: ['order-no', 'DisplayName', 'Alias', 'rotation-actions']"></mat-row>
                     </mat-table>
 
                     <!--

@@ -131,3 +131,42 @@ mat-table{
 #shift-color-picker:hover {
     border: 1px solid #000;
 }
+
+/* Column Header of Order Number of Shift Rotations */
+mat-header-cell.mat-column-order-no{
+    flex: 0 0 5% !important;
+    text-align: center;
+    justify-content: center;
+}
+
+/* Column Body of Order Number of Shift Rotations */
+.mat-column-order-no{
+    flex: 0 0 5% !important;
+    text-align: center;
+    justify-content: center;
+}
+
+/* Column Header of Shift Rotations Actions */
+mat-header-cell.mat-column-rotation-Alias{
+    flex: 0 0 15% !important;
+    text-align: center;
+    justify-content: center;
+}
+
+/* Column Body of Shift Rotations Actions */
+.mat-column-rotation-Alias{
+    flex: 0 0 15% !important;
+}
+
+
+/* Column Header of Shift Rotations Actions */
+mat-header-cell.mat-column-rotation-actions{
+    flex: 0 0 15% !important;
+    text-align: center;
+    justify-content: center;
+}
+
+/* Column Body of Shift Rotations Actions */
+.mat-column-rotation-actions{
+    flex: 0 0 15% !important;
+}
