@@ -70,6 +70,7 @@ import { ScheduleActionMenuComponent } from './modules/entity-schedule/schedule-
 import { MatMenuModule } from '@angular/material/menu';
 import { ScheduleEventViewHolderComponent } from './modules/entity-schedule/schedule-event-view-holder/schedule-event-view-holder.component';
 import { WorkerSkillSelectorComponent } from './modules/entity-schedule/worker-skill-selector/worker-skill-selector.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -147,6 +148,7 @@ import { WorkerSkillSelectorComponent } from './modules/entity-schedule/worker-s
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    MatPaginator
   ],
   providers: [
     provideClientHydration(),

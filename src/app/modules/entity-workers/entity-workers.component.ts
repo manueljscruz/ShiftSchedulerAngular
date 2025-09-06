@@ -21,6 +21,9 @@ import { DELETE_MEMBER_CONTENT, DELETE_MEMBER_TITLE } from '../../shared/constan
 import { BaseViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatSort } from '@angular/material/sort';
+import { PageEvent } from '@angular/material/paginator';
+import { PagedList } from '../../shared/models/DTOs/Incoming/PagedList';
+import { MemberListModelRequest } from '../../shared/models/DTOs/Outgoing/MemberListModelRequest';
 
 
 @Component({
@@ -29,6 +32,9 @@ import { MatSort } from '@angular/material/sort';
   styleUrl: './entity-workers.component.css'
 })
 export class EntityWorkersComponent {
+handlePageEvent($event: PageEvent) {
+throw new Error('Method not implemented.');
+}
 
   UI_DIALOG_ENTRANCE_DURATION = UI_DIALOG_ENTRANCE_DURATION;
   UI_DIALOG_EXIT_DURATION = UI_DIALOG_EXIT_DURATION;
@@ -87,6 +93,14 @@ export class EntityWorkersComponent {
   /// </summary>
   public isListView: boolean = true;
 
+  currentPageIndex = 0;
+
+  pageSize = 10;
+
+  totalItems = 0;
+
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
   //#endregion
   
   //#region Constructor
@@ -99,7 +113,7 @@ export class EntityWorkersComponent {
     private dialog: MatDialog,
     private route: ActivatedRoute
   ) {
-    this.entityMembersViewModel = new EntityMembersViewModel("", [], [], []);
+    this.entityMembersViewModel = new EntityMembersViewModel("", [], [], new PagedList([], 1, 10, 0));
     this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || ''; // decodedEntityId;
   }
 
@@ -113,14 +127,16 @@ export class EntityWorkersComponent {
     this.loadingScreenService.changeLoadingState(true);
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
 
-    let baseViewModelRequestDTO : BaseViewModelRequestDTO = {
+    let memberListModelRequestDTO : MemberListModelRequest = {
       entityId: this.currentEntityId,
       workerId: this.loggedUser.userId,
-      languageCode: ''
+      languageCode: '',
+      currentPage: this.currentPageIndex,
+      nextPage: 1,
+      itemsPerPage: this.pageSize,
     };
 
-    this.entityMembersViewModel = await this.entityService.getEntityMembersViewModel(baseViewModelRequestDTO);
-
+    this.entityMembersViewModel = await this.entityService.getEntityMembersViewModel(memberListModelRequestDTO);
     this.isCurrentUserEntityOwner = this.entityMembersViewModel.entityOwnerId === this.loggedUser.userId ? true : false;
     this.loadingScreenService.changeLoadingState(false);
   }
@@ -162,7 +178,7 @@ export class EntityWorkersComponent {
         else{
           newMemberResult = newMemberResult as EntityWorkerMemberDTO;
           // newMemberResult.SkillSet = this.auxReconfigureSkills(newMemberResult);
-          this.entityMembersViewModel.entityMembers.push(newMemberResult as EntityWorkerMemberDTO);
+          this.entityMembersViewModel.entityMembers.data.push(newMemberResult as EntityWorkerMemberDTO);
         }
       }
     });
@@ -189,9 +205,9 @@ export class EntityWorkersComponent {
         this.snackManagerService.showSuccessSnackbar(new SnackbarUIModel(5, result.message));
 
         editWorker = result.result;
-        let index = this.entityMembersViewModel.entityMembers.findIndex(x => x.workerId === editWorker.workerId);
+        let index = this.entityMembersViewModel.entityMembers.data.findIndex(x => x.workerId === editWorker.workerId);
         if(index >= 0){
-          this.entityMembersViewModel.entityMembers[index] = editWorker as EntityWorkerMemberDTO;
+          this.entityMembersViewModel.entityMembers.data[index] = editWorker as EntityWorkerMemberDTO;
         }
         else{
           this.snackManagerService.showFailSnackbar(new SnackbarUIModel(5, result.message));
@@ -223,9 +239,9 @@ export class EntityWorkersComponent {
 
     let apiResponse = await this.entityService.deleteEntityWorker(workerData);
     if(apiResponse.success){
-      let index = this.entityMembersViewModel.entityMembers.findIndex(x => x.workerId === workerToDelete.workerId);
+      let index = this.entityMembersViewModel.entityMembers.data.findIndex(x => x.workerId === workerToDelete.workerId);
       if(index >= 0){
-        this.entityMembersViewModel.entityMembers.splice(index, 1);
+        this.entityMembersViewModel.entityMembers.data.splice(index, 1);
 
         this.snackManagerService.showSuccessSnackbar(new SnackbarUIModel(5, apiResponse.message));
       }

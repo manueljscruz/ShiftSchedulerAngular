@@ -47,13 +47,13 @@
             <!-- Entity Worker List -->
             <div id="entity-worker-list-container">
                 <ng-container *ngIf="isGridView">
-                    <div class="entity-worker-list-item" *ngFor="let member of entityMembersViewModel.entityMembers">
+                    <div class="entity-worker-list-item" *ngFor="let member of entityMembersViewModel.entityMembers.data">
                         <entity-worker-member-card [entityWorkerMember]="member" [allowActions]="isCurrentUserEntityOwner" (editWorkerTemplateEvent)="onEditMember($event)" (deleteWorkerTemplateEvent)="onDeleteMember($event)"></entity-worker-member-card>
                     </div>
                 </ng-container>
 
                 <ng-container *ngIf="isListView">
-                    <table mat-table [dataSource]="entityMembersViewModel.entityMembers" class="mat-elevation-z1 full-width-table" matSort>
+                    <table mat-table [dataSource]="entityMembersViewModel.entityMembers.data" class="mat-elevation-z1 full-width-table" matSort>
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="name">
@@ -102,6 +102,17 @@
                         <tr mat-row *matRowDef="let row; columns: isCurrentUserEntityOwner ? ['name', 'skill', 'rotation', 'multipleShift', 'actions'] : ['name', 'skill', 'rotation', 'multipleShift']"></tr>
                     </table>
 
+                    <mat-paginator
+                        class="paginator" 
+                        #paginator
+                        (page)="handlePageEvent($event)"
+                        [length]="entityMembersViewModel.entityMembers.totalCount"
+                        [pageSize]="pageSize"
+                        [showFirstLastButtons]=true
+                        [pageSizeOptions]="pageSizeOptions"
+                        [pageIndex]="entityMembersViewModel.entityMembers.currentPage-1"
+                        aria-label="Select page">
+                    </mat-paginator>
                 </ng-container>
                 
             </div>

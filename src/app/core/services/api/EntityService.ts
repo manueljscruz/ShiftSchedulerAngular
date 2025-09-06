@@ -14,6 +14,7 @@ import { HTTP_METHOD_DELETE, HTTP_METHOD_GET, HTTP_STATUS_NO_CONTENT, HTTP_STATU
 import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { DeleteEntityObjectDTO } from '../../../shared/models/DTOs/Outgoing/DeleteEntityObjectDTO';
 import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
+import { MemberListModelRequest } from '../../../shared/models/DTOs/Outgoing/MemberListModelRequest';
 
 @Injectable({
     providedIn: 'root'
@@ -103,13 +104,13 @@ export class EntityService {
      * @param entityId - The ID of the entity.
      * @returns A promise that resolves to the response from the server.
      */
-    async getEntityMembersViewModel(baseViewModelRequestDTO: BaseViewModelRequestDTO) : Promise<any> {
+    async getEntityMembersViewModel(memberListModelRequestDTO: MemberListModelRequest) : Promise<any> {
         
         let response = new BaseResponseModel(false, "", null);
-        baseViewModelRequestDTO.languageCode = this.languageService.returnLocalization();
+        memberListModelRequestDTO.languageCode = this.languageService.returnLocalization();
 
         try {
-            const response = await this.http.post(GET_ENTITY_MEMBERS_VM, baseViewModelRequestDTO).toPromise();
+            const response = await this.http.post(GET_ENTITY_MEMBERS_VM, memberListModelRequestDTO).toPromise();
             return response;
         }
         catch (error : any) {
