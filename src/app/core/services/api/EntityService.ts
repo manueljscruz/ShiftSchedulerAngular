@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, DELETE_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
+import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, DELETE_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_PAGINATION, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
 import { EntityProfileViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityProfileViewModelRequestDTO';
 import { Entity } from '../../../shared/models/database/entity';
 import { FormEntityDTO } from '../../../shared/models/DTOs/Outgoing/FormEntityDTO';
@@ -111,6 +111,26 @@ export class EntityService {
 
         try {
             const response = await this.http.post(GET_ENTITY_MEMBERS_VM, memberListModelRequestDTO).toPromise();
+            return response;
+        }
+        catch (error : any) {
+            console.error('Error fetching data:', error.message);
+            response.message = error.message;
+        }
+
+        return response;
+    }
+
+    //#endregion
+
+    //#region Get Entity Members
+
+    async getEntityMembers(memberListModelRequestDTO: MemberListModelRequest) : Promise<any> {
+        let response = new BaseResponseModel(false, "", null);
+        memberListModelRequestDTO.languageCode = this.languageService.returnLocalization();
+
+        try {
+            const response = await this.http.post(GET_ENTITY_MEMBERS_PAGINATION, memberListModelRequestDTO).toPromise();
             return response;
         }
         catch (error : any) {

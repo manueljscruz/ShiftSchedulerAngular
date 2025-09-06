@@ -19,6 +19,7 @@ const ENTITY_CONTROLLER: string = "Entity";
 export const ADD_ENTITY_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/add";
 export const GET_ENTITIES_BY_WORKER_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/get-entities-by-worker-id/{workerId}";
 export const GET_ENTITY_MEMBERS_VM : string = BASE_API_URL + ENTITY_CONTROLLER + "/get-entities-members-view-model";
+export const GET_ENTITY_MEMBERS_PAGINATION : string = BASE_API_URL + ENTITY_CONTROLLER + "/get-entity-members-pagination";
 export const GET_ENTITY_PROFILE_VM : string = BASE_API_URL + ENTITY_CONTROLLER + "/get-entity-profile-view-model";
 export const GET_ENTITY_SKILLS : string = BASE_API_URL + ENTITY_CONTROLLER + "/get-entity-skills";
 export const UPDATE_ENTITY_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/update";

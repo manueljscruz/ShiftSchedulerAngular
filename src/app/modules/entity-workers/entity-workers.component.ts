@@ -32,9 +32,6 @@ import { MemberListModelRequest } from '../../shared/models/DTOs/Outgoing/Member
   styleUrl: './entity-workers.component.css'
 })
 export class EntityWorkersComponent {
-handlePageEvent($event: PageEvent) {
-throw new Error('Method not implemented.');
-}
 
   UI_DIALOG_ENTRANCE_DURATION = UI_DIALOG_ENTRANCE_DURATION;
   UI_DIALOG_EXIT_DURATION = UI_DIALOG_EXIT_DURATION;
@@ -127,12 +124,13 @@ throw new Error('Method not implemented.');
     this.loadingScreenService.changeLoadingState(true);
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
 
+    this.currentPageIndex = 1;
     let memberListModelRequestDTO : MemberListModelRequest = {
       entityId: this.currentEntityId,
       workerId: this.loggedUser.userId,
       languageCode: '',
       currentPage: this.currentPageIndex,
-      nextPage: 1,
+      nextPage: this.currentPageIndex,
       itemsPerPage: this.pageSize,
     };
 
@@ -255,6 +253,8 @@ throw new Error('Method not implemented.');
 
   //#endregion
 
+  //#region On View Change
+
   onViewChange($event: MatButtonToggleChange) {
     switch ($event.value) {
       case 'grid':
@@ -274,7 +274,40 @@ throw new Error('Method not implemented.');
     }
   }
 
+  //#endregion
 
+  //#region Get Members Page
+
+  async GetMembersPage(nextPageIndex: number, itemsPerPage: number){
+
+    let memberListModelRequestDTO : MemberListModelRequest = {
+      entityId: this.currentEntityId,
+      workerId: this.loggedUser.userId,
+      languageCode: '',
+      currentPage: this.currentPageIndex,
+      nextPage: nextPageIndex+1,
+      itemsPerPage: itemsPerPage,
+    };
+
+    this.loadingScreenService.changeLoadingState(true);
+   
+    this.entityMembersViewModel.entityMembers = await this.entityService.getEntityMembers(memberListModelRequestDTO);
+    
+    this.loadingScreenService.changeLoadingState(false);
+  }
+
+  //#endregion
+
+  //#region Handle Page Event
+
+  async handlePageEvent($event: PageEvent) {
+    this.currentPageIndex = $event.pageIndex;
+    this.pageSize = $event.pageSize;
+
+    await this.GetMembersPage(this.currentPageIndex, this.pageSize);
+  }
+
+  //#endregion
 
   //#endregion
 
