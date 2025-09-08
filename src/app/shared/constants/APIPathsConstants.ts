@@ -57,6 +57,7 @@ export const DELETE_RULE_SPECS_URL : string = BASE_API_URL + ENTITY_RULES_CONTRO
 //#region ABSENCE
 const ENTITY_WORKER_ABSENCES_CONTROLLER = "EntityWorkerAbsence";
 export const GET_ENTITY_ABSENCES_VIEW_MODEL_URL : string = BASE_API_URL + ENTITY_WORKER_ABSENCES_CONTROLLER + "/get-entity-worker-absence-model";
+export const GET_ENTITY_ABSENCES_PAGINATION : string = BASE_API_URL + ENTITY_WORKER_ABSENCES_CONTROLLER + "/get-entity-worker-absences-pagination";
 export const ADD_ENTITY_ABSENCE_URL : string = BASE_API_URL + ENTITY_WORKER_ABSENCES_CONTROLLER + "/add-entity-worker-absence";
 export const UPDATE_ENTITY_ABSENCE_URL : string = BASE_API_URL + ENTITY_WORKER_ABSENCES_CONTROLLER + "/update-entity-worker-absence";
 export const DELETE_ENTITY_ABSENCE_URL : string = BASE_API_URL + ENTITY_WORKER_ABSENCES_CONTROLLER + "/delete-entity-worker-absence";

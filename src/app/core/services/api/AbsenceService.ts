@@ -4,17 +4,20 @@ import { Observable } from 'rxjs';
 import { LanguageServiceService } from '../language-service.service';
 import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { EntityWorkerAbsenceViewModel } from '../../../shared/models/VM/EntityWorkerAbsenceViewModel';
-import { ADD_ENTITY_ABSENCE_URL, DELETE_ENTITY_ABSENCE_URL, ENTITY_ABSENCE_APPROVAL_DECISION_URL, GET_ENTITY_ABSENCES_VIEW_MODEL_URL, UPDATE_ENTITY_ABSENCE_URL } from '../../../shared/constants/APIPathsConstants';
+import { ADD_ENTITY_ABSENCE_URL, DELETE_ENTITY_ABSENCE_URL, ENTITY_ABSENCE_APPROVAL_DECISION_URL, GET_ENTITY_ABSENCES_PAGINATION, GET_ENTITY_ABSENCES_VIEW_MODEL_URL, UPDATE_ENTITY_ABSENCE_URL } from '../../../shared/constants/APIPathsConstants';
 import { AddEntityWorkerAbsenceDTO } from '../../../shared/models/DTOs/Outgoing/AddEntityWorkerAbsenceDTO';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { EntityWorkerAbsenceDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerAbsenceDTO';
 import { AbsenceApprovalDecisionDTO } from '../../../shared/models/DTOs/Outgoing/AbsenceApprovalDecisionDTO';
 import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
+import { PagedModelRequest } from '../../../shared/models/DTOs/Outgoing/MemberListModelRequest';
+import { PagedList } from '../../../shared/models/DTOs/Incoming/PagedList';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AbsenceService {
+    
 
     constructor(private http: HttpClient,
         private languageService: LanguageServiceService) 
@@ -24,7 +27,7 @@ export class AbsenceService {
     /// Get absences view model
     /// </summary>
     async getAbsenceViewModel(entityAbsenceViewModelRequestDTO : BaseViewModelRequestDTO) : Promise<EntityWorkerAbsenceViewModel> {
-        let absenceViewModel : EntityWorkerAbsenceViewModel = new EntityWorkerAbsenceViewModel(false, [], []);
+        let absenceViewModel : EntityWorkerAbsenceViewModel = new EntityWorkerAbsenceViewModel(false, PagedList.Empty(), []);
 
         entityAbsenceViewModelRequestDTO.languageCode = this.languageService.returnLocalization();
         try{
@@ -36,6 +39,25 @@ export class AbsenceService {
 
         return absenceViewModel;
     }
+
+    //#region Get Absences Page
+
+    async getAbsencesPage(absencePageRequest: PagedModelRequest) : Promise<PagedList<EntityWorkerAbsenceDTO>> {
+      let absencePagedData : PagedList<EntityWorkerAbsenceDTO> = new PagedList<EntityWorkerAbsenceDTO>([], 0, 0, 0);
+
+      absencePageRequest.languageCode = this.languageService.returnLocalization();
+
+      try{
+        absencePagedData = await this.http.post<PagedList<EntityWorkerAbsenceDTO>>(GET_ENTITY_ABSENCES_PAGINATION, absencePageRequest).toPromise() as PagedList<EntityWorkerAbsenceDTO>;
+      }
+      catch(error: any){
+        console.error('Error fetching data:', error.message);
+      }
+
+      return absencePagedData;
+    }
+
+    //#endregion
 
     /// <summary>
     /// Adds an absence instance

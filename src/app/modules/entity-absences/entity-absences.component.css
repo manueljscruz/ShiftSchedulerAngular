@@ -41,3 +41,15 @@
     padding-left: 5px;
     padding-right: 10px;
 }
+
+#absence-list-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.paginator{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-self: center;
+}

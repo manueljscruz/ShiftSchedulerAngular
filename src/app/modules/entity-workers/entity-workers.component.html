@@ -49,8 +49,10 @@
             <!-- Entity Worker List -->
             <div id="entity-worker-list-container">
                 <ng-container *ngIf="isGridView">
-                    <div class="entity-worker-list-item" *ngFor="let member of entityMembersViewModel.entityMembers.data">
-                        <entity-worker-member-card [entityWorkerMember]="member" [allowActions]="isCurrentUserEntityOwner" (editWorkerTemplateEvent)="onEditMember($event)" (deleteWorkerTemplateEvent)="onDeleteMember($event)"></entity-worker-member-card>
+                    <div id="entity-worker-grid">
+                        <div class="entity-worker-list-item" *ngFor="let member of entityMembersViewModel.entityMembers.data">
+                            <entity-worker-member-card [entityWorkerMember]="member" [allowActions]="isCurrentUserEntityOwner" (editWorkerTemplateEvent)="onEditMember($event)" (deleteWorkerTemplateEvent)="onDeleteMember($event)"></entity-worker-member-card>
+                        </div>
                     </div>
                 </ng-container>
 
@@ -103,8 +105,8 @@
                         <tr mat-header-row *matHeaderRowDef="isCurrentUserEntityOwner ? ['name', 'skill', 'rotation', 'multipleShift', 'actions'] : ['name', 'skill', 'rotation', 'multipleShift']"></tr>
                         <tr mat-row *matRowDef="let row; columns: isCurrentUserEntityOwner ? ['name', 'skill', 'rotation', 'multipleShift', 'actions'] : ['name', 'skill', 'rotation', 'multipleShift']"></tr>
                     </table>
-
-                    <mat-paginator
+                </ng-container>
+                <mat-paginator
                         class="paginator" 
                         #paginator
                         (page)="handlePageEvent($event)"
@@ -115,8 +117,6 @@
                         [pageIndex]="entityMembersViewModel.entityMembers.currentPage-1"
                         aria-label="Select page">
                     </mat-paginator>
-                </ng-container>
-                
             </div>
         </div>
     </div>

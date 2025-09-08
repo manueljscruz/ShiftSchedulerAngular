@@ -23,13 +23,14 @@ import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { PagedList } from '../../shared/models/DTOs/Incoming/PagedList';
-import { MemberListModelRequest } from '../../shared/models/DTOs/Outgoing/MemberListModelRequest';
+import { PagedModelRequest } from '../../shared/models/DTOs/Outgoing/MemberListModelRequest';
+import { EntityWorkerMemberCardComponent } from "../../shared/components/entity-worker-member-card/entity-worker-member-card.component";
 
 
 @Component({
   selector: 'app-entity-workers',
   templateUrl: './entity-workers.component.html',
-  styleUrl: './entity-workers.component.css'
+  styleUrl: './entity-workers.component.css',
 })
 export class EntityWorkersComponent {
 
@@ -125,7 +126,7 @@ export class EntityWorkersComponent {
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
 
     this.currentPageIndex = 1;
-    let memberListModelRequestDTO : MemberListModelRequest = {
+    let memberListModelRequestDTO : PagedModelRequest = {
       entityId: this.currentEntityId,
       workerId: this.loggedUser.userId,
       languageCode: '',
@@ -280,7 +281,7 @@ export class EntityWorkersComponent {
 
   async GetMembersPage(nextPageIndex: number, itemsPerPage: number){
 
-    let memberListModelRequestDTO : MemberListModelRequest = {
+    let memberListModelRequestDTO : PagedModelRequest = {
       entityId: this.currentEntityId,
       workerId: this.loggedUser.userId,
       languageCode: '',

@@ -24,6 +24,9 @@ import { MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/d
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { formatDate } from '@angular/common';
 import { SingleIdentifierDTO } from '../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
+import { PageEvent } from '@angular/material/paginator';
+import { PagedModelRequest } from '../../shared/models/DTOs/Outgoing/MemberListModelRequest';
+import { PagedList } from '../../shared/models/DTOs/Incoming/PagedList';
 
 @Component({
   selector: 'entity-absences',
@@ -60,12 +63,12 @@ export class EntityAbsencesComponent {
   /// <summary>
   /// View model for the entity worker absences
   /// </summary>
-  entityWorkerAbsencesViewModel : EntityWorkerAbsenceViewModel = new EntityWorkerAbsenceViewModel(false, [], []);
+  entityWorkerAbsencesViewModel : EntityWorkerAbsenceViewModel = new EntityWorkerAbsenceViewModel(false, PagedList.Empty(), []);
 
   /// <summary>
   /// Absences data
   /// </summary>
-  entityWorkerAbsences: EntityWorkerAbsenceDTO[] = [];
+  entityWorkerAbsences: PagedList<EntityWorkerAbsenceDTO> = PagedList.Empty();
 
   /// <summary>
   /// Selected absence being worked on
@@ -79,6 +82,14 @@ export class EntityAbsencesComponent {
 
   @ViewChild(MatTable) absenceTable!: MatTable<EntityWorkerAbsenceDTO>;
 
+  currentPageIndex = 0;
+
+  pageSize = 10;
+
+  totalItems = 0;
+
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackbarManagerService: SnackbarManagerService,
@@ -88,6 +99,10 @@ export class EntityAbsencesComponent {
       this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
   }
 
+  //#region Methods
+
+  //#region Ng On Init
+
   async ngOnInit() {
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
 
@@ -96,10 +111,66 @@ export class EntityAbsencesComponent {
     
     let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '');
     this.entityWorkerAbsencesViewModel = await this.absenceService.getAbsenceViewModel(entityRuleViewModelRequestDTO);
-    this.entityWorkerAbsences = this.entityWorkerAbsencesViewModel.entityWorkerAbsences;
+    this.handleAbsenceDateDisplay(this.entityWorkerAbsencesViewModel.entityWorkerAbsences);
 
     this.loadingScreenService.changeLoadingState(false);
   }
+
+  //#endregion
+
+  //#region GetAbsencesPage
+
+  async GetMembersPage(nextPageIndex: number, pageSize: number) {
+
+    let absencePageRequest : PagedModelRequest = {
+      entityId: this.currentEntityId,
+      workerId: this.loggedUser.userId,
+      languageCode: '',
+      currentPage: this.currentPageIndex,
+      nextPage: nextPageIndex+1,
+      itemsPerPage: pageSize,
+    };
+
+    this.loadingScreenService.changeLoadingState(true); 
+
+    let data = await this.absenceService.getAbsencesPage(absencePageRequest);
+    
+    this.entityWorkerAbsencesViewModel.entityWorkerAbsences = data;
+
+    this.handleAbsenceDateDisplay(this.entityWorkerAbsencesViewModel.entityWorkerAbsences);
+
+    this.loadingScreenService.changeLoadingState(false);
+
+  }
+
+  //#region Handle Page Event
+
+  async handlePageEvent($event: PageEvent) {
+    this.currentPageIndex = $event.pageIndex;
+    this.pageSize = $event.pageSize;
+
+    await this.GetMembersPage(this.currentPageIndex, this.pageSize);
+  }
+
+
+  //#endregion
+
+  //#region Handle Absence Date Display
+
+  handleAbsenceDateDisplay(absences: PagedList<EntityWorkerAbsenceDTO>) {
+    let currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    absences.data.forEach(absence => {
+      absence.absenceStartDate = this.dateDisplayService.convertDateToTimezone(absence.absenceStartDate, absence.offsetMinutes, absence.timezoneId, currentTimezone);
+      absence.absenceEndDate = this.dateDisplayService.convertDateToTimezone(absence.absenceEndDate, absence.offsetMinutes, absence.timezoneId, currentTimezone);
+    });
+
+    this.entityWorkerAbsences = absences;
+  }
+
+  //#endregion
+
+  //#region Toggle Form to Create
 
   toggleFormToCreate() {
     this.selectedAbsence = EntityWorkerAbsenceDTO.newEntityWorkerAbsenceDTO();
@@ -109,6 +180,10 @@ export class EntityAbsencesComponent {
     this.isEditing = false;
     this.toggleForm(true);
   }
+
+  //#endregion
+
+  //#region Toggle Form
 
   /// <summary>
   /// Responsible for toggling the form
@@ -122,6 +197,10 @@ export class EntityAbsencesComponent {
     }
   }
 
+  //#endregion
+
+  //#region On Absence To Edit
+
   /// <summary>
   /// Responsible for the event when an absence is selected to be edited
   /// </summary>
@@ -133,12 +212,20 @@ export class EntityAbsencesComponent {
     this.toggleForm(true);
   }
 
+  //#endregion
+
+  //#region On Operation Completed
+
   /// <summary>
   /// Responsible for the event when an absence is created or updated
   onOperationCompleted($event: BaseResponseModel) {
     this.isEditing = false;
     this.toggleForm(false);
   }
+
+  //#endregion
+
+  //#region Open Delete Dialog
 
   /// <summary>
   /// Opens the delete dialog for an absence
@@ -156,11 +243,15 @@ export class EntityAbsencesComponent {
     });
   }
 
+  //#endregion
+
+  //#region Delete Absence
+
   /// <summary>
   /// Deletes an absence from the list of absences
   /// </summary>
   async deleteAbsence(absenceInstance: EntityWorkerAbsenceDTO) {
-    let index = this.entityWorkerAbsences.findIndex(x => x.entityWorkerAbsenceId === absenceInstance.entityWorkerAbsenceId);
+    let index = this.entityWorkerAbsences.data.findIndex(x => x.entityWorkerAbsenceId === absenceInstance.entityWorkerAbsenceId);
 
     this.loadingScreenService.changeLoadingState(true);
 
@@ -170,14 +261,18 @@ export class EntityAbsencesComponent {
     this.loadingScreenService.changeLoadingState(false);
 
     if(response.success){
-      this.entityWorkerAbsences.splice(index, 1);
+      this.entityWorkerAbsences.data.splice(index, 1);
       this.absenceTable.renderRows();
       this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, response.message));
     }
     else{
       this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, response.message));
     }
-}
+  }
+
+  //#endregion
+
+  //#region Edit Absence
 
   /// <summary>
   /// Edits an absence from the list of absences
@@ -192,6 +287,10 @@ export class EntityAbsencesComponent {
       
   }
 
+  //#endregion
+
+  //#region Apply Decision
+
   /// <summary>
   /// Submits a decision approval or rejection for an absence
   /// </summary>
@@ -203,7 +302,7 @@ export class EntityAbsencesComponent {
       return;
     }
     else{
-      let absenceApprovalDecision : AbsenceApprovalDecisionDTO = new AbsenceApprovalDecisionDTO(absence.entityWorkerAbsenceId, decisionResult, this.loggedUser.userId, '');
+      let absenceApprovalDecision : AbsenceApprovalDecisionDTO = new AbsenceApprovalDecisionDTO(absence.entityWorkerAbsenceId, decisionResult, this.loggedUser.userId,Intl.DateTimeFormat().resolvedOptions().timeZone,'');
 
       this.loadingScreenService.changeLoadingState(true);
 
@@ -212,8 +311,8 @@ export class EntityAbsencesComponent {
       this.loadingScreenService.changeLoadingState(false);
 
       if(apiResponse.success){
-        let index = this.entityWorkerAbsences.findIndex(x => x.entityWorkerAbsenceId === absence.entityWorkerAbsenceId);
-        this.entityWorkerAbsences[index] = apiResponse.result;
+        let index = this.entityWorkerAbsences.data.findIndex(x => x.entityWorkerAbsenceId === absence.entityWorkerAbsenceId);
+        this.entityWorkerAbsences.data[index] = apiResponse.result;
         this.absenceTable.renderRows();
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Decision successfully applied.'));
       }
@@ -222,6 +321,10 @@ export class EntityAbsencesComponent {
       }
     }
   }
+
+  //#endregion
+
+  //#region Edit Decision
 
   /// <summary>
   /// Enables an absence decision to be edited
@@ -237,9 +340,17 @@ export class EntityAbsencesComponent {
     absence.absenceDecisionBeingEdited = true;
   }
 
+  //#endregion
+
+  //#region Cancel Edit Decision
+
   cancelEditDecision(absence: EntityWorkerAbsenceDTO) {
     absence.absenceDecisionBeingEdited = false;
   }
+
+  //#endregion
+
+  //#region On Absence Type Change
 
   /// <summary>
   /// Handles the selection of an absence type
@@ -247,6 +358,10 @@ export class EntityAbsencesComponent {
   onAbsenceTypeChange($event: MatSelectChange) {
     this.selectedAbsenceType = $event.value;
   }
+
+  //#endregion
+
+  //#region Save Absence
 
   /// <summary>
   /// Saves an absence to the server
@@ -281,6 +396,8 @@ export class EntityAbsencesComponent {
         this.selectedAbsence.observations,
         this.selectedAbsence.absenceStartDate,
         this.selectedAbsence.absenceEndDate,
+        this.selectedAbsence.absenceStartDate.getTimezoneOffset(),
+        Intl.DateTimeFormat().resolvedOptions().timeZone,
         ''
       );
 
@@ -294,12 +411,12 @@ export class EntityAbsencesComponent {
     if(response.success) {
       this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Absence successfully saved.'));
       if(this.isEditing){
-        let index = this.entityWorkerAbsences.findIndex(x => x.entityWorkerAbsenceId === this.selectedAbsence.entityWorkerAbsenceId);
+        let index = this.entityWorkerAbsences.data.findIndex(x => x.entityWorkerAbsenceId === this.selectedAbsence.entityWorkerAbsenceId);
         this.selectedAbsence = response.result;
-        this.entityWorkerAbsences[index] = this.selectedAbsence;
+        this.entityWorkerAbsences.data[index] = this.selectedAbsence;
       }
       else{
-        this.entityWorkerAbsences.push(response.result);
+        this.entityWorkerAbsences.data.push(response.result);
       }
 
       this.isEditing = false;
@@ -311,6 +428,10 @@ export class EntityAbsencesComponent {
     }
 
   }
+
+  //#endregion
+
+  //#region Validate Form
 
   /// <summary>
   /// Validates the form before sending the data to the server.
@@ -342,6 +463,10 @@ export class EntityAbsencesComponent {
     return response;
   }
 
+  //#endregion
+
+  //#region Validate Decision Data
+
   /// <summary>
   /// Validates the decision data before sending it to the server.
   /// </summary>
@@ -362,12 +487,21 @@ export class EntityAbsencesComponent {
     return response;
   }
 
+  //#endregion
+
+  //#region On Absence Start Date Change
+
   onAbsenceStartDateChange(event: MatDatepickerInputEvent<Date>) {
     this.selectedAbsence.absenceStartDate = event.value as Date;
   }
   
+  //#endregion
+
+  //#region On Absence End Date Change
 
   onAbsenceEndDateChange(event: MatDatepickerInputEvent<Date>) {
     this.selectedAbsence.absenceEndDate = event.value as Date;
   }
+
+  //#endregion
 }

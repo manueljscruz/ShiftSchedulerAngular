@@ -83,6 +83,7 @@ export class EntityAbsencesFormComponent{
 
     }
     else{
+      let test = this.absenceToEdit.absenceStartDate.getTimezoneOffset();
       let newAbsence = new AddEntityWorkerAbsenceDTO(
         this.entityId,
         this.workerId,
@@ -90,6 +91,8 @@ export class EntityAbsencesFormComponent{
         this.absenceToEdit.observations,
         this.absenceToEdit.absenceStartDate,
         this.absenceToEdit.absenceEndDate,
+        this.absenceToEdit.absenceStartDate.getTimezoneOffset(),
+        Intl.DateTimeFormat().resolvedOptions().timeZone,
         ''
       );
 

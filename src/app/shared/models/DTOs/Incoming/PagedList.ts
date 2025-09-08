@@ -16,10 +16,9 @@ export class PagedList<T> {
         this.currentPage = currentPage;
         this.pageSize = pageSize;
         this.totalCount = totalCount;
-        /*
-        this.totalPages = this.totalCount > 0 ? Math.ceil(this.totalCount / this.pageSize) : 0;
-        this.isPreviousPageExists = this.currentPage > 1;
-        this.isNextPageExists = this.currentPage < this.totalPages;
-        */
+    }
+
+    static Empty<T>(pageSize: number = 10): PagedList<T> {
+        return new PagedList<T>([], 1, pageSize, 0);
     }
 }

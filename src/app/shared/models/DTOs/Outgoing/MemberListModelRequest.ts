@@ -1,6 +1,6 @@
 import { BaseViewModelRequestDTO } from "./BaseViewModelRequestDTO";
 
-export class MemberListModelRequest extends BaseViewModelRequestDTO {
+export class PagedModelRequest extends BaseViewModelRequestDTO {
 
     currentPage : number = 0;
     nextPage : number = 0;

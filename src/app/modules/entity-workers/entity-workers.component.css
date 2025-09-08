@@ -6,7 +6,12 @@
     height: 48px;
 }
 
-#entity-worker-list-container {
+#entity-worker-list-container{
+    display: flex;
+    flex-direction: column;
+}
+
+#entity-worker-grid {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

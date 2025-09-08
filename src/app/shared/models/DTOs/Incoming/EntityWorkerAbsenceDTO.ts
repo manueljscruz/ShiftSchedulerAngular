@@ -7,12 +7,16 @@ export class EntityWorkerAbsenceDTO{
     observations: string;
     absenceStartDate: Date;
     absenceEndDate: Date;
+    offsetMinutes: number;
+    timezoneId: string;
     absenceApproved: boolean;
     absenceDecisionOwner: string;
     absenceApproverName: string;
     absenceDateDecision: Date;
+    absenceDateDecisionOffset: number;
+    decisionTimezoneId : string;
+    // UI Only
     absenceDecisionBeingEdited : boolean = false;
-    dateOffset : Date;
 
     constructor(entityWorkerAbsenceId: string, 
         entityId: string, 
@@ -22,11 +26,14 @@ export class EntityWorkerAbsenceDTO{
         observations: string, 
         absenceStartDate: Date, 
         absenceEndDate: Date, 
+        offsetMinutes: number,
+        timezoneId: string,
         absenceApproved: boolean, 
         absenceDecisionOwner: string, 
         absenceApproverName: string, 
         absenceDateDecision: Date,
-        dateOffset : Date){
+        absenceDateDecisionOffset: number,
+        decisionTimezoneId: string){
         this.entityWorkerAbsenceId = entityWorkerAbsenceId;
         this.entityId = entityId;
         this.workerId = workerId;
@@ -35,14 +42,17 @@ export class EntityWorkerAbsenceDTO{
         this.observations = observations;
         this.absenceStartDate = absenceStartDate;
         this.absenceEndDate = absenceEndDate;
+        this.offsetMinutes = offsetMinutes;
+        this.timezoneId = timezoneId;
         this.absenceApproved = absenceApproved;
         this.absenceDecisionOwner = absenceDecisionOwner;
         this.absenceApproverName = absenceApproverName;
         this.absenceDateDecision = absenceDateDecision;
-        this.dateOffset = dateOffset;
+        this.absenceDateDecisionOffset = absenceDateDecisionOffset;
+        this.decisionTimezoneId = decisionTimezoneId;
     }
 
     public static newEntityWorkerAbsenceDTO(): EntityWorkerAbsenceDTO{
-        return new EntityWorkerAbsenceDTO('','','',0,'','',new Date(),new Date(),false,'', '', new Date(), new Date());
+        return new EntityWorkerAbsenceDTO('','','',0,'','',new Date(),new Date(),0,'',false,'', '', new Date(), 0, '');
     }
 }

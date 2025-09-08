@@ -28,4 +28,24 @@ export class DateDisplayService {
     const minutes = parseInt(offsetArray[1]);
     return hours*60 + minutes;
   }
+
+  /**
+   * Converts a date to the specified timezone using offset and timezoneId.
+   * @param date The original date.
+   * @param offsetMinutes The offset in minutes.
+   * @param timezoneId The timezone identifier.
+   * @param targetTimezone The target timezone identifier.
+   * @returns The converted Date object.
+   */
+  convertDateToTimezone(date: Date | string, offsetMinutes: number, timezoneId: string, targetTimezone: string): Date {
+    // If date is a string, convert to Date
+    const originalDate = typeof date === 'string' ? new Date(date) : date;
+
+    // Adjust the date by the offset
+    const utcDate = new Date(originalDate.getTime() - offsetMinutes * 60000);
+
+    // Return the date in the target timezone (basic implementation)
+    // For more accurate conversion, use a library like luxon or moment-timezone
+    return utcDate;
+  }
 }
