@@ -15,7 +15,10 @@ export class EntityWorkerAbsenceDTO{
     absenceDateDecision: Date;
     absenceDateDecisionOffset: number;
     decisionTimezoneId : string;
+    isFullDay: boolean;
     // UI Only
+    absenceStartDateTime : string;
+    absenceEndDateTime : string;
     absenceDecisionBeingEdited : boolean = false;
 
     constructor(entityWorkerAbsenceId: string, 
@@ -33,7 +36,10 @@ export class EntityWorkerAbsenceDTO{
         absenceApproverName: string, 
         absenceDateDecision: Date,
         absenceDateDecisionOffset: number,
-        decisionTimezoneId: string){
+        decisionTimezoneId: string,
+        isFullDay: boolean,
+        absenceStartDateTime: string,
+        absenceEndDateTime: string) {
         this.entityWorkerAbsenceId = entityWorkerAbsenceId;
         this.entityId = entityId;
         this.workerId = workerId;
@@ -50,9 +56,12 @@ export class EntityWorkerAbsenceDTO{
         this.absenceDateDecision = absenceDateDecision;
         this.absenceDateDecisionOffset = absenceDateDecisionOffset;
         this.decisionTimezoneId = decisionTimezoneId;
+        this.isFullDay = isFullDay;
+        this.absenceStartDateTime = absenceStartDateTime;
+        this.absenceEndDateTime = absenceEndDateTime;
     }
 
     public static newEntityWorkerAbsenceDTO(): EntityWorkerAbsenceDTO{
-        return new EntityWorkerAbsenceDTO('','','',0,'','',new Date(),new Date(),0,'',false,'', '', new Date(), 0, '');
+        return new EntityWorkerAbsenceDTO('','','',0,'','',new Date(),new Date(),0,'',false,'', '', new Date(), 0, '', true, '', '');
     }
 }

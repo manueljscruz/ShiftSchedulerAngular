@@ -26,6 +26,9 @@ import { formatDate } from '@angular/common';
 import { ScheduleEntryParticipantDTO } from '../../shared/models/DTOs/Incoming/ScheduleEntryParticipantDTO';
 import { AssignEntryDTO } from '../../shared/models/DTOs/Outgoing/AssignEntryDTO';
 import { ApplyRotationCycleDTO } from '../../shared/models/DTOs/Outgoing/ApplyRotationCycleDTO';
+import { GenericDeleteWarningDialogComponent } from '../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
+import { DELETE_ALL_WORKER_SCHEDULE_CONTENT, DELETE_DAILY_WORKER_SCHEDULE_CONTENT, DELETE_WORKER_SCHEDULE_TITLE } from '../../shared/constants/UITextConstants';
+import { DeleteIntervalWorkerScheduleEntriesDTO } from '../../shared/models/DTOs/Outgoing/DeleteIntervalWorkerScheduleEntriesDTO';
 
 /*
 interface ScheduleList{
@@ -52,6 +55,9 @@ export class EntityScheduleComponent {
   DONE_ICON: string = DONE_ICON;
   CLOSE_ICON: string = CLOSE_ICON;
   
+  DELETE_WORKER_SCHEDULE_TITLE: string = DELETE_WORKER_SCHEDULE_TITLE;
+  DELETE_DAILY_WORKER_SCHEDULE_CONTENT: string = DELETE_DAILY_WORKER_SCHEDULE_CONTENT
+  DELETE_ALL_WORKER_SCHEDULE_CONTENT: string = DELETE_ALL_WORKER_SCHEDULE_CONTENT;
 
   //#endregion
 
@@ -846,6 +852,189 @@ export class EntityScheduleComponent {
   }
 
   //#endregion
+
+  //#region On Clear Daily Employee Assignments
+
+  onClearDailyEmployeeAssignments(workerId: string, date: string) {
+
+    // Check if worker exists
+    let worker = this.scheduleViewModel.entityWorkerMembers.find(x => x.workerId === workerId);
+    if(worker == null){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Worker not found'));
+      return;
+    }
+
+    // Filter for schedule entries where worker is assigned on that date
+    let startDate = new Date(date);
+    startDate.setHours(0,0,0,0);
+    let endDate = new Date(date);
+    endDate.setHours(23,59,59,999);
+
+    if(startDate > this.endDate){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Start date cannot be after end date'));
+      return;
+    }
+
+    let dateWorkerEntries = this.scheduleEntries.filter(i => this.formatDate(i.scheduleStartDate) === date && i.scheduleParticipants.some(p => p.worker.workerId === workerId));
+    
+    // If there are entries for that date, show confirmation dialog
+    if(dateWorkerEntries != null && dateWorkerEntries.length > 0){
+      let enterAnimationDuration = '5000';
+      let exitAnimationDuration = '5000';
+      const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+            width: '500px',
+            data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: DELETE_WORKER_SCHEDULE_TITLE, deleteWarningMessage: DELETE_DAILY_WORKER_SCHEDULE_CONTENT}
+          });
+      
+          dialogRef.afterClosed().subscribe(async result =>{
+            // If user confirms deletion
+            if(result){
+              await this.clearWorkerParticipationFromEntries(dateWorkerEntries, workerId, startDate, endDate);
+            };
+          });
+    }
+    else{
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'No schedule entries found for the selected worker on the specified date'));
+    }
+  }
+  
+  //#endregion
+
+  //#region On Clear All Employee Assignments
+
+  async onClearEmployeeAssignments(workerId: string, column: string) {
+
+    let worker = this.scheduleViewModel.entityWorkerMembers.find(x => x.workerId === workerId);
+    if(worker == null){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Worker not found'));
+      return;
+    }
+
+    // Check for the current interval of the schedule entries
+    let workerEntries = this.scheduleEntries.filter(i => i.scheduleParticipants.some(p => p.worker.workerId === workerId));
+    
+    if(workerEntries != null && workerEntries.length > 0){
+      let enterAnimationDuration = '5000';
+      let exitAnimationDuration = '5000';
+      const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+            width: '500px',
+            data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: DELETE_WORKER_SCHEDULE_TITLE, deleteWarningMessage: DELETE_ALL_WORKER_SCHEDULE_CONTENT}
+          });
+
+          dialogRef.afterClosed().subscribe(async result =>{
+            // If user confirms deletion
+            if(result){
+              await this.clearWorkerParticipationFromEntries(workerEntries, workerId, this.startDate, this.endDate);
+            }
+          });
+    }
+    else{
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'No schedule entries found for the selected worker on the specified interval'));
+    }
+  }
+
+  //#endregion
+
+  //#region Clear Worker Participation From Entries
+
+
+  /**
+   * Removes a worker's participation from the provided schedule entries within a specified date range.
+   * 
+   * Sends a request to delete the worker's schedule entries for the current entity and updates the UI accordingly.
+   * Displays a success message upon successful deletion and rebuilds the schedule views.
+   * 
+   * @param entries - The list of schedule entries to update.
+   * @param workerId - The ID of the worker whose participation is to be cleared.
+   * @param startDate - The start date of the interval for which to clear participation.
+   * @param endDate - The end date of the interval for which to clear participation.
+   */
+  async clearWorkerParticipationFromEntries(entries : ScheduleEntryDTO[], workerId: string, startDate: Date, endDate: Date){ 
+  
+    // SEND : EntityId, WorkerId, Start Date and End Date
+    let deleteIntervalRequest : DeleteIntervalWorkerScheduleEntriesDTO = new DeleteIntervalWorkerScheduleEntriesDTO(
+      this.currentEntityId,
+      workerId,
+      startDate,
+      endDate);
+
+    this.loadingScreenService.changeLoadingState(true);
+    
+    let response = await this.scheduleService.deleteWorkerEntries(deleteIntervalRequest);
+    
+    this.loadingScreenService.changeLoadingState(false);
+
+    if(response.success){
+      this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, response.message || 'Worker schedule participation entries deleted successfully'));
+      
+      entries.forEach(entry => {
+        entry.scheduleParticipants = entry.scheduleParticipants.filter(p => p.worker.workerId !== workerId);
+      });
+
+      this.buildViews();
+    }
+    else{
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, response.message || 'Failed to delete worker schedule participation entries'));
+    }   
+  }
+
+  //#endregion
+
+  //#region On Delete Schedule
+
+  onDeleteSchedule() {
+    
+    if(this.startDate > this.endDate){
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Start date cannot be after end date'));
+      return;
+    }
+
+    // If there are entries for that date, show confirmation dialog
+    if(this.scheduleEntries != null && this.scheduleEntries.length > 0){
+      let enterAnimationDuration = '5000';
+      let exitAnimationDuration = '5000';
+      const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+            width: '500px',
+            data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: DELETE_WORKER_SCHEDULE_TITLE, deleteWarningMessage: DELETE_DAILY_WORKER_SCHEDULE_CONTENT}
+          });
+      
+          dialogRef.afterClosed().subscribe(async result =>{
+            // If user confirms deletion
+            if(result){
+              await this.clearAllScheduleEntries(this.startDate, this.endDate);
+            };
+          });
+    }
+    else{
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'No schedule entries found on the specified dates'));
+    }
+  }
+
+  //#endregion
+
+  async clearAllScheduleEntries(startDate: Date, endDate: Date){
+
+    let intervalRequest : DeleteIntervalWorkerScheduleEntriesDTO = new DeleteIntervalWorkerScheduleEntriesDTO(
+      this.currentEntityId,
+      '',
+      startDate,
+      endDate);
+
+    this.loadingScreenService.changeLoadingState(true);
+
+    let response = await this.scheduleService.deleteScheduleEntries(intervalRequest);
+
+    this.loadingScreenService.changeLoadingState(false);
+
+    if(response.success){
+      this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, response.message || 'All schedule entries deleted successfully'));
+      this.scheduleEntries = [];
+      this.buildViews();
+    }
+    else{
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, response.message || 'Failed to delete all schedule entries'));
+    }
+  }
 
   //#region Format Date
 

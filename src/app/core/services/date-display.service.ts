@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DateTime } from 'luxon';
 import { off } from 'node:process';
 
 @Injectable({
@@ -37,6 +38,7 @@ export class DateDisplayService {
    * @param targetTimezone The target timezone identifier.
    * @returns The converted Date object.
    */
+  /*
   convertDateToTimezone(date: Date | string, offsetMinutes: number, timezoneId: string, targetTimezone: string): Date {
     // If date is a string, convert to Date
     const originalDate = typeof date === 'string' ? new Date(date) : date;
@@ -47,5 +49,20 @@ export class DateDisplayService {
     // Return the date in the target timezone (basic implementation)
     // For more accurate conversion, use a library like luxon or moment-timezone
     return utcDate;
+  }*/
+
+  convertDateToTimezone(date: Date, timezoneId:string ) : Date{
+    try{
+      const utcDate = DateTime.fromISO(date.toString(), { zone: 'utc' });
+
+      // Converte para Europe/Lisbon
+      const localDate = utcDate.setZone(timezoneId);
+
+      return localDate.toJSDate();
+    } catch(error){
+      console.error('Error converting date to timezone:', error);
+      return date;
+    }
+    
   }
 }

@@ -120,7 +120,7 @@ export class EntityAbsencesComponent {
 
   //#region GetAbsencesPage
 
-  async GetMembersPage(nextPageIndex: number, pageSize: number) {
+  async GetAbsencesPage(nextPageIndex: number, pageSize: number) {
 
     let absencePageRequest : PagedModelRequest = {
       entityId: this.currentEntityId,
@@ -149,7 +149,7 @@ export class EntityAbsencesComponent {
     this.currentPageIndex = $event.pageIndex;
     this.pageSize = $event.pageSize;
 
-    await this.GetMembersPage(this.currentPageIndex, this.pageSize);
+    await this.GetAbsencesPage(this.currentPageIndex, this.pageSize);
   }
 
 
@@ -161,8 +161,17 @@ export class EntityAbsencesComponent {
     let currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     absences.data.forEach(absence => {
-      absence.absenceStartDate = this.dateDisplayService.convertDateToTimezone(absence.absenceStartDate, absence.offsetMinutes, absence.timezoneId, currentTimezone);
-      absence.absenceEndDate = this.dateDisplayService.convertDateToTimezone(absence.absenceEndDate, absence.offsetMinutes, absence.timezoneId, currentTimezone);
+      if(absence.isFullDay){
+        absence.absenceStartDate = this.dateDisplayService.convertDateToTimezone(absence.absenceStartDate, absence.timezoneId);
+        absence.absenceEndDate = new Date(absence.absenceEndDate);
+        absence.absenceEndDate.setHours(23,59,59,999);
+      }
+      else{
+        absence.absenceStartDate = this.dateDisplayService.convertDateToTimezone(absence.absenceStartDate, absence.timezoneId);
+        absence.absenceEndDate = this.dateDisplayService.convertDateToTimezone(absence.absenceEndDate, absence.timezoneId);
+      }
+      absence.absenceStartDateTime = this.formatTime(absence.absenceStartDate);
+      absence.absenceEndDateTime = this.formatTime(absence.absenceEndDate);
     });
 
     this.entityWorkerAbsences = absences;
@@ -376,7 +385,24 @@ export class EntityAbsencesComponent {
 
     let response : BaseResponseModel = new BaseResponseModel(false, '', null);
 
+    // Combine absenceStartDate and absenceStartDateTime (HH:mm) into a single Date
+      let startDate = new Date(this.selectedAbsence.absenceStartDate);
+      if (this.selectedAbsence.absenceStartDateTime) {
+        const [hours, minutes] = this.selectedAbsence.absenceStartDateTime.split(':').map(Number);
+        startDate.setHours(hours, minutes, 0, 0);
+      }
+
+      let endDate = new Date(this.selectedAbsence.absenceEndDate);
+      if (this.selectedAbsence.absenceEndDateTime) {
+        const [hours, minutes] = this.selectedAbsence.absenceEndDateTime.split(':').map(Number);
+        endDate.setHours(hours, minutes, 0, 0);
+      }
+
+      this.selectedAbsence.absenceStartDate = startDate;
+      this.selectedAbsence.absenceEndDate = endDate;
+
     if(this.isEditing){
+      
       this.selectedAbsence.absenceTypeId = this.selectedAbsenceType?.absenceTypeId ?? 0;
       this.selectedAbsence.absenceTypeDisplayValue = this.selectedAbsenceType?.absenceTypeLocalizedName ?? '';
       this.selectedAbsence.absenceApproverName = '';
@@ -389,14 +415,15 @@ export class EntityAbsencesComponent {
 
     }
     else{
+      
       let newAbsence = new AddEntityWorkerAbsenceDTO(
         this.currentEntityId,
         this.loggedUser.userId,
         this.selectedAbsenceType?.absenceTypeId ?? 0,
         this.selectedAbsence.observations,
-        this.selectedAbsence.absenceStartDate,
-        this.selectedAbsence.absenceEndDate,
-        this.selectedAbsence.absenceStartDate.getTimezoneOffset(),
+        startDate,
+        endDate,
+        startDate.getTimezoneOffset(),
         Intl.DateTimeFormat().resolvedOptions().timeZone,
         ''
       );
@@ -421,7 +448,6 @@ export class EntityAbsencesComponent {
 
       this.isEditing = false;
       this.toggleForm(false);
-      this.absenceTable.renderRows();
     }
     else {
       this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, response.message));
@@ -456,6 +482,17 @@ export class EntityAbsencesComponent {
 
     else if(this.selectedAbsence.absenceEndDate < this.selectedAbsence.absenceStartDate) {
       response.message = 'End date cannot be before start date.';
+      return response;
+    }
+
+    else if(
+      !this.selectedAbsence.isFullDay &&
+      (
+        (this.selectedAbsence.absenceEndDate?.getTime() ?? 0) -
+        (this.selectedAbsence.absenceStartDate?.getTime() ?? 0)
+      ) > (24 * 60 * 60 * 1000)
+    ) {
+      response.message = 'For non full day absences, the maximum duration is 24 hours.';
       return response;
     }
 
@@ -504,4 +541,34 @@ export class EntityAbsencesComponent {
   }
 
   //#endregion
+
+  //#region On Is Full Day Change
+
+  onFulldayFlagChange() {
+    if(this.selectedAbsence.isFullDay) {
+      this.selectedAbsence.absenceStartDate?.setHours(0,0,0,0);
+      this.selectedAbsence.absenceEndDate?.setHours(23,59,59,999);
+    }
+    else{
+      let now = new Date();
+      this.selectedAbsence.absenceStartDate?.setHours(now.getHours(), now.getMinutes(), 0, 0);
+      this.selectedAbsence.absenceEndDate?.setHours(now.getHours(), now.getMinutes(), 0, 0);
+    }
+  }
+
+  //#endregion
+
+  private formatTime(date: Date): string {
+    if (!date) return '';
+    try {
+      date = new Date(date);
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      return `${hours}:${minutes}`;
+    }
+    catch (error) {
+      console.error('Error formatting time:', error);
+      return '';
+    }
+  }
 }

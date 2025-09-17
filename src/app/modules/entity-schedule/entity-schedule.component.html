@@ -12,6 +12,10 @@
                 <mat-icon>search</mat-icon>
                 <span i18n>Search</span>
             </button>
+            <button *ngIf="isCurrentUserEntityOwner" mat-fab extended class="delete-color-bg" (click)="onDeleteSchedule()">
+                <mat-icon>delete</mat-icon>
+                <span i18n>Delete Schedule</span>
+            </button>
             <button *ngIf="isCurrentUserEntityOwner" mat-fab extended color="primary" (click)="onCreateSchedule()">
                 <mat-icon>build</mat-icon>
                 <span i18n>Create Schedule</span>
@@ -86,9 +90,13 @@
                                             <span>End Rotation Cycle</span>
                                         </button>
                                     </ng-container> 
-                                    <button mat-menu-item>
+                                    <button mat-menu-item (click)="onClearDailyEmployeeAssignments(element.id, column)">
                                         <mat-icon>{{CLOSE_ICON}}</mat-icon>
-                                        <span>Clear Assignments</span>
+                                        <span>Clear Daily Assignments</span>
+                                    </button>
+                                    <button mat-menu-item (click)="onClearEmployeeAssignments(element.id, column)">
+                                        <mat-icon>{{CLOSE_ICON}}</mat-icon>
+                                        <span>Clear All Employee Assignments</span>
                                     </button>
                                 </mat-menu>
 

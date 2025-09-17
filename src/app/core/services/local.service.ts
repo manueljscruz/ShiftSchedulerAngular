@@ -12,9 +12,12 @@ export class LocalService {
   }
 
   public getData(key: string) {
-    let data = localStorage.getItem(key)|| "";
-    //return this.decrypt(data);
-    return data;
+    if(localStorage != null){
+      let data = localStorage.getItem(key)|| "";
+      //return this.decrypt(data);
+      return data;
+    }
+    return '';
   }
   public removeData(key: string) {
     localStorage.removeItem(key);

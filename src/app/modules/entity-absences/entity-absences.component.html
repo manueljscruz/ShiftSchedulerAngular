@@ -55,6 +55,25 @@
                             </mat-form-field>
                         </div>
                     </div>
+                    <div class="row col-gap">
+                        <div class="form-input-spacer">
+                            <mat-checkbox [(ngModel)]="selectedAbsence.isFullDay" name="isFullDayCheckbox" (change)="onFulldayFlagChange()" i18n>
+                                Full Day Absence
+                            </mat-checkbox>
+                        </div>
+                        <div class="form-input-spacer flex-1" *ngIf="!selectedAbsence.isFullDay">
+                            <mat-form-field appearance="outline">
+                                <mat-label i18n>Start Time</mat-label>
+                                <input type="time" matInput required placeholder="Start Time" placeholder_i18n required min="00:00" max="24:00" name="start-time" [(ngModel)]="selectedAbsence.absenceStartDateTime">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-input-spacer flex-1" *ngIf="!selectedAbsence.isFullDay">
+                            <mat-form-field appearance="outline">
+                                <mat-label i18n>End Time</mat-label>
+                                <input type="time" matInput required placeholder="End Time" placeholder_i18n required min="00:00" max="24:00" name="end-time" [(ngModel)]="selectedAbsence.absenceEndDateTime">
+                            </mat-form-field>
+                        </div>
+                    </div>
                 </div>
             </form>
             <div class="form-input-spacer end-form-actions">

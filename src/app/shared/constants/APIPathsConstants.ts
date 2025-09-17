@@ -69,4 +69,6 @@ export const GET_ENTITY_SCHEDULE_VIEW_MODEL_URL : string = BASE_API_URL + ENTITY
 export const GENERATE_ENTITY_SCHEDULE : string = BASE_API_URL + ENTITY_SCHEDULE_CONTROLLER + "/generate-entity-schedule";
 export const ASSIGN_ENTRY_URL : string = BASE_API_URL + ENTITY_SCHEDULE_CONTROLLER + "/assign-entry";
 export const GET_ENTITY_SCHEDULES_URL : string = BASE_API_URL + ENTITY_SCHEDULE_CONTROLLER + "/get-entity-schedules";
+export const DELETE_WORKER_SCHEDULE_ENTRIES_URL : string = BASE_API_URL + ENTITY_SCHEDULE_CONTROLLER + "/delete-worker-schedule-entries";
+export const DELETE_SCHEDULE_ENTRIES_URL : string = BASE_API_URL + ENTITY_SCHEDULE_CONTROLLER + "/delete-schedule-entries";
 export const APPLY_ROTATION_CYCLE_URL : string = BASE_API_URL + ENTITY_SCHEDULE_CONTROLLER + "/apply-rotation-cycle";

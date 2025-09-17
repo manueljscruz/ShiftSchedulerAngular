@@ -4,7 +4,7 @@ import { LanguageServiceService } from "../language-service.service";
 import { BaseViewModelRequestDTO } from "../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO";
 import { ScheduleViewModelRequestDTO } from "../../../shared/models/DTOs/Outgoing/ScheduleViewModelRequestDTO";
 import { EntityScheduleViewModel } from "../../../shared/models/VM/EntityScheduleViewModel";
-import { APPLY_ROTATION_CYCLE_URL, ASSIGN_ENTRY_URL, GENERATE_ENTITY_SCHEDULE, GET_ENTITY_SCHEDULE_VIEW_MODEL_URL, GET_ENTITY_SCHEDULES_URL } from "../../../shared/constants/APIPathsConstants";
+import { APPLY_ROTATION_CYCLE_URL, ASSIGN_ENTRY_URL, DELETE_SCHEDULE_ENTRIES_URL, DELETE_WORKER_SCHEDULE_ENTRIES_URL, GENERATE_ENTITY_SCHEDULE, GET_ENTITY_SCHEDULE_VIEW_MODEL_URL, GET_ENTITY_SCHEDULES_URL } from "../../../shared/constants/APIPathsConstants";
 import { ScheduleEntryDTO } from "../../../shared/models/DTOs/Incoming/ScheduleEntryDTO";
 import { CreateEntityScheduleDTO } from "../../../shared/models/DTOs/Outgoing/CreateEntityScheduleDTO";
 import { BaseResponseModel } from "../../../shared/models/baseResponseModel";
@@ -12,6 +12,7 @@ import { AssignEntryDTO } from "../../../shared/models/DTOs/Outgoing/AssignEntry
 import { ApplyRotationCycleDTO } from "../../../shared/models/DTOs/Outgoing/ApplyRotationCycleDTO";
 import { app } from "../../../../../server";
 import { firstValueFrom } from "rxjs";
+import { DeleteIntervalWorkerScheduleEntriesDTO } from "../../../shared/models/DTOs/Outgoing/DeleteIntervalWorkerScheduleEntriesDTO";
 
 
 
@@ -20,6 +21,7 @@ import { firstValueFrom } from "rxjs";
 })
 
 export class ScheduleService {
+    
     
     constructor(private http: HttpClient,
         private languageService: LanguageServiceService) 
@@ -131,7 +133,49 @@ export class ScheduleService {
 
     //#endregion
 
-    //#region Delete Schedule
+    //#region Delete Worker Entries
+
+    async deleteWorkerEntries(deleteIntervalRequest: DeleteIntervalWorkerScheduleEntriesDTO) : Promise<BaseResponseModel> {
+        let response: any;
+
+        deleteIntervalRequest.languageCode = this.languageService.returnLocalization();
+
+        try{
+            response = await this.http.delete<BaseResponseModel>(DELETE_WORKER_SCHEDULE_ENTRIES_URL,
+                {
+                    body: deleteIntervalRequest
+                }
+            ).toPromise() as BaseResponseModel;
+        }
+        catch(error: any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
+    }
+
+    //#endregion
+
+    //#region Delete Worker Entries
+
+    async deleteScheduleEntries(deleteIntervalRequest: DeleteIntervalWorkerScheduleEntriesDTO) : Promise<BaseResponseModel> {
+        let response: any;
+
+        deleteIntervalRequest.languageCode = this.languageService.returnLocalization();
+
+        try{
+            response = await this.http.delete<BaseResponseModel>(DELETE_SCHEDULE_ENTRIES_URL,
+                {
+                    body: deleteIntervalRequest
+                }
+            ).toPromise() as BaseResponseModel;
+        }
+        catch(error: any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
+    }
 
     //#endregion
 }

@@ -18,6 +18,13 @@ export const DELETE_RULE_TITLE = 'Delete Rule';
 export const DELETE_RULE_CONTENT = 'Are you sure you want to delete this rule? All associated rule related data will be deleted.';
 export const DELETE_RULE_SPEC_TITLE = 'Delete Rule Specification';
 export const DELETE_RULE_SPEC_CONTENT = 'Are you sure you want to delete this rule specification?';
+
 // Absences
 export const DELETE_ABSENCE_TITLE = 'Delete Absence';
 export const DELETE_ABSENCE_CONTENT = 'Are you sure you want to delete this absence?';
+
+// Schedules
+export const DELETE_WORKER_SCHEDULE_TITLE = 'Delete Schedule Entries';
+export const DELETE_DAILY_WORKER_SCHEDULE_CONTENT = 'Are you sure you want to delete all daily entries for this worker?';
+export const DELETE_ALL_WORKER_SCHEDULE_CONTENT = 'Are you sure you want to delete all entries for this worker?';
+export const DELETE_SCHEDULE_ENTRIES_CONTENT = 'Are you sure you want to delete all schedule entries? This action cannot be undone.';
