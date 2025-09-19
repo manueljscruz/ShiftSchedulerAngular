@@ -6,8 +6,26 @@
                 <mat-button-toggle value="calendar">Calendar</mat-button-toggle>
                 <mat-button-toggle value="list">List</mat-button-toggle>
             </mat-button-toggle-group>
-            <input type="date" matInput required placeholder="Start Date" required name="schedule-start-date"  [value]="formatDateString(startDate.toString())" (change)="onStartDateChange($event)">
-            <input type="date" matInput required placeholder="End Date" required name="schedule-end-date" [value]="formatDateString(endDate.toString())" (change)="onEndDateChange($event)">
+
+            <!-- Start Date -->
+            
+
+            <mat-form-field appearance="outline" class="date-field">
+                <mat-label i18n>Start Date</mat-label>
+                <input matInput [matDatepicker]="startDatePicker" [value]="startDate" (dateChange)="onStartDateChange($event)"> <!-- (change)="onStartDateChange($event)" -->
+                <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startDatePicker></mat-datepicker>
+            </mat-form-field>
+
+            <!-- End Date -->
+
+            <mat-form-field appearance="outline" class="date-field">
+                <mat-label i18n>End Date</mat-label>
+                <input matInput [matDatepicker]="endDatePicker" [value]="endDate" (dateChange)="onEndDateChange($event)">
+                <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+            </mat-form-field>
+
             <button mat-fab extended color="primary" (click)="onApplySearch()">
                 <mat-icon>search</mat-icon>
                 <span i18n>Search</span>

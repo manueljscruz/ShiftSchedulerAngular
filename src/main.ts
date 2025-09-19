@@ -1,7 +1,7 @@
 /// <reference types="@angular/localize" />
 
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { AppModule } from './app/app.module';
 
 

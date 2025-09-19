@@ -17,6 +17,9 @@ import { WorkerSkillSelectorComponent } from '../worker-skill-selector/worker-sk
 import { ScheduleEntryParticipantDTO } from '../../../shared/models/DTOs/Incoming/ScheduleEntryParticipantDTO';
 import { LoadingSpinnerManagerService } from '../../../core/services/ui/loading-spinner-manager.service';
 import { ScheduleAuxService } from '../../../core/services/schedule-aux.service';
+import { ScheduleService } from '../../../core/services/api/ScheduleService';
+import { AddScheduleEntryDTO } from '../../../shared/models/DTOs/Outgoing/AddScheduleEntryDTO';
+import e from 'express';
 
 @Component({
   selector: 'schedule-action-menu',
@@ -112,6 +115,8 @@ export class ScheduleActionMenuComponent {
   /// </summary>
   @ViewChild(MatTable) selectedTable!: MatTable<any>;
 
+  @Output() newScheduleEntryOp = new EventEmitter<ScheduleEntryDTO>();
+
   /// <summary>
   /// Event emitter for schedule action operations.
   /// </summary>
@@ -128,6 +133,7 @@ export class ScheduleActionMenuComponent {
     private dialog: MatDialog,
     private snackbarManagerService: SnackbarManagerService,
     private loadingScreenService: LoadingSpinnerManagerService,
+    private scheduleService: ScheduleService,
     private scheduleAuxService: ScheduleAuxService) {
     // Initialization logic can go here if needed
     this.workingDate = data.workingDate || new Date();
@@ -211,15 +217,24 @@ export class ScheduleActionMenuComponent {
 
     this.saveScheduleDataInternally();
 
-    // TO DO: MAKE API CALL TO SAVE SCHEDULE ENTRIES
-    this.onScheduleActionOp.emit(new BaseResponseModel(true, "Schedule entries saved successfully", this.scheduleEntries));
+    let response = await this.scheduleService.saveSchedules(this.scheduleEntries);
+
+    this.loadingScreenService.changeLoadingState(false);
+
+    if(response == null){
+      this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, "Schedule entries saved successfully"));
+      this.onScheduleActionOp.emit(new BaseResponseModel(true, "Schedule entries saved successfully", this.scheduleEntries));
+    }
+    else{
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, response.message));
+    }
   }
 
   //#endregion
 
   //#region On Add Entry
 
-  onAddEntry() {
+  async onAddEntry() {
     // Validate if a shift was selected
     if(this.selectedShift == null) {
       this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Shift required'));
@@ -232,21 +247,40 @@ export class ScheduleActionMenuComponent {
       return;
     }
 
-    let newScheduleEntry = this.scheduleAuxService.createNewScheduleEntry(this.workingDate, this.selectedShift)
+    let addScheduleEntryRequest: AddScheduleEntryDTO = new AddScheduleEntryDTO(this.selectedShift.shiftId, this.workingDate, '');
+
+    this.loadingScreenService.changeLoadingState(true);
+
+    let response : BaseResponseModel = await this.scheduleService.addScheduleEntry(addScheduleEntryRequest);
+
+    this.loadingScreenService.changeLoadingState(false);
+
+    if(response.success){
+      let newScheduleEntry = response.result as ScheduleEntryDTO;
+
+      this.newScheduleEntryOp.emit(newScheduleEntry);
+      this.scheduleEntries.push(newScheduleEntry);
+      this.selectedScheduleEntry = newScheduleEntry;
+      // Filter the shifts to remove the selected shift from the list of available shifts
+      this.selectedShift = null;
+      this.filterShifts();
+      this.filterWorkers();
+
+      this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, response.message));
+    }
+    else{
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, response.message));
+    }
+    // let newScheduleEntry = this.scheduleAuxService.createNewScheduleEntry(this.workingDate, this.selectedShift)
     
     // Add the new schedule entry to the list of schedule entries
     // and set it as the selected schedule entry.
     // Note: This will not persist the entry to the backend, it is just for UI purposes.
-    this.scheduleEntries.push(newScheduleEntry);
+    
 
-    this.selectedScheduleEntry = newScheduleEntry;
+    
 
-    // Filter the shifts to remove the selected shift from the list of available shifts
-    this.selectedShift = null;
-    this.filterShifts();
-    this.filterWorkers();
-
-    this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Schedule entry added successfully'));
+    
   }
 
   //#endregion
@@ -375,6 +409,7 @@ export class ScheduleActionMenuComponent {
   //#region On Schedule Entry Change
 
   onScheduleEntryChange(scheduleEntry: any) {
+    this.saveScheduleDataInternally();
     this.loadScheduleEntry(scheduleEntry);
   }
 
@@ -389,8 +424,6 @@ export class ScheduleActionMenuComponent {
 
     this.selectedWorkers = [...scheduleEntry.scheduleParticipants];
 
-    // this.selectedTable.renderRows();
-    // this.notSelectedTable.renderRows();
   }
 
   //#endregion

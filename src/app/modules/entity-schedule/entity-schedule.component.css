@@ -20,3 +20,8 @@
     max-width: 1490px;
     max-height: 750px;
 }
+
+.date-field{
+    width: 150px;
+    margin-top: 25px;
+}

@@ -5,6 +5,8 @@ import { EntityWorkerMemberDTO } from '../../../shared/models/DTOs/Incoming/Enti
 import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
 import { EntityRuleDTO } from '../../../shared/models/DTOs/Incoming/EntityRuleDTO';
 import { CreateEntityScheduleDTO } from '../../../shared/models/DTOs/Outgoing/CreateEntityScheduleDTO';
+import { CLOSE_ICON } from '../../../shared/constants/IconNamesConstants';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 export enum FilterType{
     Members = 'Members',
@@ -26,6 +28,8 @@ export class ScheduleCreatorMenuComponent {
   MEMBER_FILTER_TYPE: FilterType = FilterType.Members;
   SHIFT_FILTER_TYPE: FilterType = FilterType.Shifts;
   RULE_FILTER_TYPE: FilterType = FilterType.Rules;
+  CLOSE_ICON : string = CLOSE_ICON;
+  CREATE_SCHEDULE_ICON : string = 'playlist_add_check';
 
   //#endregion
 
@@ -121,8 +125,8 @@ export class ScheduleCreatorMenuComponent {
   //#region Constructor
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    this.startDate = new Date(data.startDate);
-    this.endDate = new Date(data.endDate);
+    this.startDate = data.startDate;
+    this.endDate = data.endDate;
     this.entityWorkerMembers = data.entityWorkerMembers;
     this.entityShifts = data.entityShifts;
     this.entityRules = data.entityRules;
@@ -167,27 +171,27 @@ export class ScheduleCreatorMenuComponent {
 
   //#endregion
 
-//#region Clear Selections
+  //#region Clear Selections
 
-clearSelections(){
-  this.selectedEntityWorkerMembers = [];
-  this.selectedEntityShifts = [];
-  this.selectedEntityRules = []; 
+  clearSelections(){
+    this.selectedEntityWorkerMembers = [];
+    this.selectedEntityShifts = [];
+    this.selectedEntityRules = []; 
 
-  this.entityWorkerMembers.forEach(element => {
-    element.isSelected = false;
-  });
+    this.entityWorkerMembers.forEach(element => {
+      element.isSelected = false;
+    });
 
-  this.entityShifts.forEach(element => {
-    element.isSelected = false;
-  });
+    this.entityShifts.forEach(element => {
+      element.isSelected = false;
+    });
 
-  this.entityRules.forEach(element => {
-    element.isSelected = false;
-  });
-}
+    this.entityRules.forEach(element => {
+      element.isSelected = false;
+    });
+  }
 
-//#endregion
+  //#endregion
 
   //#region Toggle Selection
 
@@ -262,6 +266,26 @@ clearSelections(){
       });
       this.selectedEntityRules = this.isRulesAllSelected ? this.entityRules.map(item => item.entityRuleId) : [];
     }
+  }
+
+  //#endregion
+
+  //#region On Start Date Change
+
+  onStartDateChange(event: MatDatepickerInputEvent<Date>) {
+    let input = event.value;
+    input = input ? new Date(Date.UTC(input.getFullYear(), input.getMonth(), input.getDate())) : new Date();
+    this.startDate = input;
+  }
+
+  //#endregion
+
+  //#region On End Date Change
+
+  onEndDateChange(event: MatDatepickerInputEvent<Date>) {
+    let input = event.value;
+    input = input ? new Date(Date.UTC(input.getFullYear(), input.getMonth(), input.getDate())) : new Date();
+    this.endDate = input;
   }
 
   //#endregion

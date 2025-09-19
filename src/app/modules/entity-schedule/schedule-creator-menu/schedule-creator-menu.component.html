@@ -1,113 +1,151 @@
 <div id="schedule-creator-menu">
     <mat-dialog-content>
-        <h1 i18n>Schedule Creator</h1>
-        <mat-checkbox [(ngModel)]="singleRoleResponsibility" name="singleRoleCheckbox">
-            <span i18n>Single Role Responsibility</span>
-        </mat-checkbox>
-        <mat-checkbox [(ngModel)]="clearExistingSchedule" name="clearExistingScheduleCheckbox">
-            <span i18n>Clear Existing Schedule</span>
-        </mat-checkbox>
-        <mat-checkbox [(ngModel)]="isFilterable" name="isFilterableCheckbox">
-            <span i18n>Filterable</span>
-        </mat-checkbox>
+        <h1 i18n>Create Schedule</h1>
+        <div class="row">
+            <div class="col">
+                <!-- Start Date -->
+                <mat-form-field appearance="outline" class="date-field">
+                    <mat-label i18n>Start Date</mat-label>
+                    <input matInput [matDatepicker]="startDatePicker" [value]="startDate" (dateChange)="onStartDateChange($event)"> <!-- (change)="onStartDateChange($event)" -->
+                    <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
 
-        <mat-tab-group [selectedIndex]="selectedTabIndex" *ngIf="isFilterable">
-        <!-- Options -->
-            <mat-tab label="Members">
-                <div>
-                    <table mat-table [dataSource]="entityWorkerMembers" class="mat-elevation-z1">
-                        <!-- Checkbox Column -->
-                        <ng-container matColumnDef="select">
-                            <th mat-header-cell *matHeaderCellDef>
-                                <mat-checkbox (change)="$event ? masterToggle(MEMBER_FILTER_TYPE) : null"
-                                    [checked]="isMembersAllSelected">
-                                </mat-checkbox>
-                            </th>
+            <!-- End Date -->
+            <div class="col">
+                <mat-form-field appearance="outline" class="date-field">
+                    <mat-label i18n>End Date</mat-label>
+                    <input matInput [matDatepicker]="endDatePicker" [value]="endDate" (dateChange)="onEndDateChange($event)">
+                    <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+            <mat-checkbox [(ngModel)]="singleRoleResponsibility" name="singleRoleCheckbox">
+                <span i18n>Single Role Responsibility</span>
+            </mat-checkbox>
+            </div>
+            <div class="col-auto">
+            <mat-checkbox [(ngModel)]="clearExistingSchedule" name="clearExistingScheduleCheckbox">
+                <span i18n>Clear Existing Schedule</span>
+            </mat-checkbox>
+            </div>
+            <div class="col-auto">
+            <mat-checkbox [(ngModel)]="isFilterable" name="isFilterableCheckbox">
+                <span i18n>Filterable</span>
+            </mat-checkbox>
+            </div>
+            
+        </div>
 
-                            <td mat-cell *matCellDef="let member">
-                                <mat-checkbox (click)="$event.stopPropagation()"
-                                    (change)="toggleSelection(MEMBER_FILTER_TYPE, member)"
-                                    [checked]="member.isSelected">
-                                </mat-checkbox>
-                            </td>
-                        </ng-container>
+        <div class="row">
+            <mat-tab-group [selectedIndex]="selectedTabIndex" *ngIf="isFilterable">
+            <!-- Options -->
+                <mat-tab label="Members">
+                    <div>
+                        <table mat-table [dataSource]="entityWorkerMembers" class="mat-elevation-z1">
+                            <!-- Checkbox Column -->
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-checkbox (change)="$event ? masterToggle(MEMBER_FILTER_TYPE) : null"
+                                        [checked]="isMembersAllSelected">
+                                    </mat-checkbox>
+                                </th>
 
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="name">
-                            <th mat-header-cell *matHeaderCellDef i18n>Name</th>
-                            <td mat-cell *matCellDef="let member">{{ member.workerName }}</td>
-                        </ng-container>
+                                <td mat-cell *matCellDef="let member">
+                                    <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="toggleSelection(MEMBER_FILTER_TYPE, member)"
+                                        [checked]="member.isSelected">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
 
-                        <tr mat-header-row *matHeaderRowDef="['select', 'name']"></tr>
-                        <tr mat-row *matRowDef="let row; columns: ['select', 'name'];"></tr>
-                    </table>
-                </div>
-            </mat-tab>
-            <mat-tab label="Shifts">
-                <div>
-                    <table mat-table [dataSource]="entityShifts" class="mat-elevation-z1">
-                        <!-- Checkbox Column -->
-                        <ng-container matColumnDef="select">
-                            <th mat-header-cell *matHeaderCellDef>
-                                <mat-checkbox (change)="$event ? masterToggle(SHIFT_FILTER_TYPE) : null"
-                                    [checked]="isShiftsAllSelected">
-                                </mat-checkbox>
-                            </th>
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef i18n>Name</th>
+                                <td mat-cell *matCellDef="let member">{{ member.workerName }}</td>
+                            </ng-container>
 
-                            <td mat-cell *matCellDef="let shift">
-                                <mat-checkbox (click)="$event.stopPropagation()"
-                                    (change)="toggleSelection(SHIFT_FILTER_TYPE, shift)"
-                                    [checked]="shift.isSelected">
-                                </mat-checkbox>
-                            </td>
-                        </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['select', 'name']"></tr>
+                            <tr mat-row *matRowDef="let row; columns: ['select', 'name'];"></tr>
+                        </table>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Shifts">
+                    <div>
+                        <table mat-table [dataSource]="entityShifts" class="mat-elevation-z1">
+                            <!-- Checkbox Column -->
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-checkbox (change)="$event ? masterToggle(SHIFT_FILTER_TYPE) : null"
+                                        [checked]="isShiftsAllSelected">
+                                    </mat-checkbox>
+                                </th>
 
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="name">
-                            <th mat-header-cell *matHeaderCellDef i18n>Name</th>
-                            <td mat-cell *matCellDef="let shift">{{ shift.shiftName }}</td>
-                        </ng-container>
+                                <td mat-cell *matCellDef="let shift">
+                                    <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="toggleSelection(SHIFT_FILTER_TYPE, shift)"
+                                        [checked]="shift.isSelected">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
 
-                        <tr mat-header-row *matHeaderRowDef="['select', 'name']"></tr>
-                        <tr mat-row *matRowDef="let row; columns: ['select', 'name'];"></tr>
-                    </table>
-                </div>
-            </mat-tab>
-            <mat-tab label="Rules">
-                <div>
-                    <table mat-table [dataSource]="entityRules" class="mat-elevation-z1">
-                        <!-- Checkbox Column -->
-                        <ng-container matColumnDef="select">
-                            <th mat-header-cell *matHeaderCellDef>
-                                <mat-checkbox (change)="$event ? masterToggle(RULE_FILTER_TYPE) : null"
-                                    [checked]="isRulesAllSelected">
-                                </mat-checkbox>
-                            </th>
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef i18n>Name</th>
+                                <td mat-cell *matCellDef="let shift">{{ shift.shiftName }}</td>
+                            </ng-container>
 
-                            <td mat-cell *matCellDef="let rule">
-                                <mat-checkbox (click)="$event.stopPropagation()"
-                                    (change)="toggleSelection(RULE_FILTER_TYPE, rule)"
-                                    [checked]="rule.isSelected">
-                                </mat-checkbox>
-                            </td>
-                        </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['select', 'name']"></tr>
+                            <tr mat-row *matRowDef="let row; columns: ['select', 'name'];"></tr>
+                        </table>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Rules">
+                    <div>
+                        <table mat-table [dataSource]="entityRules" class="mat-elevation-z1">
+                            <!-- Checkbox Column -->
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-checkbox (change)="$event ? masterToggle(RULE_FILTER_TYPE) : null"
+                                        [checked]="isRulesAllSelected">
+                                    </mat-checkbox>
+                                </th>
 
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="name">
-                            <th mat-header-cell *matHeaderCellDef i18n>Name</th>
-                            <td mat-cell *matCellDef="let rule">{{ rule.ruleTypeDisplayValue }}</td>
-                        </ng-container>
+                                <td mat-cell *matCellDef="let rule">
+                                    <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="toggleSelection(RULE_FILTER_TYPE, rule)"
+                                        [checked]="rule.isSelected">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
 
-                        <tr mat-header-row *matHeaderRowDef="['select', 'name']"></tr>
-                        <tr mat-row *matRowDef="let row; columns: ['select', 'name'];"></tr>
-                    </table>
-                </div>
-            </mat-tab>
-        </mat-tab-group>
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef i18n>Name</th>
+                                <td mat-cell *matCellDef="let rule">{{ rule.ruleTypeDisplayValue }}</td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="['select', 'name']"></tr>
+                            <tr mat-row *matRowDef="let row; columns: ['select', 'name'];"></tr>
+                        </table>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
 
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button mat-button (click)="onClose()">Close</button>
-        <button mat-button (click)="onCreate()">Create</button>
+        <button mat-fab extended class="secondary-color-bg flex-1" (click)="onClose()">
+            <mat-icon>{{CLOSE_ICON}}</mat-icon>
+            <span i18n>Close</span>
+        </button>
+        <button mat-fab extended class="add-color-bg flex-1" (click)="onCreate()">
+            <mat-icon>{{CREATE_SCHEDULE_ICON}}</mat-icon>
+            <span i18n>Create</span>
+        </button>
     </mat-dialog-actions>
 </div>

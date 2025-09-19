@@ -18,8 +18,6 @@ import { MatSelectChange } from '@angular/material/select';
 import { AddEntityWorkerAbsenceDTO } from '../../shared/models/DTOs/Outgoing/AddEntityWorkerAbsenceDTO';
 import { AbsenceApprovalDecisionDTO } from '../../shared/models/DTOs/Outgoing/AbsenceApprovalDecisionDTO';
 import { DateDisplayService } from '../../core/services/date-display.service';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { AppDateAdapter, APP_DATE_FORMATS } from '../../shared/pipes/AppDateAdapter';
 import { MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { formatDate } from '@angular/common';

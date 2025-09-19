@@ -1,3 +1,10 @@
 #event-view-dialog{
     padding: 20px 20px;
 }
+
+#schedule-creator-menu{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px 20px;
+}

@@ -44,7 +44,7 @@ import { AddMemberDialogComponent } from './modules/entity-workers/add-member-di
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { EntityShiftsComponent } from './modules/entity-shifts/entity-shifts.component';
 import { ShiftBreakDialogFormComponent } from './modules/entity-shifts/shift-break-dialog-form/shift-break-dialog-form.component';
-import { MatRippleModule } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatRippleModule } from '@angular/material/core';
 import { HeaderLessTabsDirective } from './shared/directives/header-less-tabs.directive';
 import { ShiftTemplateCardComponent } from './shared/components/shift-template-card/shift-template-card.component';
 import {MatTableModule} from '@angular/material/table';
@@ -71,6 +71,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ScheduleEventViewHolderComponent } from './modules/entity-schedule/schedule-event-view-holder/schedule-event-view-holder.component';
 import { WorkerSkillSelectorComponent } from './modules/entity-schedule/worker-skill-selector/worker-skill-selector.component';
 import { MatPaginator } from '@angular/material/paginator';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import { MatDateFormats } from '@angular/material/core';
+import { APP_DATE_FORMATS } from './shared/pipes/AppDateAdapter';
 
 @NgModule({
   declarations: [
@@ -151,9 +154,13 @@ import { MatPaginator } from '@angular/material/paginator';
     MatPaginator
   ],
   providers: [
+    provideNativeDateAdapter(),
     provideClientHydration(),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+}

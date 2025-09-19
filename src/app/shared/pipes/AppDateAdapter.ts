@@ -16,6 +16,7 @@ export class AppDateAdapter extends NativeDateAdapter {
 
 }
 
+/*
 export const APP_DATE_FORMATS: MatDateFormats = {
     parse: {
       dateInput: { month: 'short', year: 'numeric', day: 'numeric' },
@@ -27,4 +28,17 @@ export const APP_DATE_FORMATS: MatDateFormats = {
       },
       monthYearA11yLabel: { year: 'numeric', month: 'long' },
     }
+  };
+  */
+
+export const APP_DATE_FORMATS: MatDateFormats = {
+    parse: {
+      dateInput: 'DD/MM/YYYY',
+    },
+    display: {
+      dateInput: 'DD/MM/YYYY',
+      monthYearLabel: 'MMM YYYY',
+      dateA11yLabel: 'DD/MM/YYYY',
+      monthYearA11yLabel: 'MMMM YYYY',
+    },
   };

@@ -29,6 +29,8 @@ import { ApplyRotationCycleDTO } from '../../shared/models/DTOs/Outgoing/ApplyRo
 import { GenericDeleteWarningDialogComponent } from '../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 import { DELETE_ALL_WORKER_SCHEDULE_CONTENT, DELETE_DAILY_WORKER_SCHEDULE_CONTENT, DELETE_WORKER_SCHEDULE_TITLE } from '../../shared/constants/UITextConstants';
 import { DeleteIntervalWorkerScheduleEntriesDTO } from '../../shared/models/DTOs/Outgoing/DeleteIntervalWorkerScheduleEntriesDTO';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 /*
 interface ScheduleList{
@@ -154,8 +156,6 @@ export class EntityScheduleComponent {
     private scheduleService: ScheduleService,
     private scheduleAuxService: ScheduleAuxService) { 
       this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
-      this.startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), 1);
-      this.endDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1, 0);
       this.scheduleList = [];
   }
 
@@ -167,6 +167,8 @@ export class EntityScheduleComponent {
 
   async ngOnInit() {
     this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+
+    this.setDates();
 
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
@@ -188,13 +190,23 @@ export class EntityScheduleComponent {
 
   //#endregion
 
+  private setDates() {
+    let year = new Date().getFullYear();
+    let month = new Date().getMonth();
+
+    this.startDate = new Date(Date.UTC(year, month, 1)); // midnight UTC
+    this.endDate = new Date(Date.UTC(year, month + 1, 0, 23, 59, 59)); // last day at 23:59:59 UTC
+  }
+
+  //#endregion
+
   //#region On Create Schedule
 
   async onCreateSchedule(){
     // Open the schedule creator menu
     const dialogRef = this.dialog.open(ScheduleCreatorMenuComponent, {
       width: '800px',
-      height: '600px',
+      height: '800px',
       data: { 
         startDate: this.startDate,
         endDate: this.endDate,
@@ -536,7 +548,14 @@ export class EntityScheduleComponent {
           } 
         });
 
+        // Entry created event
+        dialogRef.componentInstance.newScheduleEntryOp.subscribe((result : ScheduleEntryDTO) => {
+          if (result != null) {
+            this.scheduleEntries.push(result);
+          }
+        });
         
+        // Schedule action completed event
         dialogRef.componentInstance.onScheduleActionOp.subscribe((result : BaseResponseModel) => {
           if (result.success) {
             let newUpdatedEntries = result.result as ScheduleEntryDTO[];
@@ -554,8 +573,6 @@ export class EntityScheduleComponent {
             });
 
             // Close the dialog
-            
-
             this.buildViews();
           }
           this.loadingScreenService.changeLoadingState(false);
@@ -723,8 +740,6 @@ export class EntityScheduleComponent {
     }
     this.loadingScreenService.changeLoadingState(false);
   }
-
-  //#endregion
 
   //#endregion
 
@@ -1012,6 +1027,8 @@ export class EntityScheduleComponent {
 
   //#endregion
 
+  //#region Clear All Schedule Entries
+
   async clearAllScheduleEntries(startDate: Date, endDate: Date){
 
     let intervalRequest : DeleteIntervalWorkerScheduleEntriesDTO = new DeleteIntervalWorkerScheduleEntriesDTO(
@@ -1036,18 +1053,24 @@ export class EntityScheduleComponent {
     }
   }
 
-  //#region Format Date
+  //#endregion
 
-  onStartDateChange($event: Event) {
-    const input = $event.target as HTMLInputElement;
-    console.log(input.value);
-    this.startDate = new Date(input.value);
+  //#region On Start Date Change
+
+  onStartDateChange(event: MatDatepickerInputEvent<Date>) {
+    let input = event.value;
+    input = input ? new Date(Date.UTC(input.getFullYear(), input.getMonth(), input.getDate())) : new Date();
+    this.startDate = input;
   }
 
-  onEndDateChange($event: Event) {
-    const input = $event.target as HTMLInputElement;
-    console.log(input.value);
-    this.endDate = new Date(input.value);
+  //#endregion
+
+  //#region On End Date Change
+
+  onEndDateChange(event: MatDatepickerInputEvent<Date>) {
+    let input = event.value;
+    input = input ? new Date(Date.UTC(input.getFullYear(), input.getMonth(), input.getDate())) : new Date();
+    this.endDate = input;
   }
 
   //#endregion
