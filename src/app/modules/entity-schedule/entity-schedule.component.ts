@@ -31,6 +31,10 @@ import { DELETE_ALL_WORKER_SCHEDULE_CONTENT, DELETE_DAILY_WORKER_SCHEDULE_CONTEN
 import { DeleteIntervalWorkerScheduleEntriesDTO } from '../../shared/models/DTOs/Outgoing/DeleteIntervalWorkerScheduleEntriesDTO';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Workbook } from 'exceljs';
+import * as fs from 'file-saver';
+import * as htmlToImage from 'html-to-image';
+import * as XLSX from 'xlsx';
 
 /*
 interface ScheduleList{
@@ -300,9 +304,10 @@ export class EntityScheduleComponent {
 
       if(scheduleEntry != null){
         
+        let scheduleArray: ScheduleEntryDTO[] = [scheduleEntry];
         const dialogRef = this.dialog.open(ScheduleEventViewHolderComponent, {
               width: '500px',
-              data: { scheduleEntries: scheduleEntry, isCurrentUserEntityOwner: this.isCurrentUserEntityOwner } 
+              data: { scheduleEntries: scheduleArray, isCurrentUserEntityOwner: this.isCurrentUserEntityOwner } 
         });
 
         dialogRef.componentInstance.closeOp.subscribe((result : boolean) => {
@@ -324,9 +329,9 @@ export class EntityScheduleComponent {
   /// Handles when the day is clicked
   /// </summary>
   dayClicked($event: { day: MonthViewDay; sourceEvent: MouseEvent|KeyboardEvent; }) {
-    console.log($event.day.date);
-    console.log($event.day.events);
-    console.log($event.sourceEvent);
+    // console.log($event.day.date);
+    // console.log($event.day.events);
+    // console.log($event.sourceEvent);
   }
 
   //#endregion
@@ -397,7 +402,9 @@ export class EntityScheduleComponent {
     // Add the date columns
     // Loop through the start date to the end date and add the date columns
     let dateMonitor = new Date(this.startDate);
+    
     while (dateMonitor <= this.endDate) {
+      // + ' (' + this.returnDayOfWeek(dateMonitor) + ')')
       this.calendarListColumns.push(this.formatDateString(dateMonitor.toISOString()));
       dateMonitor.setDate(dateMonitor.getDate() + 1);
     }
@@ -1083,6 +1090,62 @@ export class EntityScheduleComponent {
   };
 
   //#endregion
+
+  //#region Export Schedule to Excel
+  async exportScheduleToExcel() {
+
+    this.loadingScreenService.changeLoadingState(true);
+
+    const tableElement = document.getElementById('schedule-list'); // table container
+
+    /*
+    if (!element) return;
+
+    htmlToImage.toPng(element, { backgroundColor: '#FFFFFF' })
+      .then((dataUrl) => {
+        // Now insert this PNG into Excel
+        this.insertImageIntoExcel(dataUrl);
+      })
+      .catch((error) => {
+        console.error('Error capturing table as image:', error);
+      });
+    */
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.table_to_sheet(tableElement);
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Schedule');
+
+    XLSX.writeFile(workbook, 'schedule.xlsx');
+
+    this.loadingScreenService.changeLoadingState(false);
+  }
+
+  private insertImageIntoExcel(base64Image: string): void {
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet('Schedule');
+
+    // Add the image to Excel
+    const imageId = workbook.addImage({
+      base64: base64Image,
+      extension: 'png',
+    });
+
+    // Position image in the worksheet
+    worksheet.addImage(imageId, {
+      tl: { col: 0, row: 0 }, // top-left corner
+      ext: { width: 1500, height: 800 }, // size (adjust to your table size)
+    });
+
+    // Export Excel
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      fs.saveAs(new Blob([buffer]), 'schedule.xlsx');
+    });
+  }
+
+  private returnDayOfWeek(date: Date): string {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[date.getDay()];
+  }
 
   //#endregion
 }

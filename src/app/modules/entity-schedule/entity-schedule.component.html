@@ -4,12 +4,10 @@
         <div class="actions">
             <mat-button-toggle-group (change)="onViewChange($event)">
                 <mat-button-toggle value="calendar">Calendar</mat-button-toggle>
-                <mat-button-toggle value="list">List</mat-button-toggle>
+                <mat-button-toggle checked="true" value="list">List</mat-button-toggle>
             </mat-button-toggle-group>
 
             <!-- Start Date -->
-            
-
             <mat-form-field appearance="outline" class="date-field">
                 <mat-label i18n>Start Date</mat-label>
                 <input matInput [matDatepicker]="startDatePicker" [value]="startDate" (dateChange)="onStartDateChange($event)"> <!-- (change)="onStartDateChange($event)" -->
@@ -25,6 +23,11 @@
                 <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
                 <mat-datepicker #endDatePicker></mat-datepicker>
             </mat-form-field>
+
+            <button mat-fab extended color="primary" (click)="exportScheduleToExcel()">
+                <mat-icon>import_export</mat-icon>
+                <span i18n>Export</span>
+            </button>
 
             <button mat-fab extended color="primary" (click)="onApplySearch()">
                 <mat-icon>search</mat-icon>
@@ -54,7 +57,7 @@
 
             
             <div id="schedule-list">
-                <table mat-table [dataSource]="scheduleList" class="mat-elevation-z8" *ngIf="isListView">
+                <table mat-table [dataSource]="scheduleList" class="mat-elevation-z8" id="schedule-list" *ngIf="isListView">
                 
                     <ng-container *ngFor="let column of calendarListColumns" [matColumnDef]="column">
                         <th mat-header-cell *matHeaderCellDef> {{ column  }} </th>

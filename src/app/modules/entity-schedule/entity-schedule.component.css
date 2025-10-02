@@ -15,13 +15,21 @@
 
 
 #schedule-list {
-    overflow-x: auto;
-    overflow-y: auto;
-    max-width: 1490px;
-    max-height: 750px;
+    flex: 1;
+    display: block;               /* Force block for proper scrolling */
+    max-height: 650px;             /* Take only the available space in dashboard-content */
+    overflow-x: auto;             /* Scroll horizontally if grid too wide */
+    overflow-y: auto;             /* Scroll vertically if grid too tall */
+    background: #fff;             /* Keep it clean */
+    border-radius: 6px;
+    
 }
 
 .date-field{
     width: 150px;
     margin-top: 25px;
+}
+
+.elevated-card-container{
+    max-width: 84.5%;
 }

@@ -1,18 +1,18 @@
-<div id="schedule-creator-menu">
-    <mat-dialog-content>
+<div id="schedule-creator-menu" class="dialog-container">
+    <!-- Fixed header -->
+    <div class="dialog-header">
         <h1 i18n>Create Schedule</h1>
+        
+        <!-- Dates Row -->
         <div class="row">
             <div class="col">
-                <!-- Start Date -->
                 <mat-form-field appearance="outline" class="date-field">
                     <mat-label i18n>Start Date</mat-label>
-                    <input matInput [matDatepicker]="startDatePicker" [value]="startDate" (dateChange)="onStartDateChange($event)"> <!-- (change)="onStartDateChange($event)" -->
+                    <input matInput [matDatepicker]="startDatePicker" [value]="startDate" (dateChange)="onStartDateChange($event)">
                     <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
                     <mat-datepicker #startDatePicker></mat-datepicker>
                 </mat-form-field>
             </div>
-
-            <!-- End Date -->
             <div class="col">
                 <mat-form-field appearance="outline" class="date-field">
                     <mat-label i18n>End Date</mat-label>
@@ -22,27 +22,18 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="row">
-            <div class="col-auto">
-            <mat-checkbox [(ngModel)]="singleRoleResponsibility" name="singleRoleCheckbox">
-                <span i18n>Single Role Responsibility</span>
-            </mat-checkbox>
-            </div>
-            <div class="col-auto">
-            <mat-checkbox [(ngModel)]="clearExistingSchedule" name="clearExistingScheduleCheckbox">
-                <span i18n>Clear Existing Schedule</span>
-            </mat-checkbox>
-            </div>
-            <div class="col-auto">
-            <mat-checkbox [(ngModel)]="isFilterable" name="isFilterableCheckbox">
-                <span i18n>Filterable</span>
-            </mat-checkbox>
-            </div>
-            
-        </div>
 
+        <!-- Checkboxes Row -->
         <div class="row">
-            <mat-tab-group [selectedIndex]="selectedTabIndex" *ngIf="isFilterable">
+            <mat-checkbox [(ngModel)]="singleRoleResponsibility" class="col-auto" name="singleRoleCheckbox">Single Role Responsibility</mat-checkbox>
+            <mat-checkbox [(ngModel)]="clearExistingSchedule" class="col-auto" name="clearExistingScheduleCheckbox">Clear Existing Schedule</mat-checkbox>
+            <mat-checkbox [(ngModel)]="isFilterable" class="col-auto" name="isFilterableCheckbox">Filterable</mat-checkbox>
+        </div>
+    </div>
+
+    <!-- Scrollable middle content -->
+    <mat-dialog-content class="scrollable-content">
+        <mat-tab-group [selectedIndex]="selectedTabIndex" *ngIf="isFilterable">
             <!-- Options -->
                 <mat-tab label="Members">
                     <div>
@@ -69,8 +60,18 @@
                                 <td mat-cell *matCellDef="let member">{{ member.workerName }}</td>
                             </ng-container>
 
-                            <tr mat-header-row *matHeaderRowDef="['select', 'name']"></tr>
-                            <tr mat-row *matRowDef="let row; columns: ['select', 'name'];"></tr>
+                            <!-- Skill Column -->
+                        <ng-container matColumnDef="skill">
+                            <th mat-header-cell *matHeaderCellDef i18n>Skill</th>
+                            <td mat-cell *matCellDef="let worker">
+                                <mat-chip-set>
+                                    <mat-chip  *ngFor="let skill of worker?.skillSet" [color]="skill.skillHexFontColor" [ngStyle]="{ 'background-color': skill.skillHexBGColor, '--mdc-chip-label-text-color': skill.skillHexFontColor}">{{skill.skillLocalizedName}}</mat-chip>
+                                </mat-chip-set>
+                            </td>
+                        </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="['select', 'name', 'skill']"></tr>
+                            <tr mat-row *matRowDef="let row; columns: ['select', 'name', 'skill'];"></tr>
                         </table>
                     </div>
                 </mat-tab>
@@ -106,8 +107,8 @@
                 </mat-tab>
                 <mat-tab label="Rules">
                     <div>
+                        <!--
                         <table mat-table [dataSource]="entityRules" class="mat-elevation-z1">
-                            <!-- Checkbox Column -->
                             <ng-container matColumnDef="select">
                                 <th mat-header-cell *matHeaderCellDef>
                                     <mat-checkbox (change)="$event ? masterToggle(RULE_FILTER_TYPE) : null"
@@ -123,7 +124,6 @@
                                 </td>
                             </ng-container>
 
-                            <!-- Name Column -->
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell *matHeaderCellDef i18n>Name</th>
                                 <td mat-cell *matCellDef="let rule">{{ rule.ruleTypeDisplayValue }}</td>
@@ -132,17 +132,50 @@
                             <tr mat-header-row *matHeaderRowDef="['select', 'name']"></tr>
                             <tr mat-row *matRowDef="let row; columns: ['select', 'name'];"></tr>
                         </table>
+                    -->
+                        
+                        <mat-accordion multi="true">
+                            <mat-expansion-panel *ngFor="let rule of entityRules">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        {{ rule.ruleTypeDisplayValue }}
+                                    </mat-panel-title>
+                                    <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="toggleSelection(RULE_FILTER_TYPE, rule)"
+                                        [checked]="rule.isSelected"/>
+                                </mat-expansion-panel-header>
+                                <!--
+                                <mat-checkbox (click)="$event.stopPropagation()"
+                                    (change)="toggleSelection(RULE_FILTER_TYPE, rule)"
+                                    [checked]="rule.isSelected">
+                                    Select Rule
+                                </mat-checkbox>
+                                -->
+                                <div class="rule-details">
+                                    <p><strong i18n>Details:</strong> {{ rule.ruleTypeDescription }}</p>
+                                    <ng-container *ngFor="let spec of rule.entityRuleSpecificationDTOs">
+                                        <div>
+                                            <span *ngIf="spec.referenceName">{{ spec.referenceName }} : </span>
+                                            <span *ngIf="spec.ruleSpecificationValue && !rule.isSpecValueBoolean" >{{ spec.ruleSpecificationValue }} </span>
+                                            <span *ngIf="spec.ruleSpecificationValue && rule.isSpecValueBoolean" >{{ rule.isSpecValueBoolean && spec.ruleSpecificationValue == 1 ? 'True' : 'False' }} </span>
+                                            <span *ngIf="spec.referenceName2"> - {{ spec.referenceName2 }}</span>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
                     </div>
                 </mat-tab>
-            </mat-tab-group>
-        </div>
-
+        </mat-tab-group>
     </mat-dialog-content>
-    <mat-dialog-actions>
+
+    <!-- Fixed footer -->
+    <mat-dialog-actions class="dialog-footer">
         <button mat-fab extended class="secondary-color-bg flex-1" (click)="onClose()">
             <mat-icon>{{CLOSE_ICON}}</mat-icon>
             <span i18n>Close</span>
         </button>
+
         <button mat-fab extended class="add-color-bg flex-1" (click)="onCreate()">
             <mat-icon>{{CREATE_SCHEDULE_ICON}}</mat-icon>
             <span i18n>Create</span>
