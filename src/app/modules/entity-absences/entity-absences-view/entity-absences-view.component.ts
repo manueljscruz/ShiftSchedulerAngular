@@ -3,7 +3,6 @@ import { EntityWorkerAbsenceDTO } from '../../../shared/models/DTOs/Incoming/Ent
 import { MatTable } from '@angular/material/table';
 import { Observable, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { GenericDeleteWarningDialogComponent } from '../../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 import { AbsenceService } from '../../../core/services/api/AbsenceService';
 import { DELETE_ABSENCE_CONTENT, DELETE_ABSENCE_TITLE, NOT_OWNER_OF_INTANCE_CONTENT } from '../../../shared/constants/UITextConstants';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
@@ -12,6 +11,7 @@ import { LoadingSpinnerManagerService } from '../../../core/services/ui/loading-
 import { SnackbarUIModel } from '../../../shared/models/UI/SnackbarUIModel';
 import { OperationCompletedPayload } from '../../../shared/models/interfaces/OperationCompletedPayload';
 import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
+import { GenericWarningDialogComponent } from '../../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 
 @Component({
   selector: 'entity-absences-view',
@@ -50,9 +50,9 @@ export class EntityAbsencesViewComponent {
   /// Opens the delete dialog for an absence
   /// </summary>
   openDeleteDialog(enterAnimationDuration: string, exitAnimationDuration: string, title : string, content : string, objectToDelete: EntityWorkerAbsenceDTO) {
-    const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+    const dialogRef = this.dialog.open(GenericWarningDialogComponent, {
       width: '500px',
-      data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: title, deleteWarningMessage: content}
+      data: { enterAnimationDuration, exitAnimationDuration, warningTitle: title, warningMessage: content, isDeleteWarning: true },
     });
 
     dialogRef.afterClosed().subscribe(async result =>{

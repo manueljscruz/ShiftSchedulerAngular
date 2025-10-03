@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { EntityWorkerMemberDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerMemberDTO';
 import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
@@ -7,6 +7,8 @@ import { EntityRuleDTO } from '../../../shared/models/DTOs/Incoming/EntityRuleDT
 import { CreateEntityScheduleDTO } from '../../../shared/models/DTOs/Outgoing/CreateEntityScheduleDTO';
 import { CLOSE_ICON } from '../../../shared/constants/IconNamesConstants';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { CREATE_SCHEDULE_ALL_MEMBERS, CREATE_SCHEDULE_ALL_RULES, CREATE_SCHEDULE_ALL_SHIFTS, CREATE_SCHEDULE_CLEAR_EXISTING, CREATE_SCHEDULE_FILTERED_MEMBERS, CREATE_SCHEDULE_FILTERED_RULES, CREATE_SCHEDULE_FILTERED_SHIFTS, CREATE_SCHEDULE_MERGE_EXISTING, CREATE_SCHEDULE_MULTIPLE_RESPONSIBILITIES, CREATE_SCHEDULE_SINGLE_RESPONSIBILITY, CREATE_SCHEDULE_TITLE, CREATE_SCHEDULE_WARNING_TEMPLATE } from '../../../shared/constants/UITextConstants';
+import { GenericWarningDialogComponent } from '../../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 
 export enum FilterType{
     Members = 'Members',
@@ -30,6 +32,9 @@ export class ScheduleCreatorMenuComponent {
   RULE_FILTER_TYPE: FilterType = FilterType.Rules;
   CLOSE_ICON : string = CLOSE_ICON;
   CREATE_SCHEDULE_ICON : string = 'playlist_add_check';
+
+  CREATE_SCHEDULE_TITLE: string = CREATE_SCHEDULE_TITLE;
+  CREATE_SCHEDULE_WARNING_TEMPLATE: string = CREATE_SCHEDULE_WARNING_TEMPLATE;
 
   //#endregion
 
@@ -124,7 +129,7 @@ export class ScheduleCreatorMenuComponent {
 
   //#region Constructor
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialog ) {
     this.startDate = data.startDate;
     this.endDate = data.endDate;
     this.entityWorkerMembers = data.entityWorkerMembers;
@@ -144,23 +149,74 @@ export class ScheduleCreatorMenuComponent {
       this.clearSelections();
     }
 
-    let createParameters : CreateEntityScheduleDTO = new CreateEntityScheduleDTO(
-      '',
-      '',
-      '',
-      this.startDate,
-      this.endDate,
-      this.singleRoleResponsibility,
-      this.clearExistingSchedule,
-      this.selectedEntityWorkerMembers,
-      this.selectedEntityShifts,
-      this.selectedEntityRules
-    );
+    let enterAnimationDuration = '5000';
+    let exitAnimationDuration = '5000';
 
-    this.createScheduleOp.emit(new BaseResponseModel(true, "Created", createParameters));
+    let template = this.CREATE_SCHEDULE_WARNING_TEMPLATE;
+
+    let membersWarning = this.selectedEntityWorkerMembers.length === 0 
+      ? CREATE_SCHEDULE_ALL_MEMBERS : this.formatMessage(CREATE_SCHEDULE_FILTERED_MEMBERS, {
+      0: this.selectedEntityWorkerMembers.length.toString()
+    });
+
+    let shiftsWarning = this.selectedEntityShifts.length === 0
+      ? CREATE_SCHEDULE_ALL_SHIFTS
+      : this.formatMessage(CREATE_SCHEDULE_FILTERED_SHIFTS, {
+        0: this.selectedEntityShifts.length.toString()
+      });
+
+    let rulesWarning = this.selectedEntityRules.length === 0
+      ? CREATE_SCHEDULE_ALL_RULES
+      : this.formatMessage(CREATE_SCHEDULE_FILTERED_RULES, {
+        0: this.selectedEntityRules.length.toString()
+      });
+
+    let content = this.formatMessage(template, {
+      0: this.startDate.toLocaleDateString("en-GB").replace(/-/g, "/"),
+      1: this.endDate.toLocaleDateString("en-GB").replace(/-/g, "/"),
+      2: this.singleRoleResponsibility ? CREATE_SCHEDULE_SINGLE_RESPONSIBILITY : CREATE_SCHEDULE_MULTIPLE_RESPONSIBILITIES,
+      3: this.clearExistingSchedule ? CREATE_SCHEDULE_CLEAR_EXISTING : CREATE_SCHEDULE_MERGE_EXISTING,
+      4: membersWarning,
+      5: shiftsWarning,
+      6: rulesWarning
+    });
+
+
+    let dialogRef = this.dialog.open(GenericWarningDialogComponent, {
+        width: '500px',
+        data: { enterAnimationDuration, exitAnimationDuration, warningTitle: this.CREATE_SCHEDULE_TITLE, warningMessage: content, isDeleteWarning: false }
+    });
+
+    dialogRef.afterClosed().subscribe(async result =>{
+      if(result){
+        let createParameters : CreateEntityScheduleDTO = new CreateEntityScheduleDTO(
+          '',
+          '',
+          '',
+          this.startDate,
+          this.endDate,
+          this.singleRoleResponsibility,
+          this.clearExistingSchedule,
+          this.selectedEntityWorkerMembers,
+          this.selectedEntityShifts,
+          this.selectedEntityRules
+        );
+
+        this.createScheduleOp.emit(new BaseResponseModel(true, "Created", createParameters));
+        this.clearSelections();
+      }
+    });
   }
 
   //#endregion
+
+  /*
+  async openDeleteDialog(enterAnimationDuration: string, exitAnimationDuration: string, title : string, content : string, objectToDelete: any, type: string){
+      const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+        width: '500px',
+        data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: title, deleteWarningMessage: content}
+      });
+  */
 
   //#region On Close
 
@@ -286,6 +342,20 @@ export class ScheduleCreatorMenuComponent {
     let input = event.value;
     input = input ? new Date(Date.UTC(input.getFullYear(), input.getMonth(), input.getDate())) : new Date();
     this.endDate = input;
+  }
+
+  //#endregion
+
+  //#region AUX : Format Message
+
+  private formatMessage(template: string, params: Record<string, any>): string {
+    let message = template;
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        message = message.replace(`{${key}}`, params[key]);
+      }
+    }
+    return message;
   }
 
   //#endregion

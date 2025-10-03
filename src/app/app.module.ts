@@ -48,7 +48,7 @@ import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatRippleModule } from '@angular/mat
 import { HeaderLessTabsDirective } from './shared/directives/header-less-tabs.directive';
 import { ShiftTemplateCardComponent } from './shared/components/shift-template-card/shift-template-card.component';
 import {MatTableModule} from '@angular/material/table';
-import { GenericDeleteWarningDialogComponent } from './shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
+import { GenericWarningDialogComponent } from './shared/components/generic-warning-dialog/generic-warning-dialog.component';
 import { EntityRulesComponent } from './modules/entity-rules/entity-rules.component';
 import { EntityAbsencesComponent } from './modules/entity-absences/entity-absences.component';
 import { EntityAbsencesViewComponent } from './modules/entity-absences/entity-absences-view/entity-absences-view.component';
@@ -104,7 +104,7 @@ import { APP_DATE_FORMATS } from './shared/pipes/AppDateAdapter';
     ShiftBreakDialogFormComponent,
     HeaderLessTabsDirective,
     ShiftTemplateCardComponent,
-    GenericDeleteWarningDialogComponent,
+    GenericWarningDialogComponent,
     EntityRulesComponent,
     EntityAbsencesComponent,
     EntityAbsencesViewComponent,

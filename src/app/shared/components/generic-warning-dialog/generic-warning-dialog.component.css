@@ -1,0 +1,21 @@
+#delete-warning-dialog {
+    padding: 20px 20px;
+}
+
+.actions {
+    display: flex;
+    column-gap: 10px;
+}
+
+.actions button {
+    flex: 1;
+}
+
+
+.dialog-footer {
+  flex: 0 0 auto; /* fixed height */
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+}

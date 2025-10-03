@@ -30,3 +30,4 @@ export const SWAP_ICON : string = "swap_horiz";
 export const MAT_EDIT_ICON : string = "edit";
 export const CLOSE_ICON: string = "close";
 export const CANCEL_ICON: string = "cancel";
+export const DELETE_ICON: string = "delete";

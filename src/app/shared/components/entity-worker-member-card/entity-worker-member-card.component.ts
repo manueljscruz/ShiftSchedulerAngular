@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EntityWorkerMemberDTO } from '../../models/DTOs/Incoming/EntityWorkerMemberDTO';
-import { GenericDeleteWarningDialogComponent } from '../generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DELETE_MEMBER_CONTENT, DELETE_MEMBER_TITLE } from '../../constants/UITextConstants';
+import { GenericWarningDialogComponent } from '../generic-warning-dialog/generic-warning-dialog.component';
 
 @Component({
   selector: 'entity-worker-member-card',
@@ -28,9 +28,9 @@ export class EntityWorkerMemberCardComponent {
   } 
 
   removeWorker(enterAnimationDuration: string, exitAnimationDuration: string, workerToRemove: EntityWorkerMemberDTO, title: string, message: string) {
-    const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+    const dialogRef = this.dialog.open(GenericWarningDialogComponent, {
       width: '500px',
-      data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: title, deleteWarningMessage: message}
+      data: { enterAnimationDuration, exitAnimationDuration, warningTitle: title, warningMessage: message, isDeleteWarning: true }
     });
 
     dialogRef.afterClosed().subscribe(async result =>{

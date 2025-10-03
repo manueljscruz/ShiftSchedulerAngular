@@ -16,7 +16,6 @@ import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { UI_DIALOG_ENTRANCE_DURATION, UI_DIALOG_EXIT_DURATION } from '../../shared/constants/UiContants';
 import { EditMemberDialogComponent } from './edit-member-dialog/edit-member-dialog.component';
 import { DeleteMemberDTO } from '../../shared/models/DTOs/Outgoing/DeleteMemberDTO';
-import { GenericDeleteWarningDialogComponent } from '../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 import { DELETE_MEMBER_CONTENT, DELETE_MEMBER_TITLE } from '../../shared/constants/UITextConstants';
 import { BaseViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';

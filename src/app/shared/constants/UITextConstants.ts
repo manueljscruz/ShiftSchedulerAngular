@@ -28,3 +28,22 @@ export const DELETE_WORKER_SCHEDULE_TITLE = 'Delete Schedule Entries';
 export const DELETE_DAILY_WORKER_SCHEDULE_CONTENT = 'Are you sure you want to delete all daily entries for this worker?';
 export const DELETE_ALL_WORKER_SCHEDULE_CONTENT = 'Are you sure you want to delete all entries for this worker?';
 export const DELETE_SCHEDULE_ENTRIES_CONTENT = 'Are you sure you want to delete all schedule entries? This action cannot be undone.';
+
+export const CREATE_SCHEDULE_TITLE = 'Create Schedule Warning';
+export const CREATE_SCHEDULE_WARNING_TEMPLATE = 'You are about to create a new schedule from {0} to {1}. This action will: <br/><br/>'+
+'- {2}; <br/>'+ // Single responsibility / Multiple responsibilities
+'- {3} existing schedule entries; <br/>'+
+'- {4}; <br/>'+ // All members are included / Filtered members are included
+'- {5}; <br/>'+ // All shifts are included / Filtered shifts are included
+'- {6}. <br/><br/>'+ // All rules are included / Filtered rules are included
+'Do you wish to proceed?';
+export const CREATE_SCHEDULE_CLEAR_EXISTING = 'Clear all';
+export const CREATE_SCHEDULE_MERGE_EXISTING = 'Keep all';
+export const CREATE_SCHEDULE_SINGLE_RESPONSIBILITY = 'Workers can only have one responsibility';
+export const CREATE_SCHEDULE_MULTIPLE_RESPONSIBILITIES = 'Workers can have multiple responsibilities';
+export const CREATE_SCHEDULE_ALL_MEMBERS = 'All members are included';
+export const CREATE_SCHEDULE_FILTERED_MEMBERS = 'Selected {0} members';
+export const CREATE_SCHEDULE_ALL_SHIFTS = 'All shifts are included';
+export const CREATE_SCHEDULE_FILTERED_SHIFTS = 'Selected {0} shifts';
+export const CREATE_SCHEDULE_ALL_RULES = 'All rules are included';
+export const CREATE_SCHEDULE_FILTERED_RULES = 'Selected {0} rules';

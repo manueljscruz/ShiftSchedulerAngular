@@ -8,7 +8,6 @@ import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { BaseViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { DELETE_RULE_CONTENT, DELETE_RULE_SPEC_CONTENT, DELETE_RULE_SPEC_TITLE, DELETE_RULE_TITLE, NA } from '../../shared/constants/UITextConstants';
-import { GenericDeleteWarningDialogComponent } from '../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 import { EntityRuleDTO } from '../../shared/models/DTOs/Incoming/EntityRuleDTO';
 import { EntityRuleSpecificationDTO } from '../../shared/models/DTOs/Incoming/EntityRuleSpecificationDTO';
 import { RuleTypeLocalizedDTO } from '../../shared/models/DTOs/Incoming/RuleTypeLocalizedDTO';
@@ -29,6 +28,7 @@ import { AddEntityRuleSpecificationDTO } from '../../shared/models/DTOs/Outgoing
 import e from 'express';
 import { RuleValidatorService } from '../../core/services/rule-validator.service';
 import { SingleIdentifierDTO } from '../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
+import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 
 @Component({
   selector: 'entity-rules',
@@ -262,9 +262,9 @@ export class EntityRulesComponent {
       let enterAnimationDuration = '5000';
       let exitAnimationDuration = '5000';
 
-      const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+      const dialogRef = this.dialog.open(GenericWarningDialogComponent, {
         width: '500px',
-        data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: 'Warning', deleteWarningMessage: 'Changing the rule type will delete all the rule specifications. Are you sure you want to proceed?'}
+        data: { enterAnimationDuration, exitAnimationDuration, warningTitle: 'Warning', warningMessage: 'Changing the rule type will delete all the rule specifications. Are you sure you want to proceed?', isDeleteWarning: true }
       });
 
       dialogRef.afterClosed().subscribe(async result =>{
@@ -310,9 +310,9 @@ export class EntityRulesComponent {
   /// Method that opens a dialog to confirm the deletion of a rule or rule spec
   /// </summary>
   openDeleteDialog(enterAnimationDuration: string, exitAnimationDuration: string, title : string, content : string, objectToDelete: any, type: string) {
-    const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+    const dialogRef = this.dialog.open(GenericWarningDialogComponent, {
       width: '500px',
-      data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: title, deleteWarningMessage: content}
+      data: { enterAnimationDuration, exitAnimationDuration, warningTitle: title, warningMessage: content, isDeleteWarning: true }
     });
 
     dialogRef.afterClosed().subscribe(async result =>{

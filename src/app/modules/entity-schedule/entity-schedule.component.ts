@@ -26,7 +26,6 @@ import { formatDate } from '@angular/common';
 import { ScheduleEntryParticipantDTO } from '../../shared/models/DTOs/Incoming/ScheduleEntryParticipantDTO';
 import { AssignEntryDTO } from '../../shared/models/DTOs/Outgoing/AssignEntryDTO';
 import { ApplyRotationCycleDTO } from '../../shared/models/DTOs/Outgoing/ApplyRotationCycleDTO';
-import { GenericDeleteWarningDialogComponent } from '../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 import { DELETE_ALL_WORKER_SCHEDULE_CONTENT, DELETE_DAILY_WORKER_SCHEDULE_CONTENT, DELETE_WORKER_SCHEDULE_TITLE } from '../../shared/constants/UITextConstants';
 import { DeleteIntervalWorkerScheduleEntriesDTO } from '../../shared/models/DTOs/Outgoing/DeleteIntervalWorkerScheduleEntriesDTO';
 import {provideNativeDateAdapter} from '@angular/material/core';
@@ -35,6 +34,7 @@ import { Workbook } from 'exceljs';
 import * as fs from 'file-saver';
 import * as htmlToImage from 'html-to-image';
 import * as XLSX from 'xlsx';
+import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 
 /*
 interface ScheduleList{
@@ -903,9 +903,9 @@ export class EntityScheduleComponent {
     if(dateWorkerEntries != null && dateWorkerEntries.length > 0){
       let enterAnimationDuration = '5000';
       let exitAnimationDuration = '5000';
-      const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+      const dialogRef = this.dialog.open(GenericWarningDialogComponent, {
             width: '500px',
-            data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: DELETE_WORKER_SCHEDULE_TITLE, deleteWarningMessage: DELETE_DAILY_WORKER_SCHEDULE_CONTENT}
+            data: { enterAnimationDuration, exitAnimationDuration, warningTitle: DELETE_WORKER_SCHEDULE_TITLE, warningMessage: DELETE_DAILY_WORKER_SCHEDULE_CONTENT, isDeleteWarning: true }
           });
       
           dialogRef.afterClosed().subscribe(async result =>{
@@ -938,9 +938,9 @@ export class EntityScheduleComponent {
     if(workerEntries != null && workerEntries.length > 0){
       let enterAnimationDuration = '5000';
       let exitAnimationDuration = '5000';
-      const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+      const dialogRef = this.dialog.open(GenericWarningDialogComponent, {
             width: '500px',
-            data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: DELETE_WORKER_SCHEDULE_TITLE, deleteWarningMessage: DELETE_ALL_WORKER_SCHEDULE_CONTENT}
+            data: { enterAnimationDuration, exitAnimationDuration, warningTitle: DELETE_WORKER_SCHEDULE_TITLE, warningMessage: DELETE_ALL_WORKER_SCHEDULE_CONTENT, isDeleteWarning: true }
           });
 
           dialogRef.afterClosed().subscribe(async result =>{
@@ -1015,9 +1015,9 @@ export class EntityScheduleComponent {
     if(this.scheduleEntries != null && this.scheduleEntries.length > 0){
       let enterAnimationDuration = '5000';
       let exitAnimationDuration = '5000';
-      const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+      const dialogRef = this.dialog.open(GenericWarningDialogComponent, {
             width: '500px',
-            data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: DELETE_WORKER_SCHEDULE_TITLE, deleteWarningMessage: DELETE_DAILY_WORKER_SCHEDULE_CONTENT}
+            data: { enterAnimationDuration, exitAnimationDuration, warningTitle: DELETE_WORKER_SCHEDULE_TITLE, warningMessage: DELETE_DAILY_WORKER_SCHEDULE_CONTENT, isDeleteWarning: true }
           });
       
           dialogRef.afterClosed().subscribe(async result =>{

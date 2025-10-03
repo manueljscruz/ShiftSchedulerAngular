@@ -14,13 +14,14 @@ import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { MatTable } from '@angular/material/table';
 import { AddShiftDTO } from '../../shared/models/DTOs/Outgoing/AddShiftDTO';
 import { AddShiftBreakDTO } from '../../shared/models/DTOs/Outgoing/AddShiftBreakDTO';
-import { GenericDeleteWarningDialogComponent } from '../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
+
 import { DELETE_SHIFT_BREAK_CONTENT, DELETE_SHIFT_BREAK_TITLE, DELETE_SHIFT_CONTENT, DELETE_SHIFT_ROTATION_CONTENT, DELETE_SHIFT_ROTATION_TITLE, DELETE_SHIFT_TITLE } from '../../shared/constants/UITextConstants';
 import { ShiftTemplateDTO } from '../../shared/models/DTOs/Incoming/ShiftTemplateDTO';
 import { BaseViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { ShiftRotationDialogFormComponent } from './shift-rotation-dialog-form/shift-rotation-dialog-form.component';
 import { EntityShiftRotationDTO } from '../../shared/models/DTOs/Incoming/EntityShiftRotationDTO';
 import { UpdateShiftRotationDTO } from '../../shared/models/DTOs/Outgoing/UpdateShiftRotationDTO';
+import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 
 @Component({
   selector: 'app-entity-shifts',
@@ -431,9 +432,9 @@ export class EntityShiftsComponent {
   //#region Open Delete Dialog
 
   async openDeleteDialog(enterAnimationDuration: string, exitAnimationDuration: string, title : string, content : string, objectToDelete: any, type: string){
-    const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+    const dialogRef = this.dialog.open(GenericWarningDialogComponent, {
       width: '500px',
-      data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: title, deleteWarningMessage: content}
+      data: { enterAnimationDuration, exitAnimationDuration, warningTitle: title, warningMessage: content, isDeleteWarning: true }
     });
 
     dialogRef.afterClosed().subscribe(async result =>{

@@ -1,0 +1,23 @@
+<div id="delete-warning-dialog">
+    <h1 i18n>{{warningTitle}}</h1>
+    <div [innerHTML]="warningMessage"></div>
+    
+    <mat-dialog-actions class="dialog-footer">
+        <button mat-fab extended class="secondary-color-bg" [mat-dialog-close]="false">
+            <mat-icon>close</mat-icon>
+            <span i18n>Cancel</span>
+        </button>
+        <ng-container *ngIf="isDeleteWarning">
+            <button mat-fab extended class="warn-color-bg" [mat-dialog-close]="true">
+                <mat-icon>{{DELETE_ICON}}</mat-icon>
+                <span i18n>Delete</span>
+            </button>
+        </ng-container>
+        <ng-container *ngIf="!isDeleteWarning">
+            <button mat-fab extended class="edit-color-bg" [mat-dialog-close]="true">
+                <mat-icon>{{DONE_ICON}}</mat-icon>
+                <span i18n>Confirm</span>
+            </button>
+        </ng-container>
+    </mat-dialog-actions>
+</div>

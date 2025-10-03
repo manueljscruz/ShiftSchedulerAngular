@@ -11,7 +11,6 @@ import { AbsenceService } from '../../core/services/api/AbsenceService';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { DELETE_ABSENCE_CONTENT, DELETE_ABSENCE_TITLE, NOT_OWNER_OF_INTANCE_CONTENT } from '../../shared/constants/UITextConstants';
 import { MatTable } from '@angular/material/table';
-import { GenericDeleteWarningDialogComponent } from '../../shared/components/generic-delete-warning-dialog/generic-delete-warning-dialog.component';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { AbsenceTypeLocalizedDTO } from '../../shared/models/DTOs/Incoming/AbsenceTypeLocalizedDTO';
 import { MatSelectChange } from '@angular/material/select';
@@ -25,6 +24,7 @@ import { SingleIdentifierDTO } from '../../shared/models/DTOs/Outgoing/SingleIde
 import { PageEvent } from '@angular/material/paginator';
 import { PagedModelRequest } from '../../shared/models/DTOs/Outgoing/MemberListModelRequest';
 import { PagedList } from '../../shared/models/DTOs/Incoming/PagedList';
+import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 
 @Component({
   selector: 'entity-absences',
@@ -238,9 +238,9 @@ export class EntityAbsencesComponent {
   /// Opens the delete dialog for an absence
   /// </summary>
   openDeleteDialog(enterAnimationDuration: string, exitAnimationDuration: string, title : string, content : string, objectToDelete: EntityWorkerAbsenceDTO) {
-    const dialogRef = this.dialog.open(GenericDeleteWarningDialogComponent, {
+    const dialogRef = this.dialog.open(GenericWarningDialogComponent, {
       width: '500px',
-      data: { enterAnimationDuration, exitAnimationDuration, deleteWarningTitle: title, deleteWarningMessage: content}
+      data: { enterAnimationDuration, exitAnimationDuration, warningTitle: title, warningMessage: content, isDeleteWarning: true }
     });
 
     dialogRef.afterClosed().subscribe(async result =>{
