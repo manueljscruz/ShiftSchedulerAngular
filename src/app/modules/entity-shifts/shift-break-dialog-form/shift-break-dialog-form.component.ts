@@ -209,7 +209,8 @@ export class ShiftBreakDialogFormComponent {
   onSelectShiftTemplate($event: ShiftBreakTemplateDTO) {
     this.selectedShiftBreakTemplate = $event;
     this.selectedTabIndex = 2;
-    this.setShiftFormValues($event.shiftBreakTypeId, $event.shiftBreakStartHour, $event.shiftBreakDuration, $event.includedInShift, $event.isTimeFlexible)
+    this.setShiftFormValues($event.shiftBreakTypeId, $event.shiftBreakStartHour, $event.shiftBreakDuration, $event.includedInShift, $event.isTimeFlexible);
+    this.shiftService.updateShiftBreakTemplatePopCount(this.selectedShiftBreakTemplate.shiftBreakTemplateId);
   }
 
   /// <summary>

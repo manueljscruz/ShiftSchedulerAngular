@@ -145,6 +145,12 @@ export class EntityShiftsComponent {
   toggleForm(isEditing: boolean) {
     this.isFormActive = !this.isFormActive;
     this.isEditing = isEditing;
+    if(isEditing === false) {
+      this.SelectedShift = ShiftDTO.newShiftDTO();
+      this.SelectedShiftBreaks = [];
+      this.selectedShiftBreakTable.renderRows();
+      this.cdRef.detectChanges();
+    }
   }
 
   //#endregion
@@ -239,6 +245,8 @@ export class EntityShiftsComponent {
 
         this.selectedShiftBreakTable.renderRows();
       }
+
+      this.shiftService.updateShiftTemplatePopCount(shiftTemplateDTO.shiftTemplateId);
     }
   }
 

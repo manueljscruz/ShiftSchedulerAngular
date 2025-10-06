@@ -43,6 +43,11 @@ export const UPDATE_SHIFT_ROTATION_ORDER_URL : string = BASE_API_URL + SHIFT_CON
 export const UPDATE_SHIFT_ROTATION_URL : string = BASE_API_URL + SHIFT_CONTROLLER + "/update-shift-rotation";
 export const DELETE_SHIFT_ROTATION_URL : string = BASE_API_URL + SHIFT_CONTROLLER + "/delete-shift-rotation";
 
+//#region SHIFT TEMPLATE
+const SHIFT_TEMPLATE_CONTROLLER : string = "ShiftTemplate";
+export const UPDATE_SHIFT_TEMPLATE_POP_COUNT_URL : string = BASE_API_URL + SHIFT_TEMPLATE_CONTROLLER + "/update-shift-template-pop-count/{shiftTemplateId}";
+export const UPDATE_SHIFT_BREAK_TEMPLATE_POP_COUNT_URL : string = BASE_API_URL + SHIFT_TEMPLATE_CONTROLLER + "/update-shift-break-template-pop-count/{shiftBreakTemplateId}";
+
 //#region RULES
 const ENTITY_RULES_CONTROLLER: string = "EntityRule";
 export const GET_ENTITY_RULES_VIEW_MODEL_URL : string = BASE_API_URL + ENTITY_RULES_CONTROLLER + "/get-entity-rules-view-model";

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LanguageServiceService } from '../language-service.service';
-import { GET_ENTITY_SHIFT_VIEW_MODEL_URL, ADD_SHIFT_URL, ADD_SHIFT_BREAK_URL, UPDATE_SHIFT_BREAK_URL, DELETE_SHIFT_URL, DELETE_SHIFT_BREAK_URL, UPDATE_SHIFT_URL, GET_ENTITY_SHIFTS, ADD_SHIFT_ROTATION_URL, UPDATE_SHIFT_ROTATION_URL, DELETE_SHIFT_ROTATION_URL, UPDATE_SHIFT_ROTATION_ORDER_URL } from '../../../shared/constants/APIPathsConstants';
+import { GET_ENTITY_SHIFT_VIEW_MODEL_URL, ADD_SHIFT_URL, ADD_SHIFT_BREAK_URL, UPDATE_SHIFT_BREAK_URL, DELETE_SHIFT_URL, DELETE_SHIFT_BREAK_URL, UPDATE_SHIFT_URL, GET_ENTITY_SHIFTS, ADD_SHIFT_ROTATION_URL, UPDATE_SHIFT_ROTATION_URL, DELETE_SHIFT_ROTATION_URL, UPDATE_SHIFT_ROTATION_ORDER_URL, UPDATE_SHIFT_TEMPLATE_POP_COUNT_URL, UPDATE_SHIFT_BREAK_TEMPLATE_POP_COUNT_URL } from '../../../shared/constants/APIPathsConstants';
 import { ShiftViewModel } from '../../../shared/models/VM/ShiftViewModel';
 import { EntityShiftViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityShiftViewModelRequestDTO';
 import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
@@ -130,6 +130,45 @@ export class ShiftService {
         try{
             response = await this.http.put<BaseResponseModel>(UPDATE_SHIFT_URL, SelectedShift).toPromise() as BaseResponseModel;
         }
+        catch(error : any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
+    }
+
+    //#endregion
+
+    //#region Update Shift Template Pop Count
+
+    async updateShiftTemplatePopCount(shiftTemplateId: number): Promise<BaseResponseModel> {
+
+        let response = new BaseResponseModel(false, "", null);
+
+        try{
+            let url = UPDATE_SHIFT_TEMPLATE_POP_COUNT_URL.replace("{shiftTemplateId}", shiftTemplateId.toString());
+            response = await this.http.put<BaseResponseModel>(url, {}).toPromise() as BaseResponseModel;
+        }
+        catch(error : any){
+            console.error('Error fetching data:', error.message);
+        }
+
+        return response;
+    }
+
+    //#endregion
+
+    //#region Update Shift Break Template Pop Count
+
+    async updateShiftBreakTemplatePopCount(shiftBreakTemplateId: number): Promise<BaseResponseModel> {
+
+        let response = new BaseResponseModel(false, "", null);
+
+        try{
+            let url = UPDATE_SHIFT_BREAK_TEMPLATE_POP_COUNT_URL.replace("{shiftBreakTemplateId}", shiftBreakTemplateId.toString());
+            response = await this.http.put<BaseResponseModel>(url, {}).toPromise() as BaseResponseModel;
+        }   
+
         catch(error : any){
             console.error('Error fetching data:', error.message);
         }
