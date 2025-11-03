@@ -31,3 +31,4 @@ export const MAT_EDIT_ICON : string = "edit";
 export const CLOSE_ICON: string = "close";
 export const CANCEL_ICON: string = "cancel";
 export const DELETE_ICON: string = "delete";
+export const SEARCH_ICON: string = "search";

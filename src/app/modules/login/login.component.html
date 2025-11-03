@@ -17,7 +17,7 @@
                     <mat-form-field appearance="outline">
                         <mat-icon matPrefix>lock</mat-icon>
                         <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="password" name="password" required>
-                        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+                        <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
                             <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
                         </button>
                     </mat-form-field>

@@ -22,7 +22,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { formatDate } from '@angular/common';
 import { SingleIdentifierDTO } from '../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 import { PageEvent } from '@angular/material/paginator';
-import { PagedModelRequest } from '../../shared/models/DTOs/Outgoing/MemberListModelRequest';
+import { PagedModelRequest } from '../../shared/models/DTOs/Outgoing/PagedModelRequest';
 import { PagedList } from '../../shared/models/DTOs/Incoming/PagedList';
 import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 

@@ -6,13 +6,15 @@ import { SkillDTO } from "../DTOs/Incoming/SkillDTO";
 export class EntityMembersViewModel {
     entityOwnerId: string;
     skills: SkillDTO[];
+    entityUsedSkills: SkillDTO[] = [];
     shifts: ShiftDTO[];
     entityMembers: PagedList<EntityWorkerMemberDTO>;
     // entityMembers: EntityWorkerMemberDTO[];
 
-    constructor(entityOwnerId : string, skills: SkillDTO[], shifts: ShiftDTO[], entityMembers: PagedList<EntityWorkerMemberDTO>) {
+    constructor(entityOwnerId : string, skills: SkillDTO[], entityUsedSkills : SkillDTO[], shifts: ShiftDTO[], entityMembers: PagedList<EntityWorkerMemberDTO>) {
         this.entityOwnerId = entityOwnerId;
         this.skills = skills;
+        this.entityUsedSkills = entityUsedSkills;
         this.shifts = shifts;
         this.entityMembers = entityMembers;
     }

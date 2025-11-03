@@ -74,6 +74,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { MatDateFormats } from '@angular/material/core';
 import { APP_DATE_FORMATS } from './shared/pipes/AppDateAdapter';
+import { WorkerFiltersDialogComponent } from './modules/entity-workers/worker-filters-dialog/worker-filters-dialog.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { APP_DATE_FORMATS } from './shared/pipes/AppDateAdapter';
     ScheduleCreatorMenuComponent,
     ScheduleActionMenuComponent,
     ScheduleEventViewHolderComponent,
-    WorkerSkillSelectorComponent
+    WorkerSkillSelectorComponent,
+    WorkerFiltersDialogComponent
   ],
   imports: [
     BrowserModule,

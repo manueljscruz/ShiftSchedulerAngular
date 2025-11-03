@@ -14,7 +14,7 @@ import { HTTP_METHOD_DELETE, HTTP_METHOD_GET, HTTP_STATUS_NO_CONTENT, HTTP_STATU
 import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { DeleteEntityObjectDTO } from '../../../shared/models/DTOs/Outgoing/DeleteEntityObjectDTO';
 import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
-import { PagedModelRequest } from '../../../shared/models/DTOs/Outgoing/MemberListModelRequest';
+import { PagedModelRequest } from '../../../shared/models/DTOs/Outgoing/PagedModelRequest';
 
 @Injectable({
     providedIn: 'root'

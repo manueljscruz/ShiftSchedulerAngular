@@ -1,0 +1,11 @@
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.dialog-header {
+  flex: 0 0 auto; /* fixed height */
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}

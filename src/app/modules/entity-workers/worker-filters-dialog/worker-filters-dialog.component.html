@@ -1,0 +1,65 @@
+<div class="dialog-container">
+    <div class="dialog-header">
+        <h2>Filter Workers</h2>
+    </div>
+
+    <mat-dialog-content>
+
+        <!-- Name Input -->
+        <mat-form-field appearance="outline">
+            <mat-label i18n>Worker Name</mat-label>
+            <input matInput placeholder="Worker Name" name="worker-name-filter">
+        </mat-form-field>
+
+        <!-- Order Options -->
+        <mat-form-field  appearance="outline">
+            <mat-label i18n>Order Options</mat-label>
+            <mat-select > 
+                <mat-option value="name">Alphabetical Ascending</mat-option>
+                <mat-option value="-name">Alphabetical Descending</mat-option>
+                <mat-option value="-dateJoined">Most Recent Members</mat-option>
+                <mat-option value="dateJoined">Most Senior Members</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Skill Multi-Select -->
+        <mat-form-field  appearance="outline">
+            <mat-label i18n>Select Skill</mat-label>
+            <mat-select [(ngModel)]="selectedSkills" multiple name="skills-selector" [compareWith]="compareSkills">
+                <mat-option *ngFor="let skill of skillSelections" [value]="skill">{{skill.skillLocalizedName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Shift Multi-Select -->
+        <mat-form-field appearance="outline">
+            <mat-label i18n>Specific Assignments</mat-label>
+            <mat-select [(ngModel)]="selectedShifts" multiple name="shifts-selector" [compareWith]="compareShifts">
+                <mat-option *ngFor="let shift of shiftSelections" [value]="shift">{{shift.shiftName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-label i18n>Part of Rotation</mat-label>
+        <mat-checkbox [(ngModel)]="partOfRotation" onchange="onRotatationChange()" name="rotation-value-bool"></mat-checkbox>
+
+        <ng-container *ngIf="!partOfRotation">
+            <mat-label i18n>Works Week Days</mat-label>
+            <mat-checkbox [(ngModel)]="worksWeekDays" name="weekdays-value-bool"></mat-checkbox>
+
+            <mat-label i18n>Works Week Ends</mat-label>
+            <mat-checkbox [(ngModel)]="worksWeekEnds" name="weekends-value-bool"></mat-checkbox>
+        </ng-container>
+        
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="dialog-footer">
+        <button mat-fab extended class="secondary-color-bg flex-1" (click)="onClose()">
+            <mat-icon>{{CLOSE_ICON}}</mat-icon>
+            <span i18n>Close</span>
+        </button>
+
+        <button mat-fab extended class="add-color-bg flex-1" (click)="onSearch()">
+            <mat-icon>{{SEARCH_ICON}}</mat-icon>
+            <span i18n>Search</span>
+        </button>
+    </mat-dialog-actions>
+</div>

@@ -10,7 +10,7 @@ import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { EntityWorkerAbsenceDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerAbsenceDTO';
 import { AbsenceApprovalDecisionDTO } from '../../../shared/models/DTOs/Outgoing/AbsenceApprovalDecisionDTO';
 import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
-import { PagedModelRequest } from '../../../shared/models/DTOs/Outgoing/MemberListModelRequest';
+import { PagedModelRequest } from '../../../shared/models/DTOs/Outgoing/PagedModelRequest';
 import { PagedList } from '../../../shared/models/DTOs/Incoming/PagedList';
 
 @Injectable({

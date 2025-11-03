@@ -22,8 +22,11 @@ import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { PagedList } from '../../shared/models/DTOs/Incoming/PagedList';
-import { PagedModelRequest } from '../../shared/models/DTOs/Outgoing/MemberListModelRequest';
+import { PagedModelRequest } from '../../shared/models/DTOs/Outgoing/PagedModelRequest';
 import { EntityWorkerMemberCardComponent } from "../../shared/components/entity-worker-member-card/entity-worker-member-card.component";
+import { WorkerFiltersDialogComponent } from './worker-filters-dialog/worker-filters-dialog.component';
+import { MemberListFilterDTO } from '../../shared/models/DTOs/Outgoing/MemberListFilterDTO';
+import { MemberListRequestDTO } from '../../shared/models/DTOs/Outgoing/MemberListRequestDTO';
 
 
 @Component({
@@ -110,7 +113,7 @@ export class EntityWorkersComponent {
     private dialog: MatDialog,
     private route: ActivatedRoute
   ) {
-    this.entityMembersViewModel = new EntityMembersViewModel("", [], [], new PagedList([], 1, 10, 0));
+    this.entityMembersViewModel = new EntityMembersViewModel("", [], [], [], new PagedList([], 1, 10, 0));
     this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || ''; // decodedEntityId;
   }
 
@@ -147,7 +150,28 @@ export class EntityWorkersComponent {
   /// Method that activates or deactivates the filter options
   /// </summary>
   toggleFilters() {
-    this.isFilterActive = !this.isFilterActive;
+    // this.isFilterActive = !this.isFilterActive;
+    
+
+    const dialogRef = this.dialog.open(WorkerFiltersDialogComponent, {
+      width: '400px',
+      data: { 
+        enterAnimationDuration: UI_DIALOG_ENTRANCE_DURATION, 
+        exitAnimationDuration: UI_DIALOG_EXIT_DURATION, 
+        entityUsedSkills: this.entityMembersViewModel.entityUsedSkills,
+        entityShifts: this.entityMembersViewModel.shifts
+      }
+    });
+
+    dialogRef.componentInstance.onFiltersClose.subscribe((result: any) => {
+      dialogRef.close();
+
+      // If result is not null, then apply filters
+      if(result){
+        
+      }
+    });
+
   }
 
   //#endregion
@@ -278,15 +302,16 @@ export class EntityWorkersComponent {
 
   //#region Get Members Page
 
-  async GetMembersPage(nextPageIndex: number, itemsPerPage: number){
+  async GetMembersPage(nextPageIndex: number, itemsPerPage: number, filters?: MemberListFilterDTO){
 
-    let memberListModelRequestDTO : PagedModelRequest = {
+    let memberListModelRequestDTO : MemberListRequestDTO = {
       entityId: this.currentEntityId,
       workerId: this.loggedUser.userId,
       languageCode: '',
       currentPage: this.currentPageIndex,
       nextPage: nextPageIndex+1,
       itemsPerPage: itemsPerPage,
+      memberFilters: filters ? filters : new MemberListFilterDTO(),
     };
 
     this.loadingScreenService.changeLoadingState(true);
