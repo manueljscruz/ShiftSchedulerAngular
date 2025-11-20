@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { EntityRuleSpecificationDTO } from '../../shared/models/DTOs/Incoming/EntityRuleSpecificationDTO';
 import { EntityRuleDTO } from '../../shared/models/DTOs/Incoming/EntityRuleDTO';
-import { AVG_HOURS_MONTH_ID, AVG_HOURS_WEEK_ID, MAX_HOURS_WEEK_ID, MIN_DAYS_OFF_WEEK_ID, MIN_WEEKENDS_OFF_MONTH_ID } from '../../shared/constants/DataConstants';
+import { AVG_HOURS_MONTH_ID, AVG_HOURS_WEEK_ID, MAX_HOURS_DAY_ID, MAX_HOURS_WEEK_ID, MIN_DAYS_OFF_WEEK_ID, MIN_WEEKENDS_OFF_MONTH_ID } from '../../shared/constants/DataConstants';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +12,9 @@ export class RuleValidatorService {
 
   constructor() { }
 
-  //#region Validate Max Hours Per Day
+  //#region Validate Single Instance Rules
 
-  /// <summary>
-  /// Validates the max hour per shift rule
-  /// Rule Type Id 1 is the max hour per shift and can only have 1 rule of this type
-  /// </summary>
-  validateMaxHourPerDay(entityRules : EntityRuleDTO[], entityRuleInstance : EntityRuleDTO, isEditOp: boolean) : BaseResponseModel {
+  validateSingleInstanceRules(entityRules : EntityRuleDTO[], entityRuleInstance : EntityRuleDTO, isEditOp: boolean, ruleTypeId : number, existingErrorMsg : string) : BaseResponseModel {
     let response : BaseResponseModel = new BaseResponseModel(false, '', null);
 
     // If there are no items, no need to check for any rules
@@ -28,64 +24,25 @@ export class RuleValidatorService {
     }
 
     // If it is an edit operation, there is only 1 record and the rule type is different
-    else if(isEditOp && entityRules.length == 1 && entityRules[0].ruleTypeId != 1)
+    else if(isEditOp && entityRules.length == 1 && entityRules[0].ruleTypeId != ruleTypeId)
     {
       response.success = true;
       return response;
     }
 
-    // Check for existing Max Hour per Day rule
-    let maxHourRuleExists = entityRules.some(rule => rule.ruleTypeId === 1);
-    let otherMaxHourRuleExists = entityRules.some(rule => rule.ruleTypeId === 1 && rule.entityRuleId !== entityRuleInstance.entityRuleId);
+    // Check for existing rule
+    let ruleExists = entityRules.some(rule => rule.ruleTypeId === ruleTypeId);
+    let otherRuleExists = entityRules.some(rule => rule.ruleTypeId === ruleTypeId && rule.entityRuleId !== entityRuleInstance.entityRuleId);
 
-    // If it's an edit operation and another Max Hour per Day rule exists
-    if (isEditOp && otherMaxHourRuleExists) {
-        response.message = 'Max Hour per Day rule already exists';
+    // If it's an edit operation and another rule exists
+    if (isEditOp && otherRuleExists) {
+        response.message = existingErrorMsg;
         return response;
     }
 
-    // If it's an add operation and a Max Hour per Day rule already exists
-    if (!isEditOp && maxHourRuleExists) {
-        response.message = 'Max Hour per Day rule already exists';
-        return response;
-    }
-    response.success = true;
-    return response;
-  }
-
-  //#endregion
-
-  //#region Validate Max Hours Per Week
-
-  validateMaxHoursPerWeek(entityRules : EntityRuleDTO[], entityRuleInstance : EntityRuleDTO, isEditOp: boolean) : BaseResponseModel {
-    let response : BaseResponseModel = new BaseResponseModel(false, '', null);
-
-    // If there are no items, no need to check for any rules
-    if (entityRules.length === 0) {
-      response.success = true;
-      return response;
-    }
-
-    // If it is an edit operation, there is only 1 record and the rule type is different
-    else if(isEditOp && entityRules.length == 1 && entityRules[0].ruleTypeId != MAX_HOURS_WEEK_ID)
-    {
-      response.success = true;
-      return response;
-    }
-
-    // Check for existing Max Hour per Shift rule
-    let maxWeeklyHourRuleExists = entityRules.some(rule => rule.ruleTypeId === MAX_HOURS_WEEK_ID);
-    let otherMaxWeeklyHourRuleExists = entityRules.some(rule => rule.ruleTypeId === MAX_HOURS_WEEK_ID && rule.entityRuleId !== entityRuleInstance.entityRuleId);
-
-    // If it's an edit operation and another Max Hour per Shift rule exists
-    if (isEditOp && otherMaxWeeklyHourRuleExists) {
-        response.message = 'Max Hour per Week rule already exists';
-        return response;
-    }
-
-    // If it's an add operation and a Max Hour per Shift rule already exists
-    if (!isEditOp && maxWeeklyHourRuleExists) {
-        response.message = 'Max Hour per Week rule already exists';
+    // If it's an add operation and this rule type already exists
+    if (!isEditOp && ruleExists) {
+        response.message = existingErrorMsg;
         return response;
     }
     response.success = true;
@@ -235,165 +192,6 @@ export class RuleValidatorService {
     return response;
   }
 
-  //#region Validate Rule Min Days Off Per Week
-
-  validateRuleMinDaysOffPerWeek(entityRules : EntityRuleDTO[], entityRuleInstance : EntityRuleDTO, isEditOp: boolean) : BaseResponseModel {
-    let response : BaseResponseModel = new BaseResponseModel(false, '', null);
-
-    // If there are no items, no need to check for any rules
-    if (entityRules.length === 0) {
-      response.success = true;
-      return response;
-    }
-
-    // If it is an edit operation, there is only 1 record and the rule type is different
-    else if(isEditOp && entityRules.length == 1 && entityRules[0].ruleTypeId != MIN_DAYS_OFF_WEEK_ID)
-    {
-      response.success = true;
-      return response;
-    }
-
-    // Check for existing Min Days Off per Week rule
-    let minDaysOffRuleExists = entityRules.some(rule => rule.ruleTypeId === MIN_DAYS_OFF_WEEK_ID);
-    let otherMinDaysOffRuleExists = entityRules.some(rule => rule.ruleTypeId === MIN_DAYS_OFF_WEEK_ID && rule.entityRuleId !== entityRuleInstance.entityRuleId);
-
-    // If it's an edit operation and another Min Days Off per Week rule exists
-    if (isEditOp && otherMinDaysOffRuleExists) {
-        response.message = 'Min Days Off per Week rule already exists';
-        return response;
-    }
-
-    // If it's an add operation and a Min Days Off per Week rule already exists
-    if (!isEditOp && minDaysOffRuleExists) {
-        response.message = 'Min Days Off per Week rule already exists';
-        return response;
-    }
-
-    response.success = true;
-    return response;
-  }
-
   //#endregion
 
-  //#region Validate Rule Weekends Off Per Month
-
-  validateRuleWeekendsOffPerMonth(entityRules : EntityRuleDTO[], entityRuleInstance : EntityRuleDTO, isEditOp: boolean) : BaseResponseModel {
-    let response : BaseResponseModel = new BaseResponseModel(false, '', null);
-
-    // If there are no items, no need to check for any rules
-    if (entityRules.length === 0) {
-      response.success = true;
-      return response;
-    }
-
-    // If it is an edit operation, there is only 1 record and the rule type is different
-    else if(isEditOp && entityRules.length == 1 && entityRules[0].ruleTypeId != MIN_WEEKENDS_OFF_MONTH_ID)
-    {
-      response.success = true;
-      return response;
-    }
-
-    // Check for existing Min Days Off per Month rule
-    let minWeekendsOffRuleExists = entityRules.some(rule => rule.ruleTypeId === MIN_WEEKENDS_OFF_MONTH_ID);
-    let otherMinWeekendsOffRuleExists = entityRules.some(rule => rule.ruleTypeId === MIN_WEEKENDS_OFF_MONTH_ID && rule.entityRuleId !== entityRuleInstance.entityRuleId);
-
-    // If it's an edit operation and another Min Days Off per Month rule exists
-    if (isEditOp && otherMinWeekendsOffRuleExists) {
-        response.message = 'Min Weekends Off per Month rule already exists';
-        return response;
-    }
-
-    // If it's an add operation and a Min Days Off per Month rule already exists
-    if (!isEditOp && minWeekendsOffRuleExists) {
-        response.message = 'Min Weekends Off per Month rule already exists';
-        return response;
-    }
-
-    response.success = true;
-    return response;
-  }
-
-  //#endregion
-
-  //#region Validate Avg Hours Per Month
-
-  validateAvgHoursPerMonth(entityRules: EntityRuleDTO[], selectedRule: EntityRuleDTO, isEditingRule: boolean) : BaseResponseModel {
-    let response : BaseResponseModel = new BaseResponseModel(false, '', null);
-
-     // If there are no items, no need to check for any rules
-    if (entityRules.length === 0) {
-      response.success = true;
-      return response;
-    }
-
-    // If it is an edit operation, there is only 1 record and the rule type is different
-    else if(isEditingRule && entityRules.length == 1 && entityRules[0].ruleTypeId != AVG_HOURS_MONTH_ID)
-    {
-      response.success = true;
-      return response;
-    }
-
-    // Check for existing Avg Hours per Month rule
-    let avgHoursMonthRuleExists = entityRules.some(rule => rule.ruleTypeId === AVG_HOURS_MONTH_ID);
-    let otherAvgHoursMonthRuleExists = entityRules.some(rule => rule.ruleTypeId === AVG_HOURS_MONTH_ID && rule.entityRuleId !== selectedRule.entityRuleId);
-
-    // If it's an edit operation and another Min Days Off per Month rule exists
-    if (isEditingRule && otherAvgHoursMonthRuleExists) {
-        response.message = 'Avg Hours per Month rule already exists';
-        return response;
-    }
-
-    // If it's an add operation and a Min Days Off per Month rule already exists
-    if (!isEditingRule && avgHoursMonthRuleExists) {
-        response.message = 'Avg Hours per Month rule already exists';
-        return response;
-    }
-
-    response.success = true;
-
-    return response;
-  }
-
-  //#endregion
-
-  //#region Validate Avg Hours Per Week
-
-  validateAvgHoursPerWeek(entityRules: EntityRuleDTO[], selectedRule: EntityRuleDTO, isEditingRule: boolean) : BaseResponseModel {
-    let response : BaseResponseModel = new BaseResponseModel(false, '', null);
-
-     // If there are no items, no need to check for any rules
-    if (entityRules.length === 0) {
-      response.success = true;
-      return response;
-    }
-
-    // If it is an edit operation, there is only 1 record and the rule type is different
-    else if(isEditingRule && entityRules.length == 1 && entityRules[0].ruleTypeId != AVG_HOURS_WEEK_ID)
-    {
-      response.success = true;
-      return response;
-    }
-
-    // Check for existing Min Days Off per Month rule
-    let avgWeeksHoursRuleExists = entityRules.some(rule => rule.ruleTypeId === AVG_HOURS_WEEK_ID);
-    let otherAvgWeekHoursRuleExists = entityRules.some(rule => rule.ruleTypeId === AVG_HOURS_WEEK_ID && rule.entityRuleId !== selectedRule.entityRuleId);
-
-    // If it's an edit operation and another Min Days Off per Month rule exists
-    if (isEditingRule && otherAvgWeekHoursRuleExists) {
-        response.message = 'Avg Hours per Week rule already exists';
-        return response;
-    }
-
-    // If it's an add operation and a Min Days Off per Month rule already exists
-    if (!isEditingRule && avgWeeksHoursRuleExists) {
-        response.message = 'Avg Hours per Week rule already exists';
-        return response;
-    }
-
-    response.success = true;
-
-    return response;
-  }
-
-  //#endregion
 }

@@ -26,6 +26,8 @@ export const MIN_DAYS_OFF_WEEK_ID: number = 13;
 export const MIN_WEEKENDS_OFF_MONTH_ID: number = 14;
 export const AVG_HOURS_WEEK_ID: number = 15;
 export const AVG_HOURS_MONTH_ID: number = 16;
+export const MIN_HOURS_WEEK_ID: number = 17;
+export const MIN_HOURS_MONTH_ID: number = 18;
 
 
 // SKILL CONSTANTS

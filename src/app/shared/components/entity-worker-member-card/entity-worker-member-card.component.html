@@ -1,13 +1,13 @@
 <div class="entity-worker-member-item">
     <div class="elevated-card-container">
         <img src="https://placehold.co/150x150" class="member-image">
+        <div class="worker-info">
+          <h4 class="worker-name">{{ entityWorkerMember.workerName }}</h4>
+          <mat-icon *ngIf="entityWorkerMember?.isOwner">stars</mat-icon>
+        </div>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title class="worker-card-header">
-                    <div class="worker-info">
-                      <h4 class="worker-name">{{ entityWorkerMember.workerName }}</h4>
-                      <mat-icon *ngIf="entityWorkerMember?.isOwner">stars</mat-icon>
-                    </div>
                     <div class="worker-actions" *ngIf="allowActions">
                       <button mat-icon-button color="primary" (click)="editWorker(entityWorkerMember)">
                         <mat-icon>edit</mat-icon>
@@ -16,7 +16,7 @@
                         <mat-icon>delete</mat-icon>
                       </button>
                     </div>
-                  </mat-panel-title>
+                </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-chip-set>
                 <mat-chip  *ngFor="let skill of entityWorkerMember?.skillSet" [color]="skill.skillHexFontColor" [ngStyle]="{ 'background-color': skill.skillHexBGColor, '--mdc-chip-label-text-color': skill.skillHexFontColor}">{{skill.skillLocalizedName}}</mat-chip>

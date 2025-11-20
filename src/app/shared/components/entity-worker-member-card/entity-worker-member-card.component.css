@@ -12,6 +12,7 @@
     box-shadow: none;
 }
 
+/*
 .worker-card-header {
     display: flex;
     justify-content: space-between;
@@ -20,12 +21,16 @@
     gap: 8px;
     width: 100%;
   }
-  
+  */
+
   .worker-info {
+    padding: 5px 0px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex: 1;
     overflow: hidden;
+    justify-content: center;
+    gap: 5px;
   }
   
   .worker-name {
@@ -34,6 +39,7 @@
     white-space: normal;
     word-break: break-word;
     line-height: 1.2;
+    text-align: center;
   }
   
   .worker-actions {
@@ -42,3 +48,16 @@
     flex-shrink: 0;
   }
   
+  .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+    /* display: flex; */
+    /* flex-grow: 1; */
+    /* flex-basis: 0; */
+    /* margin-right: 16px; */
+    display: flex;
+    flex-direction: row;
+    /* flex-wrap: nowrap; */
+    /* align-content: center; */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

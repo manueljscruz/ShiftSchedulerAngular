@@ -47,3 +47,14 @@
         flex-direction: row;
         flex-wrap: nowrap;
 }
+
+.mat-column-Actions{
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    justify-content: center;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}

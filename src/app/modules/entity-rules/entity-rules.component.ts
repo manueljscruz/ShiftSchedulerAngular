@@ -18,7 +18,7 @@ import { SkillDTO } from '../../shared/models/DTOs/Incoming/SkillDTO';
 import { EntityService } from '../../core/services/api/EntityService';
 import { ShiftService } from '../../core/services/api/ShiftService';
 import { MatSelectChange } from '@angular/material/select';
-import { AVG_HOURS_MONTH_ID, AVG_HOURS_WEEK_ID, BUSINESS_ASPECT_SHIFTS_ID, BUSINESS_ASPECT_SKILLS_ID, MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID, MAX_CONSECUTIVE_SHIFTS_ID, MAX_HOURS_DAY_ID, MAX_HOURS_WEEK_ID, MAX_WORKERS_SHIFT_ID, MIN_DAYS_OFF_WEEK_ID, MIN_WEEKENDS_OFF_MONTH_ID, MIN_WORKERS_SHIFT_ID, POST_SHIFT_REST_HOURS_ID, REQ_QTY_SKILL_SHIFT_ID, REQ_QTY_SKILL_SHIFT_WEEKDAYS_ID, REQ_QTY_SKILL_SHIFT_WEEKENDS_ID, REQ_SKILLSET_SHIFT_ID, SHIFT_INCLUDES_WEEKENDS_ID } from '../../shared/constants/DataConstants';
+import { AVG_HOURS_MONTH_ID, AVG_HOURS_WEEK_ID, BUSINESS_ASPECT_SHIFTS_ID, BUSINESS_ASPECT_SKILLS_ID, MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID, MAX_CONSECUTIVE_SHIFTS_ID, MAX_HOURS_DAY_ID, MAX_HOURS_WEEK_ID, MAX_WORKERS_SHIFT_ID, MIN_DAYS_OFF_WEEK_ID, MIN_HOURS_MONTH_ID, MIN_HOURS_WEEK_ID, MIN_WEEKENDS_OFF_MONTH_ID, MIN_WORKERS_SHIFT_ID, POST_SHIFT_REST_HOURS_ID, REQ_QTY_SKILL_SHIFT_ID, REQ_QTY_SKILL_SHIFT_WEEKDAYS_ID, REQ_QTY_SKILL_SHIFT_WEEKENDS_ID, REQ_SKILLSET_SHIFT_ID, SHIFT_INCLUDES_WEEKENDS_ID } from '../../shared/constants/DataConstants';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { MatTab } from '@angular/material/tabs';
 import { MatTable } from '@angular/material/table';
@@ -412,72 +412,53 @@ export class EntityRulesComponent {
   /// <summary>
   /// Method that validates the rule submission
   /// </summary>
-  validateRule() : BaseResponseModel {
-    let response = new BaseResponseModel(false, '', null);
-  
-    if(this.selectedRuleType === undefined) {
-      response.message = 'Rule type is required';
-      return response;
-    }
-  
-    else if(this.selectedRuleSpecs.length === 0) {
-      response.message = 'Rule specification is required';
-      return response;
+  validateRule(): BaseResponseModel {
+    const response = new BaseResponseModel(false, '', null);
+    const existingErrorMsg = 'A rule of this type already exists for this entity';
+
+    // ✅ Basic validation
+    if (!this.selectedRuleType) {
+      return new BaseResponseModel(false, 'Rule type is required', null);
     }
 
-    else if(this.selectedRuleType.multipleSpecification === false && this.selectedRuleSpecs.length > 1) {
-      response.message = 'This rule type only allows one specification';
-      return response;
-    }
-  
-    // if selected rule type is Max Hour per Shift
-    else if(this.selectedRuleType.ruleTypeId === MAX_HOURS_DAY_ID) {
-
-      // Check if the Max Hour per Day rule already exists
-      let checkMaxHourRuleExistenceResponse = this.ruleValidatorService.validateMaxHourPerDay(this.rulesViewModel.entityRules, this.selectedRule, this.isEditingRule)
-    
-      if(checkMaxHourRuleExistenceResponse.success === false) 
-        return checkMaxHourRuleExistenceResponse; 
+    if (this.selectedRuleSpecs.length === 0) {
+      return new BaseResponseModel(false, 'Rule specification is required', null);
     }
 
-    else if(this.selectedRuleType.ruleTypeId === MIN_DAYS_OFF_WEEK_ID) {
-
-      // Check if the Min Days Off per Week rule already exists
-      let checkMinDaysOffRuleExistenceResponse = this.ruleValidatorService.validateRuleMinDaysOffPerWeek(this.rulesViewModel.entityRules, this.selectedRule, this.isEditingRule)
-    
-      if(checkMinDaysOffRuleExistenceResponse.success === false) 
-        return checkMinDaysOffRuleExistenceResponse; 
+    if (!this.selectedRuleType.multipleSpecification && this.selectedRuleSpecs.length > 1) {
+      return new BaseResponseModel(false, 'This rule type only allows one specification', null);
     }
 
-    else if(this.selectedRuleType.ruleTypeId === MIN_WEEKENDS_OFF_MONTH_ID) {
-        
-        // Check if the Min Weekends Off per Month rule already exists
-        let checkMinWeekendsOffRuleExistenceResponse = this.ruleValidatorService.validateRuleWeekendsOffPerMonth(this.rulesViewModel.entityRules, this.selectedRule, this.isEditingRule)
-      
-        if(checkMinWeekendsOffRuleExistenceResponse.success === false) 
-          return checkMinWeekendsOffRuleExistenceResponse; 
+    // ✅ Map of single-instance rules to their IDs
+    const singleInstanceRules = [
+      MAX_HOURS_DAY_ID,
+      MAX_HOURS_WEEK_ID,
+      MIN_DAYS_OFF_WEEK_ID,
+      MIN_WEEKENDS_OFF_MONTH_ID,
+      AVG_HOURS_WEEK_ID,
+      AVG_HOURS_MONTH_ID,
+      MIN_HOURS_WEEK_ID,
+      MIN_HOURS_MONTH_ID
+    ];
+
+    // ✅ If selected rule type requires single-instance validation
+    const { ruleTypeId } = this.selectedRuleType;
+    if (singleInstanceRules.includes(ruleTypeId)) {
+      const checkResponse = this.ruleValidatorService.validateSingleInstanceRules(
+        this.rulesViewModel.entityRules,
+        this.selectedRule,
+        this.isEditingRule,
+        ruleTypeId,
+        existingErrorMsg
+      );
+
+      if (!checkResponse.success) return checkResponse;
     }
 
-    else if(this.selectedRuleType.ruleTypeId === AVG_HOURS_WEEK_ID){
-      // Check if the Avg Hours per Week rule already exists
-      let checkAvgHoursWeekRuleExistenceResponse = this.ruleValidatorService.validateAvgHoursPerWeek(this.rulesViewModel.entityRules, this.selectedRule, this.isEditingRule);
-      
-      if(checkAvgHoursWeekRuleExistenceResponse.success === false) 
-        return checkAvgHoursWeekRuleExistenceResponse; 
-    }
-
-    else if(this.selectedRuleType.ruleTypeId === AVG_HOURS_MONTH_ID){
-      // Check if the Avg Hours per Month rule already exists
-      let checkAvgHoursMonthRuleExistenceResponse = this.ruleValidatorService.validateAvgHoursPerMonth(this.rulesViewModel.entityRules, this.selectedRule, this.isEditingRule);
-      
-      if(checkAvgHoursMonthRuleExistenceResponse.success === false) 
-        return checkAvgHoursMonthRuleExistenceResponse; 
-    }
-
-    response.success = true;
-  
-    return response;
+    // ✅ Passed all validations
+    return new BaseResponseModel(true, '', null);
   }
+
 
   //#endregion
 
@@ -553,6 +534,8 @@ export class EntityRulesComponent {
     switch(this.selectedRuleType?.ruleTypeId) {
       case MAX_HOURS_DAY_ID:
       case MAX_HOURS_WEEK_ID:
+      case MIN_HOURS_WEEK_ID:
+      case MIN_HOURS_MONTH_ID:
       case MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID:
       case MIN_DAYS_OFF_WEEK_ID:
       case MIN_WEEKENDS_OFF_MONTH_ID:
@@ -686,6 +669,8 @@ export class EntityRulesComponent {
     switch(this.selectedRuleType?.ruleTypeId) {
       case MAX_HOURS_DAY_ID:
       case MAX_HOURS_WEEK_ID:
+      case MIN_HOURS_WEEK_ID:
+      case MIN_HOURS_MONTH_ID:
       case MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID:
       case MIN_DAYS_OFF_WEEK_ID:
       case MIN_WEEKENDS_OFF_MONTH_ID:
@@ -734,6 +719,8 @@ export class EntityRulesComponent {
       switch(this.selectedRuleType?.ruleTypeId) {
         case MAX_HOURS_DAY_ID:
         case MAX_HOURS_WEEK_ID:
+        case MIN_HOURS_WEEK_ID:
+        case MIN_HOURS_MONTH_ID:
         case MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID:
         case MIN_DAYS_OFF_WEEK_ID:
         case MIN_WEEKENDS_OFF_MONTH_ID:
@@ -883,6 +870,8 @@ export class EntityRulesComponent {
     switch(ruleTypeID) {
       case MAX_HOURS_DAY_ID:
       case MAX_HOURS_WEEK_ID:
+      case MIN_HOURS_WEEK_ID:
+      case MIN_HOURS_MONTH_ID:
       case MAX_CONSECUTIVE_DAYS_NON_ROTATIONERS_ID:
       case MIN_DAYS_OFF_WEEK_ID:
       case MIN_WEEKENDS_OFF_MONTH_ID:
