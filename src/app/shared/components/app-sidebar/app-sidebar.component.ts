@@ -3,6 +3,7 @@ import { ENTITY_ICON, ENTITY_ADD_ICON, DASHBOARD_HOME_ICON, PROFILE_ICON, LOGOUT
 import { SideBarItemModel } from '../../models/UI/SideBarItemModel';
 import { LANDING_PAGE_ROUTE, DASHBOARD_ROUTE, DASHBOARD_HOME_ROUTE, PROFILE_ROUTE, NEW_ENTITY_ROUTE, SETTINGS_ROUTE, HELP_ROUTE } from '../../constants/ViewRoutesConstants';
 import { SIDERBAR_ITEM_GROUP_ENTITIES_CONTAINER } from '../../constants/UiContants';
+import { MatDivider } from "@angular/material/divider";
 
 @Component({
   selector: 'app-sidebar',

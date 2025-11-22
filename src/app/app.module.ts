@@ -75,6 +75,25 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import { MatDateFormats } from '@angular/material/core';
 import { APP_DATE_FORMATS } from './shared/pipes/AppDateAdapter';
 import { WorkerFiltersDialogComponent } from './modules/entity-workers/worker-filters-dialog/worker-filters-dialog.component';
+import { HelpdocsComponent } from './modules/helpdocs/helpdocs.component';
+import { HelpIntroComponent } from './modules/helpdocs/pages/help-intro/help-intro.component';
+import { HelpFaqComponent } from './modules/helpdocs/pages/help-faq/help-faq.component';
+// GetStartedComponent removed because file was missing; use HelpGetStartedComponent instead
+import { HelpGetStartedComponent } from './modules/helpdocs/pages/help-get-started/help-get-started.component';
+import { HelpFeaturesComponent } from './modules/helpdocs/pages/help-features/help-features.component';
+import { HelpTutorialsComponent } from './modules/helpdocs/pages/help-tutorials/help-tutorials.component';
+import { HelpMembersComponent } from './modules/helpdocs/pages/help-members/help-members.component';
+import { HelpSchedulesComponent } from './modules/helpdocs/pages/help-schedules/help-schedules.component';
+import { HelpShiftsComponent } from './modules/helpdocs/pages/help-shifts/help-shifts.component';
+import { HelpRulesComponent } from './modules/helpdocs/pages/help-rules/help-rules.component';
+import { HelpAbsencesComponent } from './modules/helpdocs/pages/help-absences/help-absences.component';
+import { HelpProfileManagementComponent } from './modules/helpdocs/pages/help-profile-management/help-profile-management.component';
+import { HelpPrivacyComponent } from './modules/helpdocs/pages/help-privacy/help-privacy.component';
+import { HelpNotificationsComponent } from './modules/helpdocs/pages/help-notifications/help-notifications.component';
+import { HelpBillingComponent } from './modules/helpdocs/pages/help-billing/help-billing.component';
+import { HelpContactSupportComponent } from './modules/helpdocs/pages/help-contact-support/help-contact-support.component';
+import { HelpReleaseNotesComponent } from './modules/helpdocs/pages/help-release-notes/help-release-notes.component';
+import { HelpLegalComponent } from './modules/helpdocs/pages/help-legal/help-legal.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +138,25 @@ import { WorkerFiltersDialogComponent } from './modules/entity-workers/worker-fi
     ScheduleActionMenuComponent,
     ScheduleEventViewHolderComponent,
     WorkerSkillSelectorComponent,
-    WorkerFiltersDialogComponent
+    WorkerFiltersDialogComponent,
+    HelpdocsComponent,
+    HelpIntroComponent,
+    HelpFaqComponent,
+    HelpGetStartedComponent,
+    HelpFeaturesComponent,
+    HelpTutorialsComponent,
+    HelpMembersComponent,
+    HelpSchedulesComponent,
+    HelpShiftsComponent,
+    HelpRulesComponent,
+    HelpAbsencesComponent,
+    HelpProfileManagementComponent,
+    HelpPrivacyComponent,
+    HelpNotificationsComponent,
+    HelpBillingComponent,
+    HelpContactSupportComponent,
+    HelpReleaseNotesComponent,
+    HelpLegalComponent
   ],
   imports: [
     BrowserModule,
@@ -153,7 +190,7 @@ import { WorkerFiltersDialogComponent } from './modules/entity-workers/worker-fi
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
-    MatPaginator
+    MatPaginator,
   ],
   providers: [
     provideNativeDateAdapter(),
