@@ -12,3 +12,22 @@ export const ENTITY_FORM_ROUTE: string = "/dashboard/entity-form/:entityId";
 export const ENTITY_SHIFTS_ROUTE: string = "/dashboard/entity-shifts/:entityId";
 export const ENTITY_RULES_ROUTE: string = "/dashboard/entity-rules/:entityId";
 export const ENTITY_ABSENCES_ROUTE: string = "/dashboard/entity-absences/:entityId";
+
+// HELP DOCS ROUTE
+export const HELPDOCS_INTRO_ROUTE: string = "intro";
+export const HELPDOCS_GET_STARTED_ROUTE: string = "get-started";
+export const HELPDOCS_FEATURES_ROUTE: string = "features";
+export const HELPDOCS_TUTORIALS_ROUTE: string = "tutorials";
+export const HELPDOCS_FAQ_ROUTE: string = "faq";
+export const HELPDOCS_MEMBERS_ROUTE: string = "members";
+export const HELPDOCS_SCHEDULES_ROUTE: string = "schedules";
+export const HELPDOCS_SHIFTS_ROUTE: string = "shifts";
+export const HELPDOCS_RULES_ROUTE: string = "rules";
+export const HELPDOCS_ABSENCES_ROUTE: string = "absences";
+export const HELPDOCS_PROFILE_MANAGEMENT_ROUTE: string = "profile-management";
+export const HELPDOCS_PRIVACY_ROUTE: string = "privacy";
+export const HELPDOCS_NOTIFICATIONS_ROUTE: string = "notifications";
+export const HELPDOCS_BILLING_ROUTE: string = "billing";
+export const HELPDOCS_CONTACT_SUPPORT_ROUTE: string = "contact-support";
+export const HELPDOCS_RELEASE_NOTES_ROUTE: string = "release-notes";
+export const HELPDOCS_LEGAL_ROUTE: string = "legal";

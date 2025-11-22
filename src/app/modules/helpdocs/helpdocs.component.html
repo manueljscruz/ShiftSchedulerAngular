@@ -1,0 +1,63 @@
+<div id="help-container" class="elevated-card-container primary-card-container-height">
+    
+
+  <!-- Mobile toggle button -->
+  <button class="mobile-toggle" (click)="mobileNavOpen = !mobileNavOpen">
+    ☰ Menu
+  </button>
+
+  <div class="help-content" [class.mobile-open]="mobileNavOpen">
+
+    <!-- LEFT NAVIGATION -->
+    <nav class="help-nav">
+    <!-- Introduction Section -->
+    <ul>
+        <li i18n [routerLink]="HELPDOCS_INTRO_ROUTE" routerLinkActive="active">Introduction</li>
+        <li i18n [routerLink]="HELPDOCS_GET_STARTED_ROUTE" routerLinkActive="active">Getting Started</li>
+        <li i18n [routerLink]="HELPDOCS_FEATURES_ROUTE" routerLinkActive="active">Features Overview</li>
+        <li i18n [routerLink]="HELPDOCS_TUTORIALS_ROUTE" routerLinkActive="active">Tutorials / How-To Guides</li>
+        <li i18n [routerLink]="HELPDOCS_FAQ_ROUTE" routerLinkActive="active">FAQ</li>
+    </ul>
+
+    <mat-divider></mat-divider>
+
+    <!-- Functional Section -->
+    <ul>
+        <li i18n [routerLink]="HELPDOCS_MEMBERS_ROUTE" routerLinkActive="active">Members</li>
+        <li i18n [routerLink]="HELPDOCS_SHIFTS_ROUTE" routerLinkActive="active">Shifts</li>
+        <li i18n [routerLink]="HELPDOCS_RULES_ROUTE" routerLinkActive="active">Rules</li>
+        <li i18n [routerLink]="HELPDOCS_ABSENCES_ROUTE" routerLinkActive="active">Absences</li>
+        <li i18n [routerLink]="HELPDOCS_SCHEDULES_ROUTE" routerLinkActive="active">Schedules</li>
+    </ul>
+
+    <mat-divider></mat-divider>
+
+    <!-- Account & Support Section -->
+    <ul>
+        <li i18n [routerLink]="HELPDOCS_PROFILE_MANAGEMENT_ROUTE" routerLinkActive="active">Profile Management</li>
+        <li i18n [routerLink]="HELPDOCS_PRIVACY_ROUTE" routerLinkActive="active">Privacy & Security</li>
+        <li i18n [routerLink]="HELPDOCS_NOTIFICATIONS_ROUTE" routerLinkActive="active">Notifications</li>
+        <li i18n [routerLink]="HELPDOCS_BILLING_ROUTE" routerLinkActive="active">Billing & Subscriptions</li>
+        <li i18n [routerLink]="HELPDOCS_CONTACT_SUPPORT_ROUTE" routerLinkActive="active">Contact Support</li>
+        <li i18n [routerLink]="HELPDOCS_RELEASE_NOTES_ROUTE" routerLinkActive="active">Release Notes / Updates</li>
+        <li i18n [routerLink]="HELPDOCS_LEGAL_ROUTE" routerLinkActive="active">Legal / Policies</li>
+    </ul>
+</nav>
+
+
+    <!-- RIGHT CONTENT -->
+    <div class="help-details" #contentPane>
+      <router-outlet (activate)="onPageActivate($event)"></router-outlet>
+    </div>
+
+    <!-- RIGHT: ANCHOR NAV (TOC) -->
+    <nav class="anchor-nav" *ngIf="anchors.length > 0">
+      <ul>
+        <li *ngFor="let anchor of anchors">
+          <a (click)="scrollTo(anchor.id)">{{ anchor.text }}</a>
+        </li>
+      </ul>
+    </nav>
+
+  </div>
+</div>

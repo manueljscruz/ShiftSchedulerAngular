@@ -374,7 +374,8 @@ export class EntityShiftsComponent {
   /// </summary>
   openShiftBreakDialogForm(enterAnimationDuration: string, exitAnimationDuration: string, isAddingShiftBreak : boolean, shiftBreakDTO: ShiftBreakDTO) {
     const dialogRef = this.dialog.open(ShiftBreakDialogFormComponent, {
-      width: '600px',
+      width: '900px',
+     maxWidth: '95vw',
       data: { 
         enterAnimationDuration, 
         exitAnimationDuration, 

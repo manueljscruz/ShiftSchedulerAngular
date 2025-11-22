@@ -1,0 +1,133 @@
+<h1 i18n>Shifts</h1>
+<p i18n>Setting up your shifts is a critical and required step into creating your schedules.</p>
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h2 i18n>How to Add a Shift</h2>
+<p i18n>This guide walks you through the steps required to add a new shift in Shift Scheduler.</p>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h3 i18n>1. Add a Shift</h3>
+<p i18n>To begin, choose the option to "Add Shift" on the top of the page.</p>
+
+<div class="center-image">
+  <img src="assets/images/helpdocs/shifts/AddShiftButton.png" alt="Add Shift Button" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<h4 i18n>Fill Out the Form</h4>
+<p i18n>To begin, the shift will require the following information:</p>
+
+<ul>
+  <li i18n><b>Shift Name</b> — A descriptive name for the shift (e.g., "Morning Shift");</li>
+  <li i18n><b>Shift Color</b> — An optional color to visually distinguish this shift in the schedule. If not assigned, a random color will be selected;</li>
+  <li i18n><b>Shift Alias</b> — Alias is meant to be used as an acronym for the shift, 1 to 3 letters maximum. This will be useful to visualize in the schedule what entry was assigned to the worker (e.g., "Morning Shift" with the alias "M");</li>
+  <li i18n><b>Start Time:</b> — The time the shift begins;</li>
+  <li i18n><b>Shift Duration</b> — The time duration of said shift;</li>
+  <li i18n><b>Description</b> - Descriptive information regarding said shift, or any notes that the manager wished to associate with this entry.</li>
+</ul>
+
+<div class="center-image">
+  <img src="assets/images/helpdocs/shifts/CreateShiftForm.png" alt="Create Shift Form" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<h4 i18n>Select a Template</h4>
+<p i18n>Alternatively, you can choose a template from the selection below the form, to prefill the values with existing ones. This will save you time if you are satisfied with pre-existing options or to use some as baseline of what you want.</p>
+
+<div class="center-image">
+  <img src="assets/images/helpdocs/shifts/ShiftTemplateSelection.png" alt="Shift Template Selection Form" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h3 i18n>2. Add Shift Breaks</h3>
+<p i18n>You can add one or more breaks to your shift by clicking the "Add Break" button.</p>
+
+<div class="center-image">
+  <img src="assets/images/helpdocs/shifts/AddShiftBreakButton.png" alt="Add Shift Break Button" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>You will then be presented with the Add Shift Break popup. From there, the manager can proceed in two ways:</p>
+
+<div class="center-image">
+  <img src="assets/images/helpdocs/shifts/AddShiftBreakOptions.png" alt="Add Shift Break Options" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<ul>
+    <li i18n><b>Create from Scratch</b> — Manually fill out the break form fields with the following:</li>
+    <ul>
+        <li i18n><b>Break Type</b> — Specify from a list of possible values, the type of break it is (e.g., "Lunch Break", "Smoke Break", etc.);</li>
+        <li i18n><b>Break Start Time</b> — The time where the break begins;</li>
+        <li i18n><b>Break Duration</b> — The time duration of the break;</li>
+        <li i18n><b>Included in the Shift</b> — Flag that indicates whether the break is expected to occur within the shift duration and to take that into account when creating the schedule entries and when they end (e.g., "Morning Shift" with 8 hours duration that start at 09:00. If this shift has a "Lunch Break" that lasts an hour and flagged as "Included in the Shift", the schedule entry will start at 09:00 and ends at 18:00, for it has 8 hours of shift duration, plus the hour break.);</li>
+        <li i18n><b>Is Time Flexible</b> — Flag that indicates internally to the work entity that, even though there is a specific time of when to take the break, its flexible to occur at another point in time.</li>
+    </ul>
+
+    <div class="center-image">
+        <img src="assets/images/helpdocs/shifts/AddShiftBreakForm.png" alt="Add Shift Break Form" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+    </div>
+
+    <li i18n><b>Based on Template</b> — Choose from pre-configured break templates to quickly apply standard break settings, either to apply it to the letter, or to use as baseline for what you wish to create.</li>
+    <div class="center-image">
+        <img src="assets/images/helpdocs/shifts/AddShiftBreakTemplates.png" alt="Shift Break Template Options" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+    </div>
+</ul>
+
+<p i18n>Once added, the shift breaks will appear in the list below the "Add Break" button, where you can edit or delete them as needed.</p>
+<div class="center-image">
+  <img src="assets/images/helpdocs/shifts/ManageShiftBreaksGrid.png" alt="Shift Breaks Grid" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+  <br/>
+
+<mat-divider></mat-divider>
+<br/>
+
+<h3 i18n>3. Finish</h3>
+<p i18n>After completing all required fields and adding breaks as needed, click <b>Create</b> to complete the shift creation process.</p>
+
+<div class="center-image">
+  <img src="assets/images/helpdocs/shifts/AddConfirmShiftButton.png" alt="Create Shift Button" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>Once created, the new shift will appear in the shifts list, ready to be assigned to workers and used in scheduling.</p>
+
+<div class="center-image">
+  <img src="assets/images/helpdocs/shifts/ShiftManagementGrid.png" alt="Create Shift Button" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h2 i18n>Set Shift Rotation</h2>
+<p i18n>Some work entities may require workers to work within a certain rotation cycle. This can also be set within the shift management page, by adding rotation entries in the "Set Rotation Entry" button.</p>
+
+<div class="center-image">
+  <img src="assets/images/helpdocs/shifts/SetShiftRotation.png" alt="Set Shift Rotation Button" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>From there, the Shift Rotation popup will appear, where you can submit:</p>
+<ul>
+    <li i18n><b>Shift</b> — You select from the list of shifts that you created;</li>
+
+    <div class="center-image">
+        <img src="assets/images/helpdocs/shifts/ShiftRotationPopup.png" alt="Set Shift Rotation Button" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+    </div>
+
+    <li i18n><b>Leave</b> — You choose to signal a mandatory leave for a specific period of time.</li>
+
+    <div class="center-image">
+        <img src="assets/images/helpdocs/shifts/ShiftRotationPopupLeaveForm.png" alt="Set Shift Rotation Button" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+    </div>
+</ul>
+
+<p i18n>Once added, the rotation entries will appear in the list below the "Set Rotation Entry" button, where you can edit the rotation order or delete them as needed.</p>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/shifts/ShiftRotationGrid.png" alt="Set Shift Rotation Button" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>

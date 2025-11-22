@@ -43,14 +43,14 @@ export class SidebarNavigationService {
       entityOptionItems.push(new SideBarItemModel('', "Home", ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', encodedEntityId), []));
       // Add Members Button
       entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', encodedEntityId), []));
-      // Add Schedule Button
-      entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', encodedEntityId), []));
       // Add Shifts Options 
       entityOptionItems.push(new SideBarItemModel('', "Shift Management", SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', encodedEntityId), []));
       // Add Rules Options
       entityOptionItems.push(new SideBarItemModel('', "Rules", SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', encodedEntityId), []));
 
       entityOptionItems.push(new SideBarItemModel('', "Absences", ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', encodedEntityId), []));
+      // Add Schedule Button
+      entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', encodedEntityId), []));
 
       entityOptionsItems.push(new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', encodedEntityId), entityWorkerDTO.entityName, ENTITY_ICON, "", entityOptionItems));
     
@@ -85,9 +85,6 @@ export class SidebarNavigationService {
     // Add Members Button
     entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', encodedEntityId), []));
 
-    // Add Schedule Button
-    entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', encodedEntityId), []));
-
     // Add Shifts Options 
     entityOptionItems.push(new SideBarItemModel('', "Shift Management", SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', encodedEntityId), []));
 
@@ -95,6 +92,10 @@ export class SidebarNavigationService {
     entityOptionItems.push(new SideBarItemModel('', "Rules", SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', encodedEntityId), []));
 
     entityOptionItems.push(new SideBarItemModel('', "Absences", ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', encodedEntityId), []));
+    
+    // Add Schedule Button
+    entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', encodedEntityId), []));
+
 
     let sidebarGroupModel = new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', encodedEntityId), newEntity.entityName, ENTITY_ICON, "", entityOptionItems);
  

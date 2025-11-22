@@ -1,0 +1,10 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'help-intro',
+  templateUrl: './help-intro.component.html',
+  styleUrl: './help-intro.component.css'
+})
+export class HelpIntroComponent {
+
+}
