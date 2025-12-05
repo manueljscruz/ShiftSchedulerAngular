@@ -1,12 +1,278 @@
 <h1 i18n>Rules</h1>
-<p i18n>In order for schedules to tailor into the needs of the managers, each work entity must create a set of rules that the application will then interpret and generate a schedule.</p>
+<p i18n>In order for schedules to tailor into the needs of the managers, each work entity must have a set of rules that the application will then interpret to generate a schedule.</p>
 <br/>
 <mat-divider></mat-divider>
 <br/>
 
-<h2 i18n></h2>
-<p i18n>This guide walks you through the steps required to add a new shift in Shift Scheduler.</p>
+<h2 i18n>Add Rule</h2>
+<p i18n>First step to adding a rule is to click the "Add Rule" button present on the top part of the view.</p>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/rules/AddRuleButton.png" alt="Add Rule Button" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>After clicking the button, the first form will appear with the following fields:</p>
+<ul>
+    <li i18n><strong>Rule Type</strong> — Type of rule to be created</li>
+    <li i18n><strong>Description</strong> — Descriptive information for the manager as an internal note.</li>
+</ul>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/rules/RuleBaseForm.png" alt="Base Rule Form" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>When a rule is selected, a secondary form will appear based on the rule type, for different kind of fields may be required to create the specifications that complement the rule.</p>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/rules/RuleSpecificationsForm.png" alt="Rule Specifications Form" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>After filling the specifications form, pressing the "+" button will to save the rule specification. Some rules will allow for multiple specifications to be added to the same rule type, like the example below:</p>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/rules/RuleSpecificationGrid.png" alt="Rule Specification Grid for Required Skillet for Shift" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>Finally, pressing the "Save" button, will save the rule to the work entity.</p>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/rules/RuleSaveButton.png" alt="Rule Save Button" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
 
 <br/>
 <mat-divider></mat-divider>
 <br/>
+
+<h2 i18n>Update and Delete</h2>
+<p i18n>To update or delete rules and their specifications, it is done by accessing the edit or delete buttons present on each row of their respective grids.</p>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/rules/RuleGridEditDeleteButtons.png" alt="Rule Grid Edit and Delete Buttons" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/rules/RuleSpecificationGridEditDeleteButtons.png" alt="Rule Grid Edit and Delete Buttons" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<br/>
+
+<p i18n>Pressing the edit button will open the same forms as when creating a rule, but populated with the existing data.</p>
+
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h2 i18n>Know the Rules Types</h2>
+<p i18n>Rule types dictate the behaviour of schedule generating operations. They can be of single instance, meaning only one rule of that specific type can exist at any given time, multiple instances, single or multiple specifications, with different type of references that can be associated.</p>
+<br/>
+<p i18n>Here's a list of all available rule types and their descriptions:</p>
+<br/>
+
+<h3 i18n>Max. Hours by Day</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Single Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — None</li>
+    <li i18n><b>Description</b> — Specifies the maximum number of hours an employee can work in a single day.</li>
+</ul>
+<br/>
+
+<h3 i18n>Min. Hours per Week</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Single Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — None</li>
+    <li i18n><b>Description</b> — Specifies the minimum number of hours an employee can work during a week period</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Max. Hours per Week</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Single Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — None</li>
+    <li i18n><b>Description</b> — Specifies the maximum number of hours an employee can work during a week period</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Min. Hours per Month</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Single Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — None</li>
+    <li i18n><b>Description</b> — Specifies the minimum number of hours an employee can work during a monthly period</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Min. Workers per Shift</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Multiple Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — Shift</li>
+    <li i18n><b>Description</b> — Specifies the minimum amount of workers that are to be assigned to a shift</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Max. Workers per Shift</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Multiple Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — Shift</li>
+    <li i18n><b>Description</b> — Specifies the maximum amount of workers that are to be assigned to a shift</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Required Skill Set per Shift</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Multiple Instance</li>
+    <li i18n><b>Specification Type</b> — Multiple Specification</li>
+    <li i18n><b>References</b> — Shift and Skill</li>
+    <li i18n><b>Description</b> — Specifies the required skills that a worker must have to work in a specific shift</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Required Quantity Skill Set per Shift</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Multiple Instance</li>
+    <li i18n><b>Specification Type</b> — Multiple Specification</li>
+    <li i18n><b>References</b> — Shift and Skill</li>
+    <li i18n><b>Description</b> — Specifies the required amount of workers that have specific skills required for the shift</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Required Quantity Skill Set per Shift on Weekdays</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Multiple Instance</li>
+    <li i18n><b>Specification Type</b> — Multiple Specification</li>
+    <li i18n><b>References</b> — Shift and Skill</li>
+    <li i18n><b>Description</b> — Specifies the required amount of workers that have specific skills required for the shift, when the shift occurs on weekdays</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Required Quantity Skill Set per Shift on Weekends</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Multiple Instance</li>
+    <li i18n><b>Specification Type</b> — Multiple Specification</li>
+    <li i18n><b>References</b> — Shift and Skill</li>
+    <li i18n><b>Description</b> — Specifies the required amount of workers that have specific skills required for the shift, when the shift occurs on weekends</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Max Consecutive Shifts</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Multiple Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — Shift</li>
+    <li i18n><b>Description</b> — Specifies the number of times a worker can do a specific shift in a row</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Shift Includes Weekends</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Multiple Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — Shift</li>
+    <li i18n><b>Description</b> — Specifies that shift also occurs on the weekends</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Post Shift Rest Hours</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Multiple Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — Shift</li>
+    <li i18n><b>Description</b> — Specifies the amount of mandatory hours of rest after a worker does a specific shift</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Min. Days off per Week</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Single Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — None</li>
+    <li i18n><b>Description</b> — Specifies the amount of days off a worker must have per week</li>
+</ul>
+
+<br/>
+
+
+<h3 i18n>Min. Weekends Off per Month</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Single Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — None</li>
+    <li i18n><b>Description</b> — Specifies the amount of weekends off a worker must have per month</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Max. Consecutive Days for Non Rotationers</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Multiple Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — None</li>
+    <li i18n><b>Description</b> — Specifies the amount of consecutive days a worker can do if he is not part of shift rotation regime</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Avg. Hours per Week</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Single Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — None</li>
+    <li i18n><b>Description</b> — Specifies the average hour a worker must have per week.</li>
+    <li i818n><b>Note</b> — This rule is uses a specified value and declares generated assignments valid if they deviate by 10% from the average. This is still a work in progress.</li>
+</ul>
+
+<br/>
+
+<h3 i18n>Avg. Hours per Month</h3>
+<ul>
+    <li i18n><b>Instance Type</b> — Single Instance</li>
+    <li i18n><b>Specification Type</b> — Single Specification</li>
+    <li i18n><b>References</b> — None</li>
+    <li i18n><b>Description</b> — Specifies the average hour a worker must have per Month.</li>
+    <li i818n><b>Note</b> — This rule is uses a specified value and declares generated assignments valid if they deviate by 10% from the average. This is still a work in progress.</li>
+</ul>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h2 i18n>Rule Priorities</h2>
+<p i18n>When adding layers of rules to your organization, conflicts can occur due to their similar nature between them. In this current version of schedule generation, certain rule types have priorities over others.</p>
+<p i18n>For example, setting a maximum amount of workers per shift of 10, will prioritize higher over required amount of skillset per shift that can specify 6 workers of Skill X and 6 of Skill Y.</p>
+
+<p i18n>Here is the list of rule types ordered by priority from highest to lowest, that can enter in conflict:</p>
+
+<p i18n>INSERT PRIORITIES HERE</p>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h2 i18n>Tips</h2>
+<ul>
+    <li i18n>When creating rules, keep in mind that the more rules you add, the more restrictions the schedule generator will have to comply with. This can lead to situations where no valid schedule can be generated due to conflicting or overly restrictive rules.</li>
+    <li i18n>It's advisable to start with a basic set of rules and gradually add more as needed, testing the schedule generation after each addition to ensure feasibility.</li>
+    <li i18n>Some rule types cover specific scenarios. Recommend the use of a mix of generic and specific rule types for better results.</li>
+    <li i18n>Engage with your workforce to understand their needs and preferences, and consider incorporating their feedback into the rule-setting process to enhance satisfaction and compliance.</li>
+    <li i18n>Regularly review and update the rules to reflect any changes in operational needs or workforce capabilities.</li>
+</ul>
+
+<br/>
+<mat-divider></mat-divider>

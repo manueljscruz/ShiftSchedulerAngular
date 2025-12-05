@@ -1,0 +1,10 @@
+.center-image {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.action-row{
+    display: flex;
+    flex-direction: row;
+}

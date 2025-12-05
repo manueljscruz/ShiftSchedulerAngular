@@ -1,1 +1,245 @@
-<p>help-schedules works!</p>
+<h1 i18n>Schedules</h1>
+<p i18n>
+  This section provides information about managing schedules within the application. You can create, edit, and delete schedules as needed, either as an automated process or a manual task.
+</p>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h2 i18n>View Types</h2>
+<p i18n> You can view schedules in two different formats:</p>
+<ul>
+    <li><strong i18n>Calendar View:</strong> — Displays schedules in a calendar format, allowing you to see events and shifts organized by days and weeks.</li>
+
+    <div class="center-image">
+        <img src="assets/images/helpdocs/schedules/ScheduleCalendarView.png" alt="Schedule Calendar View" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+    </div>
+
+    <li><strong i18n>List View:</strong> — Presents schedules in a tabular format, making it easy to see details of each schedule entry in a list.</li>
+
+    <div class="center-image">
+        <img src="assets/images/helpdocs/schedules/ScheduleListView.png" alt="Schedule List View" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+    </div>
+</ul>
+
+<h2 i18n>General Schedule Actions</h2>
+<p i18n>Several general actions can be performed on schedules:</p>
+<ul>
+    <li><strong i18n>View Toggle</strong> — Switch between Calendar and List views to suit your preference.</li>
+    <li><strong i18n>Start Date / End Date</strong> — Select the date range for which you want to view or manage schedules.</li>
+    <li><strong i18n>Export</strong> — Export the current schedule view to an Excel file for offline access or reporting purposes.</li>
+    <li><strong i18n>Search</strong> — Filter schedules based on specific date range.</li>
+    <li><strong i18n>Create Schedule</strong> — Initiate the process of creating a new schedule. This option is typically available to users with the necessary permissions.</li>
+    <li><strong i18n>Delete Schedule</strong> — Remove an existing schedule from the system. This action is irreversible and should be performed with caution.</li>
+    
+    <div class="center-image">
+        <img src="assets/images/helpdocs/schedules/ScheduleOptions.png" alt="Schedule Options" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+    </div>
+</ul>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h2 i18n>Specific Schedule Actions</h2>
+<p i18n>In "List View", pressing a table cell where the worker and a specific date meet, will show a menu of actions that can be performed specific to a worker or schedule. Here's a list of what it can do:</p>
+<ul>
+    <li><strong i18n>View Day Schedule</strong> — Shows the list of shift entries that a worker is a assigned to, in that specific day.</li>
+    <li><strong i18n>Manage Day Schedule</strong> — Opens a window that a manager can use to create schedule entries for its shifts, who participates in them and their roles.</li>
+    <li><strong i18n>Assign Shift</strong> — Quick action to assign a worker to a specific shift on the selected day.</li>
+    <li><strong i18n>Start Rotation Cycle</strong> — Saves the start date of a rotation cycle request, for a specific worker. NOTE: Only available for workers who are part of the rotation.</li>
+    <li><strong i18n>Cancel Rotation</strong> — Cancels any active rotation cycle that was being configured for a specific worker. NOTE: Only available for workers who are part of the rotation.</li>
+    <li><strong i18n>End Rotation Cycle</strong> — Sets a rotation cycle from the previously stored start date to the date specified, for a specific worker. NOTE: Only available for workers who are part of the rotation.</li>
+    <li><strong i18n>Clear Daily Assignments</strong> — Removes all daily assignments a worker has on a specific day.</li>
+    <li><strong i18n>Clear All Employee Assignments</strong> — Removes all assignments within the current range period to that specific worker.</li>
+</ul>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/schedules/ListActions.png" alt="Schedule List Actions" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>These actions are covered more in depth, in the "Manual Scheduling" section of this page.</p>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h2 i18n>Managing Schedule</h2>
+<p i18n>Schedules can be managed with the existing automated process or through the various manual processes that the application has to offer.</p>
+
+<br/>
+
+<h3 i18n>Automated Scheduling</h3>
+<p i18n>The automated scheduling feature allows users to set up schedules that are generated based on predefined rules and criteria. This can help streamline the scheduling process and ensure consistency across different time periods.</p>
+<p i18n>For this operation to work, members, shifts and rule configurations already have to be in place. Once that is done, access the Schedules page of your work entity and press "Create Schedule" button.</p>
+
+<div class="center-image">
+        <img src="assets/images/helpdocs/schedules/CreateScheduleButton.png" alt="" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+    </div>
+
+<p i18n>This will open the Create Schedule Window where it will presented with the following options:</p>
+
+<ul>
+    <li i18n><b>Start Date</b> — Sets the start date to where the scheduling process will begin.</li>
+    <li i18n><b>End Date</b> — Sets the end date to where the scheduling process will end.</li>
+    <li i18n><b>Single Role Responsibility</b> — Determines if a worker will be assigned to a single skill responsibility when assigned to a shift entry.</li>
+    <li i18n><b>Clear Existing Schedule</b> — When checked, it will create the schedule from scratch, removing any existing previous entries, before creating the new schedule.</li>
+    <li i18n><b>Filterable</b> — Shows the list of members, shifts and rules that the user can select to filter its application on the schedule generation.</li>
+</ul>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/schedules/CreateScheduleWindow.png" alt="" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>When pressing the filterable button, tabbed pages for members, shifts and rules will appear. For each one, you will have a checkbox that you can click to specify what you want to use for your schedule generation.</p>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/schedules/CreateScheduleFiltersMembersSection.png" alt="Filterable Members" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/schedules/CreateScheduleFiltersShiftsSection.png" alt="Filterable Shifts" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/schedules/CreateScheduleFiltersRulesSection.png" alt="Filterable Rules" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>Once everything is set, press the "Create" button that is presented at the bottom of the page.</p>
+<div class="center-image">
+    <img src="assets/images/helpdocs/schedules/CreateScheduleWindowButton.png" alt="Create Schedule Window Button" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>This will trigger a warning window to confirm all of the selections, requiring therefore a confirmation.</p>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/schedules/CreateScheduleWarningWindow.png" alt="Create Schedule Warning Window" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>After confirming, the system will process the request and generate the schedule based on the provided criteria. Depending on the size of the dataset and complexity of the rules, this may take some time.</p>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h3 i18n>Manual Scheduling</h3>
+<p i18n>Manual scheduling provides users with the flexibility to create and adjust schedules as needed. This is particularly useful for handling unique situations or last-minute changes that may not be accommodated by automated processes.</p>
+
+<h4 i18n>Viewing Day Schedule</h4>
+<p i18n>You can view daily schedules in both view modes. In Calendar mode, you select the colored dots that exist. In List mode, clicking on a specific cell of the table will show a menu of options where you can select the "View Day Schedule". The following view will appear:</p>
+
+<p i18n>This view will show the shift entries that a specific worker is assigned to. If there is a more than one entry, an option will appear to switch events. Here it specifies:</p>
+
+<ul>
+    <li i18n><strong>Event Name</strong> — The name of the event which will always be the shift name.</li>
+    <li i18n><strong>Start/End</strong> — The start and end date and time of the shift.</li>
+    <li i18n><strong>Participants</strong> — A list of all participants in this entry and skills assigned to them.</li> 
+</ul>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/schedules/ViewDaySchedule.png" alt="Schedule Options" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h4 i18n>Manage Day Schedule</h4>
+<p i18n>Manage Day Schedule is an option that the manager can use when he wants to be more hands on. When clicked, the following window will appear:</p>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/schedules/ManageDayScheduleWindow.png" alt="Manage Day Schedule Window" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>The manager can create schedule entries for its shifts, who participates in them and their roles. To start, if there are no entries, we select a shift and press the "Add Entry" button. Otherwise, you can select existing entries.</p>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/schedules/ManageDayScheduleWindowSelectAndAddEntry.png" alt="Select or Add Entry" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>Once an entry is created/selected, a list of available members will appear on left column. You can select one or more workers and then use one of 4 buttons that exist in the middle column, efectively assigning members to the schedule entry.</p>
+
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/schedules/ManageDayScheduleMemberSelection.png" alt="Member Selection" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<br/>
+
+<div id="manage-schedule-action-buttons">
+    <div class="action-row">
+        <mat-icon>first_page</mat-icon>
+        <span i18n>Removes all participating workers</span>
+    </div>
+    <div class="action-row">
+        <mat-icon>chevron_left</mat-icon>
+        <span i18n>Removes selected workers from the entry</span>
+    </div>
+    <div class="action-row">
+        <mat-icon>chevron_right</mat-icon>
+        <span i18n>Assigns selected workers to the entry</span>
+    </div>
+    <div class="action-row">
+        <mat-icon>last_page</mat-icon>
+        <span i18n>Assigns all available workers to the entry</span>
+    </div>
+</div>
+
+<br/>
+
+<p i18n>For each assigned worker, you can also specify the skill that he will be using for this entry. By default, all workers skills will already be present, but there will be <mat-icon>cancel</mat-icon> icon that allows for the removal of that skill. This is subject to change if required, for a <mat-icon>add</mat-icon> icon with "Add Skill".</p>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/schedules/AddSkill.png" alt="Add Skill Button" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>Once that happens, a window will appear to select any skill that isnt currently active. Pressing "Add Skill" button will add the skill again to the worker.</p>
+
+<div class="center-image">
+    <img src="assets/images/helpdocs/schedules/AddSkillWindow.png" alt="Add Skill Window" alt-i18n style="max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+<p i18n>Once everything is set, press the "Save" button at the bottom right of the page to save all changes made.</p>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h4 i18n>Assign Shift</h4>
+<p i18n>One quick way to add worker to a specific shift, navigate to the desired date and worker in the schedule view. Click on the corresponding cell to open the action menu, then select "Assign Shift". A submenu will appear with a list of available shifts. Click on the desired shift to assign it to the worker for that day.</p>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h4 i18n>Start Rotation Cycle</h4>
+<p i18n>One of the tools created for workers who are part of the work entity rotation, is to create a rotation cycle. The intent is for the worker to set the rotation from a range period. When pressing "Start Rotation Cycle" option, it will store the worker and the start date of the rotation cycle, allowing the user to select when the rotation cycle ends.</p>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h4 i18n>Cancel Rotation</h4>
+<p i18n>Pressing "Cancel Rotation" will clear the previously saved start date and worker references</p>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h4 i18n>End Rotation Cycle</h4>
+<p i18n>When pressing "End Rotation Cycle" in a specific end date, the application will take both dates and worker references to assign the worker in a rotation cycle from that interval range.</p>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h4 i18n>Clear Daily Assignments</h4>
+<p i18n>This option will clear all assignments that a worker has on the selected date.</p>
+
+<br/>
+<mat-divider></mat-divider>
+<br/>
+
+<h4 i18n>Clear All Employee Assignments</h4>
+<p i18n>This will remove all employee assignments from the current range dates that is current selected.</p>

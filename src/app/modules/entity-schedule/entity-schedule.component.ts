@@ -26,7 +26,7 @@ import { formatDate } from '@angular/common';
 import { ScheduleEntryParticipantDTO } from '../../shared/models/DTOs/Incoming/ScheduleEntryParticipantDTO';
 import { AssignEntryDTO } from '../../shared/models/DTOs/Outgoing/AssignEntryDTO';
 import { ApplyRotationCycleDTO } from '../../shared/models/DTOs/Outgoing/ApplyRotationCycleDTO';
-import { DELETE_ALL_WORKER_SCHEDULE_CONTENT, DELETE_DAILY_WORKER_SCHEDULE_CONTENT, DELETE_WORKER_SCHEDULE_TITLE } from '../../shared/constants/UITextConstants';
+import { DELETE_ALL_WORKER_SCHEDULE_CONTENT, DELETE_DAILY_WORKER_SCHEDULE_CONTENT, DELETE_SCHEDULE_ENTRIES_CONTENT, DELETE_WORKER_SCHEDULE_TITLE } from '../../shared/constants/UITextConstants';
 import { DeleteIntervalWorkerScheduleEntriesDTO } from '../../shared/models/DTOs/Outgoing/DeleteIntervalWorkerScheduleEntriesDTO';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -1017,7 +1017,7 @@ export class EntityScheduleComponent {
       let exitAnimationDuration = '5000';
       const dialogRef = this.dialog.open(GenericWarningDialogComponent, {
             width: '500px',
-            data: { enterAnimationDuration, exitAnimationDuration, warningTitle: DELETE_WORKER_SCHEDULE_TITLE, warningMessage: DELETE_DAILY_WORKER_SCHEDULE_CONTENT, isDeleteWarning: true }
+            data: { enterAnimationDuration, exitAnimationDuration, warningTitle: DELETE_WORKER_SCHEDULE_TITLE, warningMessage: DELETE_SCHEDULE_ENTRIES_CONTENT, isDeleteWarning: true }
           });
       
           dialogRef.afterClosed().subscribe(async result =>{
