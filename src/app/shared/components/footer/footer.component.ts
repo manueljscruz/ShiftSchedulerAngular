@@ -1,0 +1,20 @@
+import { Component } from '@angular/core';
+import { ADDRESS_PLACEHOLDER, COMPANY_COPYRIGHT, COMPANY_EMAIL, COMPANY_PHONE, NIF_PLACEHOLDER } from '../../constants/UITextConstants';
+import { TERMS_CONDITIONS_ROUTE, PRIVACY_POLICY_ROUTE, CONTACTS_ROUTE, COOKIES_POLICY_ROUTE } from '../../constants/ViewRoutesConstants';
+
+@Component({
+  selector: 'footer-component',
+  templateUrl: './footer.component.html',
+  styleUrl: './footer.component.css'
+})
+export class FooterComponent {
+  COMPANY_COPYRIGHT = COMPANY_COPYRIGHT;
+  NIF_PLACEHOLDER = NIF_PLACEHOLDER;
+  ADDRESS_PLACEHOLDER = ADDRESS_PLACEHOLDER;
+  COMPANY_EMAIL = COMPANY_EMAIL;
+  COMPANY_PHONE = COMPANY_PHONE;
+  TERMS_CONDITIONS_ROUTE = TERMS_CONDITIONS_ROUTE;
+  PRIVACY_POLICY_ROUTE = PRIVACY_POLICY_ROUTE
+  COOKIES_POLICY_ROUTE = COOKIES_POLICY_ROUTE;
+  CONTACTS_ROUTE = CONTACTS_ROUTE;
+}

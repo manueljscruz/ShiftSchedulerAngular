@@ -1,4 +1,11 @@
 // General
+export const COMPANY_NAME = 'ROOSTER SOFTWARE HOUSE — Unipessoal, Lda';
+export const NIF_PLACEHOLDER = 'NIF: 123456789';
+export const ADDRESS_PLACEHOLDER = 'Morada: Rua Exemplo 1, Lisboa';
+export const COMPANY_EMAIL = 'contact@roostersh.com';
+export const COMPANY_PHONE = '+351 912 345 678';
+export const COMPANY_COPYRIGHT = '© 2026 '+ COMPANY_NAME;
+
 export const NA = 'N/A';
 export const NOT_OWNER_OF_INTANCE_CONTENT = 'You cannot edit this information.';
 // Members

@@ -1,5 +1,10 @@
 export const LANDING_PAGE_ROUTE: string = "/";
 export const LOGIN_ROUTE: string = "/login";
+export const TERMS_CONDITIONS_ROUTE: string = '/terms-conditions';
+export const COOKIES_POLICY_ROUTE: string = '/cookies-policy'
+export const CONTACTS_ROUTE: string = '/contacts'
+export const PRIVACY_POLICY_ROUTE: string = '/privacy-policy'
+
 export const DASHBOARD_ROUTE: string = "/dashboard";
 export const DASHBOARD_HOME_ROUTE: string = "/dashboard/home";
 export const PROFILE_ROUTE: string = "/dashboard/profile";

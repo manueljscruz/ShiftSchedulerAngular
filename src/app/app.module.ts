@@ -94,6 +94,11 @@ import { HelpBillingComponent } from './modules/helpdocs/pages/help-billing/help
 import { HelpContactSupportComponent } from './modules/helpdocs/pages/help-contact-support/help-contact-support.component';
 import { HelpReleaseNotesComponent } from './modules/helpdocs/pages/help-release-notes/help-release-notes.component';
 import { HelpLegalComponent } from './modules/helpdocs/pages/help-legal/help-legal.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { TermsConditionsComponent } from './modules/terms-conditions/terms-conditions.component';
+import { PrivacyPolicyComponent } from './modules/privacy-policy/privacy-policy.component';
+import { CookiesPolicyComponent } from './modules/cookies-policy/cookies-policy.component';
+import { ContactsComponent } from './modules/contacts/contacts.component';
 
 @NgModule({
   declarations: [
@@ -156,7 +161,12 @@ import { HelpLegalComponent } from './modules/helpdocs/pages/help-legal/help-leg
     HelpBillingComponent,
     HelpContactSupportComponent,
     HelpReleaseNotesComponent,
-    HelpLegalComponent
+    HelpLegalComponent,
+    FooterComponent,
+    TermsConditionsComponent,
+    PrivacyPolicyComponent,
+    CookiesPolicyComponent,
+    ContactsComponent
   ],
   imports: [
     BrowserModule,
