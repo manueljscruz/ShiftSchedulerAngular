@@ -99,6 +99,10 @@ import { TermsConditionsComponent } from './modules/terms-conditions/terms-condi
 import { PrivacyPolicyComponent } from './modules/privacy-policy/privacy-policy.component';
 import { CookiesPolicyComponent } from './modules/cookies-policy/cookies-policy.component';
 import { ContactsComponent } from './modules/contacts/contacts.component';
+import { DashboardTabViewComponent } from './modules/dashboard-home/dashboard-tab-view/dashboard-tab-view.component';
+import { A11yModule } from "@angular/cdk/a11y";
+import { SearchResultsComponent } from './modules/search-results/search-results.component';
+import { SearchResultItemComponent } from './modules/search-results/search-result-item/search-result-item.component';
 
 @NgModule({
   declarations: [
@@ -166,7 +170,10 @@ import { ContactsComponent } from './modules/contacts/contacts.component';
     TermsConditionsComponent,
     PrivacyPolicyComponent,
     CookiesPolicyComponent,
-    ContactsComponent
+    ContactsComponent,
+    DashboardTabViewComponent,
+    SearchResultsComponent,
+    SearchResultItemComponent
   ],
   imports: [
     BrowserModule,
@@ -197,11 +204,12 @@ import { ContactsComponent } from './modules/contacts/contacts.component';
     NgxColorsModule,
     MatMenuModule,
     CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
+        provide: DateAdapter,
+        useFactory: adapterFactory,
     }),
     MatPaginator,
-  ],
+    A11yModule
+],
   providers: [
     provideNativeDateAdapter(),
     provideClientHydration(),

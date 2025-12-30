@@ -1,0 +1,24 @@
+<div class="elevated-card-container primary-card-container-height">
+    <div class="header-and-actions">
+        <h1 i18n>Search</h1>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="elevated-card-container-content">
+        <div id="search-grid">
+            <div class="search-result-list-item" *ngFor="let result of searchResultsViewModel.resultList.data">
+                <search-result-item [searchResult]="result"></search-result-item>
+            </div>
+        </div>
+        <mat-paginator
+            class="paginator" 
+            #paginator
+            (page)="handlePageEvent($event)"
+            [length]="searchResultsViewModel.resultList.totalCount"
+            [pageSize]="pageSize"
+            [showFirstLastButtons]=true
+            [pageSizeOptions]="pageSizeOptions"
+            [pageIndex]="searchResultsViewModel.resultList.currentPage-1"
+            aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div>

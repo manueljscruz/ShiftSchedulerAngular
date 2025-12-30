@@ -17,6 +17,7 @@ export const GET_ENTITY_TYPES_BY_LOCALIZATION_URL : string = BASE_API_URL + "Ent
 //#region ENTITY
 const ENTITY_CONTROLLER: string = "Entity";
 export const ADD_ENTITY_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/add";
+export const GET_ENTITY_DASHBOARD_VM_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/get-entity-dashboard-view-model";
 export const GET_ENTITIES_BY_WORKER_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/get-entities-by-worker-id/{workerId}";
 export const GET_ENTITY_MEMBERS_VM : string = BASE_API_URL + ENTITY_CONTROLLER + "/get-entities-members-view-model";
 export const GET_ENTITY_MEMBERS_PAGINATION : string = BASE_API_URL + ENTITY_CONTROLLER + "/get-entity-members-pagination";

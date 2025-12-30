@@ -382,7 +382,7 @@ export class EntityScheduleComponent {
         end: new Date(schedule.scheduleEndDate),
         title: schedule.shiftDTO.shiftName,
         color: { primary: schedule.shiftDTO.shiftColorHex, secondary: schedule.shiftDTO.shiftColorHex },
-        allDay: true
+        allDay: false
       }));
   }
 

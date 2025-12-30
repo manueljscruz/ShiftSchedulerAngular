@@ -1,5 +1,12 @@
-<p>dashboard-home works!</p>
-
-<button mat-stroked-button (click)="openSnackBar()" aria-label="Show an example snack-bar">
-    Pizza party
-</button>
+<div class="elevated-card-container primary-card-container-height fade-in">
+    <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedTabChange)="onTabSelected($event)" header-less-tabs>
+        <mat-tab *ngFor="let entity of workEntities; let i = index"
+           [label]="entity.entityName">
+        <dashboard-tab-view
+            [entityWorkerInstance]="entity"
+            [loggedUser]="loggedUser"
+            [active]="selectedTabIndex === i">
+    </dashboard-tab-view>
+  </mat-tab>
+    </mat-tab-group>
+</div>

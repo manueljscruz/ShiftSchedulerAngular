@@ -1,0 +1,53 @@
+.dashboard-icon-button-row{
+    gap: 20px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.dashboard-icon-button{
+    width: 100px;
+    height: 100px;
+}
+
+#skill-row{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.dashboard-icon-button {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.icon-and-badge-text{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+}
+
+#calendar-row{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}  
+
+#absence-entries-row{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#dashboard-row{
+    display: flex;
+    flex-direction: row;
+}

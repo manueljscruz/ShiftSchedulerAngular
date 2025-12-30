@@ -1,13 +1,16 @@
 #app-header{
     display: flex;
-    height: 80px;
-    align-items: center;
-    align-content: center;
-    flex-wrap: wrap;
     justify-content: space-around;
+    min-height: 80px;
+    flex-direction: row;
     align-items: center;
 }
 
-mat-form-field{
-    width: 400px;
+#app-header mat-form-field {
+  width: 400px;
+  margin: 0;
+}
+
+#app-header .mat-mdc-form-field-subscript-wrapper .mat-mdc-form-field-bottom-align {
+  display: none !important;
 }

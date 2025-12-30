@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, DELETE_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_MEMBERS_PAGINATION, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
+import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, DELETE_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_DASHBOARD_VM_URL, GET_ENTITY_MEMBERS_PAGINATION, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
 import { EntityProfileViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityProfileViewModelRequestDTO';
 import { Entity } from '../../../shared/models/database/entity';
 import { FormEntityDTO } from '../../../shared/models/DTOs/Outgoing/FormEntityDTO';
@@ -15,6 +15,7 @@ import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/Ba
 import { DeleteEntityObjectDTO } from '../../../shared/models/DTOs/Outgoing/DeleteEntityObjectDTO';
 import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 import { PagedModelRequest } from '../../../shared/models/DTOs/Outgoing/PagedModelRequest';
+import { DashboardEntityViewModel } from '../../../shared/models/VM/DashboardEntityViewModel';
 
 @Injectable({
     providedIn: 'root'
@@ -86,6 +87,7 @@ export class EntityService {
      */
     async getEntityProfileViewModel(profileVMRequestDTO : EntityProfileViewModelRequestDTO) : Promise<any> {
         try {
+            
             const response = await this.http.post(GET_ENTITY_PROFILE_VM, profileVMRequestDTO).toPromise();
             return response;
             // Process the received data
@@ -150,6 +152,7 @@ export class EntityService {
         try {
             let url = GET_ENTITY_SKILLS;
             baseViewModelRequest.languageCode = userLanguage;
+            
             const response = await this.http.post(url,baseViewModelRequest).toPromise();
             return response;
         }
@@ -170,6 +173,7 @@ export class EntityService {
      */
     async updateEntity(entityToUpdate: FormEntityDTO) : Promise<any> {
         try {
+            
             const response = await this.http.put(UPDATE_ENTITY_URL, entityToUpdate).toPromise();
             return response;
             // Process the received data
@@ -190,7 +194,6 @@ export class EntityService {
      */
     async deleteEntity(entityId: string) : Promise<BaseResponseModel> {
         let response = new BaseResponseModel(false, "", null);
-
         let deleteEntityObject : SingleIdentifierDTO = new SingleIdentifierDTO(entityId);
         try {
             let apiResponse = await this.http.delete(DELETE_ENTITY_URL, {
@@ -273,4 +276,25 @@ export class EntityService {
     }
     
     //#endregion
+
+    //#region Get Entity Dashboard View Model
+
+    async getEntityDashboardViewModel(baseViewModelRequest: BaseViewModelRequestDTO) : Promise<any>{
+        let userLanguage = this.languageService.returnLocalization();
+        try {
+            baseViewModelRequest.languageCode = userLanguage;
+            // baseViewModelRequest.entityId = this.toBase64Url(baseViewModelRequest.entityId);
+            console.log(JSON.stringify(baseViewModelRequest));
+            const response = await this.http.post(GET_ENTITY_DASHBOARD_VM_URL, baseViewModelRequest).toPromise();
+            return response;
+            // Process the received data
+        } catch (error : any) {
+            console.error('Error fetching data:', error.message);
+            // Handle the error appropriately (e.g., display an error message)
+        }
+    }
+
+    //#endregion
+
+
 }

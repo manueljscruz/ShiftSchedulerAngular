@@ -1,0 +1,23 @@
+.search-result-item-card{
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+}
+
+.search-result-item-content{
+    margin-left: 16px;
+}
+
+.search-result-item-link{
+    text-decoration: none;
+    color: inherit;
+}
+
+.search-result-item-link:hover .search-result-item-title{
+    cursor: pointer;
+    text-decoration: underline;
+}

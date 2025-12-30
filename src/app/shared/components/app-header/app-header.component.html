@@ -1,7 +1,12 @@
 <div id="app-header" style="background-color: white;">
-    <mat-form-field appearance="outline">
-        <mat-label i18n>Search</mat-label>
-        <input matInput placeholder_i18n="Search for a work entity" [(ngModel)]="searchInput" [ngModelOptions]="{standalone: true}">
-        <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+    <div id="search-bar">
+        <mat-form-field appearance="outline" >
+            <mat-label i18n>Search</mat-label>
+            <input matInput placeholder_i18n="Search for a work entity" 
+                [(ngModel)]="searchInput" 
+                [ngModelOptions]="{standalone: true}"
+                (keydown.enter)="onEnter()">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </div>
 </div>

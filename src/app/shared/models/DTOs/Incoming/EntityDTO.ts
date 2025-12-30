@@ -12,4 +12,14 @@ export class EntityDTO{
         this.entityTypeLocalized = entityTypeLocalized;
         this.entityWorkersCount = entityWorkersCount;
     }
+
+    static newEntityDTO() : EntityDTO {
+        return new EntityDTO(
+            '',
+            '',
+            '',
+            '',
+            0
+        );
+    }
 }

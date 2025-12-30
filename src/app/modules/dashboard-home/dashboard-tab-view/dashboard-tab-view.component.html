@@ -1,0 +1,97 @@
+<div class="entity-dashboard-container">
+    <h1 i18n>{{entityDashboardViewModel.entityDTO.entityName}}</h1>
+    <h5 i18n>{{entityDashboardViewModel.entityDTO.entityTypeLocalized}}</h5>
+    <mat-divider></mat-divider>
+
+    <!-- Owner Dashboard Displays and Shortcuts -->
+    <div id="dashboard-row" class="dashboard-icon-button-row" *ngIf="entityWorkerInstance?.isOwner">
+        <button mat-fab extended class="dashboard-icon-button" [routerLink]="membersRouterLink"> 
+            <div class="icon-and-badge-text">
+                <mat-icon>people</mat-icon>
+                <span>{{entityDashboardViewModel.entityStatistics.numberOfMembers}}</span>
+            </div>
+            <span i18n>Members</span>
+        </button>
+
+        <button mat-fab extended class="dashboard-icon-button" [routerLink]="rulesRouterLink">
+            <div class="icon-and-badge-text">
+                <i class="bi bi-file-ruled-fill"></i>
+                <span>{{entityDashboardViewModel.entityStatistics.numberOfRules}}</span>
+            </div>
+            <span i18n>Rules</span>
+        </button>
+
+        <button mat-fab extended class="dashboard-icon-button" [routerLink]="shiftsRouterLink">
+            <div class="icon-and-badge-text">
+                <i class="bi bi-clock-fill"></i>
+                <span>{{entityDashboardViewModel.entityStatistics.numberOfShifts}}</span>
+            </div>
+            <span i18n>Shifts</span>
+        </button>
+    </div>
+
+    <!-- Skill Assignments -->
+    <div id="skill-row">
+        <span i18n>Skill Assignments:</span>
+        <mat-chip-set>
+                <mat-chip *ngFor="let skill of entityDashboardViewModel.assignedEntitySkills" [color]="skill.skillHexFontColor" [ngStyle]="{ 'background-color': skill.skillHexBGColor, '--mdc-chip-label-text-color': skill.skillHexFontColor}">{{skill.skillLocalizedName}}</mat-chip>
+        </mat-chip-set>
+    </div>
+
+    <div class="row" id="calendar-row">
+        <mwl-calendar-week-view 
+                [viewDate]="viewDate"
+                [events]="events"
+                [weekStartsOn]="dayOfTheWeek"
+                (eventClicked)="OpenView($event)"
+            >
+            <!--
+            (eventClicked)="showEvent($event)"
+                (dayClicked)="dayClicked($event)"
+            -->
+        </mwl-calendar-week-view>
+    </div>
+    
+    <div class="row" id="absence-entries-row">
+        <mat-table #absenceTable [dataSource]="entityDashboardViewModel.entityWorkerAbsenceEntries.data" class="mat-elevation-z8">
+            <ng-container matColumnDef="AbsenceTypeDisplay">
+                <mat-header-cell *matHeaderCellDef i18n>Absence Type</mat-header-cell>
+                <mat-cell *matCellDef="let absence">{{ absence.absenceTypeDisplayValue }}</mat-cell>
+            </ng-container>
+                
+            <ng-container matColumnDef="Observations">
+                <mat-header-cell *matHeaderCellDef i18n>Observations</mat-header-cell>
+                <mat-cell *matCellDef="let absence">{{ absence.observations }}</mat-cell>
+            </ng-container>
+                
+            <ng-container matColumnDef="StartDate">
+                <mat-header-cell *matHeaderCellDef i18n>Start Date</mat-header-cell>
+                <mat-cell *matCellDef="let absence">{{ absence.absenceStartDate | date }}</mat-cell>
+            </ng-container>
+                
+            <ng-container matColumnDef="EndDate">
+                <mat-header-cell *matHeaderCellDef i18n>End Date</mat-header-cell>
+                <mat-cell *matCellDef="let absence">{{ absence.absenceEndDate | date }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Status">
+                <mat-header-cell *matHeaderCellDef i18n>Status</mat-header-cell>
+                <mat-cell *matCellDef="let absence">
+                    <ng-container *ngIf="absence.absenceDecisionOwner === ''">
+                        <span i18n>Pending</span>
+                    </ng-container>
+                
+                    <ng-container *ngIf="absence.absenceDecisionOwner != ''">
+                        <span i18n>{{absence.absenceApproved ? 'Approved' : 'Not Approved'}}</span>
+                    </ng-container>
+                            
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="['AbsenceTypeDisplay', 'Observations', 'StartDate', 'EndDate', 'Status']"></mat-header-row>
+            <mat-row *matRowDef="let absence; columns: ['AbsenceTypeDisplay', 'Observations', 'StartDate', 'EndDate', 'Status']"></mat-row>
+        </mat-table>
+    </div>
+
+
+</div>

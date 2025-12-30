@@ -6,6 +6,7 @@ export const CONTACTS_ROUTE: string = '/contacts'
 export const PRIVACY_POLICY_ROUTE: string = '/privacy-policy'
 
 export const DASHBOARD_ROUTE: string = "/dashboard";
+export const SEARCH_RESULTS_ROUTE: string = "/dashboard/search-results";
 export const DASHBOARD_HOME_ROUTE: string = "/dashboard/home";
 export const PROFILE_ROUTE: string = "/dashboard/profile";
 export const NEW_ENTITY_ROUTE: string = "/dashboard/new-entity";

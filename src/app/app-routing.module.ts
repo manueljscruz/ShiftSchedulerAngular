@@ -36,6 +36,7 @@ import { TermsConditionsComponent } from './modules/terms-conditions/terms-condi
 import { CookiesPolicyComponent } from './modules/cookies-policy/cookies-policy.component';
 import { ContactsComponent } from './modules/contacts/contacts.component';
 import { PrivacyPolicyComponent } from './modules/privacy-policy/privacy-policy.component';
+import { SearchResultsComponent } from './modules/search-results/search-results.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -50,6 +51,7 @@ const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
     { path: 'home', component: DashboardHomeComponent},
     { path: 'profile', component: ProfileComponent},
+    { path: 'search-results', component: SearchResultsComponent},
     { path: 'new-entity', component: NewEntityComponent},
     { path: 'entity-form/:entityId', component: EntityFormComponent},
     { path: 'entity-workers/:entityId', component: EntityWorkersComponent},
