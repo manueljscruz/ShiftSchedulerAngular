@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { LanguageServiceService } from '../language-service.service';
 import { GET_ENTITY_SHIFT_VIEW_MODEL_URL, ADD_SHIFT_URL, ADD_SHIFT_BREAK_URL, UPDATE_SHIFT_BREAK_URL, DELETE_SHIFT_URL, DELETE_SHIFT_BREAK_URL, UPDATE_SHIFT_URL, GET_ENTITY_SHIFTS, ADD_SHIFT_ROTATION_URL, UPDATE_SHIFT_ROTATION_URL, DELETE_SHIFT_ROTATION_URL, UPDATE_SHIFT_ROTATION_ORDER_URL, UPDATE_SHIFT_TEMPLATE_POP_COUNT_URL, UPDATE_SHIFT_BREAK_TEMPLATE_POP_COUNT_URL } from '../../../shared/constants/APIPathsConstants';
 import { ShiftViewModel } from '../../../shared/models/VM/ShiftViewModel';
-import { EntityShiftViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityShiftViewModelRequestDTO';
 import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
 import { AddShiftBreakDTO } from '../../../shared/models/DTOs/Outgoing/AddShiftBreakDTO';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
