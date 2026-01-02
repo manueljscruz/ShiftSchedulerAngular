@@ -283,8 +283,6 @@ export class EntityService {
         let userLanguage = this.languageService.returnLocalization();
         try {
             baseViewModelRequest.languageCode = userLanguage;
-            // baseViewModelRequest.entityId = this.toBase64Url(baseViewModelRequest.entityId);
-            console.log(JSON.stringify(baseViewModelRequest));
             const response = await this.http.post(GET_ENTITY_DASHBOARD_VM_URL, baseViewModelRequest).toPromise();
             return response;
             // Process the received data
