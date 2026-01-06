@@ -13,6 +13,8 @@ import { LocalService } from '../../core/services/local.service';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
+import { AuthServiceService } from '../../core/services/auth-service.service';
+import { SessionService } from '../../core/services/session.service';
 
 
 @Component({
@@ -31,9 +33,11 @@ export class LoginComponent {
   isLoading: boolean;
 
 constructor(private loginRegisterService: WorkerService, 
+  private authService: AuthServiceService,
   private router: Router, 
   private loadingScreenService: LoadingSpinnerManagerService,
   private snackbarManagerService: SnackbarManagerService,
+  private sessionService: SessionService,
   @Inject(LocalService) private localStore: LocalService) {
   this.email = '';
   this.password = '';
@@ -60,16 +64,15 @@ constructor(private loginRegisterService: WorkerService,
 
       loginDTO = new LoginDTO(this.email, this.password); // Initialize it here
 
-      // Call the login service here
-      let loginResult : BaseResponseModel = await this.loginRegisterService.login(loginDTO);
+      let loginResult : BaseResponseModel = await this.authService.login(loginDTO).toPromise();
 
       this.clearPassword();
 
       this.loadingScreenService.changeLoadingState(false);
 
       if (loginResult != null && loginResult.success) {
+        this.sessionService.set<UserDTO>("loggedUser", loginResult.result.user);
         this.localStore.saveData("loggedUser", JSON.stringify(loginResult.result.user));
-        this.localStore.saveData("tokenData", loginResult.result.tokenResponseDTO);
         this.router.navigate(['/dashboard']);
       } else {
         this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, loginResult.message));

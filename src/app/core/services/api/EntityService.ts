@@ -112,7 +112,9 @@ export class EntityService {
         memberListModelRequestDTO.languageCode = this.languageService.returnLocalization();
 
         try {
-            const response = await this.http.post(GET_ENTITY_MEMBERS_VM, memberListModelRequestDTO).toPromise();
+            const response = await this.http.post(GET_ENTITY_MEMBERS_VM, memberListModelRequestDTO, {
+                withCredentials: true
+            }).toPromise();
             return response;
         }
         catch (error : any) {

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -103,6 +103,8 @@ import { DashboardTabViewComponent } from './modules/dashboard-home/dashboard-ta
 import { A11yModule } from "@angular/cdk/a11y";
 import { SearchResultsComponent } from './modules/search-results/search-results.component';
 import { SearchResultItemComponent } from './modules/search-results/search-result-item/search-result-item.component';
+import { CredentialsInterceptor } from './core/interceptors/credentials.interceptor';
+import { AuthErrorInterceptor } from './core/interceptors/auth-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -215,7 +217,9 @@ import { SearchResultItemComponent } from './modules/search-results/search-resul
     provideClientHydration(),
     provideAnimationsAsync(),
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
-    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
+    { provide: HTTP_INTERCEPTORS, useValue: CredentialsInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useValue: AuthErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
