@@ -1,11 +1,32 @@
 <loading-screen></loading-screen>
 <div id="dashboard-container">
-    <app-sidebar [workEntitiesSideBarItems]="workEntitiesSideBarItems" (logoutEvent)="logout()"></app-sidebar>
-    <div id="dashboard-view">
-        <app-header></app-header>
+    <!-- Desktop sidebar - fixed position, always visible on desktop -->
+    <div id="desktop-sidebar" class="show-desktop-only">
+        <app-sidebar [workEntitiesSideBarItems]="workEntitiesSideBarItems" (logoutEvent)="logout()"></app-sidebar>
+    </div>
+
+    <!-- Mobile drawer - only rendered on mobile -->
+    <mat-sidenav-container id="mobile-sidenav-container" class="hide-desktop">
+        <mat-sidenav #drawer mode="over" [(opened)]="sidebarOpen" class="mobile-sidenav">
+            <app-sidebar [workEntitiesSideBarItems]="workEntitiesSideBarItems" (logoutEvent)="logout()" (navigationEvent)="closeSidebar()"></app-sidebar>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div id="dashboard-view">
+                <app-header [showMenuButton]="true" (menuButtonClicked)="toggleSidebar()"></app-header>
+                <mat-divider></mat-divider>
+                <div id="dashboard-content">
+                    <router-outlet *ngIf="isMobile"></router-outlet>
+                </div>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+
+    <!-- Desktop content area - only rendered on desktop -->
+    <div id="dashboard-view" class="show-desktop-only">
+        <app-header [showMenuButton]="false"></app-header>
         <mat-divider></mat-divider>
         <div id="dashboard-content">
-            <router-outlet></router-outlet>
+            <router-outlet *ngIf="!isMobile"></router-outlet>
         </div>
     </div>
 </div>

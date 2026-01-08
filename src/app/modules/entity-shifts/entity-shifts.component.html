@@ -1,8 +1,13 @@
 <div class="elevated-card-container primary-card-container-height fade-in">
     <!-- Header -->
     <div class="header-and-actions">
-        <h1 i18n>Shift Management</h1>
-        <div class="actions" *ngIf="isCurrentUserEntityOwner">
+        <h1 i18n>
+            Shift Management
+            <button mat-mini-fab class="mobile-menu-toggle" (click)="isMobileActionsOpen = !isMobileActionsOpen">
+                <mat-icon>{{ isMobileActionsOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </button>
+        </h1>
+        <div class="actions" *ngIf="isCurrentUserEntityOwner" [class.open]="isMobileActionsOpen">
             <button *ngIf="!isFormActive" mat-fab extended class="edit-color-bg" (click)="toggleForm(false)">
                 <mat-icon>add</mat-icon>
                 <span i18n>Add Shift</span>

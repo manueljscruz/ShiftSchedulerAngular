@@ -5,22 +5,22 @@
     <mat-divider></mat-divider>
     <div class="menu">
         <div id="menu-top-options">
-            <sidebar-item [sidebarItemText]="'Dashboard'" [sidebarItemRouterLink]="DASHBOARD_HOME_ROUTE" [sidebarItemIcon]="DASHBOARD_HOME_ICON"></sidebar-item>
-            <sidebar-item [sidebarItemText]="'Profile'" [sidebarItemRouterLink]="PROFILE_ROUTE" [sidebarItemIcon]="PROFILE_ICON"></sidebar-item>
-            <sidebar-item [sidebarItemText]="'New Entity'" [sidebarItemRouterLink]="NEW_ENTITY_ROUTE" [sidebarItemIcon]="ENTITY_ADD_ICON"></sidebar-item>
+            <sidebar-item [sidebarItemText]="'Dashboard'" [sidebarItemRouterLink]="DASHBOARD_HOME_ROUTE" [sidebarItemIcon]="DASHBOARD_HOME_ICON" (eventTriggered)="onNavigationClick()"></sidebar-item>
+            <sidebar-item [sidebarItemText]="'Profile'" [sidebarItemRouterLink]="PROFILE_ROUTE" [sidebarItemIcon]="PROFILE_ICON" (eventTriggered)="onNavigationClick()"></sidebar-item>
+            <sidebar-item [sidebarItemText]="'New Entity'" [sidebarItemRouterLink]="NEW_ENTITY_ROUTE" [sidebarItemIcon]="ENTITY_ADD_ICON" (eventTriggered)="onNavigationClick()"></sidebar-item>
         </div>
-        
+
         <mat-divider></mat-divider>
-        
+
         <div id="menu-entities-container" *ngFor="let item of workEntitiesSideBarItems">
-            <sidebar-item-group [sidebarItemGroupId]="item.sidebarItemId" [sidebarItemGroupText]="item.sidebarItemText" [sidebarGroupItems]="item.sidebarItemChildren" [sidebarItemGroupIcon]="ENTITY_ICON"></sidebar-item-group>
+            <sidebar-item-group [sidebarItemGroupId]="item.sidebarItemId" [sidebarItemGroupText]="item.sidebarItemText" [sidebarGroupItems]="item.sidebarItemChildren" [sidebarItemGroupIcon]="ENTITY_ICON" (navigationEvent)="onNavigationClick()"></sidebar-item-group>
         </div>
-        
+
         <mat-divider></mat-divider>
 
         <div id="menu-bottom-options">
-            <sidebar-item [sidebarItemText]="'Settings'" [sidebarItemRouterLink]="SETTINGS_ROUTE" [sidebarItemIcon]="SETTINGS_ICON"></sidebar-item>
-            <sidebar-item [sidebarItemText]="'Help'" [sidebarItemRouterLink]="HELP_ROUTE" [sidebarItemIcon]="HELP_ICON"></sidebar-item>
+            <sidebar-item [sidebarItemText]="'Settings'" [sidebarItemRouterLink]="SETTINGS_ROUTE" [sidebarItemIcon]="SETTINGS_ICON" (eventTriggered)="onNavigationClick()"></sidebar-item>
+            <sidebar-item [sidebarItemText]="'Help'" [sidebarItemRouterLink]="HELP_ROUTE" [sidebarItemIcon]="HELP_ICON" (eventTriggered)="onNavigationClick()"></sidebar-item>
             <sidebar-item [sidebarItemText]="'Logout'" (eventTriggered)="onLogoutClick()" [sidebarItemRouterLink]="LANDING_PAGE_ROUTE" [sidebarItemIcon]="LOGOUT_ICON"></sidebar-item>
         </div>
     </div>

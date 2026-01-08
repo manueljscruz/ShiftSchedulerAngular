@@ -26,6 +26,9 @@ export class ProfileComponent{
 
   isEditing: boolean = false;
 
+  // Mobile actions menu toggle
+  public isMobileActionsOpen: boolean = false;
+
   constructor(private auxDataService: HomeService, 
     private snackbarManagerService: SnackbarManagerService, 
     private loadingScreenService: LoadingSpinnerManagerService,

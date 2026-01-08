@@ -36,12 +36,46 @@ import * as htmlToImage from 'html-to-image';
 import * as XLSX from 'xlsx';
 import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 
-/*
-interface ScheduleList{
-    employee: string;
-};
-*/
-
+/**
+ * Entity Schedule Component
+ *
+ * The most complex component in the application - manages work schedule creation,
+ * visualization, assignment, and manipulation for an entity.
+ *
+ * Core Features:
+ * - Calendar-based schedule visualization (uses angular-calendar library)
+ * - Multiple view modes: Month/Week/Day calendar views, Grid view, List view
+ * - Schedule creation wizard (via ScheduleCreatorMenuComponent)
+ * - Manual shift assignment to workers
+ * - Automated rotation cycle application
+ * - Drag-and-drop schedule entry editing (in some views)
+ * - Worker schedule swapping
+ * - Export to Excel and image formats
+ *
+ * Schedule Creation Workflow:
+ * 1. User opens schedule creator menu
+ * 2. Selects date range and applicable shifts
+ * 3. System validates against business rules
+ * 4. Schedule entries created as "unassigned"
+ * 5. User assigns workers manually or via rotation cycles
+ *
+ * Data Model:
+ * - ScheduleEntryDTO: Individual schedule slots (date, shift, assigned worker)
+ * - ScheduleEntryParticipantDTO: Worker assigned to a specific entry
+ * - EntityScheduleViewModel: Contains entries, workers, shifts, rules
+ *
+ * Business Rules Integration:
+ * - Validates assignments against entity rules before saving
+ * - Checks max working hours, rest periods, skill requirements
+ * - Highlights rule violations in UI
+ *
+ * Responsive behavior:
+ * - Mobile: Actions stack vertically, calendar switches to compact mode
+ * - Desktop: Full calendar with side panels
+ *
+ * Route: /dashboard/entity/:entityId/schedule
+ * Access: Requires entity membership; ownership for edit operations
+ */
 @Component({
   selector: 'app-entity-schedule',
   templateUrl: './entity-schedule.component.html',
@@ -149,6 +183,9 @@ export class EntityScheduleComponent {
   workerCycleTracking: EntityWorkerMemberDTO = EntityWorkerMemberDTO.newInstance();
 
   cycleStartDate: Date = new Date();
+
+  // Mobile actions menu toggle
+  isMobileActionsOpen: boolean = false;
 
   //#endregion
 
@@ -366,9 +403,13 @@ export class EntityScheduleComponent {
 
   buildViews() {
     this.loadingScreenService.changeLoadingState(true);
-    this.buildTable();
-    this.buildCalendar();
-    this.loadingScreenService.changeLoadingState(false);
+
+    // Use setTimeout to allow UI to render loading spinner before heavy computation
+    setTimeout(() => {
+      this.buildTable();
+      this.buildCalendar();
+      this.loadingScreenService.changeLoadingState(false);
+    }, 0);
   }
 
   //#endregion

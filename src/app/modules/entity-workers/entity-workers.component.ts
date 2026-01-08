@@ -28,7 +28,29 @@ import { WorkerFiltersDialogComponent } from './worker-filters-dialog/worker-fil
 import { MemberListFilterDTO } from '../../shared/models/DTOs/Outgoing/MemberListFilterDTO';
 import { MemberListRequestDTO } from '../../shared/models/DTOs/Outgoing/MemberListRequestDTO';
 
-
+/**
+ * Entity Workers Component
+ *
+ * Manages the worker/member roster for a specific entity (organization/department).
+ * Displays workers in either grid or list view with pagination and filtering capabilities.
+ *
+ * Features:
+ * - Grid/List view toggle for worker display
+ * - Pagination for large worker lists (5/10/25/100 items per page)
+ * - Filtering by skills and shifts
+ * - Add new workers to entity (via AddMemberDialogComponent)
+ * - Edit worker details including skills and assigned shifts (via EditMemberDialogComponent)
+ * - Delete workers from entity (with confirmation)
+ * - Permission-based UI (entity owners see add/edit/delete, regular members see read-only)
+ *
+ * Responsive behavior:
+ * - Mobile: Grid switches to 1 column, actions stack vertically
+ * - Tablet: 2 columns
+ * - Desktop: 3+ columns based on screen width
+ *
+ * Route: /dashboard/entity/:entityId/workers
+ * Access: Requires user to be a member of the entity
+ */
 @Component({
   selector: 'app-entity-workers',
   templateUrl: './entity-workers.component.html',
@@ -92,6 +114,9 @@ export class EntityWorkersComponent {
   /// Flag to determine if the view is in list mode
   /// </summary>
   public isListView: boolean = true;
+
+  // Mobile actions menu toggle
+  public isMobileActionsOpen: boolean = false;
 
   currentPageIndex = 0;
 

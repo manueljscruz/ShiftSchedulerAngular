@@ -1,24 +1,90 @@
-#dashboard-container{
+/**
+ * Dashboard Component Styles
+ *
+ * Implements a responsive two-tier layout system:
+ * - Desktop (≥768px): Fixed sidebar on left, content fills remaining space on right
+ * - Mobile (<768px): Full-width content with overlay drawer sidebar
+ *
+ * Layout Architecture:
+ * The template uses TWO separate structures (not conditional rendering):
+ * 1. Desktop: #desktop-sidebar (regular div) + #dashboard-view (flexes to fill remaining space)
+ * 2. Mobile: #mobile-sidenav-container (Material drawer) wrapping #dashboard-view
+ *
+ * CSS utility classes (.show-desktop-only, .hide-desktop) control visibility
+ * to prevent both structures from rendering simultaneously.
+ */
+
+/* ===== Main Container ===== */
+/* Flexbox container for desktop layout */
+#dashboard-container {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 100%;
     min-height: 100vh;
+    background-color: #C03221; /* Match sidebar color to prevent white gaps on horizontal scroll */
+    overflow: hidden; /* Prevent horizontal scroll at container level */
 }
 
-#dashboard-view{
-    display: flex;
-    flex-direction: column;
+/* ===== Desktop Sidebar (≥768px) ===== */
+/* Fixed-width sidebar on the left side of the screen */
+#desktop-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto; /* Allows scrolling if menu items exceed viewport height */
+}
+
+/* ===== Mobile Sidenav Container (<768px) ===== */
+#mobile-sidenav-container {
     width: 100%;
     height: 100vh;
-    background-color: #f5f5f5;
 }
 
-#dashboard-content{
-    padding: 20px;
-    overflow: auto; /* Enables scrolling */
+/* Mobile drawer sidebar styling */
+.mobile-sidenav {
+    width: 260px; /* Same width as desktop for consistency */
+}
+
+/* ===== Dashboard Content Area ===== */
+/* Contains header and router-outlet for child views */
+#dashboard-view {
     display: flex;
     flex-direction: column;
-    flex: 1; /* Allows the content to grow and fill the available space */
-    height: calc(100vh - 80px - 1px); /* Adjust based on actual header/divider height */
+    flex: 1;
+    min-width: 0; /* Critical: prevents flex child from expanding beyond container */
+    height: 100vh;
+    background-color: #f5f5f5;
+    overflow: hidden; /* Prevent overflow at this level */
+}
+
+/* Content area below header where router-outlet renders child components */
+#dashboard-content {
+    padding: 20px;
+    overflow-x: hidden; /* Prevent horizontal scroll - child elements handle their own */
+    overflow-y: auto; /* Allow vertical scrolling */
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Grows to fill remaining vertical space below header */
+    /* Height calculation: 100vh - header height (80px) - divider (1px) */
+    height: calc(100vh - 80px - 1px);
+    box-sizing: border-box; /* Include padding in width/height calculations */
+    min-width: 0; /* Prevent flex expansion */
+}
+
+/* Ensure child content respects container padding */
+#dashboard-content > * {
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0; /* Prevent flex child overflow */
+}
+
+/* ===== Mobile Responsive Adjustments (<768px) ===== */
+@media (max-width: 767.98px) {
+    #dashboard-content {
+        padding: 12px; /* Reduced padding for mobile screens */
+        /* Mobile header is shorter (64px instead of 80px) */
+        height: calc(100vh - 64px - 1px);
+    }
 }

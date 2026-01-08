@@ -8,10 +8,10 @@
     <mat-divider></mat-divider>
     <div class="menu" *ngFor="let item of sidebarGroupItems">
         <div *ngIf="item.sidebarItemChildren.length == 0">
-            <sidebar-item [sidebarItemText]="item.sidebarItemText" [sidebarItemRouterLink]="item.sidebarItemLink" [sidebarItemIcon]="item.sidebarItemIcon"></sidebar-item>
+            <sidebar-item [sidebarItemText]="item.sidebarItemText" [sidebarItemRouterLink]="item.sidebarItemLink" [sidebarItemIcon]="item.sidebarItemIcon" (eventTriggered)="onChildNavigationClick()"></sidebar-item>
         </div>
         <div *ngIf="item.sidebarItemChildren.length > 0">
-            <sidebar-item-group [sidebarItemGroupId]="item.sidebarItemId" [sidebarItemGroupText]="item.sidebarItemText" [sidebarItemGroupIcon]="item.sidebarItemIcon" [sidebarGroupItems]="item.sidebarItemChildren"></sidebar-item-group>
+            <sidebar-item-group [sidebarItemGroupId]="item.sidebarItemId" [sidebarItemGroupText]="item.sidebarItemText" [sidebarItemGroupIcon]="item.sidebarItemIcon" [sidebarGroupItems]="item.sidebarItemChildren" (navigationEvent)="onChildNavigationClick()"></sidebar-item-group>
         </div>
     </div>
 </mat-expansion-panel>

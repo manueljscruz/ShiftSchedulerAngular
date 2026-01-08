@@ -71,6 +71,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ScheduleEventViewHolderComponent } from './modules/entity-schedule/schedule-event-view-holder/schedule-event-view-holder.component';
 import { WorkerSkillSelectorComponent } from './modules/entity-schedule/worker-skill-selector/worker-skill-selector.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { MatDateFormats } from '@angular/material/core';
 import { APP_DATE_FORMATS } from './shared/pipes/AppDateAdapter';
@@ -203,6 +204,7 @@ import { SearchResultItemComponent } from './modules/search-results/search-resul
     MatSlider,
     NgxColorsModule,
     MatMenuModule,
+    MatSidenavModule,
     CalendarModule.forRoot({
         provide: DateAdapter,
         useFactory: adapterFactory,

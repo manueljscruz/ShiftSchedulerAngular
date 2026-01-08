@@ -53,6 +53,9 @@ export class EntityAbsencesComponent {
   /// </summary>
   isFormActive : boolean = false;
 
+  // Mobile actions menu toggle
+  public isMobileActionsOpen: boolean = false;
+
   /// <summary>
   /// Determines if the user is editing an absence or not
   /// </summary>

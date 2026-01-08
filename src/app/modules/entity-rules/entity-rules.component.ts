@@ -61,6 +61,9 @@ export class EntityRulesComponent {
   /// </summary>
   isFormActive : boolean = false;
 
+  // Mobile actions menu toggle
+  public isMobileActionsOpen: boolean = false;
+
   /// <summary>
   /// Signaling if the user is editing the rule
   /// </summary>

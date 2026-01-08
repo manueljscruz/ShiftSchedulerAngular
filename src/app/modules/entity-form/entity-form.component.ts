@@ -52,6 +52,9 @@ export class EntityFormComponent {
   /// </summary>
   isEditing: boolean = false;
 
+  // Mobile actions menu toggle
+  public isMobileActionsOpen: boolean = false;
+
 
   /// <summary>
   /// Selected entity type. Can be null if the entity cannot be edited

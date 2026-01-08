@@ -68,6 +68,9 @@ export class EntityShiftsComponent {
   /// </summary>
   public isEditing: boolean = false;
 
+  // Mobile actions menu toggle
+  public isMobileActionsOpen: boolean = false;
+
   /// <summary>
   /// Shift view model object
   /// </summary>
