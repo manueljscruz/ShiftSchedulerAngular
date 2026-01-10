@@ -5,6 +5,7 @@
     /*height: calc(100vh - 40px);*/
     /*width: 260px;*/
     padding: 20px;
+    overflow: hidden;
 }
 
 #side-bar .logo{
@@ -12,19 +13,35 @@
     flex-direction: row;
     align-items: center;
     margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+#side-bar .logo img {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
 }
 
 .menu{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    height: 100%;
+    min-height: 0;
+    flex: 1;
+    overflow: hidden;
+}
+
+#menu-top-options{
+    flex-shrink: 0;
 }
 
 #menu-entities-container{
-    flex-grow: 1;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
 }
 
 #menu-bottom-options{
-    justify-content: flex-end;
+    flex-shrink: 0;
+    margin-top: 10px;
 }

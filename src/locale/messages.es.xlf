@@ -106,6 +106,7 @@
       </trans-unit>
       <trans-unit id="4691887509600985309" datatype="html">
         <source>Members</source>
+        <target>Miembros</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/dashboard-home/dashboard-tab-view/dashboard-tab-view.component.html</context>
           <context context-type="linenumber">13,14</context>
@@ -125,6 +126,7 @@
       </trans-unit>
       <trans-unit id="4645345687322304891" datatype="html">
         <source>Rules</source>
+        <target>Reglas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/dashboard-home/dashboard-tab-view/dashboard-tab-view.component.html</context>
           <context context-type="linenumber">21,22</context>
@@ -144,6 +146,7 @@
       </trans-unit>
       <trans-unit id="1335554401937230706" datatype="html">
         <source>Shifts</source>
+        <target>Turnos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/dashboard-home/dashboard-tab-view/dashboard-tab-view.component.html</context>
           <context context-type="linenumber">29,30</context>
@@ -171,6 +174,7 @@
       </trans-unit>
       <trans-unit id="2922944853966966320" datatype="html">
         <source>Skill Assignments:</source>
+        <target>Asignaciones de habilidades:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/dashboard-home/dashboard-tab-view/dashboard-tab-view.component.html</context>
           <context context-type="linenumber">35,36</context>
@@ -178,6 +182,7 @@
       </trans-unit>
       <trans-unit id="423086859978202711" datatype="html">
         <source>Absence Type</source>
+        <target>Tipo de ausencia</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/dashboard-home/dashboard-tab-view/dashboard-tab-view.component.html</context>
           <context context-type="linenumber">58</context>
@@ -201,6 +206,7 @@
       </trans-unit>
       <trans-unit id="3778494590546555291" datatype="html">
         <source>Observations</source>
+        <target>Observaciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/dashboard-home/dashboard-tab-view/dashboard-tab-view.component.html</context>
           <context context-type="linenumber">63</context>
@@ -224,6 +230,7 @@
       </trans-unit>
       <trans-unit id="3604386807230411192" datatype="html">
         <source>Start Date</source>
+        <target>Fecha de inicio</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/dashboard-home/dashboard-tab-view/dashboard-tab-view.component.html</context>
           <context context-type="linenumber">68</context>
@@ -247,6 +254,7 @@
       </trans-unit>
       <trans-unit id="7379726829888309084" datatype="html">
         <source>End Date</source>
+        <target>Fecha de fin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/dashboard-home/dashboard-tab-view/dashboard-tab-view.component.html</context>
           <context context-type="linenumber">73</context>
@@ -270,6 +278,7 @@
       </trans-unit>
       <trans-unit id="5611592591303869712" datatype="html">
         <source>Status</source>
+        <target>Estado</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/dashboard-home/dashboard-tab-view/dashboard-tab-view.component.html</context>
           <context context-type="linenumber">78</context>
@@ -285,6 +294,7 @@
       </trans-unit>
       <trans-unit id="4416413576346763682" datatype="html">
         <source>Pending</source>
+        <target>Pendiente</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/dashboard-home/dashboard-tab-view/dashboard-tab-view.component.html</context>
           <context context-type="linenumber">81,82</context>
@@ -300,6 +310,7 @@
       </trans-unit>
       <trans-unit id="9122764051261658431" datatype="html">
         <source>Absence Start Date</source>
+        <target>Fecha de inicio de ausencia</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-absences/entity-absences-form/entity-absences-form.component.html</context>
           <context context-type="linenumber">23</context>
@@ -311,6 +322,7 @@
       </trans-unit>
       <trans-unit id="6369047600255418814" datatype="html">
         <source>Absence End Date</source>
+        <target>Fecha de fin de ausencia</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-absences/entity-absences-form/entity-absences-form.component.html</context>
           <context context-type="linenumber">30</context>
@@ -322,6 +334,7 @@
       </trans-unit>
       <trans-unit id="3768927257183755959" datatype="html">
         <source>Save</source>
+        <target>Guardar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-absences/entity-absences-form/entity-absences-form.component.html</context>
           <context context-type="linenumber">41,43</context>
@@ -353,6 +366,7 @@
       </trans-unit>
       <trans-unit id="5674286808255988565" datatype="html">
         <source>Create</source>
+        <target>Crear</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-absences/entity-absences-form/entity-absences-form.component.html</context>
           <context context-type="linenumber">44,45</context>
@@ -380,6 +394,7 @@
       </trans-unit>
       <trans-unit id="3193976279273491157" datatype="html">
         <source>Actions</source>
+        <target>Acciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-absences/entity-absences-view/entity-absences-view.component.html</context>
           <context context-type="linenumber">55</context>
@@ -395,6 +410,7 @@
       </trans-unit>
       <trans-unit id="465569207811084248" datatype="html">
         <source>Absences</source>
+        <target>Ausencias</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-absences/entity-absences.component.html</context>
           <context context-type="linenumber">3,4</context>
@@ -410,6 +426,7 @@
       </trans-unit>
       <trans-unit id="8449851293441443451" datatype="html">
         <source>Add Absence</source>
+        <target>Agregar ausencia</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-absences/entity-absences.component.html</context>
           <context context-type="linenumber">7,8</context>
@@ -421,6 +438,7 @@
       </trans-unit>
       <trans-unit id="2159130950882492111" datatype="html">
         <source>Cancel</source>
+        <target>Cancelar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-absences/entity-absences.component.html</context>
           <context context-type="linenumber">11,12</context>
@@ -460,6 +478,7 @@
       </trans-unit>
       <trans-unit id="4893955166101345155" datatype="html">
         <source> Full Day Absence </source>
+        <target> Ausencia de día completo </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-absences/entity-absences.component.html</context>
           <context context-type="linenumber">61</context>
@@ -467,6 +486,7 @@
       </trans-unit>
       <trans-unit id="4204880191779081093" datatype="html">
         <source>Start Time</source>
+        <target>Hora de inicio</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-absences/entity-absences.component.html</context>
           <context context-type="linenumber">66</context>
@@ -474,6 +494,7 @@
       </trans-unit>
       <trans-unit id="3845185958891849368" datatype="html">
         <source>End Time</source>
+        <target>Hora de fin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-absences/entity-absences.component.html</context>
           <context context-type="linenumber">72</context>
@@ -488,6 +509,7 @@
       </trans-unit>
       <trans-unit id="4403326523260771574" datatype="html">
         <source>Are you sure you want to delete this entity? All data will be erased and everyone associated with this work entity will no longer have access.</source>
+        <target>¿Está seguro de que desea eliminar esta entidad? Todos los datos serán borrados y todas las personas asociadas con esta entidad de trabajo ya no tendrán acceso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-form/delete-entity-warning-dialog/delete-entity-warning-dialog.component.html</context>
           <context context-type="linenumber">3,4</context>
@@ -495,6 +517,7 @@
       </trans-unit>
       <trans-unit id="7022070615528435141" datatype="html">
         <source>Delete</source>
+        <target>Eliminar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-form/delete-entity-warning-dialog/delete-entity-warning-dialog.component.html</context>
           <context context-type="linenumber">11,12</context>
@@ -517,6 +540,7 @@
       </trans-unit>
       <trans-unit id="7585826646011739428" datatype="html">
         <source>Edit</source>
+        <target>Editar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-form/entity-form.component.html</context>
           <context context-type="linenumber">7,8</context>
@@ -528,6 +552,7 @@
       </trans-unit>
       <trans-unit id="8953033926734869941" datatype="html">
         <source>Name</source>
+        <target>Nombre</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-form/entity-form.component.html</context>
           <context context-type="linenumber">21</context>
@@ -575,6 +600,7 @@
       </trans-unit>
       <trans-unit id="8650499415827640724" datatype="html">
         <source>Type</source>
+        <target>Tipo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-form/entity-form.component.html</context>
           <context context-type="linenumber">31</context>
@@ -586,6 +612,7 @@
       </trans-unit>
       <trans-unit id="4902817035128594900" datatype="html">
         <source>Description</source>
+        <target>Descripción</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-form/entity-form.component.html</context>
           <context context-type="linenumber">49</context>
@@ -605,6 +632,7 @@
       </trans-unit>
       <trans-unit id="1372022816709469401" datatype="html">
         <source>Add Rule</source>
+        <target>Agregar regla</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-rules/entity-rules.component.html</context>
           <context context-type="linenumber">7,8</context>
@@ -616,6 +644,7 @@
       </trans-unit>
       <trans-unit id="3730039082945415558" datatype="html">
         <source>Rule Type</source>
+        <target>Tipo de regla</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-rules/entity-rules.component.html</context>
           <context context-type="linenumber">21</context>
@@ -627,6 +656,7 @@
       </trans-unit>
       <trans-unit id="5355084146164284268" datatype="html">
         <source>Rule Description</source>
+        <target>Descripción de la regla</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-rules/entity-rules.component.html</context>
           <context context-type="linenumber">65</context>
@@ -634,6 +664,7 @@
       </trans-unit>
       <trans-unit id="6387879863897234206" datatype="html">
         <source>Skill</source>
+        <target>Habilidad</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-rules/entity-rules.component.html</context>
           <context context-type="linenumber">77</context>
@@ -649,6 +680,7 @@
       </trans-unit>
       <trans-unit id="8240571897505003751" datatype="html">
         <source>Shift</source>
+        <target>Turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-rules/entity-rules.component.html</context>
           <context context-type="linenumber">89</context>
@@ -660,6 +692,7 @@
       </trans-unit>
       <trans-unit id="1618019139541122700" datatype="html">
         <source>Specification Value</source>
+        <target>Valor de especificación</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-rules/entity-rules.component.html</context>
           <context context-type="linenumber">101</context>
@@ -671,6 +704,7 @@
       </trans-unit>
       <trans-unit id="1854106445112126279" datatype="html">
         <source>Reference Item</source>
+        <target>Elemento de referencia</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-rules/entity-rules.component.html</context>
           <context context-type="linenumber">119</context>
@@ -678,6 +712,7 @@
       </trans-unit>
       <trans-unit id="3136705813458336417" datatype="html">
         <source>Reference Type</source>
+        <target>Tipo de referencia</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-rules/entity-rules.component.html</context>
           <context context-type="linenumber">124</context>
@@ -685,6 +720,7 @@
       </trans-unit>
       <trans-unit id="519735012870947635" datatype="html">
         <source>Reference Item 2</source>
+        <target>Elemento de referencia 2</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-rules/entity-rules.component.html</context>
           <context context-type="linenumber">129</context>
@@ -692,6 +728,7 @@
       </trans-unit>
       <trans-unit id="8305971402001086404" datatype="html">
         <source>Reference Type 2</source>
+        <target>Tipo de referencia 2</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-rules/entity-rules.component.html</context>
           <context context-type="linenumber">134</context>
@@ -699,6 +736,7 @@
       </trans-unit>
       <trans-unit id="5433782699501161466" datatype="html">
         <source>Schedule</source>
+        <target>Horario</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/entity-schedule.component.html</context>
           <context context-type="linenumber">3,4</context>
@@ -706,6 +744,7 @@
       </trans-unit>
       <trans-unit id="7462301153729425254" datatype="html">
         <source>Export</source>
+        <target>Exportar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/entity-schedule.component.html</context>
           <context context-type="linenumber">29,30</context>
@@ -717,6 +756,7 @@
       </trans-unit>
       <trans-unit id="4580988005648117665" datatype="html">
         <source>Search</source>
+        <target>Buscar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/entity-schedule.component.html</context>
           <context context-type="linenumber">34,35</context>
@@ -740,6 +780,7 @@
       </trans-unit>
       <trans-unit id="1333291424930320057" datatype="html">
         <source>Delete Schedule</source>
+        <target>Eliminar horario</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/entity-schedule.component.html</context>
           <context context-type="linenumber">38,39</context>
@@ -751,6 +792,7 @@
       </trans-unit>
       <trans-unit id="1450810958312498601" datatype="html">
         <source>Create Schedule</source>
+        <target>Crear horario</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/entity-schedule.component.html</context>
           <context context-type="linenumber">42,43</context>
@@ -766,6 +808,7 @@
       </trans-unit>
       <trans-unit id="5619974938946045201" datatype="html">
         <source>Selected Entry</source>
+        <target>Entrada seleccionada</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-action-menu/schedule-action-menu.component.html</context>
           <context context-type="linenumber">8</context>
@@ -773,6 +816,7 @@
       </trans-unit>
       <trans-unit id="2849036019487510943" datatype="html">
         <source>Shift Name</source>
+        <target>Nombre del turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-action-menu/schedule-action-menu.component.html</context>
           <context context-type="linenumber">19</context>
@@ -784,6 +828,7 @@
       </trans-unit>
       <trans-unit id="6712415762729021015" datatype="html">
         <source>Add Entry</source>
+        <target>Agregar entrada</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-action-menu/schedule-action-menu.component.html</context>
           <context context-type="linenumber">31,32</context>
@@ -791,6 +836,7 @@
       </trans-unit>
       <trans-unit id="1814278512027019433" datatype="html">
         <source>Available Workers</source>
+        <target>Trabajadores disponibles</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-action-menu/schedule-action-menu.component.html</context>
           <context context-type="linenumber">39,40</context>
@@ -798,6 +844,7 @@
       </trans-unit>
       <trans-unit id="2767379358770143451" datatype="html">
         <source>Worker Name</source>
+        <target>Nombre del trabajador</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-action-menu/schedule-action-menu.component.html</context>
           <context context-type="linenumber">53,54</context>
@@ -813,6 +860,7 @@
       </trans-unit>
       <trans-unit id="4342625008558026850" datatype="html">
         <source>Skills</source>
+        <target>Habilidades</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-action-menu/schedule-action-menu.component.html</context>
           <context context-type="linenumber">59,60</context>
@@ -832,6 +880,7 @@
       </trans-unit>
       <trans-unit id="9186298672849114989" datatype="html">
         <source>Assigned Workers</source>
+        <target>Trabajadores asignados</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-action-menu/schedule-action-menu.component.html</context>
           <context context-type="linenumber">103,104</context>
@@ -839,6 +888,7 @@
       </trans-unit>
       <trans-unit id="4071176072274224912" datatype="html">
         <source>Add Skill</source>
+        <target>Agregar habilidad</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-action-menu/schedule-action-menu.component.html</context>
           <context context-type="linenumber">133,134</context>
@@ -850,6 +900,7 @@
       </trans-unit>
       <trans-unit id="8890553633144307762" datatype="html">
         <source>Back</source>
+        <target>Volver</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-action-menu/schedule-action-menu.component.html</context>
           <context context-type="linenumber">158,159</context>
@@ -873,6 +924,7 @@
       </trans-unit>
       <trans-unit id="4361568045684156139" datatype="html">
         <source>Details:</source>
+        <target>Detalles:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-creator-menu/schedule-creator-menu.component.html</context>
           <context context-type="linenumber">155</context>
@@ -880,6 +932,7 @@
       </trans-unit>
       <trans-unit id="7819314041543176992" datatype="html">
         <source>Close</source>
+        <target>Cerrar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-creator-menu/schedule-creator-menu.component.html</context>
           <context context-type="linenumber">176,177</context>
@@ -895,6 +948,7 @@
       </trans-unit>
       <trans-unit id="3099407790104619613" datatype="html">
         <source>No schedule entries found.</source>
+        <target>No se encontraron entradas de horario.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-event-view-holder/schedule-event-view-holder.component.html</context>
           <context context-type="linenumber">16,17</context>
@@ -902,6 +956,7 @@
       </trans-unit>
       <trans-unit id="1655069838040430737" datatype="html">
         <source>Event Details</source>
+        <target>Detalles del evento</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-event-view/schedule-event-view.component.html</context>
           <context context-type="linenumber">1,2</context>
@@ -909,6 +964,7 @@
       </trans-unit>
       <trans-unit id="event-name" datatype="html">
         <source>Event Name:</source>
+        <target>Nombre del evento:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-event-view/schedule-event-view.component.html</context>
           <context context-type="linenumber">3</context>
@@ -916,6 +972,7 @@
       </trans-unit>
       <trans-unit id="event-start" datatype="html">
         <source>Start:</source>
+        <target>Inicio:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-event-view/schedule-event-view.component.html</context>
           <context context-type="linenumber">4</context>
@@ -923,6 +980,7 @@
       </trans-unit>
       <trans-unit id="event-end" datatype="html">
         <source>End:</source>
+        <target>Fin:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-event-view/schedule-event-view.component.html</context>
           <context context-type="linenumber">5</context>
@@ -930,6 +988,7 @@
       </trans-unit>
       <trans-unit id="event-participants" datatype="html">
         <source>Participants</source>
+        <target>Participantes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/schedule-event-view/schedule-event-view.component.html</context>
           <context context-type="linenumber">9,10</context>
@@ -937,6 +996,7 @@
       </trans-unit>
       <trans-unit id="7722300411852775497" datatype="html">
         <source>Select a skill to add to the worker:</source>
+        <target>Seleccione una habilidad para agregar al trabajador:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-schedule/worker-skill-selector/worker-skill-selector.component.html</context>
           <context context-type="linenumber">4,5</context>
@@ -944,6 +1004,7 @@
       </trans-unit>
       <trans-unit id="2418896733749937346" datatype="html">
         <source>Shift Management</source>
+        <target>Gestión de turnos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">4,5</context>
@@ -951,6 +1012,7 @@
       </trans-unit>
       <trans-unit id="6596884798698432024" datatype="html">
         <source>Add Shift</source>
+        <target>Agregar turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">8,9</context>
@@ -958,6 +1020,7 @@
       </trans-unit>
       <trans-unit id="4299364623291586677" datatype="html">
         <source>Set Shift Rotation</source>
+        <target>Establecer rotación de turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">87,88</context>
@@ -969,6 +1032,7 @@
       </trans-unit>
       <trans-unit id="7283512008863790225" datatype="html">
         <source>No Shift Rotations have been created yet.</source>
+        <target>Aún no se han creado rotaciones de turno.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">93,94</context>
@@ -976,6 +1040,7 @@
       </trans-unit>
       <trans-unit id="1895067393641764168" datatype="html">
         <source>Shift Color</source>
+        <target>Color del turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">167</context>
@@ -983,6 +1048,7 @@
       </trans-unit>
       <trans-unit id="6267949586860460320" datatype="html">
         <source>Shift Alias</source>
+        <target>Alias del turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">175</context>
@@ -990,6 +1056,7 @@
       </trans-unit>
       <trans-unit id="6143773109349065224" datatype="html">
         <source>Shift Start Time</source>
+        <target>Hora de inicio del turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">182</context>
@@ -997,6 +1064,7 @@
       </trans-unit>
       <trans-unit id="4441052382288482608" datatype="html">
         <source>Shift Duration</source>
+        <target>Duración del turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">189</context>
@@ -1004,6 +1072,7 @@
       </trans-unit>
       <trans-unit id="5867020438024952931" datatype="html">
         <source>Shift Description</source>
+        <target>Descripción del turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">198</context>
@@ -1011,6 +1080,7 @@
       </trans-unit>
       <trans-unit id="672895838020782184" datatype="html">
         <source>Add Break</source>
+        <target>Agregar descanso</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">220,221</context>
@@ -1018,6 +1088,7 @@
       </trans-unit>
       <trans-unit id="1846599026130801353" datatype="html">
         <source> Shift Break Type </source>
+        <target>Tipo de descanso del turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">230</context>
@@ -1025,6 +1096,7 @@
       </trans-unit>
       <trans-unit id="8576166194482756163" datatype="html">
         <source> Duration </source>
+        <target>Duración</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">236</context>
@@ -1032,6 +1104,7 @@
       </trans-unit>
       <trans-unit id="8593256478268398801" datatype="html">
         <source> Start Time </source>
+        <target>Hora de inicio</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">242</context>
@@ -1053,6 +1126,7 @@
       </trans-unit>
       <trans-unit id="4360239040231802726" datatype="html">
         <source> Actions </source>
+        <target>Acciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/entity-shifts.component.html</context>
           <context context-type="linenumber">260</context>
@@ -1060,6 +1134,7 @@
       </trans-unit>
       <trans-unit id="4305336587864101642" datatype="html">
         <source>Create from Scratch</source>
+        <target>Crear desde cero</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/shift-break-dialog-form/shift-break-dialog-form.component.html</context>
           <context context-type="linenumber">10,11</context>
@@ -1067,6 +1142,7 @@
       </trans-unit>
       <trans-unit id="5451153544382828449" datatype="html">
         <source>Based on Templates</source>
+        <target>Basado en plantillas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/shift-break-dialog-form/shift-break-dialog-form.component.html</context>
           <context context-type="linenumber">14,15</context>
@@ -1074,6 +1150,7 @@
       </trans-unit>
       <trans-unit id="704468115072807571" datatype="html">
         <source>Shift Break Type</source>
+        <target>Tipo de descanso del turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/shift-break-dialog-form/shift-break-dialog-form.component.html</context>
           <context context-type="linenumber">45</context>
@@ -1081,6 +1158,7 @@
       </trans-unit>
       <trans-unit id="108577618408089378" datatype="html">
         <source>Break Start Time</source>
+        <target>Hora de inicio del descanso</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/shift-break-dialog-form/shift-break-dialog-form.component.html</context>
           <context context-type="linenumber">57</context>
@@ -1088,6 +1166,7 @@
       </trans-unit>
       <trans-unit id="4828975917810335444" datatype="html">
         <source>Break Duration</source>
+        <target>Duración del descanso</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/shift-break-dialog-form/shift-break-dialog-form.component.html</context>
           <context context-type="linenumber">64</context>
@@ -1095,6 +1174,7 @@
       </trans-unit>
       <trans-unit id="6297710456915163809" datatype="html">
         <source>Included in the Shift</source>
+        <target>Incluido en el turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/shift-break-dialog-form/shift-break-dialog-form.component.html</context>
           <context context-type="linenumber">74,75</context>
@@ -1102,6 +1182,7 @@
       </trans-unit>
       <trans-unit id="6275387819181214676" datatype="html">
         <source>Is Time Flexible</source>
+        <target>¿Es flexible el horario?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/shift-break-dialog-form/shift-break-dialog-form.component.html</context>
           <context context-type="linenumber">80,81</context>
@@ -1109,6 +1190,7 @@
       </trans-unit>
       <trans-unit id="6948323079960194123" datatype="html">
         <source>Shift Rotation</source>
+        <target>Rotación de turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/shift-rotation-dialog-form/shift-rotation-dialog-form.component.html</context>
           <context context-type="linenumber">2,3</context>
@@ -1116,6 +1198,7 @@
       </trans-unit>
       <trans-unit id="2958333138850968806" datatype="html">
         <source>Is Leave</source>
+        <target>Es licencia</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/shift-rotation-dialog-form/shift-rotation-dialog-form.component.html</context>
           <context context-type="linenumber">5,6</context>
@@ -1123,6 +1206,7 @@
       </trans-unit>
       <trans-unit id="4359847060009771702" datatype="html">
         <source>Set</source>
+        <target>Establecer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-shifts/shift-rotation-dialog-form/shift-rotation-dialog-form.component.html</context>
           <context context-type="linenumber">29,30</context>
@@ -1130,6 +1214,7 @@
       </trans-unit>
       <trans-unit id="5105557512709552795" datatype="html">
         <source>Add Member</source>
+        <target>Agregar miembro</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/add-member-dialog/add-member-dialog.component.html</context>
           <context context-type="linenumber">2,3</context>
@@ -1141,6 +1226,7 @@
       </trans-unit>
       <trans-unit id="4768749765465246664" datatype="html">
         <source>Email</source>
+        <target>Correo electrónico</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/add-member-dialog/add-member-dialog.component.html</context>
           <context context-type="linenumber">9</context>
@@ -1164,6 +1250,7 @@
       </trans-unit>
       <trans-unit id="6396425553781247861" datatype="html">
         <source>Part of Rotation</source>
+        <target>Parte de la rotación</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/add-member-dialog/add-member-dialog.component.html</context>
           <context context-type="linenumber">45</context>
@@ -1179,6 +1266,7 @@
       </trans-unit>
       <trans-unit id="4357250853133772561" datatype="html">
         <source>Multiple Shifts Assignments</source>
+        <target>Asignaciones de múltiples turnos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/add-member-dialog/add-member-dialog.component.html</context>
           <context context-type="linenumber">49</context>
@@ -1190,6 +1278,7 @@
       </trans-unit>
       <trans-unit id="3609832601707326899" datatype="html">
         <source>Works on Weekdays</source>
+        <target>Trabaja en días laborables</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/add-member-dialog/add-member-dialog.component.html</context>
           <context context-type="linenumber">63</context>
@@ -1201,6 +1290,7 @@
       </trans-unit>
       <trans-unit id="3603757085603809409" datatype="html">
         <source>Works on Weekends</source>
+        <target>Trabaja en fines de semana</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/add-member-dialog/add-member-dialog.component.html</context>
           <context context-type="linenumber">67</context>
@@ -1212,6 +1302,7 @@
       </trans-unit>
       <trans-unit id="5605993045193979158" datatype="html">
         <source>Edit Member</source>
+        <target>Editar miembro</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/edit-member-dialog/edit-member-dialog.component.html</context>
           <context context-type="linenumber">2,3</context>
@@ -1219,6 +1310,7 @@
       </trans-unit>
       <trans-unit id="6111213362045056189" datatype="html">
         <source>In Rotation</source>
+        <target>En rotación</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/entity-workers.component.html</context>
           <context context-type="linenumber">56,57</context>
@@ -1226,6 +1318,7 @@
       </trans-unit>
       <trans-unit id="5562380167840901184" datatype="html">
         <source>Multiple Shift</source>
+        <target>Turnos múltiples</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/entity-workers.component.html</context>
           <context context-type="linenumber">63,64</context>
@@ -1233,6 +1326,7 @@
       </trans-unit>
       <trans-unit id="6356220954110952801" datatype="html">
         <source>Order Options</source>
+        <target>Opciones de orden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/worker-filters-dialog/worker-filters-dialog.component.html</context>
           <context context-type="linenumber">16</context>
@@ -1240,6 +1334,7 @@
       </trans-unit>
       <trans-unit id="5223996203808870899" datatype="html">
         <source>Select Skill</source>
+        <target>Seleccionar habilidad</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/worker-filters-dialog/worker-filters-dialog.component.html</context>
           <context context-type="linenumber">27</context>
@@ -1247,6 +1342,7 @@
       </trans-unit>
       <trans-unit id="7859083301467991470" datatype="html">
         <source>Specific Assignments</source>
+        <target>Asignaciones específicas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/worker-filters-dialog/worker-filters-dialog.component.html</context>
           <context context-type="linenumber">35</context>
@@ -1254,6 +1350,7 @@
       </trans-unit>
       <trans-unit id="2730082324624991000" datatype="html">
         <source>Works Week Days</source>
+        <target>Trabaja días de semana</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/worker-filters-dialog/worker-filters-dialog.component.html</context>
           <context context-type="linenumber">45</context>
@@ -1261,6 +1358,7 @@
       </trans-unit>
       <trans-unit id="3882341026979434963" datatype="html">
         <source>Works Week Ends</source>
+        <target>Trabaja fines de semana</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/entity-workers/worker-filters-dialog/worker-filters-dialog.component.html</context>
           <context context-type="linenumber">48</context>
@@ -1268,6 +1366,7 @@
       </trans-unit>
       <trans-unit id="2171894153326157864" datatype="html">
         <source>Introduction</source>
+        <target>Introducción</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/helpdocs.component.html</context>
           <context context-type="linenumber">15,16</context>
@@ -1279,6 +1378,7 @@
       </trans-unit>
       <trans-unit id="9156212170228959929" datatype="html">
         <source>Getting Started</source>
+        <target>Comenzando</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/helpdocs.component.html</context>
           <context context-type="linenumber">16,17</context>
@@ -1290,6 +1390,7 @@
       </trans-unit>
       <trans-unit id="8212499805974607961" datatype="html">
         <source>Features Overview</source>
+        <target>Descripción general de funciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/helpdocs.component.html</context>
           <context context-type="linenumber">17,18</context>
@@ -1301,6 +1402,7 @@
       </trans-unit>
       <trans-unit id="6392341046708560954" datatype="html">
         <source>Tutorials / How-To Guides</source>
+        <target>Tutoriales / Guías de instrucciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/helpdocs.component.html</context>
           <context context-type="linenumber">18,19</context>
@@ -1308,6 +1410,7 @@
       </trans-unit>
       <trans-unit id="2806917038528218276" datatype="html">
         <source>FAQ</source>
+        <target>Preguntas frecuentes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/helpdocs.component.html</context>
           <context context-type="linenumber">19,20</context>
@@ -1315,6 +1418,7 @@
       </trans-unit>
       <trans-unit id="7988633056301568717" datatype="html">
         <source>Schedules</source>
+        <target>Horarios</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/helpdocs.component.html</context>
           <context context-type="linenumber">30,31</context>
@@ -1330,6 +1434,7 @@
       </trans-unit>
       <trans-unit id="3494381912309991670" datatype="html">
         <source>Profile Management</source>
+        <target>Gestión de perfiles</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/helpdocs.component.html</context>
           <context context-type="linenumber">37,38</context>
@@ -1337,6 +1442,7 @@
       </trans-unit>
       <trans-unit id="4471408334474769276" datatype="html">
         <source>Privacy &amp; Security</source>
+        <target>Privacidad y seguridad</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/helpdocs.component.html</context>
           <context context-type="linenumber">38,39</context>
@@ -1344,6 +1450,7 @@
       </trans-unit>
       <trans-unit id="5851560788527570644" datatype="html">
         <source>Notifications</source>
+        <target>Notificaciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/helpdocs.component.html</context>
           <context context-type="linenumber">39,40</context>
@@ -1355,6 +1462,7 @@
       </trans-unit>
       <trans-unit id="8636246400263047779" datatype="html">
         <source>Billing &amp; Subscriptions</source>
+        <target>Facturación y suscripciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/helpdocs.component.html</context>
           <context context-type="linenumber">40,41</context>
@@ -1362,6 +1470,7 @@
       </trans-unit>
       <trans-unit id="579912113060173772" datatype="html">
         <source>Contact Support</source>
+        <target>Contactar soporte</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/helpdocs.component.html</context>
           <context context-type="linenumber">41,42</context>
@@ -1369,6 +1478,7 @@
       </trans-unit>
       <trans-unit id="5901548994016373457" datatype="html">
         <source>Release Notes / Updates</source>
+        <target>Notas de la versión / Actualizaciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/helpdocs.component.html</context>
           <context context-type="linenumber">42,43</context>
@@ -1376,6 +1486,7 @@
       </trans-unit>
       <trans-unit id="8048035017469027409" datatype="html">
         <source>Legal / Policies</source>
+        <target>Legal / Políticas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/helpdocs.component.html</context>
           <context context-type="linenumber">43,44</context>
@@ -1383,6 +1494,7 @@
       </trans-unit>
       <trans-unit id="3718408168459742747" datatype="html">
         <source>This section provides information about employee absences, including types of absences, policies, and procedures for reporting and managing time off.</source>
+        <target>Esta sección proporciona información sobre las ausencias de los empleados, incluyendo tipos de ausencias, políticas y procedimientos para reportar y gestionar el tiempo libre.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-absences/help-absences.component.html</context>
           <context context-type="linenumber">2,4</context>
@@ -1397,6 +1509,7 @@
       </trans-unit>
       <trans-unit id="7085366844216920023" datatype="html">
         <source>After clicking the button, a form will appear where you can enter the details of the absence, such as the type of absence, start and end dates, and any additional notes.</source>
+        <target>Después de hacer clic en el botón, aparecerá un formulario donde puede ingresar los detalles de la ausencia, como el tipo de ausencia, fechas de inicio y fin, y cualquier nota adicional.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-absences/help-absences.component.html</context>
           <context context-type="linenumber">15,17</context>
@@ -1404,6 +1517,7 @@
       </trans-unit>
       <trans-unit id="1165719733061051656" datatype="html">
         <source>Absences can be of type full day or partial. In a partial absence scenario, the user must specify the time intervals to which he will be absent.</source>
+        <target>Las ausencias pueden ser de tipo día completo o parcial. En un escenario de ausencia parcial, el usuario debe especificar los intervalos de tiempo en los que estará ausente.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-absences/help-absences.component.html</context>
           <context context-type="linenumber">21,23</context>
@@ -1418,6 +1532,7 @@
       </trans-unit>
       <trans-unit id="674026493964944543" datatype="html">
         <source>After saving, the new absence will appear in the absences grid.</source>
+        <target>Después de guardar, la nueva ausencia aparecerá en la cuadrícula de ausencias.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-absences/help-absences.component.html</context>
           <context context-type="linenumber">33,35</context>
@@ -1425,6 +1540,7 @@
       </trans-unit>
       <trans-unit id="2597641570715627312" datatype="html">
         <source>Update and Delete</source>
+        <target>Actualizar y eliminar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-absences/help-absences.component.html</context>
           <context context-type="linenumber">43,44</context>
@@ -1436,6 +1552,7 @@
       </trans-unit>
       <trans-unit id="26310371381728932" datatype="html">
         <source>To update or delete absences, it is done by accessing the edit or delete buttons present on each row of their respective grids.</source>
+        <target>Para actualizar o eliminar ausencias, se hace accediendo a los botones de editar o eliminar presentes en cada fila de sus respectivas cuadrículas.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-absences/help-absences.component.html</context>
           <context context-type="linenumber">44,46</context>
@@ -1443,6 +1560,7 @@
       </trans-unit>
       <trans-unit id="6588327542379499806" datatype="html">
         <source>Pressing the edit button will open the same form as when creating an absence, but populated with the existing data.</source>
+        <target>Presionar el botón de editar abrirá el mismo formulario que al crear una ausencia, pero poblado con los datos existentes.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-absences/help-absences.component.html</context>
           <context context-type="linenumber">50,52</context>
@@ -1450,6 +1568,7 @@
       </trans-unit>
       <trans-unit id="6584837424170531787" datatype="html">
         <source>Absence Types</source>
+        <target>Tipos de ausencia</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-absences/help-absences.component.html</context>
           <context context-type="linenumber">56,57</context>
@@ -1548,6 +1667,7 @@
       </trans-unit>
       <trans-unit id="8866942762882235892" datatype="html">
         <source>Absence Approval</source>
+        <target>Aprobación de ausencia</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-absences/help-absences.component.html</context>
           <context context-type="linenumber">78,79</context>
@@ -1555,6 +1675,7 @@
       </trans-unit>
       <trans-unit id="8613523133160828196" datatype="html">
         <source>Absences can only be approved by the owner or any other manager responsible for this section. This operation can be done in the absences grid status column with the thumb icons.</source>
+        <target>Las ausencias solo pueden ser aprobadas por el propietario o cualquier otro gerente responsable de esta sección. Esta operación se puede hacer en la columna de estado de la cuadrícula de ausencias con los iconos de pulgar.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-absences/help-absences.component.html</context>
           <context context-type="linenumber">79,81</context>
@@ -1562,6 +1683,7 @@
       </trans-unit>
       <trans-unit id="3164239909200177539" datatype="html">
         <source>Clicking the thumbs up icon will approve the absence, while clicking the thumbs down icon will reject it. If approved, this absence will be taken into account when forming schedules, as the worker may or may not be available to specific shift entries.</source>
+        <target>Hacer clic en el icono de pulgar arriba aprobará la ausencia, mientras que hacer clic en el icono de pulgar abajo la rechazará. Si se aprueba, esta ausencia se tendrá en cuenta al formar horarios, ya que el trabajador puede o no estar disponible para entradas de turno específicas.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-absences/help-absences.component.html</context>
           <context context-type="linenumber">85</context>
@@ -1569,6 +1691,7 @@
       </trans-unit>
       <trans-unit id="6888826025326395695" datatype="html">
         <source>Shift Scheduler offers a collection of tools designed to simplify workforce scheduling and improve team coordination. This overview highlights the key features available in the application.</source>
+        <target>Shift Scheduler ofrece una colección de herramientas diseñadas para simplificar la programación de la fuerza laboral y mejorar la coordinación del equipo. Esta descripción general destaca las características clave disponibles en la aplicación.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">2,3</context>
@@ -1576,6 +1699,7 @@
       </trans-unit>
       <trans-unit id="7862051440805498376" datatype="html">
         <source>Members Management</source>
+        <target>Gestión de miembros</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">7,8</context>
@@ -1583,6 +1707,7 @@
       </trans-unit>
       <trans-unit id="2664987994523805520" datatype="html">
         <source>From this page, you can see who is part of the organization in one place. As a managar, you can add new users, update their roles, define availability, and control access permissions to ensure accurate and secure scheduling.</source>
+        <target>Desde esta página, puede ver quién es parte de la organización en un solo lugar. Como gerente, puede agregar nuevos usuarios, actualizar sus roles, definir disponibilidad y controlar permisos de acceso para garantizar una programación precisa y segura.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">8,9</context>
@@ -1590,6 +1715,7 @@
       </trans-unit>
       <trans-unit id="7309532341290132140" datatype="html">
         <source>You can also create profiles to simulate people, either as a tool for experimenting new possibilities, or to create standins, managing the same information that a regular worker has.</source>
+        <target>También puede crear perfiles para simular personas, ya sea como una herramienta para experimentar nuevas posibilidades, o para crear suplentes, gestionando la misma información que tiene un trabajador regular.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">9,10</context>
@@ -1597,6 +1723,7 @@
       </trans-unit>
       <trans-unit id="3328872266573698917" datatype="html">
         <source>Build and maintain shift templates with customizable start times, durations, and requirements. These templates serve as the foundation for schedule generation. Either create them from scratch or make use of many available templates, to speed up configuration.</source>
+        <target>Construya y mantenga plantillas de turnos con horarios de inicio, duraciones y requisitos personalizables. Estas plantillas sirven como base para la generación de horarios. Ya sea créelos desde cero o haga uso de muchas plantillas disponibles, para acelerar la configuración.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">15,16</context>
@@ -1604,6 +1731,7 @@
       </trans-unit>
       <trans-unit id="2415269215066634102" datatype="html">
         <source>Rules &amp; Constraints</source>
+        <target>Reglas y restricciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">20,21</context>
@@ -1611,6 +1739,7 @@
       </trans-unit>
       <trans-unit id="7826675837503753145" datatype="html">
         <source>Define rules that control how schedules are generated. You can select from a vast selection of rule types and specify custom values and associations that will shape the outcome of your scheudle. These can include minimum weekly hours, required rest times, role requirements, and custom business logic.</source>
+        <target>Defina reglas que controlen cómo se generan los horarios. Puede seleccionar de una amplia selección de tipos de reglas y especificar valores y asociaciones personalizadas que darán forma al resultado de su horario. Estos pueden incluir horas semanales mínimas, tiempos de descanso requeridos, requisitos de rol y lógica empresarial personalizada.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">21,22</context>
@@ -1618,6 +1747,7 @@
       </trans-unit>
       <trans-unit id="2657219941833782311" datatype="html">
         <source>Absences &amp; Availability</source>
+        <target>Ausencias y disponibilidad</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">26,27</context>
@@ -1625,6 +1755,7 @@
       </trans-unit>
       <trans-unit id="6887736567639950485" datatype="html">
         <source>Track absences, time-off requests, and general availability. This ensures the created schedules accurately reflect who can work and when.</source>
+        <target>Realice un seguimiento de ausencias, solicitudes de tiempo libre y disponibilidad general. Esto garantiza que los horarios creados reflejen con precisión quién puede trabajar y cuándo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">27,28</context>
@@ -1632,6 +1763,7 @@
       </trans-unit>
       <trans-unit id="2863365551654350148" datatype="html">
         <source>Shift Scheduler keeps your team informed with notifications for schedule updates, shift changes, approvals, and more. Notification preferences can be customized in the user settings.</source>
+        <target>Shift Scheduler mantiene a su equipo informado con notificaciones sobre actualizaciones de horarios, cambios de turnos, aprobaciones y más. Las preferencias de notificación se pueden personalizar en la configuración del usuario.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">33,34</context>
@@ -1639,6 +1771,7 @@
       </trans-unit>
       <trans-unit id="7929809690312606425" datatype="html">
         <source>Account &amp; Billing</source>
+        <target>Cuenta y facturación</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">38,39</context>
@@ -1646,6 +1779,7 @@
       </trans-unit>
       <trans-unit id="2748829505338990044" datatype="html">
         <source>Manage your profile, organization settings, and subscription in one place. Access billing details, plan information, and invoices whenever needed.</source>
+        <target>Gestione su perfil, configuración de la organización y suscripción en un solo lugar. Acceda a detalles de facturación, información del plan y facturas cuando sea necesario.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">39,40</context>
@@ -1653,6 +1787,7 @@
       </trans-unit>
       <trans-unit id="6415204373611137832" datatype="html">
         <source>Support Tools</source>
+        <target>Herramientas de soporte</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">44,45</context>
@@ -1660,6 +1795,7 @@
       </trans-unit>
       <trans-unit id="4759809396888580714" datatype="html">
         <source>Shift Scheduler includes a complete support system to help you succeed. Access tutorials, FAQs, release notes, and contact options for technical assistance.</source>
+        <target>Shift Scheduler incluye un sistema de soporte completo para ayudarle a tener éxito. Acceda a tutoriales, preguntas frecuentes, notas de la versión y opciones de contacto para asistencia técnica.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">45,47</context>
@@ -1667,6 +1803,7 @@
       </trans-unit>
       <trans-unit id="7831471763161939822" datatype="html">
         <source>Create and organize weekly or monthly schedules. The scheduling engine uses your shift templates and rules to automatically generate optimized work plans for your team.</source>
+        <target>Cree y organice horarios semanales o mensuales. El motor de programación utiliza sus plantillas de turnos y reglas para generar automáticamente planes de trabajo optimizados para su equipo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">52,53</context>
@@ -1674,6 +1811,7 @@
       </trans-unit>
       <trans-unit id="2695004715759897226" datatype="html">
         <source>You can also manually plan your schedule by specifying whos is working on every given day and which roles are they performing.</source>
+        <target>También puede planificar manualmente su horario especificando quién está trabajando cada día y qué roles están desempeñando.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-features/help-features.component.html</context>
           <context context-type="linenumber">53,56</context>
@@ -1681,6 +1819,7 @@
       </trans-unit>
       <trans-unit id="819669997627325490" datatype="html">
         <source>Welcome to Shift Scheduler! This guide will walk you through the essential steps to begin using the application and understand its core workflow.</source>
+        <target>¡Bienvenido a Shift Scheduler! Esta guía le guiará a través de los pasos esenciales para comenzar a usar la aplicación y comprender su flujo de trabajo principal.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-get-started/help-get-started.component.html</context>
           <context context-type="linenumber">2,3</context>
@@ -1688,6 +1827,7 @@
       </trans-unit>
       <trans-unit id="6605187323728255797" datatype="html">
         <source>Create/Join a Work Entity</source>
+        <target>Crear/Unirse a una entidad de trabajo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-get-started/help-get-started.component.html</context>
           <context context-type="linenumber">7,8</context>
@@ -1716,6 +1856,7 @@
       </trans-unit>
       <trans-unit id="8864973160736725822" datatype="html">
         <source>Navigating the Dashboard</source>
+        <target>Navegando por el panel de control</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-get-started/help-get-started.component.html</context>
           <context context-type="linenumber">17,18</context>
@@ -1723,6 +1864,7 @@
       </trans-unit>
       <trans-unit id="4368399215027157319" datatype="html">
         <source>When you login in, the dashboard provides quick access to your schedules, team information, shift templates, rules, absences, and other relevant information of your work entities. Each section is designed to keep your scheduling operations clear and organized.</source>
+        <target>Cuando inicia sesión, el panel de control proporciona acceso rápido a sus horarios, información del equipo, plantillas de turnos, reglas, ausencias y otra información relevante de sus entidades de trabajo. Cada sección está diseñada para mantener sus operaciones de programación claras y organizadas.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-get-started/help-get-started.component.html</context>
           <context context-type="linenumber">18,19</context>
@@ -1730,6 +1872,7 @@
       </trans-unit>
       <trans-unit id="3542241089896052497" datatype="html">
         <source>Adding Members</source>
+        <target>Agregar miembros</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-get-started/help-get-started.component.html</context>
           <context context-type="linenumber">23,24</context>
@@ -1737,6 +1880,7 @@
       </trans-unit>
       <trans-unit id="5133831979952035399" datatype="html">
         <source>As a manager, you can add your team members to the system. You can define their roles, availability, and permissions, ensuring Shift Scheduler has accurate data to work with.</source>
+        <target>Como gerente, puede agregar a los miembros de su equipo al sistema. Puede definir sus roles, disponibilidad y permisos, asegurando que Shift Scheduler tenga datos precisos con los que trabajar.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-get-started/help-get-started.component.html</context>
           <context context-type="linenumber">24,25</context>
@@ -1744,6 +1888,7 @@
       </trans-unit>
       <trans-unit id="7858829981481849940" datatype="html">
         <source>Setting Up Shifts &amp; Rules</source>
+        <target>Configuración de turnos y reglas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-get-started/help-get-started.component.html</context>
           <context context-type="linenumber">29,30</context>
@@ -1751,6 +1896,7 @@
       </trans-unit>
       <trans-unit id="5810361786097487973" datatype="html">
         <source>Shift Scheduler relies on templates and rules to build schedules efficiently. Define shift types, durations, requirements, and constraints so the system knows how to assign work properly.</source>
+        <target>Shift Scheduler se basa en plantillas y reglas para construir horarios de manera eficiente. Defina tipos de turnos, duraciones, requisitos y restricciones para que el sistema sepa cómo asignar el trabajo adecuadamente.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-get-started/help-get-started.component.html</context>
           <context context-type="linenumber">30,31</context>
@@ -1758,6 +1904,7 @@
       </trans-unit>
       <trans-unit id="6780194053475331410" datatype="html">
         <source>Log / Manage Absences</source>
+        <target>Registrar / Gestionar ausencias</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-get-started/help-get-started.component.html</context>
           <context context-type="linenumber">35,36</context>
@@ -1765,6 +1912,7 @@
       </trans-unit>
       <trans-unit id="6825959795558873042" datatype="html">
         <source>As a worker, you can submit absence requests for your manager to approve. These absences are taken into account for generating the required schedules.</source>
+        <target>Como trabajador, puede enviar solicitudes de ausencia para que su gerente las apruebe. Estas ausencias se tienen en cuenta para generar los horarios requeridos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-get-started/help-get-started.component.html</context>
           <context context-type="linenumber">36,37</context>
@@ -1772,6 +1920,7 @@
       </trans-unit>
       <trans-unit id="2843124129377270713" datatype="html">
         <source>Creating Your First Schedule</source>
+        <target>Crear su primer horario</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-get-started/help-get-started.component.html</context>
           <context context-type="linenumber">41,42</context>
@@ -1786,6 +1935,7 @@
       </trans-unit>
       <trans-unit id="2869948436884924902" datatype="html">
         <source>Next Steps</source>
+        <target>Próximos pasos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-get-started/help-get-started.component.html</context>
           <context context-type="linenumber">47,48</context>
@@ -1797,6 +1947,7 @@
       </trans-unit>
       <trans-unit id="2433099893403033440" datatype="html">
         <source>After setting up the basics, explore other help sections to learn more about:</source>
+        <target>Después de configurar los conceptos básicos, explore otras secciones de ayuda para obtener más información sobre:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-get-started/help-get-started.component.html</context>
           <context context-type="linenumber">48,49</context>
@@ -1836,6 +1987,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="581897928546158175" datatype="html">
         <source>What is Shift Scheduler?</source>
+        <target>¿Qué es Shift Scheduler?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">10,11</context>
@@ -1843,6 +1995,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="170333452819335148" datatype="html">
         <source>Shift Scheduler is a scheduling platform built to automate and simplify the creation of work schedules. It helps organizations eliminate manual planning, ensure fair distribution of workloads, and maintain visibility over member availability, absences, and work rules.</source>
+        <target>Shift Scheduler es una plataforma de programación construida para automatizar y simplificar la creación de horarios de trabajo. Ayuda a las organizaciones a eliminar la planificación manual, garantizar una distribución justa de las cargas de trabajo y mantener la visibilidad sobre la disponibilidad de los miembros, ausencias y reglas de trabajo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">11,12</context>
@@ -1850,6 +2003,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5802745531615354462" datatype="html">
         <source>Who is it for?</source>
+        <target>¿Para quién es?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">15,16</context>
@@ -1865,6 +2019,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3209073157918575387" datatype="html">
         <source>Administrators who configure rules, create schedules, and manage members</source>
+        <target>Administradores que configuran reglas, crean horarios y gestionan miembros</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">18,19</context>
@@ -1872,6 +2027,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1691431807461275049" datatype="html">
         <source>Managers who oversee shifts, staffing, and team availability</source>
+        <target>Gerentes que supervisan turnos, personal y disponibilidad del equipo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">19,20</context>
@@ -1887,6 +2043,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="298854584109998052" datatype="html">
         <source>What can you do with Shift Scheduler</source>
+        <target>Qué puede hacer con Shift Scheduler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">25,26</context>
@@ -1894,6 +2051,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3848014192393071490" datatype="html">
         <source>With Shift Scheduler, you can easily:</source>
+        <target>Con Shift Scheduler, puede fácilmente:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">26,27</context>
@@ -1901,6 +2059,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8294865671946566363" datatype="html">
         <source>Create weekly, monthly, or custom schedules</source>
+        <target>Crear horarios semanales, mensuales o personalizados</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">28,29</context>
@@ -1908,6 +2067,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="607041656566322873" datatype="html">
         <source>Manage member profiles, roles, and availability</source>
+        <target>Gestionar perfiles de miembros, roles y disponibilidad</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">29,30</context>
@@ -1915,6 +2075,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1006664055644974755" datatype="html">
         <source>Define shift templates, scheduling rules, and constraints</source>
+        <target>Definir plantillas de turnos, reglas de programación y restricciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">30,31</context>
@@ -1922,6 +2083,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5690329444830106432" datatype="html">
         <source>Track absences and conflicts automatically</source>
+        <target>Rastrear ausencias y conflictos automáticamente</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">31,32</context>
@@ -1929,6 +2091,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1060965461414739646" datatype="html">
         <source>Review, publish, and share schedules</source>
+        <target>Revisar, publicar y compartir horarios</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">32,33</context>
@@ -1936,6 +2099,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5969692449669723609" datatype="html">
         <source>Configure notifications for changes or approvals</source>
+        <target>Configurar notificaciones para cambios o aprobaciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">33,34</context>
@@ -1943,6 +2107,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="4917341891001079305" datatype="html">
         <source>Manage subscription, billing, and account settings</source>
+        <target>Gestionar suscripción, facturación y configuración de la cuenta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">34,35</context>
@@ -1950,6 +2115,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8043044684392540237" datatype="html">
         <source>How to Start</source>
+        <target>Cómo empezar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">39,40</context>
@@ -1985,6 +2151,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="4598451426982972167" datatype="html">
         <source>Navigating Shift Scheduler</source>
+        <target>Navegando por Shift Scheduler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">49,50</context>
@@ -1992,6 +2159,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="7204205099814859292" datatype="html">
         <source>Shift Scheduler organizes its tools into a few core sections:</source>
+        <target>Shift Scheduler organiza sus herramientas en algunas secciones principales:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-intro/help-intro.component.html</context>
           <context context-type="linenumber">50,51</context>
@@ -2083,6 +2251,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="7212586398372927559" datatype="html">
         <source>List or Grid?</source>
+        <target>¿Lista o cuadrícula?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-members/help-members.component.html</context>
           <context context-type="linenumber">7,8</context>
@@ -2090,6 +2259,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3018807926732614233" datatype="html">
         <source>From this page, you can see all members and can choose in what you</source>
+        <target>Desde esta página, puede ver todos los miembros y puede elegir en qué formato desea verlos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-members/help-members.component.html</context>
           <context context-type="linenumber">8,9</context>
@@ -2111,6 +2281,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5828695369252622662" datatype="html">
         <source>Filter what you want to see</source>
+        <target>Filtrar lo que desea ver</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-members/help-members.component.html</context>
           <context context-type="linenumber">24,25</context>
@@ -2118,6 +2289,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1904287786687191929" datatype="html">
         <source>You can filter members by their roles, availability, or other criteria to quickly find specific individuals or groups within your organization.</source>
+        <target>Puede filtrar miembros por sus roles, disponibilidad u otros criterios para encontrar rápidamente individuos o grupos específicos dentro de su organización.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-members/help-members.component.html</context>
           <context context-type="linenumber">25,26</context>
@@ -2125,6 +2297,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="2988382071744300378" datatype="html">
         <source>By clicking on the filters button, a popup will appear with following options:</source>
+        <target>Al hacer clic en el botón de filtros, aparecerá una ventana emergente con las siguientes opciones:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-members/help-members.component.html</context>
           <context context-type="linenumber">29,30</context>
@@ -2167,6 +2340,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1445366876868594104" datatype="html">
         <source>Adding New Members</source>
+        <target>Agregar nuevos miembros</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-members/help-members.component.html</context>
           <context context-type="linenumber">43,44</context>
@@ -2237,6 +2411,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="2210229810682108668" datatype="html">
         <source>You can make these operations for when you wish to invite someone, or creating someone, to the exception of assigning specific shifts. Once the person has joined the work entity, you can then assign specific shifts if required.</source>
+        <target>Puede realizar estas operaciones cuando desee invitar a alguien, o crear a alguien, con la excepción de asignar turnos específicos. Una vez que la persona se haya unido a la entidad de trabajo, puede asignar turnos específicos si es necesario.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-members/help-members.component.html</context>
           <context context-type="linenumber">67,69</context>
@@ -2244,6 +2419,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8588197178754719105" datatype="html">
         <source>Editing Members</source>
+        <target>Edición de miembros</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-members/help-members.component.html</context>
           <context context-type="linenumber">72,73</context>
@@ -2258,6 +2434,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="996945404635873721" datatype="html">
         <source>In order for schedules to tailor into the needs of the managers, each work entity must have a set of rules that the application will then interpret to generate a schedule.</source>
+        <target>Para que los horarios se adapten a las necesidades de los gerentes, cada entidad de trabajo debe tener un conjunto de reglas que la aplicación interpretará para generar un horario.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">2,3</context>
@@ -2272,6 +2449,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="4729602130356681352" datatype="html">
         <source>After clicking the button, the first form will appear with the following fields:</source>
+        <target>Después de hacer clic en el botón, aparecerá el primer formulario con los siguientes campos:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">14,15</context>
@@ -2293,6 +2471,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="4263183090991666285" datatype="html">
         <source>When a rule is selected, a secondary form will appear based on the rule type, for different kind of fields may be required to create the specifications that complement the rule.</source>
+        <target>Cuando se selecciona una regla, aparecerá un formulario secundario basado en el tipo de regla, ya que se pueden requerir diferentes tipos de campos para crear las especificaciones que complementan la regla.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">24,26</context>
@@ -2314,6 +2493,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3977533733324324472" datatype="html">
         <source>To update or delete rules and their specifications, it is done by accessing the edit or delete buttons present on each row of their respective grids.</source>
+        <target>Para actualizar o eliminar reglas y sus especificaciones, se hace accediendo a los botones de editar o eliminar presentes en cada fila de sus respectivas cuadrículas.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">47,49</context>
@@ -2321,6 +2501,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5900994159062889412" datatype="html">
         <source>Pressing the edit button will open the same forms as when creating a rule, but populated with the existing data.</source>
+        <target>Presionar el botón de editar abrirá los mismos formularios que al crear una regla, pero poblados con los datos existentes.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">59,62</context>
@@ -2328,6 +2509,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1253009214600920869" datatype="html">
         <source>Know the Rules Types</source>
+        <target>Conozca los tipos de reglas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">66,67</context>
@@ -2335,6 +2517,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="2483710047930948025" datatype="html">
         <source>Rule types dictate the behaviour of schedule generating operations. They can be of single instance, meaning only one rule of that specific type can exist at any given time, multiple instances, single or multiple specifications, with different type of references that can be associated.</source>
+        <target>Los tipos de reglas dictan el comportamiento de las operaciones de generación de horarios. Pueden ser de instancia única, lo que significa que solo puede existir una regla de ese tipo específico en cualquier momento dado, instancias múltiples, especificaciones únicas o múltiples, con diferentes tipos de referencias que se pueden asociar.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">67,68</context>
@@ -2349,6 +2532,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3763311162653246140" datatype="html">
         <source>Max. Hours by Day</source>
+        <target>Máx. horas por día</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">72,73</context>
@@ -2496,6 +2680,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8031035496367103196" datatype="html">
         <source>Min. Hours per Week</source>
+        <target>Mín. horas por semana</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">81,82</context>
@@ -2510,6 +2695,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="6902966864918637409" datatype="html">
         <source>Max. Hours per Week</source>
+        <target>Máx. horas por semana</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">91,92</context>
@@ -2524,6 +2710,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3766553652558977647" datatype="html">
         <source>Min. Hours per Month</source>
+        <target>Mín. horas por mes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">101,102</context>
@@ -2538,6 +2725,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="363679271309967783" datatype="html">
         <source>Min. Workers per Shift</source>
+        <target>Mín. trabajadores por turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">111,112</context>
@@ -2618,6 +2806,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5729701769816226597" datatype="html">
         <source>Max. Workers per Shift</source>
+        <target>Máx. trabajadores por turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">121,122</context>
@@ -2632,6 +2821,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5688100236470033996" datatype="html">
         <source>Required Skill Set per Shift</source>
+        <target>Conjunto de habilidades requerido por turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">131,132</context>
@@ -2684,6 +2874,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="7219236860539692575" datatype="html">
         <source>Required Quantity Skill Set per Shift</source>
+        <target>Cantidad de conjunto de habilidades requerido por turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">141,142</context>
@@ -2698,6 +2889,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="6064333590705980164" datatype="html">
         <source>Required Quantity Skill Set per Shift on Weekdays</source>
+        <target>Cantidad de conjunto de habilidades requerido por turno en días laborables</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">151,152</context>
@@ -2712,6 +2904,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="2650310464089571912" datatype="html">
         <source>Required Quantity Skill Set per Shift on Weekends</source>
+        <target>Cantidad de conjunto de habilidades requerido por turno en fines de semana</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">161,162</context>
@@ -2726,6 +2919,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="4348554486806447870" datatype="html">
         <source>Max Consecutive Shifts</source>
+        <target>Máx. turnos consecutivos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">171,172</context>
@@ -2740,6 +2934,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="2706388485528107017" datatype="html">
         <source>Shift Includes Weekends</source>
+        <target>El turno incluye fines de semana</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">181,182</context>
@@ -2754,6 +2949,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3902058125682316230" datatype="html">
         <source>Post Shift Rest Hours</source>
+        <target>Horas de descanso post-turno</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">191,192</context>
@@ -2768,6 +2964,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="9103258656733551159" datatype="html">
         <source>Min. Days off per Week</source>
+        <target>Mín. días libres por semana</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">201,202</context>
@@ -2782,6 +2979,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5953609588733931314" datatype="html">
         <source>Min. Weekends Off per Month</source>
+        <target>Mín. fines de semana libres por mes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">212,213</context>
@@ -2796,6 +2994,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="7589823984612456785" datatype="html">
         <source>Max. Consecutive Days for Non Rotationers</source>
+        <target>Máx. días consecutivos para no rotadores</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">222,223</context>
@@ -2810,6 +3009,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3207964344808993417" datatype="html">
         <source>Avg. Hours per Week</source>
+        <target>Prom. horas por semana</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">232,233</context>
@@ -2824,6 +3024,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3050937125930228276" datatype="html">
         <source>Avg. Hours per Month</source>
+        <target>Prom. horas por mes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">243,244</context>
@@ -2838,6 +3039,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="74875501653880635" datatype="html">
         <source>Rule Priorities</source>
+        <target>Prioridades de reglas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">256,257</context>
@@ -2845,6 +3047,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1137837090577420559" datatype="html">
         <source>When adding layers of rules to your organization, conflicts can occur due to their similar nature between them. In this current version of schedule generation, certain rule types have priorities over others.</source>
+        <target>Al agregar capas de reglas a su organización, pueden ocurrir conflictos debido a su naturaleza similar entre ellas. En esta versión actual de generación de horarios, ciertos tipos de reglas tienen prioridades sobre otros.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">257,258</context>
@@ -2852,6 +3055,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1417384172957211619" datatype="html">
         <source>For example, setting a maximum amount of workers per shift of 10, will prioritize higher over required amount of skillset per shift that can specify 6 workers of Skill X and 6 of Skill Y.</source>
+        <target>Por ejemplo, establecer una cantidad máxima de trabajadores por turno de 10, priorizará más alto sobre la cantidad requerida de conjunto de habilidades por turno que puede especificar 6 trabajadores de Habilidad X y 6 de Habilidad Y.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">258,260</context>
@@ -2859,6 +3063,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="4535918771578213965" datatype="html">
         <source>Here is the list of rule types ordered by priority from highest to lowest, that can enter in conflict:</source>
+        <target>Aquí está la lista de tipos de reglas ordenados por prioridad de mayor a menor, que pueden entrar en conflicto:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">260,262</context>
@@ -2866,6 +3071,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="7407925841094459625" datatype="html">
         <source>INSERT PRIORITIES HERE</source>
+        <target>INSERTAR PRIORIDADES AQUÍ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">262,264</context>
@@ -2873,6 +3079,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3285315590661482349" datatype="html">
         <source>Tips</source>
+        <target>Consejos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">268,269</context>
@@ -2880,6 +3087,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3958316630686422390" datatype="html">
         <source>When creating rules, keep in mind that the more rules you add, the more restrictions the schedule generator will have to comply with. This can lead to situations where no valid schedule can be generated due to conflicting or overly restrictive rules.</source>
+        <target>Al crear reglas, tenga en cuenta que cuantas más reglas agregue, más restricciones tendrá que cumplir el generador de horarios. Esto puede llevar a situaciones donde no se puede generar un horario válido debido a reglas conflictivas o demasiado restrictivas.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">270,271</context>
@@ -2894,6 +3102,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="6742725610160343726" datatype="html">
         <source>Some rule types cover specific scenarios. Recommend the use of a mix of generic and specific rule types for better results.</source>
+        <target>Algunos tipos de reglas cubren escenarios específicos. Recomiende el uso de una mezcla de tipos de reglas genéricas y específicas para obtener mejores resultados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">272,273</context>
@@ -2901,6 +3110,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="2534044021887328184" datatype="html">
         <source>Engage with your workforce to understand their needs and preferences, and consider incorporating their feedback into the rule-setting process to enhance satisfaction and compliance.</source>
+        <target>Interactúe con su fuerza laboral para comprender sus necesidades y preferencias, y considere incorporar sus comentarios en el proceso de establecimiento de reglas para mejorar la satisfacción y el cumplimiento.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/helpdocs/pages/help-rules/help-rules.component.html</context>
           <context context-type="linenumber">273,274</context>
@@ -3599,6 +3809,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="2821179408673282599" datatype="html">
         <source>Home</source>
+        <target>Inicio</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home-navbar/home-navbar.component.html</context>
           <context context-type="linenumber">11,12</context>
@@ -3606,6 +3817,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1726363342938046830" datatype="html">
         <source>About</source>
+        <target>Acerca de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home-navbar/home-navbar.component.html</context>
           <context context-type="linenumber">14,15</context>
@@ -3635,6 +3847,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="7922989125096435449" datatype="html">
         <source>Contact</source>
+        <target>Contacto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home-navbar/home-navbar.component.html</context>
           <context context-type="linenumber">23,24</context>
@@ -3642,6 +3855,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="2454050363478003966" datatype="html">
         <source>Login</source>
+        <target>Iniciar sesión</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home-navbar/home-navbar.component.html</context>
           <context context-type="linenumber">27,28</context>
@@ -3649,6 +3863,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3301086086650990787" datatype="html">
         <source>Register</source>
+        <target>Registrarse</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home-navbar/home-navbar.component.html</context>
           <context context-type="linenumber">28,29</context>
@@ -3678,6 +3893,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5736481176444461852" datatype="html">
         <source>About Us</source>
+        <target>Acerca de nosotros</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">15,16</context>
@@ -3685,6 +3901,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5467408156046252945" datatype="html">
         <source>Revolutionizing Workforce Management</source>
+        <target>Revolucionando la gestión de la fuerza laboral</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">16,17</context>
@@ -3699,6 +3916,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="4379537406426853394" datatype="html">
         <source>With features that cater to managers and employees alike, Shift Scheduler ensures transparency, efficiency, and fairness in workforce scheduling. Join our growing community of businesses revolutionizing the way they manage teams</source>
+        <target>Con funciones que atienden tanto a gerentes como a empleados, Shift Scheduler garantiza transparencia, eficiencia y equidad en la programación de la fuerza laboral. Únase a nuestra creciente comunidad de empresas que están revolucionando la forma en que gestionan equipos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">19,20</context>
@@ -3706,6 +3924,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1677203912548342477" datatype="html">
         <source>Discover the Features That Transform Scheduling</source>
+        <target>Descubra las funciones que transforman la programación</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">27,29</context>
@@ -3713,6 +3932,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="838700378468064403" datatype="html">
         <source>Create &amp; Manage Worker Entities</source>
+        <target>Crear y gestionar entidades de trabajadores</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">33,34</context>
@@ -3720,6 +3940,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="579427388217536608" datatype="html">
         <source>Seamlessly register your account and create or join a company profile. Manage your workforce with ease.</source>
+        <target>Registre su cuenta sin problemas y cree o únase a un perfil de empresa. Gestione su fuerza laboral con facilidad.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">34,35</context>
@@ -3727,6 +3948,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5218790923496762508" datatype="html">
         <source>Skill-Based Assignments</source>
+        <target>Asignaciones basadas en habilidades</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">40,41</context>
@@ -3734,6 +3956,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8999728358305845463" datatype="html">
         <source>Assign specific skills to workers to ensure the right people are placed in the right shifts.</source>
+        <target>Asigne habilidades específicas a los trabajadores para garantizar que las personas adecuadas se coloquen en los turnos correctos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">41,42</context>
@@ -3741,6 +3964,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1403254880187067534" datatype="html">
         <source>Absence Management</source>
+        <target>Gestión de ausencias</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">47,48</context>
@@ -3755,6 +3979,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="4093865960961917943" datatype="html">
         <source>Customizable Shifts &amp; Templates</source>
+        <target>Turnos y plantillas personalizables</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">58,59</context>
@@ -3762,6 +3987,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3904209284191061725" datatype="html">
         <source>Design shifts with designated breaks and utilize templates to save time and maintain consistency.</source>
+        <target>Diseñe turnos con descansos designados y utilice plantillas para ahorrar tiempo y mantener la coherencia.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">59,60</context>
@@ -3769,6 +3995,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="6934752049325623166" datatype="html">
         <source>Set custom rules—such as hourly limits—and let Shift Scheduler create efficient schedules for your team automatically.</source>
+        <target>Establezca reglas personalizadas, como límites por hora, y deje que Shift Scheduler cree horarios eficientes para su equipo automáticamente.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">65,66</context>
@@ -3776,6 +4003,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8380443076206869762" datatype="html">
         <source>Manual Adjustments</source>
+        <target>Ajustes manuales</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">70,71</context>
@@ -3783,6 +4011,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5133175211736179916" datatype="html">
         <source>Need more control? Edit schedules manually to account for unique situations.</source>
+        <target>¿Necesita más control? Edite horarios manualmente para tener en cuenta situaciones únicas.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">71,72</context>
@@ -3790,6 +4019,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8323724602944806731" datatype="html">
         <source>We offer subscription-based pricing to ensure affordability and scalability as your business grows.</source>
+        <target>Ofrecemos precios basados en suscripción para garantizar asequibilidad y escalabilidad a medida que su negocio crece.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">84,85</context>
@@ -3797,6 +4027,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="6762743264882388498" datatype="html">
         <source>Monthly</source>
+        <target>Mensual</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">88</context>
@@ -3804,6 +4035,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="6942253714523157846" datatype="html">
         <source>Quarterly</source>
+        <target>Trimestral</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">89</context>
@@ -3811,6 +4043,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8036977202721714375" datatype="html">
         <source>Yearly</source>
+        <target>Anual</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">90</context>
@@ -3818,6 +4051,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5736283459838986929" datatype="html">
         <source>Starter</source>
+        <target>Inicial</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">98,99</context>
@@ -3825,6 +4059,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8458210739712683091" datatype="html">
         <source>Perfect for small teams and startups. Includes up to 10 users, manual scheduling, and absence tracking.</source>
+        <target>Perfecto para equipos pequeños y startups. Incluye hasta 10 usuarios, programación manual y seguimiento de ausencias.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">99,100</context>
@@ -3850,6 +4085,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="7690041248818454940" datatype="html">
         <source>per entity</source>
+        <target>por entidad</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">106,107</context>
@@ -3861,6 +4097,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1102557214223963584" datatype="html">
         <source>Start your free trial now</source>
+        <target>Comience su prueba gratuita ahora</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">110,111</context>
@@ -3872,6 +4109,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="6868005546929781039" datatype="html">
         <source>Growth</source>
+        <target>Crecimiento</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">115,116</context>
@@ -3879,6 +4117,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5736051664513534780" datatype="html">
         <source>Ideal for mid-sized teams. Supports up to 50 users, includes automated scheduling, and access to skill-based assignments.</source>
+        <target>Ideal para equipos de tamaño mediano. Admite hasta 50 usuarios, incluye programación automatizada y acceso a asignaciones basadas en habilidades.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">116,117</context>
@@ -3893,6 +4132,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8041427397457443304" datatype="html">
         <source>Enterprise</source>
+        <target>Empresarial</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">132,133</context>
@@ -3900,6 +4140,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1540919221997574644" datatype="html">
         <source>For large teams with complex needs. Includes unlimited users, advanced analytics, priority support, and enterprise-grade security. Contact us for a tailored quote.</source>
+        <target>Para equipos grandes con necesidades complejas. Incluye usuarios ilimitados, análisis avanzados, soporte prioritario y seguridad de nivel empresarial. Contáctenos para obtener una cotización personalizada.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">133,134</context>
@@ -3907,6 +4148,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="7722331542890828382" datatype="html">
         <source>Sends us a message</source>
+        <target>Envíenos un mensaje</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">135,136</context>
@@ -3914,6 +4156,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="759687838251957893" datatype="html">
         <source>Contact Us</source>
+        <target>Contáctenos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">146,147</context>
@@ -3921,6 +4164,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3819934776236397422" datatype="html">
         <source>Get in touch with us for more information or support.</source>
+        <target>Póngase en contacto con nosotros para obtener más información o soporte.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">147,148</context>
@@ -3928,6 +4172,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3967269098753656610" datatype="html">
         <source>Email address</source>
+        <target>Dirección de correo electrónico</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">154,155</context>
@@ -3935,6 +4180,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="9127604588498960753" datatype="html">
         <source>Subject</source>
+        <target>Asunto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">158,159</context>
@@ -3942,6 +4188,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8066608938393600549" datatype="html">
         <source>Message</source>
+        <target>Mensaje</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">162,163</context>
@@ -3949,6 +4196,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="6490688569532630280" datatype="html">
         <source>Send</source>
+        <target>Enviar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/home.component.html</context>
           <context context-type="linenumber">165,166</context>
@@ -3956,6 +4204,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3948439187870398089" datatype="html">
         <source>Gender</source>
+        <target>Género</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/register-dialog/register-dialog.component.html</context>
           <context context-type="linenumber">10</context>
@@ -3967,6 +4216,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="1431416938026210429" datatype="html">
         <source>Password</source>
+        <target>Contraseña</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/register-dialog/register-dialog.component.html</context>
           <context context-type="linenumber">21</context>
@@ -3978,6 +4228,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="3241357959735682038" datatype="html">
         <source>Confirm Password</source>
+        <target>Confirmar contraseña</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/register-dialog/register-dialog.component.html</context>
           <context context-type="linenumber">25</context>
@@ -3992,6 +4243,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="5207635742003539443" datatype="html">
         <source>Sign in</source>
+        <target>Iniciar sesión</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/login/login.component.html</context>
           <context context-type="linenumber">31,32</context>
@@ -3999,6 +4251,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="641848774367659553" datatype="html">
         <source>New Work Entity</source>
+        <target>Nueva entidad de trabajo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/new-entity/new-entity.component.html</context>
           <context context-type="linenumber">2,3</context>
@@ -4006,6 +4259,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8089347552566293606" datatype="html">
         <source>Entity Name</source>
+        <target>Nombre de la entidad</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/new-entity/new-entity.component.html</context>
           <context context-type="linenumber">6</context>
@@ -4013,6 +4267,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="4885059675675373287" datatype="html">
         <source>Minimum of 3 characters</source>
+        <target>Mínimo de 3 caracteres</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/new-entity/new-entity.component.html</context>
           <context context-type="linenumber">8</context>
@@ -4020,6 +4275,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="6638390680817376590" datatype="html">
         <source>Entity Type</source>
+        <target>Tipo de entidad</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/new-entity/new-entity.component.html</context>
           <context context-type="linenumber">12</context>
@@ -4027,6 +4283,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="4915431133669985304" datatype="html">
         <source>Profile</source>
+        <target>Perfil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/profile/profile.component.html</context>
           <context context-type="linenumber">3,4</context>
@@ -4034,6 +4291,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="7898656499594866842" datatype="html">
         <source>Terms and Conditions (WIP)</source>
+        <target>Términos y condiciones (en progreso)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/terms-conditions/terms-conditions.component.html</context>
           <context context-type="linenumber">4,5</context>
@@ -4041,6 +4299,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8598666374646992508" datatype="html">
         <source>Definições</source>
+        <target>Definiciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/terms-conditions/terms-conditions.component.html</context>
           <context context-type="linenumber">9,10</context>
@@ -4048,6 +4307,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="8720977247725652816" datatype="html">
         <source>Ok</source>
+        <target>Aceptar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/generic-message-dialog/generic-message-dialog.component.html</context>
           <context context-type="linenumber">7,8</context>
@@ -4055,6 +4315,7 @@ Whether you&apos;re an administrator creating schedules for your organization, a
       </trans-unit>
       <trans-unit id="9178182467454450952" datatype="html">
         <source>Confirm</source>
+        <target>Confirmar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/generic-warning-dialog/generic-warning-dialog.component.html</context>
           <context context-type="linenumber">19,20</context>

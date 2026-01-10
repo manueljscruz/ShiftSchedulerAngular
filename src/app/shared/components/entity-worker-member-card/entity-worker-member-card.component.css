@@ -1,9 +1,9 @@
 .entity-worker-member-item{
-    width: 260px;
+    width: 100%;
     min-width: 260px;
     max-width: 100%;
-    flex: 1;
-    margin: 10px 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Responsive styles */
@@ -12,15 +12,6 @@
         width: 100%;
         min-width: 100%;
         max-width: 100%;
-        margin: 8px 0;
-    }
-}
-
-@media (min-width: 576px) and (max-width: 767.98px) {
-    .entity-worker-member-item {
-        width: calc(50% - 20px);
-        min-width: 240px;
-        margin: 8px;
     }
 }
 
@@ -30,18 +21,15 @@
 
 .mat-expansion-panel{
     box-shadow: none;
+    margin-top: 8px;
 }
 
-/*
 .worker-card-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    flex-wrap: nowrap;
-    gap: 8px;
     width: 100%;
-  }
-  */
+}
 
   .worker-info {
     padding: 5px 0px;
@@ -64,20 +52,148 @@
   
   .worker-actions {
     display: flex;
-    gap: 4px;
+    gap: 12px;
     flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .worker-actions .action-button {
+    flex: 1;
+    min-width: 100px;
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .worker-actions .action-button mat-icon {
+    margin-right: 4px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .worker-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .worker-actions button:active {
+    transform: translateY(0);
+  }
+
+  .panel-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .expansion-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+  }
+
+  .owner-icon {
+    color: #FFD700;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .worker-details-panel {
+    width: 100%;
   }
   
   .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
-    /* display: flex; */
-    /* flex-grow: 1; */
-    /* flex-basis: 0; */
-    /* margin-right: 16px; */
     display: flex;
     flex-direction: row;
-    /* flex-wrap: nowrap; */
-    /* align-content: center; */
     justify-content: center;
     align-items: center;
     width: 100%;
-}
+    margin-right: 0 !important;
+  }
+
+  /* Improve chip styling in expansion panel */
+  mat-chip-set {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 0;
+    justify-content: center;
+  }
+
+  mat-chip {
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* Card container improvements */
+  .entity-worker-member-item .elevated-card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .entity-worker-member-item .elevated-card-container:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Mobile specific improvements */
+  @media (max-width: 575.98px) {
+    .entity-worker-member-item {
+      min-width: auto;
+    }
+
+    .entity-worker-member-item .elevated-card-container {
+      padding: 12px;
+    }
+
+    .member-image {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .worker-name {
+      font-size: 15px;
+    }
+
+    .worker-actions {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .worker-actions .action-button {
+      width: 100%;
+      min-width: auto;
+      height: 44px;
+    }
+
+    mat-chip {
+      font-size: 12px;
+    }
+
+    .expansion-text {
+      font-size: 13px;
+    }
+  }
+
+  /* Tablet specific improvements */
+  @media (min-width: 576px) and (max-width: 991.98px) {
+    .worker-actions {
+      gap: 10px;
+    }
+
+    .worker-actions .action-button {
+      min-width: 90px;
+    }
+  }

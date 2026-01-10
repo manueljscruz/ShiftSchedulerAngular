@@ -1,3 +1,17 @@
 .success-snackbar {
     background-color: #89c98c;
   }
+
+.elevated-card-container ::ng-deep .mat-mdc-tab-group {
+    height: 100%;
+    padding-bottom: 20px;
+}
+
+.elevated-card-container ::ng-deep .mat-mdc-tab-body-wrapper {
+    flex-grow: 1;
+}
+
+.elevated-card-container ::ng-deep dashboard-tab-view {
+    display: block;
+    padding-bottom: 20px;
+}

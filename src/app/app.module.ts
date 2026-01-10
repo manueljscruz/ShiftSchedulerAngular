@@ -104,6 +104,7 @@ import { DashboardTabViewComponent } from './modules/dashboard-home/dashboard-ta
 import { A11yModule } from "@angular/cdk/a11y";
 import { SearchResultsComponent } from './modules/search-results/search-results.component';
 import { SearchResultItemComponent } from './modules/search-results/search-result-item/search-result-item.component';
+import { SettingsComponent } from './modules/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -174,7 +175,8 @@ import { SearchResultItemComponent } from './modules/search-results/search-resul
     ContactsComponent,
     DashboardTabViewComponent,
     SearchResultsComponent,
-    SearchResultItemComponent
+    SearchResultItemComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
