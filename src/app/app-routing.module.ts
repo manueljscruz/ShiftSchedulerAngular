@@ -37,6 +37,7 @@ import { CookiesPolicyComponent } from './modules/cookies-policy/cookies-policy.
 import { ContactsComponent } from './modules/contacts/contacts.component';
 import { PrivacyPolicyComponent } from './modules/privacy-policy/privacy-policy.component';
 import { SearchResultsComponent } from './modules/search-results/search-results.component';
+import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -47,7 +48,7 @@ const routes: Routes = [
   { path: 'cookies-policy', component: CookiesPolicyComponent},
   { path: 'contacts', component: ContactsComponent},
   { path: 'privacy-policy', component: PrivacyPolicyComponent},
-  { path: 'dashboard', component: DashboardComponent, children: [
+  { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard], children: [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
     { path: 'home', component: DashboardHomeComponent},
     { path: 'profile', component: ProfileComponent},

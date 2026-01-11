@@ -103,7 +103,7 @@ import { DashboardTabViewComponent } from './modules/dashboard-home/dashboard-ta
 import { A11yModule } from "@angular/cdk/a11y";
 import { SearchResultsComponent } from './modules/search-results/search-results.component';
 import { SearchResultItemComponent } from './modules/search-results/search-result-item/search-result-item.component';
-import { CredentialsInterceptor } from './core/interceptors/credentials.interceptor';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthErrorInterceptor } from './core/interceptors/auth-error.interceptor';
 
 @NgModule({
@@ -218,8 +218,7 @@ import { AuthErrorInterceptor } from './core/interceptors/auth-error.interceptor
     provideAnimationsAsync(),
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
-    { provide: HTTP_INTERCEPTORS, useValue: CredentialsInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useValue: AuthErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
