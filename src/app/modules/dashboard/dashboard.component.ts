@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { EntityWorkerDTO } from '../../shared/models/DTOs/Incoming/EntityWorkerDTO';
@@ -44,6 +44,9 @@ export class DashboardComponent {
   }
 
   async ngOnInit() {
+    // Initialize mobile detection
+    this.checkScreenSize();
+
     // Subscribe to current user from AuthService
     this.authService.currentUser$.subscribe(user => {
       this.loggedUser = user;
@@ -65,6 +68,15 @@ export class DashboardComponent {
     this.sidebarNavigationService.addInitialWorkEntitiesSideBarItems(entityWorkerDTOs);
 
 
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    this.isMobile = window.innerWidth < 768;
   }
 
   logout() {

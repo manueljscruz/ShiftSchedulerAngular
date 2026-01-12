@@ -121,8 +121,9 @@ export class DashboardTabViewComponent {
 
     let baseViewModelRequestDTO = new BaseViewModelRequestDTO(this.entityWorkerInstance?.entityId ?? '', this.loggedUser?.userId ?? '', '');
     this.entityDashboardViewModel = await this.entityService.getEntityDashboardViewModel(baseViewModelRequestDTO);
-
-    this.BuildCalendar(this.entityDashboardViewModel.scheduleEntries);
+    
+    if(this.entityDashboardViewModel.scheduleEntries != null)
+      this.BuildCalendar(this.entityDashboardViewModel.scheduleEntries);
 
     this.loadingScreenService.changeLoadingState(false);
 
