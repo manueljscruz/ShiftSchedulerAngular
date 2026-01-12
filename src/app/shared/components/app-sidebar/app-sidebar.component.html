@@ -13,9 +13,7 @@
         <mat-divider></mat-divider>
 
         <div id="menu-entities-container">
-            <div *ngFor="let item of workEntitiesSideBarItems">
-                <sidebar-item-group [sidebarItemGroupId]="item.sidebarItemId" [sidebarItemGroupText]="item.sidebarItemText" [sidebarGroupItems]="item.sidebarItemChildren" [sidebarItemGroupIcon]="ENTITY_ICON" (navigationEvent)="onNavigationClick()"></sidebar-item-group>
-            </div>
+            <sidebar-item-group *ngFor="let item of workEntitiesSideBarItems" [sidebarItemGroupId]="item.sidebarItemId" [sidebarItemGroupText]="item.sidebarItemText" [sidebarGroupItems]="item.sidebarItemChildren" [sidebarItemGroupIcon]="ENTITY_ICON" (navigationEvent)="onNavigationClick()"></sidebar-item-group>
         </div>
 
         <mat-divider></mat-divider>

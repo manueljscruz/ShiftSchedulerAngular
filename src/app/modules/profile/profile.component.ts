@@ -8,7 +8,7 @@ import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { WorkerService } from '../../core/services/api/WorkerService';
-import { LocalService } from '../../core/services/local.service';
+import { AuthService } from '../../core/services/api/AuthService';
 
 @Component({
   selector: 'app-profile',
@@ -26,25 +26,25 @@ export class ProfileComponent{
 
   isEditing: boolean = false;
 
-  // Mobile actions menu toggle
-  public isMobileActionsOpen: boolean = false;
-
-  constructor(private auxDataService: HomeService, 
-    private snackbarManagerService: SnackbarManagerService, 
+  constructor(private auxDataService: HomeService,
+    private snackbarManagerService: SnackbarManagerService,
     private loadingScreenService: LoadingSpinnerManagerService,
     private workerService : WorkerService,
-    private localStore: LocalService) 
+    private authService: AuthService)
     { }
 
   async ngOnInit() {
-    // Load the logged user
-    this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
-    this.backupUser = { ...this.loggedUser };
-    
-    // Load the
+    // Load the logged user from AuthService
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser) {
+      this.loggedUser = currentUser;
+      this.backupUser = { ...this.loggedUser };
+    }
+
+    // Load the genders
     this.gendersLocalized = await this.auxDataService.getGenders();
     if (this.backupUser != null && this.backupUser.genderId != null) {
-      
+
       this.selectedGender = this.gendersLocalized.find(g => g.genderId == this.backupUser?.genderId);
     }
   }
@@ -70,7 +70,7 @@ export class ProfileComponent{
 
       if(response.result){
         this.toggleEditProfile();
-        this.localStore.saveData("loggedUser", JSON.stringify(this.backupUser));
+        this.authService.updateCurrentUser(this.backupUser);
         this.loggedUser = { ...this.backupUser };
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Profile saved successfully'));
       }

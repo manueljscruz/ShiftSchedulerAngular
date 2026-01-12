@@ -29,6 +29,7 @@ import e from 'express';
 import { RuleValidatorService } from '../../core/services/rule-validator.service';
 import { SingleIdentifierDTO } from '../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
+import { AuthService } from '../../core/services/api/AuthService';
 
 @Component({
   selector: 'entity-rules',
@@ -44,7 +45,7 @@ export class EntityRulesComponent {
   /// <summary>
   /// Logged user object
   /// </summary>
-  public loggedUser: UserDTO = new UserDTO();
+  public loggedUser: UserDTO | null = null;
   
   /// <summary>
   /// Current entity id
@@ -170,7 +171,8 @@ export class EntityRulesComponent {
     private ruleService: RuleService,
     private entityService: EntityService,
     private shiftService: ShiftService,
-    private ruleValidatorService: RuleValidatorService
+    private ruleValidatorService: RuleValidatorService,
+    private authService: AuthService
   ) {
     this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
   }
@@ -180,7 +182,14 @@ export class EntityRulesComponent {
   //#region On Init
 
   async ngOnInit() {
-    this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser) {
+      this.loggedUser = currentUser;
+    }
+
+    if (!this.loggedUser) {
+      return;
+    }
 
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);

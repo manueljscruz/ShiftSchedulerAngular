@@ -12,16 +12,17 @@ import { AbsenceApprovalDecisionDTO } from '../../../shared/models/DTOs/Outgoing
 import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 import { PagedModelRequest } from '../../../shared/models/DTOs/Outgoing/PagedModelRequest';
 import { PagedList } from '../../../shared/models/DTOs/Incoming/PagedList';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AbsenceService {
     
-
     constructor(private http: HttpClient,
         private languageService: LanguageServiceService) 
-        { }
+        { 
+        }
 
     /// <summary>
     /// Get absences view model

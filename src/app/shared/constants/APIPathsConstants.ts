@@ -1,4 +1,7 @@
-export const BASE_API_URL: string = "http://localhost:5265/api/";
+import exp from "constants";
+import { environment } from "../../../environments/environment";
+
+export const BASE_API_URL: string = environment.apiUrl;
 // Home
 export const GET_HOME_VIEW_MODEL_URL : string = BASE_API_URL + "Home/get-home-view-model/{lcode}";
 
@@ -7,6 +10,8 @@ export const GET_GENDERS_BY_LOCALIZATION_URL : string = BASE_API_URL + "gender/g
 
 //#region AUTH & USER
 export const LOGIN_URL : string = BASE_API_URL + "Auth/login";
+export const REFRESH_TOKEN_URL : string = BASE_API_URL + "Auth/refresh-token";
+export const LOGOUT_URL : string = BASE_API_URL + "Auth/logout";
 export const REGISTER_URL : string = BASE_API_URL + "user/register";
 export const UPDATE_USER_URL : string = BASE_API_URL + "user/update";
 

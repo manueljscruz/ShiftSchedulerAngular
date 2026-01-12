@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EntityService } from '../../core/services/api/EntityService';
-import { LocalService } from '../../core/services/local.service';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { EntityProfileViewModel } from '../../shared/models/VM/EntityProfileViewModel';
 import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
@@ -18,6 +17,7 @@ import { DASHBOARD_HOME_ROUTE } from '../../shared/constants/ViewRoutesConstants
 import { SIDEBAR_ITEM_GROUP_ID } from '../../shared/constants/UiContants';
 import { SidebarNavigationService } from '../../core/services/ui/sidebar-navigation.service';
 import { LanguageServiceService } from '../../core/services/language-service.service';
+import { AuthService } from '../../core/services/api/AuthService';
 
 @Component({
   selector: 'entity-form',
@@ -40,7 +40,7 @@ export class EntityFormComponent {
   /// <summary>
   /// Logged user information
   /// </summary>
-  loggedUser: UserDTO = new UserDTO();
+  loggedUser: UserDTO | null = null;
 
   /// <summary>
   /// User language
@@ -64,19 +64,26 @@ export class EntityFormComponent {
   constructor(private route: ActivatedRoute,
     private entityService: EntityService,
     private snackbarManagerService: SnackbarManagerService,
-    private localService: LocalService,
     private loadingScreenService: LoadingSpinnerManagerService,
     private sidebarNavigationService: SidebarNavigationService,
     private languageService: LanguageServiceService,
     private dialog: MatDialog,
-    private router: Router 
+    private router: Router,
+    private authService: AuthService
   ) {
     this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
-    this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser) {
+      this.loggedUser = currentUser;
+    }
     this.userLanguage = this.languageService.returnLocalization();
   }
 
   async ngOnInit() {
+    if (!this.loggedUser) {
+      return;
+    }
+
     this.loadingScreenService.changeLoadingState(true);
 
     // Retrieve the entity profile view model
@@ -85,9 +92,9 @@ export class EntityFormComponent {
       workerId: this.loggedUser.userId,
       languageCode: this.userLanguage
     };
-    
+
       this.entityProfileViewModel = await this.entityService.getEntityProfileViewModel(entityProfileViewModelRequestDTO);
-    
+
     console.log(this.entityProfileViewModel);
 
     // Sets the initial entity type if the entity can be edited
@@ -118,6 +125,10 @@ export class EntityFormComponent {
   }
   
   async saveEntity(){
+    if (!this.loggedUser) {
+      return;
+    }
+
     let validationResult = this.validateEntityForm();
     if(!validationResult.result){
       this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.message));

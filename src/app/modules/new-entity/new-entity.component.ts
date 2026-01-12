@@ -16,6 +16,7 @@ import { SideBarItemModel } from '../../shared/models/UI/SideBarItemModel';
 import { BOOTSTRAP_ICON_PREFIX, ENTITY_ICON, ENTITY_SCHEDULE_ICON, MEMBERS_ICON } from '../../shared/constants/IconNamesConstants';
 import { SIDEBAR_ITEM_GROUP_ID, SIDERBAR_ITEM_GROUP_ENTITIES_CONTAINER } from '../../shared/constants/UiContants';
 import { SidebarNavigationService } from '../../core/services/ui/sidebar-navigation.service';
+import { AuthService } from '../../core/services/api/AuthService';
 
 @Component({
   selector: 'app-new-entity',
@@ -26,26 +27,30 @@ export class NewEntityComponent {
 
   entityTypes: EntityTypeLocalizedDTO[] = [];
 
-  loggedInUser: UserDTO;
+  loggedInUser: UserDTO | null = null;
   entityNameInput : string = '';
   selectedEntityType?: EntityTypeLocalizedDTO;
   entityDescriptionInput : string = '';
-  
+
   isLoading: boolean = false;
   subscription: Subscription = new Subscription();
 
-  constructor(@Inject(LocalService) private localStore: LocalService, 
-  private auxDataService: HomeService, 
+  constructor(@Inject(LocalService) private localStore: LocalService,
+  private auxDataService: HomeService,
   private entityService: EntityService,
-  private loadingScreenService: LoadingSpinnerManagerService, 
+  private loadingScreenService: LoadingSpinnerManagerService,
   private snackbarManagerService: SnackbarManagerService,
   private sidebarNavigationService: SidebarNavigationService,
-  private router: Router) {
-    this.loggedInUser = JSON.parse(this.localStore.getData("loggedUser"));
+  private router: Router,
+  private authService: AuthService) {
   }
 
 
   async ngOnInit() {
+    this.authService.currentUser$.subscribe(user => {
+      this.loggedInUser = user;
+    });
+
     this.entityTypes = await this.auxDataService.getEntityTypes();
     this.subscription = this.loadingScreenService.currentIsLoading.subscribe(isLoading => this.isLoading = isLoading);
   }
@@ -56,8 +61,13 @@ export class NewEntityComponent {
 
   /// Handles the form submission
   async onCreateEntitySubmit() {
+    if (!this.loggedInUser) {
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'User not logged in'));
+      return;
+    }
+
     let validationResult = this.validateNewEntityForm();
-    
+
     if(!validationResult.result){
       this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, validationResult.message));
       return;

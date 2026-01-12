@@ -1,5 +1,11 @@
-<a class="nav-link" [routerLink]="sidebarItemRouterLink" (click)="onSidebarItemClick()">
-    <!--<fa-icon [icon]="[iconPrefix, iconName]"></fa-icon>-->
-    <i class="{{BOOTSTRAP_ICON_PREFIX}}{{sidebarItemIcon}}"></i>
+<a class="nav-link"
+   [routerLink]="sidebarItemRouterLink"
+   (click)="onSidebarItemClick()"
+   [matTooltip]="sidebarItemText"
+   matTooltipPosition="right"
+   [matTooltipShowDelay]="500"
+   routerLinkActive="active"
+   [attr.aria-label]="sidebarItemText">
+    <i class="{{BOOTSTRAP_ICON_PREFIX}}{{sidebarItemIcon}}" [attr.aria-hidden]="true"></i>
     <span>{{sidebarItemText}}</span>
 </a>

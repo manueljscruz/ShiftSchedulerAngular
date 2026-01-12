@@ -39,7 +39,7 @@ export class DashboardTabViewComponent {
   /// <summary>
   /// The logged user information
   /// </summary>
-  @Input() loggedUser? : UserDTO;
+  @Input() loggedUser?: UserDTO | null;
 
   /// <summary>
   /// Flag to indicate if the tab is currently active
