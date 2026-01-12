@@ -1,5 +1,5 @@
 <div class="elevated-card-container primary-card-container-height fade-in">
-    <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedTabChange)="onTabSelected($event)" header-less-tabs>
+    <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedTabChange)="onTabSelected($event)">
         <mat-tab *ngFor="let entity of workEntities; let i = index"
            [label]="entity.entityName">
         <dashboard-tab-view

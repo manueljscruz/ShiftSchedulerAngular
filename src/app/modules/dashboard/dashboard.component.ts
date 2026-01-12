@@ -33,6 +33,8 @@ export class DashboardComponent {
 
   // UI Data
   showSidebar: boolean = true;
+  sidebarOpen: boolean = false;
+  isMobile: boolean = false;
   workEntitiesSideBarItems: SideBarItemModel[] = [];
 
   constructor(private router: Router,
@@ -69,6 +71,14 @@ export class DashboardComponent {
     this.authService.logout().subscribe(() => {
       this.router.navigate([LOGIN_ROUTE]);
     });
+  }
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  closeSidebar() {
+    this.sidebarOpen = false;
   }
 
   async getViewModelData() {
