@@ -95,8 +95,6 @@ export class EntityFormComponent {
 
       this.entityProfileViewModel = await this.entityService.getEntityProfileViewModel(entityProfileViewModelRequestDTO);
 
-    console.log(this.entityProfileViewModel);
-
     // Sets the initial entity type if the entity can be edited
     this.setInitialEntityType();
 
@@ -115,11 +113,6 @@ export class EntityFormComponent {
   /// </summary>
   setInitialEntityType(){
     if(this.entityProfileViewModel.allowEdit){
-      /*
-      let localizedTypes : any = this.entityProfileViewModel.EntityTypeLocalizeds;
-      let array = localizedTypes.$values as EntityTypeLocalizedDTO[];
-      this.entityProfileViewModel.EntityTypeLocalizeds = array;
-      */
       this.selectedEntityType = this.entityProfileViewModel.entityTypeLocalizeds.find(x => x.entityTypeLocalizedName == this.entityProfileViewModel.entityDTO.entityTypeLocalized);
     }
   }

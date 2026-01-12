@@ -100,8 +100,20 @@ export class AuthService {
         return this.http.post(REFRESH_TOKEN_URL, {}, { withCredentials: true})
         .pipe(
             tap(() => {
-                
+
             })
         );
+    }
+
+    /**
+     * Clear authentication state immediately without making API call.
+     * Used by interceptor to prevent race conditions during logout.
+     */
+    clearAuthState(): void {
+        this.isAuthenticatedSubject.next(false);
+        this.currentUserSubject.next(null);
+        if (isPlatformBrowser(this.platformId)) {
+            localStorage.removeItem('loggedUser');
+        }
     }
 }
