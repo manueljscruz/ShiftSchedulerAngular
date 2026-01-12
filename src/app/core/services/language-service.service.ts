@@ -1,18 +1,25 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LanguageServiceService {
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   public returnLocalization(): string{
-    let userLanguage = navigator.language;
-    if(userLanguage.indexOf('-') > 0)
-    {
-      userLanguage = userLanguage.split('-')[0];
+    if (isPlatformBrowser(this.platformId)) {
+      let userLanguage = navigator.language;
+
+      if (userLanguage.includes('-')) {
+        userLanguage = userLanguage.split('-')[0];
+      }
+
+      return userLanguage;
     }
-    return userLanguage;
+
+    // Fallback for SSR
+    return 'en';
   }
 }
