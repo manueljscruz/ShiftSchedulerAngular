@@ -25,6 +25,7 @@ export class ProfileComponent{
   backupUser: UserDTO = new UserDTO();
 
   isEditing: boolean = false;
+  isMobileActionsOpen: boolean = false;
 
   constructor(private auxDataService: HomeService,
     private snackbarManagerService: SnackbarManagerService,
