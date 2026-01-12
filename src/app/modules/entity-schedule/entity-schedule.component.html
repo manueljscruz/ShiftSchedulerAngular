@@ -133,14 +133,14 @@
 
                             <!-- If its a regular user that is using this view -->
                             <ng-container *ngIf="!isCurrentUserEntityOwner">
-                                <ng-container *ngIf="loggedUser.userId === element.id">
+                                <ng-container *ngIf="loggedUser?.userId === element.id">
                                     <div [matMenuTriggerFor]="userMenu">
                                         <span>
                                             {{ element[column]?.alias || element[column] }}
                                         </span>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngIf="loggedUser.userId !== element.id">
+                                <ng-container *ngIf="loggedUser?.userId !== element.id">
                                     <span>
                                         {{ element[column]?.alias || element[column] }}
                                     </span>

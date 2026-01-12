@@ -1,5 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { LocalService } from '../../core/services/local.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { EntityWorkerDTO } from '../../shared/models/DTOs/Incoming/EntityWorkerDTO';
@@ -9,6 +8,7 @@ import { LANDING_PAGE_ROUTE, LOGIN_ROUTE, DASHBOARD_ROUTE, DASHBOARD_HOME_ROUTE,
 import { EntityService } from '../../core/services/api/EntityService';
 import { SIDEBAR_ITEM_GROUP_ID } from '../../shared/constants/UiContants';
 import { SidebarNavigationService } from '../../core/services/ui/sidebar-navigation.service';
+import { AuthService } from '../../core/services/api/AuthService';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,25 +28,29 @@ export class DashboardComponent {
   ENTITY_WORKERS_ROUTE: string = ENTITY_WORKERS_ROUTE;
 
   // Cached data
-  loggedUser: UserDTO;
+  loggedUser: UserDTO | null = null;
   entityWorkerDTOs: any = {};
 
   // UI Data
   showSidebar: boolean = true;
   workEntitiesSideBarItems: SideBarItemModel[] = [];
 
-  constructor(@Inject(LocalService) private localStore: LocalService, 
-    private router: Router, 
+  constructor(private router: Router,
     private entityService: EntityService,
-    private sidebarNavigationService: SidebarNavigationService) {
-    this.loggedUser = JSON.parse(this.localStore.getData("loggedUser"));
+    private sidebarNavigationService: SidebarNavigationService,
+    private authService: AuthService) {
   }
 
   async ngOnInit() {
-    // If there is no logged user, redirect to login page
-    if (!this.loggedUser) {
-      this.router.navigate([LOGIN_ROUTE]);
-    }
+    // Subscribe to current user from AuthService
+    this.authService.currentUser$.subscribe(user => {
+      this.loggedUser = user;
+
+      // If there is no logged user, redirect to login page
+      if (!this.loggedUser) {
+        this.router.navigate([LOGIN_ROUTE]);
+      }
+    });
 
     this.sidebarNavigationService.getWorkEntitiesSideBarItems().subscribe(items => {
       this.workEntitiesSideBarItems = items;
@@ -58,18 +62,20 @@ export class DashboardComponent {
     let entityWorkerDTOs = this.entityWorkerDTOs;
     this.sidebarNavigationService.addInitialWorkEntitiesSideBarItems(entityWorkerDTOs);
 
-    
+
   }
 
   logout() {
-    this.localStore.removeData("loggedUser");
-    this.localStore.removeData("tokenData");
-    this.router.navigate([LOGIN_ROUTE]);
+    this.authService.logout().subscribe(() => {
+      this.router.navigate([LOGIN_ROUTE]);
+    });
   }
 
   async getViewModelData() {
     // Get data from API
-    this.entityWorkerDTOs = await this.entityService.getEntitiesByWorkerId(this.loggedUser.userId);
+    if (this.loggedUser) {
+      this.entityWorkerDTOs = await this.entityService.getEntitiesByWorkerId(this.loggedUser.userId);
+    }
   }
 
 }
