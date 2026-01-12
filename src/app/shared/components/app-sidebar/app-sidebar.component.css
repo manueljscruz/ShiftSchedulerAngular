@@ -2,9 +2,8 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    /*height: calc(100vh - 40px);*/
-    /*width: 260px;*/
     padding: 20px;
+    overflow: hidden;
 }
 
 #side-bar .logo{
@@ -12,6 +11,7 @@
     flex-direction: row;
     align-items: center;
     margin-bottom: 20px;
+    flex-shrink: 0;
 }
 
 .menu{
@@ -19,12 +19,59 @@
     flex-direction: column;
     gap: 10px;
     height: 100%;
+    overflow: hidden;
+}
+
+#menu-top-options{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+    margin-bottom: 10px;
 }
 
 #menu-entities-container{
-    flex-grow: 1;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px 0;
+    margin: 10px 0;
+
+    /* Custom scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+/* Webkit browsers scrollbar styling */
+#menu-entities-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+#menu-entities-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#menu-entities-container::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+#menu-entities-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Smooth scrolling behavior */
+#menu-entities-container {
+    scroll-behavior: smooth;
 }
 
 #menu-bottom-options{
-    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+    margin-top: 10px;
 }

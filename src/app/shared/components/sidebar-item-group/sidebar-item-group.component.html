@@ -1,7 +1,10 @@
-<mat-expansion-panel id="{{sidebarItemGroupId}}">
-    <mat-expansion-panel-header>
+<mat-expansion-panel id="{{sidebarItemGroupId}}" [attr.aria-label]="'Expand ' + sidebarItemGroupText">
+    <mat-expansion-panel-header
+        [matTooltip]="sidebarItemGroupText"
+        matTooltipPosition="right"
+        [matTooltipShowDelay]="500">
         <div class="sidebar-item-group-header">
-            <i class="{{BOOTSTRAP_ICON_PREFIX}}{{sidebarItemGroupIcon}}"></i>
+            <i class="{{BOOTSTRAP_ICON_PREFIX}}{{sidebarItemGroupIcon}}" [attr.aria-hidden]="true"></i>
             <span>{{sidebarItemGroupText}}</span>
         </div>
     </mat-expansion-panel-header>

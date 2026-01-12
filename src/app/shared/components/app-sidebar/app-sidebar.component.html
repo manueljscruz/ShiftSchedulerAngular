@@ -11,11 +11,11 @@
         </div>
         
         <mat-divider></mat-divider>
-        
-        <div id="menu-entities-container" *ngFor="let item of workEntitiesSideBarItems">
-            <sidebar-item-group [sidebarItemGroupId]="item.sidebarItemId" [sidebarItemGroupText]="item.sidebarItemText" [sidebarGroupItems]="item.sidebarItemChildren" [sidebarItemGroupIcon]="ENTITY_ICON"></sidebar-item-group>
+
+        <div id="menu-entities-container">
+            <sidebar-item-group *ngFor="let item of workEntitiesSideBarItems" [sidebarItemGroupId]="item.sidebarItemId" [sidebarItemGroupText]="item.sidebarItemText" [sidebarGroupItems]="item.sidebarItemChildren" [sidebarItemGroupIcon]="ENTITY_ICON"></sidebar-item-group>
         </div>
-        
+
         <mat-divider></mat-divider>
 
         <div id="menu-bottom-options">
