@@ -10,38 +10,48 @@
 
     <!-- LEFT NAVIGATION -->
     <nav class="help-nav">
+
     <!-- Introduction Section -->
-    <ul>
-        <li i18n [routerLink]="HELPDOCS_INTRO_ROUTE" routerLinkActive="active">Introduction</li>
-        <li i18n [routerLink]="HELPDOCS_GET_STARTED_ROUTE" routerLinkActive="active">Getting Started</li>
-        <li i18n [routerLink]="HELPDOCS_FEATURES_ROUTE" routerLinkActive="active">Features Overview</li>
-        <li i18n [routerLink]="HELPDOCS_TUTORIALS_ROUTE" routerLinkActive="active">Tutorials / How-To Guides</li>
-        <li i18n [routerLink]="HELPDOCS_FAQ_ROUTE" routerLinkActive="active">FAQ</li>
-    </ul>
+    <div class="nav-section">
+      <div class="nav-section-title" i18n>Getting Started</div>
+      <ul>
+          <li i18n [routerLink]="HELPDOCS_INTRO_ROUTE" routerLinkActive="active">Introduction</li>
+          <li i18n [routerLink]="HELPDOCS_GET_STARTED_ROUTE" routerLinkActive="active">Getting Started</li>
+          <li i18n [routerLink]="HELPDOCS_FEATURES_ROUTE" routerLinkActive="active">Features Overview</li>
+          <li i18n [routerLink]="HELPDOCS_TUTORIALS_ROUTE" routerLinkActive="active">Tutorials / How-To Guides</li>
+          <li i18n [routerLink]="HELPDOCS_FAQ_ROUTE" routerLinkActive="active">FAQ</li>
+      </ul>
+    </div>
 
     <mat-divider></mat-divider>
 
     <!-- Functional Section -->
-    <ul>
-        <li i18n [routerLink]="HELPDOCS_MEMBERS_ROUTE" routerLinkActive="active">Members</li>
-        <li i18n [routerLink]="HELPDOCS_SHIFTS_ROUTE" routerLinkActive="active">Shifts</li>
-        <li i18n [routerLink]="HELPDOCS_RULES_ROUTE" routerLinkActive="active">Rules</li>
-        <li i18n [routerLink]="HELPDOCS_ABSENCES_ROUTE" routerLinkActive="active">Absences</li>
-        <li i18n [routerLink]="HELPDOCS_SCHEDULES_ROUTE" routerLinkActive="active">Schedules</li>
-    </ul>
+    <div class="nav-section">
+      <div class="nav-section-title" i18n>Core Features</div>
+      <ul>
+          <li i18n [routerLink]="HELPDOCS_MEMBERS_ROUTE" routerLinkActive="active">Members</li>
+          <li i18n [routerLink]="HELPDOCS_SHIFTS_ROUTE" routerLinkActive="active">Shifts</li>
+          <li i18n [routerLink]="HELPDOCS_RULES_ROUTE" routerLinkActive="active">Rules</li>
+          <li i18n [routerLink]="HELPDOCS_ABSENCES_ROUTE" routerLinkActive="active">Absences</li>
+          <li i18n [routerLink]="HELPDOCS_SCHEDULES_ROUTE" routerLinkActive="active">Schedules</li>
+      </ul>
+    </div>
 
     <mat-divider></mat-divider>
 
     <!-- Account & Support Section -->
-    <ul>
-        <li i18n [routerLink]="HELPDOCS_PROFILE_MANAGEMENT_ROUTE" routerLinkActive="active">Profile Management</li>
-        <li i18n [routerLink]="HELPDOCS_PRIVACY_ROUTE" routerLinkActive="active">Privacy & Security</li>
-        <li i18n [routerLink]="HELPDOCS_NOTIFICATIONS_ROUTE" routerLinkActive="active">Notifications</li>
-        <li i18n [routerLink]="HELPDOCS_BILLING_ROUTE" routerLinkActive="active">Billing & Subscriptions</li>
-        <li i18n [routerLink]="HELPDOCS_CONTACT_SUPPORT_ROUTE" routerLinkActive="active">Contact Support</li>
-        <li i18n [routerLink]="HELPDOCS_RELEASE_NOTES_ROUTE" routerLinkActive="active">Release Notes / Updates</li>
-        <li i18n [routerLink]="HELPDOCS_LEGAL_ROUTE" routerLinkActive="active">Legal / Policies</li>
-    </ul>
+    <div class="nav-section">
+      <div class="nav-section-title" i18n>Account & Support</div>
+      <ul>
+          <li i18n [routerLink]="HELPDOCS_PROFILE_MANAGEMENT_ROUTE" routerLinkActive="active">Profile Management</li>
+          <li i18n [routerLink]="HELPDOCS_PRIVACY_ROUTE" routerLinkActive="active">Privacy & Security</li>
+          <li i18n [routerLink]="HELPDOCS_NOTIFICATIONS_ROUTE" routerLinkActive="active">Notifications</li>
+          <li i18n [routerLink]="HELPDOCS_BILLING_ROUTE" routerLinkActive="active">Billing & Subscriptions</li>
+          <li i18n [routerLink]="HELPDOCS_CONTACT_SUPPORT_ROUTE" routerLinkActive="active">Contact Support</li>
+          <li i18n [routerLink]="HELPDOCS_RELEASE_NOTES_ROUTE" routerLinkActive="active">Release Notes / Updates</li>
+          <li i18n [routerLink]="HELPDOCS_LEGAL_ROUTE" routerLinkActive="active">Legal / Policies</li>
+      </ul>
+    </div>
 </nav>
 
 
@@ -52,8 +62,9 @@
 
     <!-- RIGHT: ANCHOR NAV (TOC) -->
     <nav class="anchor-nav" *ngIf="anchors.length > 0">
+      <div class="toc-title" i18n>On This Page</div>
       <ul>
-        <li *ngFor="let anchor of anchors">
+        <li *ngFor="let anchor of anchors" [class.level-2]="anchor.level === 2" [class.level-3]="anchor.level === 3">
           <a (click)="scrollTo(anchor.id)">{{ anchor.text }}</a>
         </li>
       </ul>

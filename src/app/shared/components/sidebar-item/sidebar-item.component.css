@@ -4,24 +4,80 @@
     align-items: center;
     text-decoration: none;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     height: 48px;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: transparent;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
     padding: 0 20px;
-    color: black;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    position: relative;
 }
 
+/* Hover state with semi-transparent overlay */
 .nav-link:hover {
-    background-color: grey;
+    background-color: rgba(255, 255, 255, 0.1);
     cursor: pointer;
+    color: rgba(255, 255, 255, 1);
+    transform: translateX(2px);
 }
 
+/* Active state with primary color accent */
 .nav-link.active {
-    background-color: grey;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 1);
+    font-weight: 500;
+}
+
+/* Active indicator bar on the left */
+.nav-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 0 2px 2px 0;
 }
 
 .nav-link i{
-    margin-right: 10px;
+    margin-right: 12px;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.85);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
 
+.nav-link:hover i{
+    color: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
+
+.nav-link.active i{
+    color: rgba(255, 255, 255, 1);
+}
+
+/* Text truncation with ellipsis */
+.nav-link span{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Focus state for accessibility */
+.nav-link:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.4);
+    outline-offset: 2px;
+}
+
+/* Keyboard navigation focus */
+.nav-link:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 2px;
 }

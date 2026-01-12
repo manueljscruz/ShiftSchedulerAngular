@@ -7,7 +7,6 @@ import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spi
 import { ActivatedRoute } from '@angular/router';
 import { SkillDTO } from '../../shared/models/DTOs/Incoming/SkillDTO';
 import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
-import { LocalService } from '../../core/services/local.service';
 import { EntityWorkerMemberDTO } from '../../shared/models/DTOs/Incoming/EntityWorkerMemberDTO';
 import { MatDialog } from '@angular/material/dialog';
 import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.component';
@@ -27,8 +26,31 @@ import { EntityWorkerMemberCardComponent } from "../../shared/components/entity-
 import { WorkerFiltersDialogComponent } from './worker-filters-dialog/worker-filters-dialog.component';
 import { MemberListFilterDTO } from '../../shared/models/DTOs/Outgoing/MemberListFilterDTO';
 import { MemberListRequestDTO } from '../../shared/models/DTOs/Outgoing/MemberListRequestDTO';
+import { AuthService } from '../../core/services/api/AuthService';
 
-
+/**
+ * Entity Workers Component
+ *
+ * Manages the worker/member roster for a specific entity (organization/department).
+ * Displays workers in either grid or list view with pagination and filtering capabilities.
+ *
+ * Features:
+ * - Grid/List view toggle for worker display
+ * - Pagination for large worker lists (5/10/25/100 items per page)
+ * - Filtering by skills and shifts
+ * - Add new workers to entity (via AddMemberDialogComponent)
+ * - Edit worker details including skills and assigned shifts (via EditMemberDialogComponent)
+ * - Delete workers from entity (with confirmation)
+ * - Permission-based UI (entity owners see add/edit/delete, regular members see read-only)
+ *
+ * Responsive behavior:
+ * - Mobile: Grid switches to 1 column, actions stack vertically
+ * - Tablet: 2 columns
+ * - Desktop: 3+ columns based on screen width
+ *
+ * Route: /dashboard/entity/:entityId/workers
+ * Access: Requires user to be a member of the entity
+ */
 @Component({
   selector: 'app-entity-workers',
   templateUrl: './entity-workers.component.html',
@@ -61,7 +83,7 @@ export class EntityWorkersComponent {
   /// <summary>
   /// Logged user object
   /// </summary>
-  public loggedUser: UserDTO = new UserDTO();
+  public loggedUser: UserDTO | null = null;
 
   /// <summary>
   /// Current entity id
@@ -93,6 +115,9 @@ export class EntityWorkersComponent {
   /// </summary>
   public isListView: boolean = true;
 
+  // Mobile actions menu toggle
+  public isMobileActionsOpen: boolean = false;
+
   currentPageIndex = 0;
 
   pageSize = 10;
@@ -107,11 +132,11 @@ export class EntityWorkersComponent {
 
   /// Constructor
   constructor(private entityService : EntityService,
-    private localStore: LocalService,
     private snackManagerService: SnackbarManagerService,
     private loadingScreenService: LoadingSpinnerManagerService,
     private dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {
     this.entityMembersViewModel = new EntityMembersViewModel("", [], [], [], new PagedList([], 1, 10, 0));
     this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || ''; // decodedEntityId;
@@ -125,7 +150,15 @@ export class EntityWorkersComponent {
 
   async ngOnInit() {
     this.loadingScreenService.changeLoadingState(true);
-    this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser) {
+      this.loggedUser = currentUser;
+    }
+
+    if (!this.loggedUser) {
+      this.loadingScreenService.changeLoadingState(false);
+      return;
+    }
 
     this.currentPageIndex = 1;
     let memberListModelRequestDTO : PagedModelRequest = {
@@ -303,6 +336,9 @@ export class EntityWorkersComponent {
   //#region Get Members Page
 
   async GetMembersPage(nextPageIndex: number, itemsPerPage: number, filters?: MemberListFilterDTO){
+    if (!this.loggedUser) {
+      return;
+    }
 
     let memberListModelRequestDTO : MemberListRequestDTO = {
       entityId: this.currentEntityId,
@@ -315,9 +351,9 @@ export class EntityWorkersComponent {
     };
 
     this.loadingScreenService.changeLoadingState(true);
-   
+
     this.entityMembersViewModel.entityMembers = await this.entityService.getEntityMembers(memberListModelRequestDTO);
-    
+
     this.loadingScreenService.changeLoadingState(false);
   }
 

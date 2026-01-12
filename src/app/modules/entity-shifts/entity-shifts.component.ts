@@ -22,6 +22,7 @@ import { ShiftRotationDialogFormComponent } from './shift-rotation-dialog-form/s
 import { EntityShiftRotationDTO } from '../../shared/models/DTOs/Incoming/EntityShiftRotationDTO';
 import { UpdateShiftRotationDTO } from '../../shared/models/DTOs/Outgoing/UpdateShiftRotationDTO';
 import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
+import { AuthService } from '../../core/services/api/AuthService';
 
 @Component({
   selector: 'app-entity-shifts',
@@ -46,7 +47,7 @@ export class EntityShiftsComponent {
   /// <summary>
   /// Logged user object
   /// </summary>
-  public loggedUser: UserDTO = new UserDTO();
+  public loggedUser: UserDTO | null = null;
   
   /// <summary>
   /// Current entity id
@@ -67,6 +68,9 @@ export class EntityShiftsComponent {
   /// Signaling if the user is editing the shift
   /// </summary>
   public isEditing: boolean = false;
+
+  // Mobile actions menu toggle
+  public isMobileActionsOpen: boolean = false;
 
   /// <summary>
   /// Shift view model object
@@ -111,9 +115,10 @@ export class EntityShiftsComponent {
     private snackbarManagerService: SnackbarManagerService,
     private loadingScreenService: LoadingSpinnerManagerService,
     private shiftService: ShiftService,
-    private cdRef: ChangeDetectorRef
-  ) 
-  { 
+    private cdRef: ChangeDetectorRef,
+    private authService: AuthService
+  )
+  {
     this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
   }
 
@@ -124,7 +129,14 @@ export class EntityShiftsComponent {
   //#region On Init
 
   async ngOnInit() {
-    this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser) {
+      this.loggedUser = currentUser;
+    }
+
+    if (!this.loggedUser) {
+      return;
+    }
 
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);

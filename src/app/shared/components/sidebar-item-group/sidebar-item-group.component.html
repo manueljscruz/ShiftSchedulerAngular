@@ -1,17 +1,20 @@
-<mat-expansion-panel id="{{sidebarItemGroupId}}">
-    <mat-expansion-panel-header>
+<mat-expansion-panel id="{{sidebarItemGroupId}}" [attr.aria-label]="'Expand ' + sidebarItemGroupText">
+    <mat-expansion-panel-header
+        [matTooltip]="sidebarItemGroupText"
+        matTooltipPosition="right"
+        [matTooltipShowDelay]="500">
         <div class="sidebar-item-group-header">
-            <i class="{{BOOTSTRAP_ICON_PREFIX}}{{sidebarItemGroupIcon}}"></i>
+            <i class="{{BOOTSTRAP_ICON_PREFIX}}{{sidebarItemGroupIcon}}" [attr.aria-hidden]="true"></i>
             <span>{{sidebarItemGroupText}}</span>
         </div>
     </mat-expansion-panel-header>
     <mat-divider></mat-divider>
     <div class="menu" *ngFor="let item of sidebarGroupItems">
         <div *ngIf="item.sidebarItemChildren.length == 0">
-            <sidebar-item [sidebarItemText]="item.sidebarItemText" [sidebarItemRouterLink]="item.sidebarItemLink" [sidebarItemIcon]="item.sidebarItemIcon"></sidebar-item>
+            <sidebar-item [sidebarItemText]="item.sidebarItemText" [sidebarItemRouterLink]="item.sidebarItemLink" [sidebarItemIcon]="item.sidebarItemIcon" (eventTriggered)="onChildNavigationClick()"></sidebar-item>
         </div>
         <div *ngIf="item.sidebarItemChildren.length > 0">
-            <sidebar-item-group [sidebarItemGroupId]="item.sidebarItemId" [sidebarItemGroupText]="item.sidebarItemText" [sidebarItemGroupIcon]="item.sidebarItemIcon" [sidebarGroupItems]="item.sidebarItemChildren"></sidebar-item-group>
+            <sidebar-item-group [sidebarItemGroupId]="item.sidebarItemId" [sidebarItemGroupText]="item.sidebarItemText" [sidebarItemGroupIcon]="item.sidebarItemIcon" [sidebarGroupItems]="item.sidebarItemChildren" (navigationEvent)="onChildNavigationClick()"></sidebar-item-group>
         </div>
     </div>
 </mat-expansion-panel>

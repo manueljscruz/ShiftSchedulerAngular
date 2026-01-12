@@ -25,6 +25,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { PagedModelRequest } from '../../shared/models/DTOs/Outgoing/PagedModelRequest';
 import { PagedList } from '../../shared/models/DTOs/Incoming/PagedList';
 import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
+import { AuthService } from '../../core/services/api/AuthService';
 
 @Component({
   selector: 'entity-absences',
@@ -41,7 +42,7 @@ export class EntityAbsencesComponent {
   /// <summary>
   /// Logged user object
   /// </summary>
-  public loggedUser: UserDTO = new UserDTO();
+  public loggedUser: UserDTO | null = null;
 
   /// <summary>
   /// Current entity id
@@ -52,6 +53,9 @@ export class EntityAbsencesComponent {
   /// Determines if the form is active or not
   /// </summary>
   isFormActive : boolean = false;
+
+  // Mobile actions menu toggle
+  public isMobileActionsOpen: boolean = false;
 
   /// <summary>
   /// Determines if the user is editing an absence or not
@@ -93,7 +97,8 @@ export class EntityAbsencesComponent {
     private snackbarManagerService: SnackbarManagerService,
     private loadingScreenService: LoadingSpinnerManagerService,
     private absenceService: AbsenceService,
-    private dateDisplayService: DateDisplayService) { 
+    private dateDisplayService: DateDisplayService,
+    private authService: AuthService) {
       this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
   }
 
@@ -102,11 +107,18 @@ export class EntityAbsencesComponent {
   //#region Ng On Init
 
   async ngOnInit() {
-    this.loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser) {
+      this.loggedUser = currentUser;
+    }
+
+    if (!this.loggedUser) {
+      return;
+    }
 
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
-    
+
     let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '');
     this.entityWorkerAbsencesViewModel = await this.absenceService.getAbsenceViewModel(entityRuleViewModelRequestDTO);
     this.handleAbsenceDateDisplay(this.entityWorkerAbsencesViewModel.entityWorkerAbsences);
@@ -119,6 +131,9 @@ export class EntityAbsencesComponent {
   //#region GetAbsencesPage
 
   async GetAbsencesPage(nextPageIndex: number, pageSize: number) {
+    if (!this.loggedUser) {
+      return;
+    }
 
     let absencePageRequest : PagedModelRequest = {
       entityId: this.currentEntityId,
@@ -129,10 +144,10 @@ export class EntityAbsencesComponent {
       itemsPerPage: pageSize,
     };
 
-    this.loadingScreenService.changeLoadingState(true); 
+    this.loadingScreenService.changeLoadingState(true);
 
     let data = await this.absenceService.getAbsencesPage(absencePageRequest);
-    
+
     this.entityWorkerAbsencesViewModel.entityWorkerAbsences = data;
 
     this.handleAbsenceDateDisplay(this.entityWorkerAbsencesViewModel.entityWorkerAbsences);
@@ -285,13 +300,17 @@ export class EntityAbsencesComponent {
   /// Edits an absence from the list of absences
   /// </summary
   editAbsence(absenceInstance: EntityWorkerAbsenceDTO) {
+    if (!this.loggedUser) {
+      return;
+    }
+
     if(absenceInstance.workerId !== this.loggedUser.userId){
       this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, NOT_OWNER_OF_INTANCE_CONTENT));
     }
     else{
       this.onAbsenceToEdit(absenceInstance);
     }
-      
+
   }
 
   //#endregion
@@ -302,6 +321,10 @@ export class EntityAbsencesComponent {
   /// Submits a decision approval or rejection for an absence
   /// </summary>
   async applyDecision(absence: EntityWorkerAbsenceDTO, decisionResult: boolean) {
+    if (!this.loggedUser) {
+      return;
+    }
+
     let validationResult = this.validateDecisionData();
 
     if(!validationResult.success) {
@@ -374,6 +397,10 @@ export class EntityAbsencesComponent {
   /// Saves an absence to the server
   /// </summary>
   async saveAbsence() {
+    if (!this.loggedUser) {
+      return;
+    }
+
     let validationResult = this.validateForm();
 
     if(!validationResult.success) {
@@ -400,7 +427,7 @@ export class EntityAbsencesComponent {
       this.selectedAbsence.absenceEndDate = endDate;
 
     if(this.isEditing){
-      
+
       this.selectedAbsence.absenceTypeId = this.selectedAbsenceType?.absenceTypeId ?? 0;
       this.selectedAbsence.absenceTypeDisplayValue = this.selectedAbsenceType?.absenceTypeLocalizedName ?? '';
       this.selectedAbsence.absenceApproverName = '';
@@ -413,7 +440,7 @@ export class EntityAbsencesComponent {
 
     }
     else{
-      
+
       let newAbsence = new AddEntityWorkerAbsenceDTO(
         this.currentEntityId,
         this.loggedUser.userId,
@@ -427,7 +454,7 @@ export class EntityAbsencesComponent {
       );
 
       this.loadingScreenService.changeLoadingState(true);
-      
+
       response = await this.absenceService.addAbsence(newAbsence);
 
       this.loadingScreenService.changeLoadingState(false);

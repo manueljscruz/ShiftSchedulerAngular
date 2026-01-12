@@ -1,7 +1,12 @@
 <div class="elevated-card-container primary-card-container-height">
     <div class="header-and-actions">
-        <h1 i18n>Schedule</h1>
-        <div class="actions">
+        <h1 i18n>
+            Schedule
+            <button mat-mini-fab class="mobile-menu-toggle" (click)="isMobileActionsOpen = !isMobileActionsOpen">
+                <mat-icon>{{ isMobileActionsOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </button>
+        </h1>
+        <div class="actions" [class.open]="isMobileActionsOpen">
             <mat-button-toggle-group (change)="onViewChange($event)">
                 <mat-button-toggle value="calendar">Calendar</mat-button-toggle>
                 <mat-button-toggle checked="true" value="list">List</mat-button-toggle>
@@ -56,8 +61,8 @@
             </mwl-calendar-month-view>
 
             
-            <div id="schedule-list">
-                <table mat-table [dataSource]="scheduleList" class="mat-elevation-z8" id="schedule-list" *ngIf="isListView">
+            <div id="schedule-list" *ngIf="isListView">
+                <table mat-table [dataSource]="scheduleList" class="mat-elevation-z8">
                 
                     <ng-container *ngFor="let column of calendarListColumns" [matColumnDef]="column">
                         <th mat-header-cell *matHeaderCellDef> {{ column  }} </th>
@@ -133,14 +138,14 @@
 
                             <!-- If its a regular user that is using this view -->
                             <ng-container *ngIf="!isCurrentUserEntityOwner">
-                                <ng-container *ngIf="loggedUser.userId === element.id">
+                                <ng-container *ngIf="loggedUser?.userId === element.id">
                                     <div [matMenuTriggerFor]="userMenu">
                                         <span>
                                             {{ element[column]?.alias || element[column] }}
                                         </span>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngIf="loggedUser.userId !== element.id">
+                                <ng-container *ngIf="loggedUser?.userId !== element.id">
                                     <span>
                                         {{ element[column]?.alias || element[column] }}
                                     </span>

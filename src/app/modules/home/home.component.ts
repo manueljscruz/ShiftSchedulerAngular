@@ -58,11 +58,14 @@ export class HomeComponent {
    */
   async ngOnInit(): Promise<void> {
     await this.GetHomeViewModel();
-    this.genders = this.homeViewModel.genders? this.homeViewModel.genders : [];
+    this.genders = this.homeViewModel?.genders || [];
   }
 
   async GetHomeViewModel(): Promise<void> {
-    this.homeViewModel = await this.homeService.getHomeViewModel();
+    const result = await this.homeService.getHomeViewModel();
+    if (result) {
+      this.homeViewModel = result;
+    }
     console.log(this.genders);
   }
 

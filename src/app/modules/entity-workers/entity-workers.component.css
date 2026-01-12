@@ -1,40 +1,160 @@
+/* Host element styling */
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
 #entity-worker-grid {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
-/*
-.action-filter-button {
-    height: 48px;
-    border-radius: 10px;
-    border-color: transparent;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding-left: 5px;
-    padding-right: 5px;
-    background-color: #f5f5f5;
-}
-    */
-
-.header-and-actions{
+.header-and-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.actions{
+.actions {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 1rem;
 }
 
-.paginator{
+/* Mobile menu toggle button - hidden on desktop */
+.mobile-menu-toggle {
+    display: none !important;
+}
+
+.paginator {
     margin-top: 10px;
     margin-bottom: 10px;
     align-self: center;
 }
 
+/* Mobile Responsive Styles */
+@media (max-width: 767.98px) {
+    .header-and-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .header-and-actions h1 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    /* Show and style mobile menu toggle on small screens */
+    .mobile-menu-toggle {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 32px !important;
+        height: 32px !important;
+        background-color: #C03221 !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    }
+
+    .mobile-menu-toggle mat-icon {
+        color: white !important;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
+        padding: 0;
+        margin-top: 0;
+    }
+
+    .actions.open {
+        max-height: 400px;
+        padding-bottom: 10px;
+        margin-top: 12px;
+    }
+
+    .actions > * {
+        width: 100%;
+    }
+
+    /* Grid/List Toggle Group - Mobile Styling */
+    .actions mat-button-toggle-group {
+        width: 100%;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 2px solid #C03221;
+    }
+
+    .actions ::ng-deep .mat-button-toggle {
+        flex: 1;
+    }
+
+    .actions ::ng-deep .mat-button-toggle-button {
+        width: 100%;
+        height: 44px;
+    }
+
+    .actions ::ng-deep .mat-button-toggle-label-content {
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+    .actions ::ng-deep .mat-button-toggle-checked {
+        background-color: #C03221;
+        color: white;
+    }
+
+    .actions ::ng-deep .mat-button-toggle-checked .mat-button-toggle-label-content {
+        color: white;
+    }
+
+    #entity-worker-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 0 8px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    #entity-worker-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        padding: 0 8px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    #entity-worker-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+}
+
+@media (min-width: 1200px) {
+    #entity-worker-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
+    }
+}

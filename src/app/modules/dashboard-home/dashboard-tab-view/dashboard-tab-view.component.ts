@@ -39,7 +39,7 @@ export class DashboardTabViewComponent {
   /// <summary>
   /// The logged user information
   /// </summary>
-  @Input() loggedUser? : UserDTO;
+  @Input() loggedUser?: UserDTO | null;
 
   /// <summary>
   /// Flag to indicate if the tab is currently active
@@ -121,8 +121,9 @@ export class DashboardTabViewComponent {
 
     let baseViewModelRequestDTO = new BaseViewModelRequestDTO(this.entityWorkerInstance?.entityId ?? '', this.loggedUser?.userId ?? '', '');
     this.entityDashboardViewModel = await this.entityService.getEntityDashboardViewModel(baseViewModelRequestDTO);
-
-    this.BuildCalendar(this.entityDashboardViewModel.scheduleEntries);
+    
+    if(this.entityDashboardViewModel.scheduleEntries != null)
+      this.BuildCalendar(this.entityDashboardViewModel.scheduleEntries);
 
     this.loadingScreenService.changeLoadingState(false);
 

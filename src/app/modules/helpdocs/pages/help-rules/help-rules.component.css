@@ -1,5 +1,2 @@
-.center-image {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
+/* Component-specific styles for help-rules */
+/* Shared styles are imported from helpdocs-shared-styles.css */

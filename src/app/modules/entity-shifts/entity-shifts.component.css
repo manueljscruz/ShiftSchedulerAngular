@@ -1,17 +1,33 @@
-.header-and-actions{
+/* Host element styling */
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.header-and-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.actions{
+.actions {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding-bottom: 5px;
+    gap: 10px;
 }
 
-.end-form-actions{
+/* Mobile menu toggle button - hidden on desktop */
+.mobile-menu-toggle {
+    display: none !important;
+}
+
+.end-form-actions {
     display: flex;
     justify-content: flex-end;
     padding-top: 20px;
@@ -33,17 +49,17 @@
     background-color: #5c8ad6;
 }
 
-.action-submit-button>mat-icon{
+.action-submit-button>mat-icon {
     padding-left: 5px;
     padding-right: 5px;
 }
 
-.action-submit-button>span{
+.action-submit-button>span {
     padding-left: 5px;
     padding-right: 10px;
 }
 
-.mat-column-ShiftBreakStartTime{
+.mat-column-ShiftBreakStartTime {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 10% !important;
@@ -54,7 +70,7 @@
     hyphens: auto;
 }
 
-.mat-column-IncludedInShift{
+.mat-column-IncludedInShift {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 10% !important;
@@ -65,7 +81,7 @@
     hyphens: auto;
 }
 
-.mat-column-IsTimeFlexible{
+.mat-column-IsTimeFlexible {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 10% !important;
@@ -76,7 +92,7 @@
     hyphens: auto;
 }
 
-.mat-column-Actions{
+.mat-column-Actions {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 10% !important;
@@ -87,9 +103,9 @@
     hyphens: auto;
 }
 
-#shift-template-selection-grid{
+#shift-template-selection-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Always 3 columns */
+    grid-template-columns: repeat(5, 1fr);
     grid-template-rows: auto;
     gap: 10px;
     max-height: calc(2 * 160px + 10px);
@@ -97,16 +113,16 @@
     min-height: 280px;
 }
 
-#shift-form{
+#shift-form {
     padding-top: 5px;
     overflow: auto;
 }
 
-mat-table{
+mat-table {
     overflow-y: auto;
 }
 
-#shift-table-rotation-separator{
+#shift-table-rotation-separator {
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -132,41 +148,125 @@ mat-table{
     border: 1px solid #000;
 }
 
-/* Column Header of Order Number of Shift Rotations */
-mat-header-cell.mat-column-order-no{
+mat-header-cell.mat-column-order-no {
     flex: 0 0 5% !important;
     text-align: center;
     justify-content: center;
 }
 
-/* Column Body of Order Number of Shift Rotations */
-.mat-column-order-no{
+.mat-column-order-no {
     flex: 0 0 5% !important;
     text-align: center;
     justify-content: center;
 }
 
-/* Column Header of Shift Rotations Actions */
-mat-header-cell.mat-column-rotation-Alias{
+mat-header-cell.mat-column-rotation-Alias {
     flex: 0 0 15% !important;
     text-align: center;
     justify-content: center;
 }
 
-/* Column Body of Shift Rotations Actions */
-.mat-column-rotation-Alias{
+.mat-column-rotation-Alias {
     flex: 0 0 15% !important;
 }
 
-
-/* Column Header of Shift Rotations Actions */
-mat-header-cell.mat-column-rotation-actions{
+mat-header-cell.mat-column-rotation-actions {
     flex: 0 0 15% !important;
     text-align: center;
     justify-content: center;
 }
 
-/* Column Body of Shift Rotations Actions */
-.mat-column-rotation-actions{
+.mat-column-rotation-actions {
     flex: 0 0 15% !important;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 767.98px) {
+    .header-and-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .header-and-actions h1 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    .mobile-menu-toggle {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 32px !important;
+        height: 32px !important;
+        background-color: #C03221 !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    }
+
+    .mobile-menu-toggle mat-icon {
+        color: white !important;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
+        padding: 0;
+        margin-top: 0;
+    }
+
+    .actions.open {
+        max-height: 300px;
+        padding-bottom: 10px;
+        margin-top: 12px;
+    }
+
+    .actions > * {
+        width: 100%;
+    }
+
+    #shift-color-picker {
+        width: 100%;
+        margin: 0;
+    }
+
+    mat-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    #shift-template-selection-grid {
+        grid-template-columns: 1fr;
+        max-height: 400px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    #shift-template-selection-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    #shift-template-selection-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    #shift-template-selection-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -19,7 +19,7 @@ import { MatTab, MatTabsModule} from '@angular/material/tabs';
 import { MatError } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { MatIcon } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { AppSidebarComponent } from './shared/components/app-sidebar/app-sidebar.component';
 import { AppHeaderComponent } from './shared/components/app-header/app-header.component';
@@ -45,6 +45,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { EntityShiftsComponent } from './modules/entity-shifts/entity-shifts.component';
 import { ShiftBreakDialogFormComponent } from './modules/entity-shifts/shift-break-dialog-form/shift-break-dialog-form.component';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatRippleModule } from '@angular/material/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { HeaderLessTabsDirective } from './shared/directives/header-less-tabs.directive';
 import { ShiftTemplateCardComponent } from './shared/components/shift-template-card/shift-template-card.component';
 import {MatTableModule} from '@angular/material/table';
@@ -62,7 +63,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { GenericMessageDialogComponent } from './shared/components/generic-message-dialog/generic-message-dialog.component';
 import { ConfirmEmailComponent } from './modules/confirm-email/confirm-email.component';
 import { ShiftRotationDialogFormComponent } from './modules/entity-shifts/shift-rotation-dialog-form/shift-rotation-dialog-form.component';
-import { MatSlider } from '@angular/material/slider';
+import { MatSliderModule } from '@angular/material/slider';
 import { ScheduleEventViewComponent } from './modules/entity-schedule/schedule-event-view/schedule-event-view.component';
 import { ScheduleCreatorMenuComponent } from './modules/entity-schedule/schedule-creator-menu/schedule-creator-menu.component';
 import { NgxColorsModule } from 'ngx-colors';
@@ -70,7 +71,8 @@ import { ScheduleActionMenuComponent } from './modules/entity-schedule/schedule-
 import { MatMenuModule } from '@angular/material/menu';
 import { ScheduleEventViewHolderComponent } from './modules/entity-schedule/schedule-event-view-holder/schedule-event-view-holder.component';
 import { WorkerSkillSelectorComponent } from './modules/entity-schedule/worker-skill-selector/worker-skill-selector.component';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { MatDateFormats } from '@angular/material/core';
 import { APP_DATE_FORMATS } from './shared/pipes/AppDateAdapter';
@@ -103,6 +105,9 @@ import { DashboardTabViewComponent } from './modules/dashboard-home/dashboard-ta
 import { A11yModule } from "@angular/cdk/a11y";
 import { SearchResultsComponent } from './modules/search-results/search-results.component';
 import { SearchResultItemComponent } from './modules/search-results/search-result-item/search-result-item.component';
+import { SettingsComponent } from './modules/settings/settings.component';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { AuthErrorInterceptor } from './core/interceptors/auth-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -173,7 +178,8 @@ import { SearchResultItemComponent } from './modules/search-results/search-resul
     ContactsComponent,
     DashboardTabViewComponent,
     SearchResultsComponent,
-    SearchResultItemComponent
+    SearchResultItemComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -188,7 +194,7 @@ import { SearchResultItemComponent } from './modules/search-results/search-resul
     MatCardModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
-    MatIcon,
+    MatIconModule,
     MatExpansionModule,
     MatChipsModule,
     MatDividerModule,
@@ -200,24 +206,31 @@ import { SearchResultItemComponent } from './modules/search-results/search-resul
     MatDatepickerModule,
     BrowserAnimationsModule,
     MatButtonToggleModule,
-    MatSlider,
+    MatSliderModule,
     NgxColorsModule,
     MatMenuModule,
+    MatSidenavModule,
+    MatTooltipModule,
     CalendarModule.forRoot({
         provide: DateAdapter,
         useFactory: adapterFactory,
     }),
-    MatPaginator,
+    MatPaginatorModule,
     A11yModule
 ],
   providers: [
     provideNativeDateAdapter(),
     provideClientHydration(),
     provideAnimationsAsync(),
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    provideHttpClient(withInterceptors([AuthErrorInterceptor])),
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
-    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { 
 }

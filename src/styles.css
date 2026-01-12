@@ -4,6 +4,27 @@
 /*html, body { height: 100%; } */
 body { height: 100%; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+/* ========================================
+   RESPONSIVE BREAKPOINT VARIABLES
+   ======================================== */
+:root {
+  /* Breakpoint values */
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1400px;
+
+  /* Common spacing adjustments for mobile */
+  --spacing-mobile: 8px;
+  --spacing-tablet: 12px;
+  --spacing-desktop: 16px;
+
+  /* Touch target minimum size for mobile */
+  --touch-target-min: 44px;
+}
+
 
 .container{
   display: flex;
@@ -113,5 +134,96 @@ input.mat-mdc-input-element::-webkit-calendar-picker-indicator {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ========================================
+   RESPONSIVE UTILITY CLASSES
+   ======================================== */
+
+/* Responsive container max-widths */
+.responsive-container {
+  width: 100%;
+  padding-left: var(--spacing-mobile);
+  padding-right: var(--spacing-mobile);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 576px) {
+  .responsive-container {
+    padding-left: var(--spacing-tablet);
+    padding-right: var(--spacing-tablet);
+  }
+}
+
+@media (min-width: 768px) {
+  .responsive-container {
+    padding-left: var(--spacing-desktop);
+    padding-right: var(--spacing-desktop);
+  }
+}
+
+/* Responsive display utilities */
+@media (max-width: 575.98px) {
+  .hide-mobile { display: none !important; }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .hide-tablet { display: none !important; }
+}
+
+@media (min-width: 768px) {
+  .hide-desktop { display: none !important; }
+}
+
+@media (max-width: 767.98px) {
+  .show-desktop-only { display: none !important; }
+}
+
+@media (min-width: 768px) {
+  .show-mobile-only { display: none !important; }
+}
+
+/* Responsive flex utilities */
+@media (max-width: 767.98px) {
+  .flex-row-responsive {
+    flex-direction: column !important;
+  }
+
+  .flex-wrap-mobile {
+    flex-wrap: wrap !important;
+  }
+}
+
+/* Responsive spacing */
+@media (max-width: 767.98px) {
+  .responsive-padding {
+    padding: var(--spacing-mobile) !important;
+  }
+
+  .responsive-margin {
+    margin: var(--spacing-mobile) !important;
+  }
+}
+
+/* Responsive width utilities */
+@media (max-width: 767.98px) {
+  .full-width-mobile {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Table responsive wrapper */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+@media (max-width: 767.98px) {
+  .table-responsive {
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
   }
 }

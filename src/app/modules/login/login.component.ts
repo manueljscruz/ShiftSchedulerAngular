@@ -13,6 +13,8 @@ import { LocalService } from '../../core/services/local.service';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
+import { SessionService } from '../../core/services/session.service';
+import { AuthService } from '../../core/services/api/AuthService';
 
 
 @Component({
@@ -31,9 +33,11 @@ export class LoginComponent {
   isLoading: boolean;
 
 constructor(private loginRegisterService: WorkerService, 
+  private authService: AuthService,
   private router: Router, 
   private loadingScreenService: LoadingSpinnerManagerService,
   private snackbarManagerService: SnackbarManagerService,
+  private sessionService: SessionService,
   @Inject(LocalService) private localStore: LocalService) {
   this.email = '';
   this.password = '';
@@ -49,7 +53,7 @@ constructor(private loginRegisterService: WorkerService,
     if (this.email === '' || this.password === '') {
       alert('Please enter email and password');
       return;
-    } 
+    }
     else if (!this.validateEmail()) {
       alert('Please enter a valid email');
       return;
@@ -60,19 +64,24 @@ constructor(private loginRegisterService: WorkerService,
 
       loginDTO = new LoginDTO(this.email, this.password); // Initialize it here
 
-      // Call the login service here
-      let loginResult : BaseResponseModel = await this.loginRegisterService.login(loginDTO);
+      try {
+        const loginResult = await this.authService.login(loginDTO).toPromise();
 
-      this.clearPassword();
+        this.clearPassword();
 
-      this.loadingScreenService.changeLoadingState(false);
+        this.loadingScreenService.changeLoadingState(false);
 
-      if (loginResult != null && loginResult.success) {
-        this.localStore.saveData("loggedUser", JSON.stringify(loginResult.result.user));
-        this.localStore.saveData("tokenData", loginResult.result.tokenResponseDTO);
-        this.router.navigate(['/dashboard']);
-      } else {
-        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, loginResult.message));
+        if (loginResult && loginResult.user) {
+          // No need to manually store in localStorage/sessionStorage
+          // The AuthService BehaviorSubject is already updated via tap() operator
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Login failed'));
+        }
+      } catch (error: any) {
+        this.clearPassword();
+        this.loadingScreenService.changeLoadingState(false);
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, error.error?.message || 'Login failed'));
       }
     }
   }

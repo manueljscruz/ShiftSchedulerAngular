@@ -48,7 +48,7 @@ export class HelpdocsComponent {
     this.mobileNavOpen = false;
   }
 
-  anchors: { id: string, text: string }[] = [];
+  anchors: { id: string, text: string, level: number }[] = [];
 
   onPageActivate(component: any) {
     // Wait for content to render
@@ -70,9 +70,13 @@ export class HelpdocsComponent {
         el.id = 'section-' + i;
       }
 
+      // Extract the heading level (2 for h2, 3 for h3)
+      const level = parseInt(el.tagName.charAt(1));
+
       this.anchors.push({
         id: el.id,
-        text: el.innerText.trim()
+        text: el.innerText.trim(),
+        level: level
       });
     });
   }

@@ -4,7 +4,7 @@ import { TERMS_CONDITIONS_ROUTE, PRIVACY_POLICY_ROUTE, COOKIES_POLICY_ROUTE, CON
 @Component({
   selector: 'help-legal',
   templateUrl: './help-legal.component.html',
-  styleUrl: './help-legal.component.css'
+  styleUrls: ['../helpdocs-shared-styles.css', './help-legal.component.css']
 })
 export class HelpLegalComponent {
 TERMS_CONDITIONS_ROUTE = TERMS_CONDITIONS_ROUTE;

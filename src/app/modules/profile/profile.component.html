@@ -1,7 +1,12 @@
 <div class="elevated-card-container primary-card-container-height fade-in">
     <div class="header-and-actions">
-        <h1 i18n>Profile</h1>
-        <div class="actions">
+        <h1 i18n>
+            Profile
+            <button mat-mini-fab class="mobile-menu-toggle" (click)="isMobileActionsOpen = !isMobileActionsOpen">
+                <mat-icon>{{ isMobileActionsOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </button>
+        </h1>
+        <div class="actions" [class.open]="isMobileActionsOpen">
             <button mat-fab extended class="edit-color-bg"(click)="toggleEditProfile()">
                 <mat-icon>edit</mat-icon>
                 <span i18n>Edit</span>

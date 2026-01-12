@@ -1,9 +1,12 @@
 <div id="app-header" style="background-color: white;">
+    <button mat-icon-button *ngIf="showMenuButton" (click)="onMenuButtonClick()" class="menu-button show-mobile-only" aria-label="Toggle menu">
+        <mat-icon>menu</mat-icon>
+    </button>
     <div id="search-bar">
         <mat-form-field appearance="outline" >
             <mat-label i18n>Search</mat-label>
-            <input matInput placeholder_i18n="Search for a work entity" 
-                [(ngModel)]="searchInput" 
+            <input matInput placeholder_i18n="Search for a work entity"
+                [(ngModel)]="searchInput"
                 [ngModelOptions]="{standalone: true}"
                 (keydown.enter)="onEnter()">
             <mat-icon matSuffix>search</mat-icon>

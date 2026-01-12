@@ -1,17 +1,31 @@
-.header-and-actions{
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.header-and-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.actions{
+.actions {
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 10px;
 }
 
-.actions>button{
+.actions>button {
     margin: 0 5px;
+}
+
+.mobile-menu-toggle {
+    display: none !important;
 }
 
 .action-edit-button {
@@ -31,12 +45,12 @@
     background-color: #3fde3f;
 }
 
-.action-edit-button>mat-icon{
+.action-edit-button>mat-icon {
     padding-left: 5px;
     padding-right: 5px;
 }
 
-.action-edit-button>span{
+.action-edit-button>span {
     padding-left: 5px;
     padding-right: 10px;
 }
@@ -58,21 +72,21 @@
     background-color: #de3f3f;
 }
 
-.action-delete-button>mat-icon{
+.action-delete-button>mat-icon {
     padding-left: 5px;
     padding-right: 5px;
 }
 
-.action-delete-button>span{
+.action-delete-button>span {
     padding-left: 5px;
     padding-right: 10px;
 }
 
-.elevated-card-container-content{
+.elevated-card-container-content {
     padding: 20px;
 }
 
-.end-form-actions{
+.end-form-actions {
     display: flex;
     justify-content: flex-end;
     padding-top: 20px;
@@ -94,12 +108,79 @@
     background-color: #5c8ad6;
 }
 
-.action-submit-button>mat-icon{
+.action-submit-button>mat-icon {
     padding-left: 5px;
     padding-right: 5px;
 }
 
-.action-submit-button>span{
+.action-submit-button>span {
     padding-left: 5px;
     padding-right: 10px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 767.98px) {
+    .header-and-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .header-and-actions h1 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    .mobile-menu-toggle {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 32px !important;
+        height: 32px !important;
+        background-color: #C03221 !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    }
+
+    .mobile-menu-toggle mat-icon {
+        color: white !important;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
+        padding: 0;
+        margin-top: 0;
+    }
+
+    .actions.open {
+        max-height: 300px;
+        padding-bottom: 10px;
+        margin-top: 12px;
+    }
+
+    .actions > * {
+        width: 100%;
+        margin: 0 !important;
+    }
+
+    .end-form-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .end-form-actions button {
+        width: 100%;
+    }
 }

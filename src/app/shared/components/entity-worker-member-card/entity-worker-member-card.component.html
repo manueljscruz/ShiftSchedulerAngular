@@ -1,26 +1,31 @@
 <div class="entity-worker-member-item">
     <div class="elevated-card-container">
-        <img src="https://placehold.co/150x150" class="member-image">
+        <img src="https://placehold.co/150x150" class="member-image" alt="Member profile picture">
         <div class="worker-info">
           <h4 class="worker-name">{{ entityWorkerMember.workerName }}</h4>
-          <mat-icon *ngIf="entityWorkerMember?.isOwner">stars</mat-icon>
+          <mat-icon *ngIf="entityWorkerMember?.isOwner" class="owner-icon">stars</mat-icon>
         </div>
-        <mat-expansion-panel>
+        <mat-expansion-panel class="worker-details-panel">
             <mat-expansion-panel-header>
                 <mat-panel-title class="worker-card-header">
-                    <div class="worker-actions" *ngIf="allowActions">
-                      <button mat-icon-button color="primary" (click)="editWorker(entityWorkerMember)">
-                        <mat-icon>edit</mat-icon>
-                      </button>
-                      <button mat-icon-button color="warn" (click)="removeWorker('5000','5000', entityWorkerMember, DELETE_MEMBER_TITLE, DELETE_MEMBER_CONTENT)">
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </div>
+                    <span class="expansion-text" i18n>View Details</span>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <mat-chip-set>
-                <mat-chip  *ngFor="let skill of entityWorkerMember?.skillSet" [color]="skill.skillHexFontColor" [ngStyle]="{ 'background-color': skill.skillHexBGColor, '--mdc-chip-label-text-color': skill.skillHexFontColor}">{{skill.skillLocalizedName}}</mat-chip>
-            </mat-chip-set>
+            <div class="panel-content">
+                <mat-chip-set>
+                    <mat-chip *ngFor="let skill of entityWorkerMember?.skillSet" [color]="skill.skillHexFontColor" [ngStyle]="{ 'background-color': skill.skillHexBGColor, '--mdc-chip-label-text-color': skill.skillHexFontColor}">{{skill.skillLocalizedName}}</mat-chip>
+                </mat-chip-set>
+                <div class="worker-actions" *ngIf="allowActions">
+                    <button mat-raised-button color="primary" (click)="editWorker(entityWorkerMember)" class="action-button">
+                        <mat-icon>edit</mat-icon>
+                        <span i18n>Edit</span>
+                    </button>
+                    <button mat-raised-button color="warn" (click)="removeWorker('5000','5000', entityWorkerMember, DELETE_MEMBER_TITLE, DELETE_MEMBER_CONTENT)" class="action-button">
+                        <mat-icon>delete</mat-icon>
+                        <span i18n>Remove</span>
+                    </button>
+                </div>
+            </div>
         </mat-expansion-panel>
     </div>
 </div>

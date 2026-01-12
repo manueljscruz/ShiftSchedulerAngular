@@ -14,7 +14,6 @@ export class LocalService {
   public getData(key: string) {
     if(localStorage != null){
       let data = localStorage.getItem(key)|| "";
-      //return this.decrypt(data);
       return data;
     }
     return '';
@@ -26,14 +25,4 @@ export class LocalService {
   public clearData() {
     localStorage.clear();
   }
-
-  /*
-  private encrypt(txt: string): string {
-    return CryptoJS.AES.encrypt(txt, this.key).toString();
-  }
-
-  private decrypt(txtToDecrypt: string) {
-    return CryptoJS.AES.decrypt(txtToDecrypt, this.key).toString(CryptoJS.enc.Utf8);
-  }
-  */
 }
