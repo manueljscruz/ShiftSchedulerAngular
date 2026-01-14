@@ -31,26 +31,15 @@ jobs:
       - name: Build application
         run: npm run build -- --configuration=staging
         
-      - name: Debug - List output directory structure
-        run: |
-          echo "=== Checking dist structure ==="
-          ls -la dist/ || echo "dist folder not found"
-          echo "=== Checking shift-scheduler-angular folder ==="
-          ls -la dist/shift-scheduler-angular/ || echo "shift-scheduler-angular folder not found"
-          echo "=== Checking browser folder ==="
-          ls -la dist/shift-scheduler-angular/browser/ || echo "browser folder not found"
-          echo "=== Finding all index.html files ==="
-          find dist -name "index.html" -type f || echo "No index.html found"
-        
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_THANKFUL_MOSS_03B378F03 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "/"
-          skip_app_build: true  # We're building manually above
-          output_location: "dist/shift-scheduler-angular/browser"
+          app_location: "dist/shift-scheduler-angular/browser/en"  # ← CHANGED: Point directly to English build
+          skip_app_build: true
+          output_location: ""  # ← CHANGED: Empty since app_location points to final files
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
