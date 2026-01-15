@@ -44,5 +44,8 @@ Thumbs.db
 # Claude Code configuration
 .claude/
 
+# Claude temporary files
+tmpclaude-*
+
 # Windows temporary files
 nul
