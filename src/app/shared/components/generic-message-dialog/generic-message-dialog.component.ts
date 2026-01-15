@@ -11,8 +11,9 @@ export class GenericMessageDialogComponent {
   messageText: string = '';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    this.messageTitle = data.deleteWarningTitle;
-    this.messageText = data.deleteWarningMessage;
+    // Support both delete warning and generic message property names
+    this.messageTitle = data.messageTitle || data.deleteWarningTitle || '';
+    this.messageText = data.messageText || data.deleteWarningMessage || '';
    }
 }
 

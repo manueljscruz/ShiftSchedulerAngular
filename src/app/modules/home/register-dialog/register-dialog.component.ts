@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { NewUserDTO } from '../../../shared/models/DTOs/Outgoing/NewWorkerDTO';
 import { GenderLocalizedDTO } from '../../../shared/models/DTOs/Incoming/GenderLocalizedDTO';
@@ -7,6 +7,8 @@ import { WorkerService } from '../../../core/services/api/WorkerService';
 import { REGISTER_ICON } from '../../../shared/constants/IconNamesConstants';
 import { GenericMessageDialogComponent } from '../../../shared/components/generic-message-dialog/generic-message-dialog.component';
 import { EMAIL_REGEX, ALPHA_NUMERIC_SPECIAL_REGEX } from '../../../shared/constants/DataConstants';
+import { Router } from '@angular/router';
+import { LOGIN_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
 
 @Component({
   selector: 'app-register-dialog',
@@ -28,9 +30,11 @@ export class RegisterDialogComponent {
   // Holds the selected gender
   selectedGender? : GenderLocalizedDTO;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, 
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   private loginRegisterService: WorkerService,
-  private dialog: MatDialog) {
+  private dialog: MatDialog,
+  private dialogRef: MatDialogRef<RegisterDialogComponent>,
+  private router: Router) {
     this.gendersLocalized = data.gendersLocalized;
   }
 
@@ -52,17 +56,40 @@ export class RegisterDialogComponent {
     // Register the user
     let newRegister: NewUserDTO = new NewUserDTO(this.nameInput, this.selectedGender?.genderId ? this.selectedGender.genderId : 0, this.emailInput, this.passwordInput);
 
-    // Call the API to register the user
-    let response : BaseResponseModel = await this.loginRegisterService.register(newRegister);
+    try {
+      // Call the API to register the user
+      let response : BaseResponseModel = await this.loginRegisterService.register(newRegister);
 
-    // If successful, close the dialog
-    this.openSuccessRegisterDialog('5000ms', '5000ms', 'Register Success', response.message);
+      // If successful, show success message and redirect to login
+      if (response && response.success) {
+        this.openSuccessRegisterDialog('Registration Successful', response.message || 'Your account has been created successfully. Please login to continue.');
+      } else {
+        alert(response?.message || 'Registration failed. Please try again.');
+      }
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      alert(error.error?.message || 'Registration failed. Please try again.');
+    }
   }
   
-  private openSuccessRegisterDialog(enterAnimationDuration: string, exitAnimationDuration: string, title : string, content : string){
-    const dialogRef = this.dialog.open(GenericMessageDialogComponent, {
+  private openSuccessRegisterDialog(title: string, content: string){
+    const messageDialogRef = this.dialog.open(GenericMessageDialogComponent, {
       width: '500px',
-      data: { enterAnimationDuration, exitAnimationDuration, messageTitle: title, messageText: content}
+      data: {
+        enterAnimationDuration: '300ms',
+        exitAnimationDuration: '300ms',
+        messageTitle: title,
+        messageText: content
+      }
+    });
+
+    // When the success message dialog closes, close the registration dialog and redirect to login
+    messageDialogRef.afterClosed().subscribe(() => {
+      // Close the registration dialog
+      this.dialogRef.close();
+
+      // Redirect to login page
+      this.router.navigate([LOGIN_ROUTE]);
     });
   }
 

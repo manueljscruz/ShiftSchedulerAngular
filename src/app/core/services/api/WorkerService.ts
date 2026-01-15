@@ -35,10 +35,10 @@ export class WorkerService {
         try {
             const response = await this.http.post(REGISTER_URL, newWorkerDTO).toPromise();
             return response;
-            // Process the received data
         } catch (error : any) {
-            console.error('Error fetching data:', error.message);
-            // Handle the error appropriately (e.g., display an error message)
+            console.error('Registration error:', error);
+            // Re-throw the error so the calling component can handle it
+            throw error;
         }
     }
 
