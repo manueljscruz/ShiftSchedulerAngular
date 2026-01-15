@@ -1,21 +1,122 @@
+/* ========================================
+   GENERIC WARNING DIALOG STYLES
+   ======================================== */
+
 #delete-warning-dialog {
-    padding: 20px 20px;
+    padding: 32px;
+    min-width: 360px;
 }
 
-.actions {
-    display: flex;
-    column-gap: 10px;
+/* Title */
+#delete-warning-dialog h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 20px 0;
+    text-align: center;
+    position: relative;
+    padding-bottom: 16px;
 }
 
-.actions button {
-    flex: 1;
+#delete-warning-dialog h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background-color: #C03221;
+    border-radius: 2px;
 }
 
+/* Warning Message Content */
+#delete-warning-dialog > div:not(.dialog-footer) {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    text-align: center;
+}
 
+/* Dialog Footer */
 .dialog-footer {
-  flex: 0 0 auto; /* fixed height */
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
-  border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 !important;
+    border-top: none !important;
+    margin-top: 8px;
+}
+
+/* Button Styling */
+:host ::ng-deep .mat-mdc-fab.mat-mdc-button-base {
+    border-radius: 10px !important;
+    height: 48px;
+    min-width: 130px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    transition: all 0.3s ease !important;
+}
+
+:host ::ng-deep .mat-mdc-fab.mat-mdc-button-base:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Cancel Button */
+:host ::ng-deep .secondary-color-bg {
+    background-color: #545E75 !important;
+}
+
+:host ::ng-deep .secondary-color-bg:hover {
+    background-color: #454d61 !important;
+}
+
+/* Delete Button (Warning) */
+:host ::ng-deep .warn-color-bg {
+    background-color: #d9534f !important;
+}
+
+:host ::ng-deep .warn-color-bg:hover {
+    background-color: #c9302c !important;
+}
+
+/* Confirm Button (Edit/Success) */
+:host ::ng-deep .edit-color-bg {
+    background-color: #33b249 !important;
+}
+
+:host ::ng-deep .edit-color-bg:hover {
+    background-color: #2a9a3e !important;
+}
+
+/* Button Icons and Text */
+:host ::ng-deep .mat-mdc-fab .mat-icon {
+    margin-right: 8px;
+}
+
+:host ::ng-deep .mat-mdc-fab span {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 576px) {
+    #delete-warning-dialog {
+        padding: 24px 20px;
+        min-width: auto;
+    }
+
+    #delete-warning-dialog h1 {
+        font-size: 1.25rem;
+    }
+
+    .dialog-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    :host ::ng-deep .mat-mdc-fab.mat-mdc-button-base {
+        width: 100%;
+    }
 }

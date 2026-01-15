@@ -1,0 +1,101 @@
+/* ========================================
+   GENERIC MESSAGE DIALOG STYLES
+   ======================================== */
+
+#message-dialog {
+    padding: 32px;
+    text-align: center;
+    min-width: 320px;
+}
+
+/* Title */
+#message-dialog h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 16px 0;
+    position: relative;
+    padding-bottom: 16px;
+}
+
+#message-dialog h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background-color: #C03221;
+    border-radius: 2px;
+}
+
+/* Message Text */
+#message-dialog p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin: 0 0 24px 0;
+}
+
+/* Actions Container */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.actions button {
+    min-width: 120px;
+}
+
+/* Button Styling */
+:host ::ng-deep .mat-mdc-fab.mat-mdc-button-base {
+    border-radius: 10px !important;
+    height: 48px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    transition: all 0.3s ease !important;
+}
+
+:host ::ng-deep .mat-mdc-fab.mat-mdc-button-base:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+:host ::ng-deep .secondary-color-bg {
+    background-color: #545E75 !important;
+}
+
+:host ::ng-deep .secondary-color-bg:hover {
+    background-color: #454d61 !important;
+}
+
+/* Button Icons and Text */
+:host ::ng-deep .mat-mdc-fab .mat-icon {
+    margin-right: 8px;
+}
+
+:host ::ng-deep .mat-mdc-fab span {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 576px) {
+    #message-dialog {
+        padding: 24px 20px;
+        min-width: auto;
+    }
+
+    #message-dialog h1 {
+        font-size: 1.25rem;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .actions button {
+        width: 100%;
+    }
+}

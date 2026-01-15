@@ -1,5 +1,172 @@
-@media (max-width: 992px) { /* Bootstrap's breakpoint for "lg" */
-    .navbar-nav .btn {
-      margin-bottom: 0.5rem; /* Adjust the spacing as needed */
+/* ========================================
+   HOME NAVBAR STYLES
+   ======================================== */
+
+/* Navbar base styling */
+:host ::ng-deep .navbar {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .navbar-brand img {
+    height: 40px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+:host ::ng-deep .navbar-brand:hover img {
+    transform: scale(1.05);
+}
+
+/* Text Logo Styling */
+:host ::ng-deep .logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: -0.5px;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .logo-accent {
+    color: #C03221;
+}
+
+:host ::ng-deep .navbar-brand:hover .logo-text {
+    transform: scale(1.02);
+}
+
+/* Navigation links */
+:host ::ng-deep .navbar-nav .nav-link {
+    color: #1a1a2e !important;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 8px 16px !important;
+    margin: 0 4px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+:host ::ng-deep .navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: #C03221;
+    transition: width 0.3s ease;
+    border-radius: 1px;
+}
+
+:host ::ng-deep .navbar-nav .nav-link:hover {
+    color: #C03221 !important;
+    background-color: rgba(192, 50, 33, 0.08);
+}
+
+:host ::ng-deep .navbar-nav .nav-link:hover::after {
+    width: 60%;
+}
+
+/* Login Button */
+:host ::ng-deep .btn-primary {
+    background-color: #C03221 !important;
+    border-color: #C03221 !important;
+    font-weight: 600;
+    padding: 10px 24px !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(192, 50, 33, 0.3);
+}
+
+:host ::ng-deep .btn-primary:hover {
+    background-color: #a82a1c !important;
+    border-color: #a82a1c !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(192, 50, 33, 0.4);
+}
+
+/* Register Button */
+:host ::ng-deep .btn-outline-secondary {
+    color: #1a1a2e !important;
+    border-color: #1a1a2e !important;
+    border-width: 2px !important;
+    font-weight: 600;
+    padding: 10px 24px !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease;
+    background-color: transparent !important;
+}
+
+:host ::ng-deep .btn-outline-secondary:hover {
+    background-color: #1a1a2e !important;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 26, 46, 0.3);
+}
+
+/* Navbar toggler for mobile */
+:host ::ng-deep .navbar-toggler {
+    border: 2px solid #C03221 !important;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .navbar-toggler:focus {
+    box-shadow: 0 0 0 3px rgba(192, 50, 33, 0.2);
+}
+
+:host ::ng-deep .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(192, 50, 33, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 992px) {
+    :host ::ng-deep .navbar {
+        padding: 10px 16px;
     }
-  }
+
+    :host ::ng-deep .navbar-nav .nav-link {
+        padding: 12px 16px !important;
+        margin: 4px 0;
+        text-align: center;
+    }
+
+    :host ::ng-deep .navbar-nav .nav-link::after {
+        display: none;
+    }
+
+    :host ::ng-deep .navbar-nav .nav-link:hover {
+        background-color: rgba(192, 50, 33, 0.1);
+    }
+
+    :host ::ng-deep .navbar-collapse {
+        background: white;
+        border-radius: 12px;
+        margin-top: 12px;
+        padding: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    :host ::ng-deep .navbar-nav .btn {
+        width: 100%;
+        margin-bottom: 8px;
+        padding: 12px 24px !important;
+    }
+
+    :host ::ng-deep .navbar-nav .btn:last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 576px) {
+    :host ::ng-deep .navbar-brand img {
+        height: 32px;
+    }
+}

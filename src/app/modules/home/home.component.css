@@ -1,3 +1,7 @@
+/* ========================================
+   HOMEPAGE STYLES - Shift Scheduler
+   ======================================== */
+
 html, body {
     margin: 0;
     padding: 0;
@@ -6,89 +10,495 @@ html, body {
 }
 
 section {
-    padding: 20px;
+    padding: 80px 20px;
 }
 
 br {
     clear: both;
 }
 
+/* ========================================
+   HERO SECTION
+   ======================================== */
 #hero {
-    background-color: #f2f2f2;
-    background-image: url('../../../assets/images/hero_splash.jpg');
+    background-color: #1a1a2e;
+    background-image: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(192, 50, 33, 0.85) 100%),
+                      url('../../../assets/images/hero_splash.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
-    text-align: center;
+    background-attachment: fixed;
+    min-height: 100vh;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+#hero::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: linear-gradient(to top, #ffffff, transparent);
+}
+
+#hero .container {
+    max-width: 900px;
+    padding: 40px;
+    position: relative;
+    z-index: 1;
 }
 
 #hero h1 {
-    margin: 0 auto;
-    font-size: 24px;
-    color: #333;
-}
-
-h2,h5{
-    padding-top: 5px;
-    padding-bottom: 5px;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 24px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
 }
 
 #hero p {
-    font-size: 16px;
-    color: #666;
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
-#services{
-    background-color: black;
+/* ========================================
+   ABOUT SECTION
+   ======================================== */
+#about {
+    background-color: #ffffff;
+    padding: 100px 20px;
+}
+
+#about .container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+#about h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #C03221;
+    margin-bottom: 16px;
+    position: relative;
+    display: inline-block;
+}
+
+#about h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background-color: #C03221;
+    border-radius: 2px;
+}
+
+#about h4 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #545E75;
+    margin-bottom: 24px;
+    margin-top: 24px;
+}
+
+#about p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+/* ========================================
+   SERVICES SECTION
+   ======================================== */
+#services {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     color: white;
+    padding: 100px 20px;
 }
 
-.service-box{
-    border-top: #666 1px solid;
-    padding-top: 5px;
-    padding-bottom: 5px;
+#services .container {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.pricing-box{
+#services h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+#services h4 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.service-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.service-box:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #C03221;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(192, 50, 33, 0.2);
+}
+
+.service-box h5 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 16px;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.service-box h5::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background-color: #C03221;
+    border-radius: 2px;
+}
+
+.service-box p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* ========================================
+   PRICING SECTION
+   ======================================== */
+#pricing {
+    background-color: #f8f9fa;
+    padding: 100px 20px;
+}
+
+#pricing .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#pricing h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+#pricing > .container > p {
+    font-size: 1.1rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Pricing Toggle Buttons */
+#pricing mat-button-toggle-group {
+    border: 2px solid #C03221;
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: white;
+}
+
+#pricing ::ng-deep .mat-button-toggle {
+    border: none !important;
+}
+
+#pricing ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    padding: 8px 24px;
+    font-weight: 500;
+}
+
+#pricing ::ng-deep .mat-button-toggle-checked {
+    background-color: #C03221 !important;
+    color: white !important;
+}
+
+.pricing-box {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border: #666 1px solid;
-    border-radius: 5px;
-    padding: 10px;
+    background: #ffffff;
+    border: 2px solid #e9ecef;
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s ease;
+    height: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.pricing-box:hover {
+    border-color: #C03221;
+    box-shadow: 0 20px 40px rgba(192, 50, 33, 0.15);
+    transform: translateY(-8px);
+}
+
+.pricing-box h5 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #C03221;
+    margin-bottom: 16px;
+}
+
+.pricing-box p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.7;
+    flex-grow: 1;
+}
+
+.pricing-box h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin: 0;
+    padding-right: 8px;
 }
 
 .pricing-box .row {
-    display: flex; /* Force horizontal layout */
-    align-items: center; /* Vertically align items */
-    gap: 10px; /* Add spacing between elements */
-  }
-  
-  @media (max-width: 576px) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.pricing-box .row span {
+    display: block;
+    font-size: 0.9rem;
+    color: #888;
+    line-height: 1.4;
+}
+
+.pricing-box .btn-success {
+    background-color: #C03221;
+    border-color: #C03221;
+    padding: 14px 24px;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.pricing-box .btn-success:hover {
+    background-color: #a82a1c;
+    border-color: #a82a1c;
+    transform: scale(1.02);
+}
+
+@media (max-width: 576px) {
     .pricing-box h1 {
-      font-size: 1.5rem; /* Adjust font size for smaller screens */
+        font-size: 2rem;
     }
-  }
+}
 
-#contact{
-    background-color: black;
+/* ========================================
+   CONTACT SECTION
+   ======================================== */
+#contact {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     color: white;
+    padding: 100px 20px;
 }
 
-#contact button{
-    width: 100px;
+#contact .container {
+    max-width: 700px;
+    margin: 0 auto;
 }
 
-.form-group{
+#contact h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+#contact > .container > p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+#contact form {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 40px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 8px;
+}
+
+.form-group .form-control {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.form-group .form-control:focus {
+    outline: none;
+    border-color: #C03221;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(192, 50, 33, 0.2);
+}
+
+.form-group textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+
+#contact button.btn-primary {
+    width: 100%;
+    padding: 16px 24px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #C03221;
+    border-color: #C03221;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+#contact button.btn-primary:hover {
+    background-color: #a82a1c;
+    border-color: #a82a1c;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(192, 50, 33, 0.3);
+}
+
+/* ========================================
+   TYPOGRAPHY GLOBAL
+   ======================================== */
+h2, h5 {
     padding-top: 5px;
     padding-bottom: 5px;
 }
 
+/* ========================================
+   FOOTER (if needed globally)
+   ======================================== */
 footer {
-    background-color: black;
+    background-color: #0f0f1a;
     color: white;
     text-align: center;
-    padding: 20px;
+    padding: 40px 20px;
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+@media (max-width: 991.98px) {
+    #hero h1 {
+        font-size: 2.5rem;
+    }
+
+    #hero p {
+        font-size: 1.1rem;
+    }
+
+    section {
+        padding: 60px 16px;
+    }
+
+    #about h2,
+    #services h2,
+    #pricing h2,
+    #contact h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #hero {
+        min-height: auto;
+        padding: 120px 20px 80px;
+        background-attachment: scroll;
+    }
+
+    #hero h1 {
+        font-size: 2rem;
+    }
+
+    #hero p {
+        font-size: 1rem;
+    }
+
+    #hero::before {
+        height: 80px;
+    }
+
+    section {
+        padding: 50px 16px;
+    }
+
+    #about h2,
+    #services h2,
+    #pricing h2,
+    #contact h2 {
+        font-size: 1.75rem;
+    }
+
+    #about h4,
+    #services h4 {
+        font-size: 1.1rem;
+    }
+
+    .service-box {
+        padding: 24px;
+    }
+
+    .pricing-box {
+        padding: 24px;
+    }
+
+    #contact form {
+        padding: 24px;
+    }
 }

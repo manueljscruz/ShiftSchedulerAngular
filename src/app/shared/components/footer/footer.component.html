@@ -1,17 +1,44 @@
-<footer class="container" id="footer-row">
-  <div class="row">
-    <span i18n>{{COMPANY_COPYRIGHT}}</span>
-    <span i18n>{{NIF_PLACEHOLDER}}</span>
-    <span i18n>{{ADDRESS_PLACEHOLDER}}</span>
-    <span i18n>{{COMPANY_EMAIL}}</span>
-    <span i18n>{{COMPANY_PHONE}}</span>
+<footer id="footer">
+  <div class="footer-container">
+    <!-- Logo and tagline -->
+    <div class="footer-brand">
+      <span class="footer-logo">Shift<span class="logo-accent">Scheduler</span></span>
+      <p class="footer-tagline" i18n>Smarter workforce management</p>
+    </div>
+
+    <!-- Company Info -->
+    <div class="footer-section">
+      <h4 i18n>Company</h4>
+      <div class="footer-info">
+        <span>{{COMPANY_COPYRIGHT}}</span>
+        <span>{{NIF_PLACEHOLDER}}</span>
+        <span>{{ADDRESS_PLACEHOLDER}}</span>
+      </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="footer-section">
+      <h4 i18n>Contact</h4>
+      <div class="footer-info">
+        <span><mat-icon>email</mat-icon>{{COMPANY_EMAIL}}</span>
+        <span><mat-icon>phone</mat-icon>{{COMPANY_PHONE}}</span>
+      </div>
+    </div>
+
+    <!-- Legal Links -->
+    <div class="footer-section">
+      <h4 i18n>Legal</h4>
+      <nav class="footer-nav">
+        <a routerLink={{TERMS_CONDITIONS_ROUTE}} i18n>Terms & Conditions</a>
+        <a routerLink={{PRIVACY_POLICY_ROUTE}} i18n>Privacy Policy</a>
+        <a routerLink={{COOKIES_POLICY_ROUTE}} i18n>Cookies</a>
+        <a routerLink={{CONTACTS_ROUTE}} i18n>Contact Us</a>
+      </nav>
+    </div>
   </div>
-  <div class="row">
-    <nav>
-        <a routerLink={{TERMS_CONDITIONS_ROUTE}}>Termos e Condições</a><br/>
-        <a routerLink={{PRIVACY_POLICY_ROUTE}}>Política de Privacidade</a><br/>
-        <a routerLink={{COOKIES_POLICY_ROUTE}}>Cookies</a><br/>
-        <a routerLink={{CONTACTS_ROUTE}}>Contactos</a>
-    </nav>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <span i18n>{{COMPANY_COPYRIGHT}}</span>
   </div>
 </footer>

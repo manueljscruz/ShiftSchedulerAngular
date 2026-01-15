@@ -6,18 +6,33 @@
     overflow: hidden;
 }
 
-#side-bar .logo{
+#side-bar .logo {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     margin-bottom: 20px;
     flex-shrink: 0;
+    padding: 10px 0;
 }
 
 #side-bar .logo img {
     width: 100%;
     max-width: 220px;
     height: auto;
+}
+
+/* Text Logo Styling */
+#side-bar .logo-text {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.5px;
+    text-align: center;
+}
+
+#side-bar .logo-accent {
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .menu{
