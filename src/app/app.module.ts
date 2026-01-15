@@ -222,12 +222,10 @@ import { AuthErrorInterceptor } from './core/interceptors/auth-error.interceptor
     provideNativeDateAdapter(),
     provideClientHydration(),
     provideAnimationsAsync(),
-    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    provideHttpClient(withInterceptors([AuthErrorInterceptor])),
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    provideHttpClient(withInterceptors([AuthErrorInterceptor]))
   ],
   bootstrap: [AppComponent]
 })
