@@ -119,9 +119,22 @@
   border-radius: 10px !important;
 }
 
-:host ::ng-deep #login-card .mdc-notched-outline__leading,
+:host ::ng-deep #login-card .mdc-notched-outline__leading {
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+  border-right: none !important;
+}
+
 :host ::ng-deep #login-card .mdc-notched-outline__trailing {
-  border-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+  border-left: none !important;
+}
+
+:host ::ng-deep #login-card .mdc-notched-outline__notch {
+  border-radius: 0 !important;
+  border-left: none !important;
+  border-right: none !important;
 }
 
 :host ::ng-deep #login-card .mat-mdc-form-field-focus-overlay {
