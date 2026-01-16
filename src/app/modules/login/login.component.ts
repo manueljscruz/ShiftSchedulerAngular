@@ -48,41 +48,55 @@ constructor(private loginRegisterService: WorkerService,
 }
 
   async login() {
-    let loginDTO: LoginDTO; // Declare the variable here
-
+    // Validation
     if (this.email === '' || this.password === '') {
-      alert('Please enter email and password');
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Please enter email and password'));
       return;
     }
-    else if (!this.validateEmail()) {
-      alert('Please enter a valid email');
+
+    if (!this.validateEmail()) {
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Please enter a valid email address'));
       return;
     }
-    else {
 
-      this.loadingScreenService.changeLoadingState(true);
+    // Set loading state
+    this.isLoading = true;
 
-      loginDTO = new LoginDTO(this.email, this.password); // Initialize it here
+    const loginDTO = new LoginDTO(this.email, this.password);
 
-      try {
-        const loginResult = await this.authService.login(loginDTO).toPromise();
+    try {
+      const loginResult = await this.authService.login(loginDTO).toPromise();
 
+      if (loginResult && loginResult.user) {
+        // Show success message
+        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(3, `Welcome back, ${loginResult.user.name}!`));
+
+        // Clear password for security
         this.clearPassword();
 
-        this.loadingScreenService.changeLoadingState(false);
-
-        if (loginResult && loginResult.user) {
-          // No need to manually store in localStorage/sessionStorage
-          // The AuthService BehaviorSubject is already updated via tap() operator
-          this.router.navigate(['/dashboard']);
-        } else {
-          this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Login failed'));
-        }
-      } catch (error: any) {
+        // Navigate to dashboard
+        this.router.navigate(['/dashboard']);
+      } else {
+        this.isLoading = false;
         this.clearPassword();
-        this.loadingScreenService.changeLoadingState(false);
-        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, error.error?.message || 'Login failed'));
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Login failed. Please check your credentials.'));
       }
+    } catch (error: any) {
+      this.isLoading = false;
+      this.clearPassword();
+
+      // Provide specific error messages
+      let errorMessage = 'Login failed. Please try again.';
+
+      if (error.status === 401) {
+        errorMessage = 'Invalid email or password.';
+      } else if (error.status === 0) {
+        errorMessage = 'Unable to connect to server. Please check your connection.';
+      } else if (error.error?.message) {
+        errorMessage = error.error.message;
+      }
+
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, errorMessage));
     }
   }
 
@@ -113,6 +127,8 @@ constructor(private loginRegisterService: WorkerService,
   }
 
   forgotPassword() {
-    this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Please contact the administrator to reset your password'));
+    if (!this.isLoading) {
+      this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Please contact the administrator to reset your password'));
+    }
   }
 }

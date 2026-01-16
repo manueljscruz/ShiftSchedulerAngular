@@ -1,3 +1,6 @@
+/* ========================================
+   LOGIN VIEW STYLES
+   ======================================== */
 
 #login-view {
   display: flex;
@@ -8,28 +11,250 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #272727;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  overflow: hidden;
 }
 
-#login-card{
-  min-width: 300px;
-  max-width: 500px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  opacity: 0.9;	
+/* Animated background effect */
+#login-view::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(192, 50, 33, 0.1) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
 }
 
-@media (max-width: 320px) { 
-  #login-card{
-    width: 300px;
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Login Card */
+#login-card {
+  position: relative;
+  z-index: 2;
+  min-width: 320px;
+  max-width: 450px;
+  width: 90%;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+              0 0 100px rgba(192, 50, 33, 0.1);
+  padding: 40px 32px;
+  opacity: 1;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
+/* Logo Section */
+#login-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 120px;
+  padding-bottom: 32px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+#login-logo::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #C03221 0%, #ff6b5a 100%);
+  border-radius: 2px;
+}
+
+#login-logo img {
+  max-width: 100%;
+  max-height: 100px;
+  height: auto;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* Form Styling */
+#login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#login-form span {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+  margin-top: 12px;
+}
+
+#login-form span:first-of-type {
+  margin-top: 0;
+}
+
+/* Form Fields */
+:host ::ng-deep #login-card .mat-mdc-form-field {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+:host ::ng-deep #login-card .mat-mdc-text-field-wrapper {
+  border-radius: 10px !important;
+}
+
+:host ::ng-deep #login-card .mdc-notched-outline__leading,
+:host ::ng-deep #login-card .mdc-notched-outline__trailing {
+  border-radius: 10px !important;
+}
+
+:host ::ng-deep #login-card .mat-mdc-form-field-focus-overlay {
+  background-color: rgba(192, 50, 33, 0.04);
+}
+
+:host ::ng-deep #login-card .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+:host ::ng-deep #login-card .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+:host ::ng-deep #login-card .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: #C03221 !important;
+  border-width: 2px !important;
+}
+
+:host ::ng-deep #login-card .mat-mdc-form-field .mat-icon {
+  color: #545E75;
+}
+
+:host ::ng-deep #login-card .mat-mdc-form-field.mat-focused .mat-icon {
+  color: #C03221;
+}
+
+/* Password Toggle Button */
+:host ::ng-deep #login-card .mat-mdc-icon-button {
+  transition: transform 0.2s ease;
+}
+
+:host ::ng-deep #login-card .mat-mdc-icon-button:hover {
+  transform: scale(1.1);
+}
+
+/* Forgot Password Link */
+#login-form .row {
+  margin: 16px 0 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#login-form a {
+  color: #C03221;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+#login-form a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #C03221;
+  transition: width 0.3s ease;
+}
+
+#login-form a:hover {
+  color: #a82a1c;
+}
+
+#login-form a:hover::after {
+  width: 100%;
+}
+
+/* Login Button */
+#login-button {
+  margin-top: 8px;
+  height: 48px;
+  border-radius: 10px !important;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(192, 50, 33, 0.3);
+  transition: all 0.3s ease !important;
+  position: relative;
+  overflow: hidden;
+}
+
+#login-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+#login-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+#login-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(192, 50, 33, 0.4);
+}
+
+#login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+#login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Login Button Loading State */
+#login-button.loading {
+  pointer-events: none;
+}
+
+#login-button .button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#login-button mat-spinner {
+  display: inline-block;
+}
+
+/* Loading Spinner Overlay */
 #loading-spinner {
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,20 +262,43 @@
   left: 0;
   width: 100%;
   height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
 }
 
-#login-logo {
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  max-height: 100px;
-  padding-bottom: 20px;
+:host ::ng-deep #loading-spinner .mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: #C03221;
 }
 
-#login-logo img {
-  max-width: 100%; /* Ensure the image doesn't exceed its container width */
-  max-height: 80px; /* Set a maximum height for the image */
-  height: auto; /* Maintain aspect ratio */
-  width: auto; /* Maintain aspect ratio */
-  display: block; /* Prevent extra spacing below the image */
+/* Mobile Responsive */
+@media (max-width: 576px) {
+  #login-card {
+    min-width: 280px;
+    padding: 32px 24px;
+  }
+
+  #login-logo {
+    padding-bottom: 24px;
+    margin-bottom: 16px;
+  }
+
+  #login-logo img {
+    max-height: 80px;
+  }
+
+  #login-button {
+    height: 44px;
+    font-size: 0.9rem;
+  }
+
+  #login-form span {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 320px) {
+  #login-card {
+    min-width: 260px;
+    padding: 24px 16px;
+  }
 }

@@ -1,5 +1,4 @@
 <div id="login-view">
-    <mat-spinner id="loading-spinner" *ngIf="isLoading"></mat-spinner>
     <div class="container">
         <div class="col-sm d-flex justify-content-center">
             <mat-card id="login-card">
@@ -10,25 +9,52 @@
                     <span i18n>Email</span>
                     <mat-form-field appearance="outline">
                         <mat-icon matPrefix>alternate_email</mat-icon>
-                        <input matInput type="email" [(ngModel)]="email" name="email" required>
+                        <input matInput
+                               type="email"
+                               [(ngModel)]="email"
+                               name="email"
+                               [disabled]="isLoading"
+                               (keyup.enter)="login()"
+                               required>
                     </mat-form-field>
-    
+
                     <span i18n>Password</span>
                     <mat-form-field appearance="outline">
                         <mat-icon matPrefix>lock</mat-icon>
-                        <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="password" name="password" required>
-                        <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
+                        <input matInput
+                               [type]="hidePassword ? 'password' : 'text'"
+                               [(ngModel)]="password"
+                               name="password"
+                               [disabled]="isLoading"
+                               (keyup.enter)="login()"
+                               required>
+                        <button mat-icon-button
+                                matSuffix
+                                type="button"
+                                (click)="togglePasswordVisibility()"
+                                [disabled]="isLoading">
                             <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
                         </button>
                     </mat-form-field>
-    
+
                     <div class="row">
-                        <a (click)="forgotPassword()">
-                            <span i18n> Forgot Password?</span>
+                        <a (click)="forgotPassword()" [class.disabled]="isLoading">
+                            <span i18n>Forgot Password?</span>
                         </a>
                     </div>
-    
-                    <button id="login-button" class="secondary-color-bg w-100" mat-raised-button (click)="login()" i18n>Sign in</button>
+
+                    <button id="login-button"
+                            class="secondary-color-bg w-100"
+                            [class.loading]="isLoading"
+                            mat-raised-button
+                            (click)="login()"
+                            [disabled]="isLoading">
+                        <span class="button-content">
+                            <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+                            <span *ngIf="!isLoading" i18n>Sign in</span>
+                            <span *ngIf="isLoading" i18n>Signing in...</span>
+                        </span>
+                    </button>
                 </form>
             </mat-card>
         </div>
