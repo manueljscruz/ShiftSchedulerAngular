@@ -126,6 +126,50 @@ mat-form-field {
     font-size: 0.95rem;
 }
 
+/* Password Requirements Styling */
+.password-requirements {
+    margin: 12px 0 20px;
+    padding: 16px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.requirement-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    color: #dc3545;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+}
+
+.requirement-item:last-child {
+    margin-bottom: 0;
+}
+
+.requirement-item mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    color: #dc3545;
+    transition: color 0.3s ease;
+}
+
+.requirement-item.met {
+    color: #28a745;
+}
+
+.requirement-item mat-icon.met-icon {
+    color: #28a745;
+}
+
+.requirement-item span {
+    flex: 1;
+    font-weight: 500;
+}
+
 /* Mobile Responsive */
 @media (max-width: 576px) {
     h1 {
@@ -144,5 +188,14 @@ mat-form-field {
 
     .mat-dialog-actions button {
         width: 100%;
+    }
+
+    .password-requirements {
+        padding: 12px;
+        margin: 10px 0 16px;
+    }
+
+    .requirement-item {
+        font-size: 0.8rem;
     }
 }

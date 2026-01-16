@@ -26,9 +26,18 @@ export class RegisterDialogComponent {
   passwordInput: string = '';
   confirmPasswordInput: string = '';
   executeActionIcon: string = REGISTER_ICON;
-  
+
   // Holds the selected gender
   selectedGender? : GenderLocalizedDTO;
+
+  // Password requirements tracking
+  passwordRequirements = {
+    minLength: false,
+    hasDigit: false,
+    hasLowercase: false,
+    hasUppercase: false,
+    hasSpecialChar: false
+  };
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   private loginRegisterService: WorkerService,
@@ -40,7 +49,39 @@ export class RegisterDialogComponent {
 
   async ngOnInit() {
 
-    
+  }
+
+  /**
+   * Validates password against all requirements and updates the requirement status
+   */
+  onPasswordChange() {
+    const password = this.passwordInput;
+
+    // Minimum length: 6 characters
+    this.passwordRequirements.minLength = password.length >= 6;
+
+    // Has at least one digit (0-9)
+    this.passwordRequirements.hasDigit = /\d/.test(password);
+
+    // Has at least one lowercase letter (a-z)
+    this.passwordRequirements.hasLowercase = /[a-z]/.test(password);
+
+    // Has at least one uppercase letter (A-Z)
+    this.passwordRequirements.hasUppercase = /[A-Z]/.test(password);
+
+    // Has at least one special character
+    this.passwordRequirements.hasSpecialChar = /[^a-zA-Z0-9]/.test(password);
+  }
+
+  /**
+   * Checks if all password requirements are met
+   */
+  arePasswordRequirementsMet(): boolean {
+    return this.passwordRequirements.minLength &&
+           this.passwordRequirements.hasDigit &&
+           this.passwordRequirements.hasLowercase &&
+           this.passwordRequirements.hasUppercase &&
+           this.passwordRequirements.hasSpecialChar;
   }
 
   // Handles the form submission
@@ -121,8 +162,9 @@ export class RegisterDialogComponent {
       return response;
     }
 
-    if(!ALPHA_NUMERIC_SPECIAL_REGEX.test(this.passwordInput)){
-      response.message = 'Password must contain at least one letter, one number, and one special character';
+    // Validate password against all requirements
+    if(!this.arePasswordRequirementsMet()){
+      response.message = 'Password does not meet all security requirements. Please check the requirements below the password field.';
       return response;
     }
 
