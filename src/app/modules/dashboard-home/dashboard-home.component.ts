@@ -30,7 +30,12 @@ export class DashboardHomeComponent {
       this.loggedUser = user;
 
       if (this.loggedUser) {
-        this.workEntities = await this.entityService.getEntitiesByWorkerId(this.loggedUser.userId);
+        try {
+          this.workEntities = await this.entityService.getEntitiesByWorkerId(this.loggedUser.userId);
+        } catch (error) {
+          console.error('Failed to load entities:', error);
+          // Error will be handled by interceptor
+        }
       }
     });
   }

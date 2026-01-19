@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
-import { LOGIN_URL, REFRESH_TOKEN_URL } from '../../shared/constants/APIPathsConstants';
+import { LOGIN_URL, REFRESH_TOKEN_URL, LOGOUT_URL } from '../../shared/constants/APIPathsConstants';
 import { AuthService } from '../services/api/AuthService';
 import { catchError, switchMap, throwError, EMPTY, Observable } from 'rxjs';
 import { inject } from '@angular/core';
@@ -15,18 +15,23 @@ export const AuthErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
-  return next(req).pipe(
+  // Add withCredentials to ALL requests (merged from AuthInterceptor)
+  const requestWithCredentials = req.clone({
+    withCredentials: true
+  });
+
+  return next(requestWithCredentials).pipe(
     catchError((error: HttpErrorResponse) => {
 
       // Handle 401 Unauthorized
       if (error.status === 401) {
 
-        // Don't try to refresh if this IS the refresh request or login request
-        if (req.url.includes(REFRESH_TOKEN_URL) || req.url.includes(LOGIN_URL)) {
-          // Refresh failed or login failed - logout ONCE
+        // Don't try to refresh if this IS the refresh/login/logout request
+        if (req.url.includes(REFRESH_TOKEN_URL) || req.url.includes(LOGIN_URL) || req.url.includes(LOGOUT_URL)) {
+          // Auth operation failed - logout ONCE
           if (!isLoggingOut) {
             isLoggingOut = true;
-            console.log('Auth failed - logging out');
+            console.log('Auth failed - clearing state and redirecting');
 
             // Clear state immediately to prevent further API calls
             authService.clearAuthState();
@@ -36,11 +41,8 @@ export const AuthErrorInterceptor: HttpInterceptorFn = (req, next) => {
               isLoggingOut = false;
             });
 
-            // Call logout endpoint in background (fire and forget)
-            authService.logout().subscribe({
-              error: (err) => console.error('Logout API call failed:', err),
-              complete: () => isLoggingOut = false
-            });
+            // DO NOT call logout() HTTP endpoint - auth is already invalid
+            // Making an HTTP call here would trigger this interceptor again
           }
 
           // Return EMPTY to stop the error chain and prevent retries
@@ -59,7 +61,7 @@ export const AuthErrorInterceptor: HttpInterceptorFn = (req, next) => {
           return refreshTokenSubject.pipe(
             switchMap(() => {
               // Refresh completed, retry the original request with new credentials
-              const clonedReq = req.clone({ withCredentials: true });
+              const clonedReq = requestWithCredentials.clone();
               return next(clonedReq);
             }),
             catchError(() => EMPTY)
@@ -76,9 +78,7 @@ export const AuthErrorInterceptor: HttpInterceptorFn = (req, next) => {
             isRefreshing = false;
             refreshTokenSubject = null;
 
-            const clonedReq = req.clone({
-              withCredentials: true
-            });
+            const clonedReq = requestWithCredentials.clone();
             return next(clonedReq);
           }),
           catchError((refreshError) => {
@@ -88,7 +88,7 @@ export const AuthErrorInterceptor: HttpInterceptorFn = (req, next) => {
 
             if (!isLoggingOut) {
               isLoggingOut = true;
-              console.log('Refresh failed - logging out');
+              console.log('Refresh failed - clearing state and redirecting');
 
               // Clear state immediately
               authService.clearAuthState();
@@ -98,11 +98,8 @@ export const AuthErrorInterceptor: HttpInterceptorFn = (req, next) => {
                 isLoggingOut = false;
               });
 
-              // Call logout endpoint in background
-              authService.logout().subscribe({
-                error: (err) => console.error('Logout API call failed:', err),
-                complete: () => isLoggingOut = false
-              });
+              // DO NOT call logout() HTTP endpoint - would create infinite loop
+              // Cookies are already invalid, making an HTTP call would fail with 401
             }
 
             // Return EMPTY to stop error propagation

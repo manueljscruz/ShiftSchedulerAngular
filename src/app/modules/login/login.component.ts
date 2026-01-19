@@ -69,7 +69,7 @@ constructor(private loginRegisterService: WorkerService,
 
       if (loginResult && loginResult.user) {
         // Show success message
-        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(3, `Welcome back, ${loginResult.user.name}!`));
+        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(3, `Welcome back, ${loginResult.user.userDisplayName}!`));
 
         // Clear password for security
         this.clearPassword();

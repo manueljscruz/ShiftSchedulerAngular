@@ -44,16 +44,14 @@
                     </div>
 
                     <button id="login-button"
-                            class="secondary-color-bg w-100"
+                            class="w-100"
                             [class.loading]="isLoading"
-                            mat-raised-button
+                            type="button"
                             (click)="login()"
                             [disabled]="isLoading">
-                        <span class="button-content">
-                            <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
-                            <span *ngIf="!isLoading" i18n>Sign in</span>
-                            <span *ngIf="isLoading" i18n>Signing in...</span>
-                        </span>
+                        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+                        <span *ngIf="!isLoading" i18n>Sign in</span>
+                        <span *ngIf="isLoading" i18n>Signing in...</span>
                     </button>
                 </form>
             </mat-card>

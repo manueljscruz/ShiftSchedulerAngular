@@ -48,26 +48,24 @@ export class DashboardComponent {
     this.checkScreenSize();
 
     // Subscribe to current user from AuthService
-    this.authService.currentUser$.subscribe(user => {
+    this.authService.currentUser$.subscribe(async user => {
       this.loggedUser = user;
 
       // If there is no logged user, redirect to login page
       if (!this.loggedUser) {
         this.router.navigate([LOGIN_ROUTE]);
+      } else {
+        // Only fetch data when user is confirmed
+        await this.getViewModelData();
+
+        let entityWorkerDTOs = this.entityWorkerDTOs;
+        this.sidebarNavigationService.addInitialWorkEntitiesSideBarItems(entityWorkerDTOs);
       }
     });
 
     this.sidebarNavigationService.getWorkEntitiesSideBarItems().subscribe(items => {
       this.workEntitiesSideBarItems = items;
     });
-
-    // Get view model data
-    await this.getViewModelData();
-
-    let entityWorkerDTOs = this.entityWorkerDTOs;
-    this.sidebarNavigationService.addInitialWorkEntitiesSideBarItems(entityWorkerDTOs);
-
-
   }
 
   @HostListener('window:resize', ['$event'])
@@ -96,7 +94,12 @@ export class DashboardComponent {
   async getViewModelData() {
     // Get data from API
     if (this.loggedUser) {
-      this.entityWorkerDTOs = await this.entityService.getEntitiesByWorkerId(this.loggedUser.userId);
+      try {
+        this.entityWorkerDTOs = await this.entityService.getEntitiesByWorkerId(this.loggedUser.userId);
+      } catch (error) {
+        console.error('Failed to load entities:', error);
+        // Error will be handled by interceptor
+      }
     }
   }
 
