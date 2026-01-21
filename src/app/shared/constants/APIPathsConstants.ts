@@ -15,6 +15,7 @@ export const LOGOUT_URL : string = BASE_API_URL + "Auth/logout";
 export const FORGOT_PASSWORD_URL : string = BASE_API_URL + "Auth/forgot-password";
 export const RESET_PASSWORD_URL : string = BASE_API_URL + "Auth/reset-password";
 export const REGISTER_URL : string = BASE_API_URL + "user/register";
+export const CONFIRM_EMAIL_URL : string = BASE_API_URL + "user/confirm-email";
 export const UPDATE_USER_URL : string = BASE_API_URL + "user/update";
 
 // EntityType

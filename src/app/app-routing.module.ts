@@ -46,7 +46,7 @@ const routes: Routes = [
   { path: 'ui', component: UITestsComponent},
   { path: 'login', component: LoginComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'confirm-email/:workerId', component: ConfirmEmailComponent },
+  { path: 'confirm-email', component: ConfirmEmailComponent }, // Changed to use query params (email & token)
   { path: 'terms-conditions', component: TermsConditionsComponent},
   { path: 'cookies-policy', component: CookiesPolicyComponent},
   { path: 'contacts', component: ContactsComponent},
