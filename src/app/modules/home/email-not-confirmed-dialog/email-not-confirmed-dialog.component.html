@@ -1,0 +1,48 @@
+<div>
+    <h1 mat-dialog-title i18n>Email Not Confirmed</h1>
+    <form id="email-not-confirmed-form">
+        <mat-dialog-content>
+            <div class="warning-icon-container">
+                <mat-icon class="warning-icon">warning</mat-icon>
+            </div>
+
+            <p class="dialog-description" i18n>
+                Your email address <strong>{{ email }}</strong> has not been confirmed yet.
+            </p>
+
+            <p class="dialog-description" i18n>
+                You need to confirm your email before you can access your account.
+                Please check your inbox for the confirmation link.
+            </p>
+
+            <div class="info-box">
+                <mat-icon>info</mat-icon>
+                <span i18n>Didn't receive the email? Click the button below to resend it.</span>
+            </div>
+
+            <div class="success-message" *ngIf="emailSent">
+                <mat-icon>check_circle</mat-icon>
+                <p i18n>
+                    Confirmation email has been resent! Please check your inbox and spam folder.
+                </p>
+            </div>
+        </mat-dialog-content>
+
+        <mat-dialog-actions align="end">
+            <button mat-button
+                    (click)="onCancel()"
+                    [disabled]="isLoading"
+                    i18n>
+                Close
+            </button>
+            <button mat-raised-button
+                    class="secondary-color-bg"
+                    (click)="onResend()"
+                    [disabled]="isLoading || emailSent">
+                <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+                <span *ngIf="!isLoading && !emailSent" i18n>Resend Confirmation Email</span>
+                <span *ngIf="emailSent" i18n>Email Sent</span>
+            </button>
+        </mat-dialog-actions>
+    </form>
+</div>

@@ -17,6 +17,7 @@ import { SessionService } from '../../core/services/session.service';
 import { AuthService } from '../../core/services/api/AuthService';
 import { MatDialog } from '@angular/material/dialog';
 import { ForgotPasswordDialogComponent } from '../home/forgot-password-dialog/forgot-password-dialog.component';
+import { EmailNotConfirmedDialogComponent } from '../home/email-not-confirmed-dialog/email-not-confirmed-dialog.component';
 
 
 @Component({
@@ -71,6 +72,22 @@ constructor(private loginRegisterService: WorkerService,
       const loginResult = await this.authService.login(loginDTO).toPromise();
 
       if (loginResult && loginResult.user) {
+        // Check if email is confirmed
+        if (loginResult.emailConfirmed === false) {
+          this.isLoading = false;
+          this.clearPassword();
+
+          // Show email not confirmed dialog
+          this.dialog.open(EmailNotConfirmedDialogComponent, {
+            width: '500px',
+            disableClose: true,
+            data: { email: this.email }
+          });
+
+          return;
+        }
+
+        // Email confirmed - proceed with login
         // Show success message
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(3, `Welcome back, ${loginResult.user.userDisplayName}!`));
 

@@ -3,13 +3,14 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap, filter, first } from 'rxjs';
 import { LoginDTO } from '../../../shared/models/DTOs/Outgoing/LoginDTO';
-import { LOGIN_URL, LOGOUT_URL, REFRESH_TOKEN_URL, FORGOT_PASSWORD_URL, RESET_PASSWORD_URL, CONFIRM_EMAIL_URL } from '../../../shared/constants/APIPathsConstants';
+import { LOGIN_URL, LOGOUT_URL, REFRESH_TOKEN_URL, FORGOT_PASSWORD_URL, RESET_PASSWORD_URL, CONFIRM_EMAIL_URL, RESEND_CONFIRMATION_EMAIL_URL } from '../../../shared/constants/APIPathsConstants';
 import { LoginResponseDTO } from '../../../shared/models/DTOs/Incoming/LoginResponseDTO';
 import { UserDTO } from '../../../shared/models/DTOs/Incoming/UserDTO';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { ForgotPasswordRequestDTO } from '../../../shared/models/DTOs/Outgoing/ForgotPasswordRequestDTO';
 import { ResetPasswordRequestDTO } from '../../../shared/models/DTOs/Outgoing/ResetPasswordRequestDTO';
 import { ConfirmEmailRequestDTO } from '../../../shared/models/DTOs/Outgoing/ConfirmEmailRequestDTO';
+import { ResendConfirmationEmailDTO } from '../../../shared/models/DTOs/Outgoing/ResendConfirmationEmailDTO';
 import { response } from 'express';
 
 @Injectable({
@@ -185,5 +186,13 @@ export class AuthService {
     confirmEmail(email: string, token: string): Observable<BaseResponseModel> {
         const requestDTO = new ConfirmEmailRequestDTO(email, token);
         return this.http.post<BaseResponseModel>(CONFIRM_EMAIL_URL, requestDTO);
+    }
+
+    /**
+     * Resend confirmation email
+     */
+    resendConfirmationEmail(email: string): Observable<BaseResponseModel> {
+        const requestDTO = new ResendConfirmationEmailDTO(email);
+        return this.http.post<BaseResponseModel>(RESEND_CONFIRMATION_EMAIL_URL, requestDTO);
     }
 }

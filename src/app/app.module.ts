@@ -110,6 +110,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthErrorInterceptor } from './core/interceptors/auth-error.interceptor';
 import { ForgotPasswordDialogComponent } from './modules/home/forgot-password-dialog/forgot-password-dialog.component';
 import { ResetPasswordComponent } from './modules/reset-password/reset-password.component';
+import { EmailNotConfirmedDialogComponent } from './modules/home/email-not-confirmed-dialog/email-not-confirmed-dialog.component';
 
 @NgModule({
   declarations: [
@@ -183,7 +184,8 @@ import { ResetPasswordComponent } from './modules/reset-password/reset-password.
     SearchResultItemComponent,
     SettingsComponent,
     ForgotPasswordDialogComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    EmailNotConfirmedDialogComponent
   ],
   imports: [
     BrowserModule,
