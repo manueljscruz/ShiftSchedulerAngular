@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
@@ -12,7 +14,7 @@ import { AuthService } from '../../core/services/api/AuthService';
   templateUrl: './dashboard-home.component.html',
   styleUrl: './dashboard-home.component.css'
 })
-export class DashboardHomeComponent {
+export class DashboardHomeComponent implements OnDestroy {
 
   loggedUser: UserDTO | null = null;
 
@@ -20,30 +22,45 @@ export class DashboardHomeComponent {
 
   workEntities : EntityWorkerDTO[] = [];
 
+  // Subscription management
+  private destroy$ = new Subject<void>();
+
   constructor(private entityService: EntityService,
     private snackbarManagerService: SnackbarManagerService,
     private authService: AuthService) {
   }
 
   async ngOnInit() {
-    this.authService.currentUser$.subscribe(async user => {
-      this.loggedUser = user;
+    // Wait for auth initialization
+    await this.authService.waitForInitialization();
 
-      if (this.loggedUser) {
-        try {
-          this.workEntities = await this.entityService.getEntitiesByWorkerId(this.loggedUser.userId);
-        } catch (error) {
-          console.error('Failed to load entities:', error);
-          // Error will be handled by interceptor
+    this.authService.currentUser$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(async user => {
+        this.loggedUser = user;
+
+        if (this.loggedUser) {
+          try {
+            this.workEntities = await this.entityService.getEntitiesByWorkerId(
+              this.loggedUser.userId
+            );
+          } catch (error) {
+            console.error('Failed to load entities:', error);
+            // Error will be handled by interceptor
+          }
         }
-      }
-    });
+      });
   }
-  
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   onTabSelected($event: MatTabChangeEvent) {
     this.selectedTabIndex = $event.index;
   }
 
- 
+
 
 }

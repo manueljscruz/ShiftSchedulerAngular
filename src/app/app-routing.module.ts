@@ -38,12 +38,14 @@ import { ContactsComponent } from './modules/contacts/contacts.component';
 import { PrivacyPolicyComponent } from './modules/privacy-policy/privacy-policy.component';
 import { SearchResultsComponent } from './modules/search-results/search-results.component';
 import { SettingsComponent } from './modules/settings/settings.component';
+import { ResetPasswordComponent } from './modules/reset-password/reset-password.component';
 import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'ui', component: UITestsComponent},
   { path: 'login', component: LoginComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'confirm-email/:workerId', component: ConfirmEmailComponent },
   { path: 'terms-conditions', component: TermsConditionsComponent},
   { path: 'cookies-policy', component: CookiesPolicyComponent},

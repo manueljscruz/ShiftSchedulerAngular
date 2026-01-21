@@ -108,6 +108,8 @@ import { SearchResultItemComponent } from './modules/search-results/search-resul
 import { SettingsComponent } from './modules/settings/settings.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthErrorInterceptor } from './core/interceptors/auth-error.interceptor';
+import { ForgotPasswordDialogComponent } from './modules/home/forgot-password-dialog/forgot-password-dialog.component';
+import { ResetPasswordComponent } from './modules/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -179,7 +181,9 @@ import { AuthErrorInterceptor } from './core/interceptors/auth-error.interceptor
     DashboardTabViewComponent,
     SearchResultsComponent,
     SearchResultItemComponent,
-    SettingsComponent
+    SettingsComponent,
+    ForgotPasswordDialogComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

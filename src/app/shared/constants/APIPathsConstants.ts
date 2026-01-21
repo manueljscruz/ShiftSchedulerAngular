@@ -12,6 +12,8 @@ export const GET_GENDERS_BY_LOCALIZATION_URL : string = BASE_API_URL + "gender/g
 export const LOGIN_URL : string = BASE_API_URL + "Auth/login";
 export const REFRESH_TOKEN_URL : string = BASE_API_URL + "Auth/refresh-token";
 export const LOGOUT_URL : string = BASE_API_URL + "Auth/logout";
+export const FORGOT_PASSWORD_URL : string = BASE_API_URL + "Auth/forgot-password";
+export const RESET_PASSWORD_URL : string = BASE_API_URL + "Auth/reset-password";
 export const REGISTER_URL : string = BASE_API_URL + "user/register";
 export const UPDATE_USER_URL : string = BASE_API_URL + "user/update";
 

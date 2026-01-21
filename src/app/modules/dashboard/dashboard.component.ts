@@ -1,4 +1,6 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { EntityWorkerDTO } from '../../shared/models/DTOs/Incoming/EntityWorkerDTO';
@@ -16,7 +18,7 @@ import { AuthService } from '../../core/services/api/AuthService';
   styleUrl: './dashboard.component.css'
 })
 
-export class DashboardComponent {
+export class DashboardComponent implements OnDestroy {
 
   // Constants
   // Route Links
@@ -37,6 +39,9 @@ export class DashboardComponent {
   isMobile: boolean = false;
   workEntitiesSideBarItems: SideBarItemModel[] = [];
 
+  // Subscription management
+  private destroy$ = new Subject<void>();
+
   constructor(private router: Router,
     private entityService: EntityService,
     private sidebarNavigationService: SidebarNavigationService,
@@ -47,11 +52,16 @@ export class DashboardComponent {
     // Initialize mobile detection
     this.checkScreenSize();
 
-    // Subscribe to current user from AuthService
-    this.authService.currentUser$.subscribe(async user => {
+    // Wait for auth initialization before subscribing
+    await this.authService.waitForInitialization();
+
+    // Subscribe to current user - now safe from race condition
+    this.authService.currentUser$.pipe(
+      takeUntil(this.destroy$) // Unsubscribe on component destroy
+    ).subscribe(async user => {
       this.loggedUser = user;
 
-      // If there is no logged user, redirect to login page
+      // If no logged user AFTER initialization, redirect to login
       if (!this.loggedUser) {
         this.router.navigate([LOGIN_ROUTE]);
       } else {
@@ -63,9 +73,16 @@ export class DashboardComponent {
       }
     });
 
-    this.sidebarNavigationService.getWorkEntitiesSideBarItems().subscribe(items => {
-      this.workEntitiesSideBarItems = items;
-    });
+    this.sidebarNavigationService.getWorkEntitiesSideBarItems()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(items => {
+        this.workEntitiesSideBarItems = items;
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   @HostListener('window:resize', ['$event'])

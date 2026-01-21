@@ -15,6 +15,8 @@ import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { SessionService } from '../../core/services/session.service';
 import { AuthService } from '../../core/services/api/AuthService';
+import { MatDialog } from '@angular/material/dialog';
+import { ForgotPasswordDialogComponent } from '../home/forgot-password-dialog/forgot-password-dialog.component';
 
 
 @Component({
@@ -32,12 +34,13 @@ export class LoginComponent {
   passwordErrorWarningVisible: boolean;
   isLoading: boolean;
 
-constructor(private loginRegisterService: WorkerService, 
+constructor(private loginRegisterService: WorkerService,
   private authService: AuthService,
-  private router: Router, 
+  private router: Router,
   private loadingScreenService: LoadingSpinnerManagerService,
   private snackbarManagerService: SnackbarManagerService,
   private sessionService: SessionService,
+  private dialog: MatDialog,
   @Inject(LocalService) private localStore: LocalService) {
   this.email = '';
   this.password = '';
@@ -128,7 +131,11 @@ constructor(private loginRegisterService: WorkerService,
 
   forgotPassword() {
     if (!this.isLoading) {
-      this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Please contact the administrator to reset your password'));
+      this.dialog.open(ForgotPasswordDialogComponent, {
+        width: '450px',
+        disableClose: false,
+        autoFocus: true
+      });
     }
   }
 }
