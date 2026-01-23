@@ -206,13 +206,14 @@ export class EntityShiftsComponent {
       if(apiResponse.success) {
         // Remove the shift from the shift view model
         let index = this.ShiftViewModel.shifts.findIndex(x => x.shiftId === shiftToDelete.shiftId);
-        this.ShiftViewModel.shifts.splice(index, 1);
+        if(index >= 0) {
+          this.ShiftViewModel.shifts.splice(index, 1);
+          // Reload the shift table
+          this.shiftTable.renderRows();
+        }
 
         // Show success message
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, apiResponse.message));
-
-        // Reload the shift table
-        this.shiftTable.renderRows();
       }
       else{
         // Show fail message
@@ -324,7 +325,9 @@ export class EntityShiftsComponent {
         // Replace entry with the new one
         if(this.isEditing) {
           let index = this.ShiftViewModel.shifts.findIndex(x => x.shiftId === shiftDTO.shiftId);
-          this.ShiftViewModel.shifts[index] = shiftDTO;
+          if(index >= 0) {
+            this.ShiftViewModel.shifts[index] = shiftDTO;
+          }
         }
 
         // Add new entry
@@ -414,7 +417,9 @@ export class EntityShiftsComponent {
         else
         {
           let index = this.SelectedShiftBreaks.findIndex(x => x === this.shiftBreakToChange);
-          this.SelectedShiftBreaks[index] = result.result;
+          if(index >= 0) {
+            this.SelectedShiftBreaks[index] = result.result;
+          }
         }
 
         this.selectedShiftBreakTable.renderRows();
@@ -484,8 +489,10 @@ export class EntityShiftsComponent {
     // If no shift break id, remove from the selected shift breaks
     if(shiftBreakDTO.shiftBreakId === ''){
       let index = this.SelectedShiftBreaks.findIndex(x => x === shiftBreakDTO);
-      this.SelectedShiftBreaks.splice(index, 1);
-      this.selectedShiftBreakTable.renderRows();
+      if(index >= 0) {
+        this.SelectedShiftBreaks.splice(index, 1);
+        this.selectedShiftBreakTable.renderRows();
+      }
     }
     else{
       // Turn on the loading spinner
@@ -497,13 +504,14 @@ export class EntityShiftsComponent {
       if(apiResponse.success) {
         // Remove the shift break from the selected shift breaks
         let index = this.SelectedShiftBreaks.findIndex(x => x.shiftBreakId === shiftBreakDTO.shiftBreakId);
-        this.SelectedShiftBreaks.splice(index, 1);
+        if(index >= 0) {
+          this.SelectedShiftBreaks.splice(index, 1);
+          // Reload the shift breaks table
+          this.selectedShiftBreakTable.renderRows();
+        }
 
         // Show success message
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, apiResponse.message));
-
-        // Reload the shift breaks table
-        this.selectedShiftBreakTable.renderRows();
       }
       // If API call not successful
       else 
@@ -547,8 +555,10 @@ export class EntityShiftsComponent {
 
         if(isEdit){
           let index = this.ShiftViewModel.shiftRotations.findIndex(x => x.entityId === result.result.entityId && x.orderNo === result.result.orderNo);
-          this.ShiftViewModel.shiftRotations[index] = result.result;
-          this.shiftRotationTable.renderRows();
+          if(index >= 0) {
+            this.ShiftViewModel.shiftRotations[index] = result.result;
+            this.shiftRotationTable.renderRows();
+          }
           return;
         }
         else{
@@ -656,13 +666,13 @@ export class EntityShiftsComponent {
     if(apiResponse.success){
       this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, apiResponse.message));
 
-      // Remove the shift break from the selected shift breaks
+      // Remove the shift rotation from the list
       let index = this.ShiftViewModel.shiftRotations.findIndex(x => x == shiftRotationDTO);
-      this.ShiftViewModel.shiftRotations.splice(index, 1);
-
-      this.shiftRotationTable.renderRows();
-
-      this.reorderShiftRotations();
+      if(index >= 0) {
+        this.ShiftViewModel.shiftRotations.splice(index, 1);
+        this.shiftRotationTable.renderRows();
+        this.reorderShiftRotations();
+      }
     }
     else{
       this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, apiResponse.message));

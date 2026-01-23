@@ -679,7 +679,7 @@ export class EntityScheduleComponent {
     // If there are entries for the selected date, we need to check if the shift already exists
     else{
       // Check if there is already an entry for this shift on this date
-      let dayShiftEntry = dayEntries.find(x => x.shiftDTO.shiftId === shiftId);
+      let dayShiftEntry = dayEntries.find(x => x.shiftDTO?.shiftId === shiftId);
 
       if(dayShiftEntry != null)
         scheduleEntryId = dayShiftEntry.scheduleEntryId;
@@ -742,12 +742,12 @@ export class EntityScheduleComponent {
     // If there are entries for the selected date, we need to check if the shift already exists
     else{
       // Check if there is already an entry for this shift on this date
-      let dayShiftEntry = dayEntries.find(x => x.shiftDTO.shiftId === shiftId);
-      
+      let dayShiftEntry = dayEntries.find(x => x.shiftDTO?.shiftId === shiftId);
+
       // If there is an entry for this shift, we can add the worker to the existing entry
       if(dayShiftEntry != null) {
         // Check if the worker is already assigned to this shift
-        if(dayShiftEntry.scheduleParticipants.some(p => p.worker.workerId === workerId)) {
+        if(dayShiftEntry.scheduleParticipants?.some(p => p.worker?.workerId === workerId)) {
           this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Worker already assigned to this shift'));
           this.loadingScreenService.changeLoadingState(false);
           return;

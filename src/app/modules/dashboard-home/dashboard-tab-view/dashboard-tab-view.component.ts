@@ -122,6 +122,12 @@ export class DashboardTabViewComponent {
     let baseViewModelRequestDTO = new BaseViewModelRequestDTO(this.entityWorkerInstance?.entityId ?? '', this.loggedUser?.userId ?? '', '');
     this.entityDashboardViewModel = await this.entityService.getEntityDashboardViewModel(baseViewModelRequestDTO);
     
+    if(this.entityDashboardViewModel == null){
+      this.loadingScreenService.changeLoadingState(false);
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5000, 'Error loading entity dashboard data'));
+      return;
+    }
+
     if(this.entityDashboardViewModel.scheduleEntries != null)
       this.BuildCalendar(this.entityDashboardViewModel.scheduleEntries);
 

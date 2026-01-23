@@ -20,9 +20,11 @@ export class ScheduleEventViewComponent {
     console.log("Schedule Event View Component Initialized");
     console.log("Schedule Entry: ", this.scheduleEntry);
 
-    for (let participant of this.scheduleEntry.scheduleParticipants) {
-      if(participant.assignedSkills.length === 0) {
-        participant.assignedSkills = [...participant.worker.skillSet]; // Assign all skills if none are selected
+    if(this.scheduleEntry?.scheduleParticipants) {
+      for (let participant of this.scheduleEntry.scheduleParticipants) {
+        if(participant?.assignedSkills?.length === 0 && participant.worker?.skillSet) {
+          participant.assignedSkills = [...participant.worker.skillSet]; // Assign all skills if none are selected
+        }
       }
     }
   }

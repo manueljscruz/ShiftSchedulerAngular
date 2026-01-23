@@ -93,12 +93,19 @@ export class EntityFormComponent {
       languageCode: this.userLanguage
     };
 
-      this.entityProfileViewModel = await this.entityService.getEntityProfileViewModel(entityProfileViewModelRequestDTO);
+    let viewModel = await this.entityService.getEntityProfileViewModel(entityProfileViewModelRequestDTO);
+
+    this.loadingScreenService.changeLoadingState(false);
+
+    if(viewModel == null) {
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Error loading entity data'));
+      return;
+    }
+
+    this.entityProfileViewModel = viewModel;
 
     // Sets the initial entity type if the entity can be edited
     this.setInitialEntityType();
-
-    this.loadingScreenService.changeLoadingState(false);
   }
 
   /// <summary>

@@ -120,10 +120,17 @@ export class EntityAbsencesComponent {
     this.loadingScreenService.changeLoadingState(true);
 
     let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '');
-    this.entityWorkerAbsencesViewModel = await this.absenceService.getAbsenceViewModel(entityRuleViewModelRequestDTO);
-    this.handleAbsenceDateDisplay(this.entityWorkerAbsencesViewModel.entityWorkerAbsences);
+    let viewModel = await this.absenceService.getAbsenceViewModel(entityRuleViewModelRequestDTO);
 
     this.loadingScreenService.changeLoadingState(false);
+
+    if(viewModel == null || viewModel.entityWorkerAbsences == null) {
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Error loading absence data'));
+      return;
+    }
+
+    this.entityWorkerAbsencesViewModel = viewModel;
+    this.handleAbsenceDateDisplay(this.entityWorkerAbsencesViewModel.entityWorkerAbsences);
   }
 
   //#endregion
@@ -283,8 +290,10 @@ export class EntityAbsencesComponent {
     this.loadingScreenService.changeLoadingState(false);
 
     if(response.success){
-      this.entityWorkerAbsences.data.splice(index, 1);
-      this.absenceTable.renderRows();
+      if(index >= 0) {
+        this.entityWorkerAbsences.data.splice(index, 1);
+        this.absenceTable.renderRows();
+      }
       this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, response.message));
     }
     else{
@@ -342,8 +351,10 @@ export class EntityAbsencesComponent {
 
       if(apiResponse.success){
         let index = this.entityWorkerAbsences.data.findIndex(x => x.entityWorkerAbsenceId === absence.entityWorkerAbsenceId);
-        this.entityWorkerAbsences.data[index] = apiResponse.result;
-        this.absenceTable.renderRows();
+        if(index >= 0) {
+          this.entityWorkerAbsences.data[index] = apiResponse.result;
+          this.absenceTable.renderRows();
+        }
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Decision successfully applied.'));
       }
       else{
@@ -465,7 +476,9 @@ export class EntityAbsencesComponent {
       if(this.isEditing){
         let index = this.entityWorkerAbsences.data.findIndex(x => x.entityWorkerAbsenceId === this.selectedAbsence.entityWorkerAbsenceId);
         this.selectedAbsence = response.result;
-        this.entityWorkerAbsences.data[index] = this.selectedAbsence;
+        if(index >= 0) {
+          this.entityWorkerAbsences.data[index] = this.selectedAbsence;
+        }
       }
       else{
         this.entityWorkerAbsences.data.push(response.result);

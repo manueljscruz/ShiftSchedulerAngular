@@ -1,6 +1,6 @@
 <div class="entity-dashboard-container">
-    <h1 i18n>{{entityDashboardViewModel.entityDTO.entityName}}</h1>
-    <h5 i18n>{{entityDashboardViewModel.entityDTO.entityTypeLocalized}}</h5>
+    <h1 i18n>{{entityDashboardViewModel?.entityDTO?.entityName}}</h1>
+    <h5 i18n>{{entityDashboardViewModel?.entityDTO?.entityTypeLocalized}}</h5>
     <mat-divider></mat-divider>
 
     <!-- Owner Dashboard Displays and Shortcuts -->
@@ -8,7 +8,7 @@
         <button mat-fab extended class="dashboard-icon-button" [routerLink]="membersRouterLink"> 
             <div class="icon-and-badge-text">
                 <mat-icon>people</mat-icon>
-                <span>{{entityDashboardViewModel.entityStatistics.numberOfMembers}}</span>
+                <span>{{entityDashboardViewModel?.entityStatistics?.numberOfMembers}}</span>
             </div>
             <span i18n>Members</span>
         </button>
@@ -16,7 +16,7 @@
         <button mat-fab extended class="dashboard-icon-button" [routerLink]="rulesRouterLink">
             <div class="icon-and-badge-text">
                 <i class="bi bi-file-ruled-fill"></i>
-                <span>{{entityDashboardViewModel.entityStatistics.numberOfRules}}</span>
+                <span>{{entityDashboardViewModel?.entityStatistics?.numberOfRules}}</span>
             </div>
             <span i18n>Rules</span>
         </button>
@@ -24,7 +24,7 @@
         <button mat-fab extended class="dashboard-icon-button" [routerLink]="shiftsRouterLink">
             <div class="icon-and-badge-text">
                 <i class="bi bi-clock-fill"></i>
-                <span>{{entityDashboardViewModel.entityStatistics.numberOfShifts}}</span>
+                <span>{{entityDashboardViewModel?.entityStatistics?.numberOfShifts}}</span>
             </div>
             <span i18n>Shifts</span>
         </button>
