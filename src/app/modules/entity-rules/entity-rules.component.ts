@@ -221,6 +221,7 @@ export class EntityRulesComponent {
       this.previousSelectedRuleType = undefined;
       this.isEditingRule = false;
       this.isRuleSpecEditing = false;
+      this.boolSpecValue = false;
       this.clearSpecForm();
       this.toggleSpecUIElements(0);
     }
@@ -377,8 +378,7 @@ export class EntityRulesComponent {
 
       if(response.success){
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, response.message));
-        this.isFormActive = false;
-        this.clearSpecForm();
+        this.toggleForm(false);
         this.ruleTable.renderRows();
       }
       else{
@@ -407,7 +407,7 @@ export class EntityRulesComponent {
       if(response.success){
         response.result.ruleTypeDisplayValue = this.rulesViewModel.ruleTypeLocalizeds.find(x => x.ruleTypeId === response.result.ruleTypeId)?.ruleTypeLocalizedName || '';
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, response.message));
-        this.isFormActive = false;
+        this.toggleForm(false);
         this.rulesViewModel.entityRules.push(response.result);
         this.ruleTable.renderRows();
       }
