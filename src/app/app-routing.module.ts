@@ -39,6 +39,7 @@ import { PrivacyPolicyComponent } from './modules/privacy-policy/privacy-policy.
 import { SearchResultsComponent } from './modules/search-results/search-results.component';
 import { SettingsComponent } from './modules/settings/settings.component';
 import { ResetPasswordComponent } from './modules/reset-password/reset-password.component';
+import { PublicProfileComponent } from './modules/public-profile/public-profile.component';
 import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
@@ -56,6 +57,7 @@ const routes: Routes = [
     { path: 'home', component: DashboardHomeComponent},
     { path: 'profile', component: ProfileComponent},
     { path: 'search-results', component: SearchResultsComponent},
+    { path: 'view/:type/:id', component: PublicProfileComponent},
     { path: 'new-entity', component: NewEntityComponent},
     { path: 'settings', component: SettingsComponent},
     { path: 'entity-form/:entityId', component: EntityFormComponent},

@@ -93,3 +93,5 @@ export const SAVE_SCHEDULE_ENTRY_URL : string = BASE_API_URL + ENTITY_SCHEDULE_C
 //#region SEARCH
 const SEARCH_CONTROLLER: string = "Search";
 export const SEARCH_URL: string = BASE_API_URL + SEARCH_CONTROLLER + "/search";
+export const GET_WORKER_PUBLIC_PROFILE_URL: string = BASE_API_URL + SEARCH_CONTROLLER + "/worker/{workerId}/{languageCode}";
+export const GET_ENTITY_PUBLIC_PROFILE_URL: string = BASE_API_URL + SEARCH_CONTROLLER + "/entity";

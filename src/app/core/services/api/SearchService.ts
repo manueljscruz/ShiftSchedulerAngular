@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SEARCH_URL } from '../../../shared/constants/APIPathsConstants';
+import { GET_ENTITY_PUBLIC_PROFILE_URL, GET_WORKER_PUBLIC_PROFILE_URL, SEARCH_URL } from '../../../shared/constants/APIPathsConstants';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
 import { LanguageServiceService } from '../language-service.service';
 import { SearchRequestDTO } from '../../../shared/models/DTOs/Outgoing/SearchRequestDTO';
-import { PagedList } from '../../../shared/models/DTOs/Incoming/PagedList';
-import { SearchResultDTO } from '../../../shared/models/DTOs/Incoming/SearchResultDTO';
+import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -31,6 +30,51 @@ export class SearchService {
             return apiResponse as BaseResponseModel;
         } catch (error: any) {
             console.error('Error performing search:', error.message);
+            response.message = error.message;
+        }
+
+        return response;
+    }
+
+    /**
+     * Retrieves the public profile of a worker.
+     * @param workerId - The unique identifier of the worker.
+     * @returns A promise that resolves to the worker's public profile.
+     */
+    async getWorkerPublicProfile(workerId: string): Promise<BaseResponseModel> {
+        let response = new BaseResponseModel(false, "", null);
+        const languageCode = this.languageService.returnLocalization();
+
+        try {
+            const url = GET_WORKER_PUBLIC_PROFILE_URL
+                .replace('{workerId}', workerId)
+                .replace('{languageCode}', languageCode);
+            const apiResponse = await this.http.get(url).toPromise();
+            return apiResponse as BaseResponseModel;
+        } catch (error: any) {
+            console.error('Error fetching worker profile:', error.message);
+            response.message = error.message;
+        }
+
+        return response;
+    }
+
+    /**
+     * Retrieves the public profile of an entity.
+     * @param entityId - The unique identifier of the entity.
+     * @returns A promise that resolves to the entity's public profile.
+     */
+    async getEntityPublicProfile(entityId: string): Promise<BaseResponseModel> {
+        let response = new BaseResponseModel(false, "", null);
+        const languageCode = this.languageService.returnLocalization();
+
+        const request = new BaseViewModelRequestDTO(entityId, '', languageCode);
+
+        try {
+            const apiResponse = await this.http.post(GET_ENTITY_PUBLIC_PROFILE_URL, request).toPromise();
+            return apiResponse as BaseResponseModel;
+        } catch (error: any) {
+            console.error('Error fetching entity profile:', error.message);
             response.message = error.message;
         }
 

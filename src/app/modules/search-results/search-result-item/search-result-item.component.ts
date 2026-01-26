@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchResultDTO } from '../../../shared/models/DTOs/Incoming/SearchResultDTO';
-import { DASHBOARD_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
+import { PUBLIC_PROFILE_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
 
 @Component({
   selector: 'search-result-item',
@@ -17,16 +17,12 @@ export class SearchResultItemComponent {
   onSearchResultClicked(): void {
     if (!this.searchResult) return;
 
-    // Navigate based on the result type
-    if (this.searchResult.resultType === 'Entity') {
-      // Navigate to entity dashboard
-      this.router.navigate([`${DASHBOARD_ROUTE}/entity-workers`, this.searchResult.identifier]);
-    } else if (this.searchResult.resultType === 'Worker') {
-      // Navigate to worker profile (or a public profile page if available)
-      this.router.navigate([`${DASHBOARD_ROUTE}/profile`], {
-        queryParams: { workerId: this.searchResult.identifier }
-      });
-    }
+    // Navigate to public profile view with type and id
+    const type = this.searchResult.resultType.toLowerCase();
+    this.router.navigate([PUBLIC_PROFILE_ROUTE
+      .replace(':type', type)
+      .replace(':id', this.searchResult.identifier)
+    ]);
   }
 
   /**

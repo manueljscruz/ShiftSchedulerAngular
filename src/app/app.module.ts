@@ -111,6 +111,7 @@ import { AuthErrorInterceptor } from './core/interceptors/auth-error.interceptor
 import { ForgotPasswordDialogComponent } from './modules/home/forgot-password-dialog/forgot-password-dialog.component';
 import { ResetPasswordComponent } from './modules/reset-password/reset-password.component';
 import { EmailNotConfirmedDialogComponent } from './modules/home/email-not-confirmed-dialog/email-not-confirmed-dialog.component';
+import { PublicProfileComponent } from './modules/public-profile/public-profile.component';
 
 @NgModule({
   declarations: [
@@ -185,7 +186,8 @@ import { EmailNotConfirmedDialogComponent } from './modules/home/email-not-confi
     SettingsComponent,
     ForgotPasswordDialogComponent,
     ResetPasswordComponent,
-    EmailNotConfirmedDialogComponent
+    EmailNotConfirmedDialogComponent,
+    PublicProfileComponent
   ],
   imports: [
     BrowserModule,

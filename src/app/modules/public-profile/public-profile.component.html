@@ -1,0 +1,86 @@
+<div class="elevated-card-container primary-card-container-height fade-in">
+    <div class="header-and-actions">
+        <div class="header-with-back">
+            <button mat-icon-button (click)="goBack()" class="back-button" aria-label="Go back">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <h1 i18n>Public Profile</h1>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+
+    <div class="elevated-card-container-content">
+        <!-- Loading state -->
+        <div class="profile-loading" *ngIf="isLoading">
+            <mat-spinner diameter="48"></mat-spinner>
+            <p i18n>Loading profile...</p>
+        </div>
+
+        <!-- Error state -->
+        <div class="profile-error" *ngIf="hasError && !isLoading">
+            <mat-icon class="error-icon">error_outline</mat-icon>
+            <h2 i18n>Profile not found</h2>
+            <p i18n>The requested profile could not be loaded.</p>
+            <button mat-raised-button color="primary" (click)="goBack()" i18n>
+                Back to Search
+            </button>
+        </div>
+
+        <!-- Worker Profile -->
+        <div class="profile-container" *ngIf="!isLoading && !hasError && profileType === 'worker' && workerProfile">
+            <div class="profile-header">
+                <div class="profile-avatar worker-avatar">
+                    <mat-icon>person</mat-icon>
+                </div>
+                <div class="profile-header-info">
+                    <h2 class="profile-name">{{ workerProfile.displayName }}</h2>
+                    <span class="profile-type-badge worker-badge" i18n>Worker</span>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="profile-details">
+                <div class="detail-item" *ngIf="workerProfile.genderLocalized">
+                    <mat-icon class="detail-icon">wc</mat-icon>
+                    <div class="detail-content">
+                        <span class="detail-label" i18n>Gender</span>
+                        <span class="detail-value">{{ workerProfile.genderLocalized }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Entity Profile -->
+        <div class="profile-container" *ngIf="!isLoading && !hasError && profileType === 'entity' && entityProfile">
+            <div class="profile-header">
+                <div class="profile-avatar entity-avatar">
+                    <mat-icon>business</mat-icon>
+                </div>
+                <div class="profile-header-info">
+                    <h2 class="profile-name">{{ entityProfile.entityName }}</h2>
+                    <span class="profile-type-badge entity-badge">{{ entityProfile.entityTypeLocalized }}</span>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="profile-details">
+                <div class="detail-item" *ngIf="entityProfile.description">
+                    <mat-icon class="detail-icon">description</mat-icon>
+                    <div class="detail-content">
+                        <span class="detail-label" i18n>Description</span>
+                        <span class="detail-value">{{ entityProfile.description }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button mat-raised-button color="primary" (click)="viewEntityDetails()" i18n>
+                    <mat-icon>visibility</mat-icon>
+                    View Entity Details
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

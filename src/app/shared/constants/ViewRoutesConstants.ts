@@ -19,6 +19,7 @@ export const ENTITY_FORM_ROUTE: string = "/dashboard/entity-form/:entityId";
 export const ENTITY_SHIFTS_ROUTE: string = "/dashboard/entity-shifts/:entityId";
 export const ENTITY_RULES_ROUTE: string = "/dashboard/entity-rules/:entityId";
 export const ENTITY_ABSENCES_ROUTE: string = "/dashboard/entity-absences/:entityId";
+export const PUBLIC_PROFILE_ROUTE: string = "/dashboard/view/:type/:id";
 
 // HELP DOCS ROUTE
 export const HELPDOCS_INTRO_ROUTE: string = "intro";
