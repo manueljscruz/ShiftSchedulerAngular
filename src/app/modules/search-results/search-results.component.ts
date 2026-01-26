@@ -8,6 +8,7 @@ import { SearchService } from '../../core/services/api/SearchService';
 import { SearchRequestDTO } from '../../shared/models/DTOs/Outgoing/SearchRequestDTO';
 import { PagedList } from '../../shared/models/DTOs/Incoming/PagedList';
 import { SearchResultDTO } from '../../shared/models/DTOs/Incoming/SearchResultDTO';
+import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 
 @Component({
   selector: 'search-results',
@@ -102,12 +103,12 @@ export class SearchResultsComponent implements OnInit {
       } else {
         this.searchResultsViewModel.resultList = PagedList.Empty<SearchResultDTO>();
         if (response.message) {
-          this.snackManagerService.openSnackBar(response.message, 'Close');
+          this.snackManagerService.showFailSnackbar(new SnackbarUIModel(5000, response.message));
         }
       }
     } catch (error: any) {
       console.error('Search error:', error);
-      this.snackManagerService.openSnackBar('An error occurred while searching.', 'Close');
+      this.snackManagerService.showFailSnackbar(new SnackbarUIModel(5000, 'An error occurred while searching.'));
       this.searchResultsViewModel.resultList = PagedList.Empty<SearchResultDTO>();
     } finally {
       this.isLoading = false;
