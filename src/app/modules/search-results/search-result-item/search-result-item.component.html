@@ -1,10 +1,14 @@
-
-    <div class="search-result-item-card elevated-card">
-        <img src="https://placehold.co/100x100" class="search-result-image">
-        <div class="search-result-item-content">
-            <a (click)="onSearchResultClicked()" class="search-result-item-link">
-                <h2 class="search-result-item-title">{{ searchResult?.title }}</h2>
-            </a>
-            <p class="search-result-item-type">{{ searchResult?.typeDisplay }}</p>
+<div class="search-result-item-card" (click)="onSearchResultClicked()">
+    <div class="result-icon-container" [ngClass]="getTypeBadgeClass()">
+        <mat-icon>{{ getResultIcon() }}</mat-icon>
+    </div>
+    <div class="search-result-item-content">
+        <h3 class="search-result-item-title">{{ searchResult?.title }}</h3>
+        <div class="search-result-item-meta">
+            <span class="type-badge" [ngClass]="getTypeBadgeClass()">
+                {{ searchResult?.typeDisplay }}
+            </span>
         </div>
     </div>
+    <mat-icon class="chevron-icon">chevron_right</mat-icon>
+</div>

@@ -89,3 +89,7 @@ export const DELETE_SCHEDULE_ENTRIES_URL : string = BASE_API_URL + ENTITY_SCHEDU
 export const APPLY_ROTATION_CYCLE_URL : string = BASE_API_URL + ENTITY_SCHEDULE_CONTROLLER + "/apply-rotation-cycle";
 export const ADD_SCHEDULE_ENTRY_URL : string = BASE_API_URL + ENTITY_SCHEDULE_CONTROLLER + "/add-schedule-entry";
 export const SAVE_SCHEDULE_ENTRY_URL : string = BASE_API_URL + ENTITY_SCHEDULE_CONTROLLER + "/save-schedule-entries";
+
+//#region SEARCH
+const SEARCH_CONTROLLER: string = "Search";
+export const SEARCH_URL: string = BASE_API_URL + SEARCH_CONTROLLER + "/search";

@@ -1,23 +1,62 @@
-<div class="elevated-card-container primary-card-container-height">
+<div class="elevated-card-container primary-card-container-height fade-in">
     <div class="header-and-actions">
-        <h1 i18n>Search</h1>
+        <div class="search-header">
+            <h1 i18n>Search Results</h1>
+            <span class="search-query-display" *ngIf="currentQuery">
+                for "<strong>{{ currentQuery }}</strong>"
+            </span>
+        </div>
+        <div class="search-filters">
+            <mat-form-field appearance="outline" class="filter-select">
+                <mat-label i18n>Filter by type</mat-label>
+                <mat-select [(value)]="selectedResultType" (selectionChange)="onFilterChange()">
+                    <mat-option *ngFor="let type of resultTypes" [value]="type.value">
+                        {{ type.label }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
     </div>
     <mat-divider></mat-divider>
+
     <div class="elevated-card-container-content">
-        <div id="search-grid">
+        <!-- Results count -->
+        <div class="results-summary" *ngIf="hasResults">
+            <span i18n>Showing {{ searchResultsViewModel.resultList.data.length }} of {{ searchResultsViewModel.resultList.totalCount }} results</span>
+        </div>
+
+        <!-- Search results grid -->
+        <div id="search-grid" *ngIf="hasResults">
             <div class="search-result-list-item" *ngFor="let result of searchResultsViewModel.resultList.data">
                 <search-result-item [searchResult]="result"></search-result-item>
             </div>
         </div>
+
+        <!-- No results message -->
+        <div class="no-results-container" *ngIf="showNoResults">
+            <mat-icon class="no-results-icon">search_off</mat-icon>
+            <h2 i18n>No results found</h2>
+            <p i18n>Try adjusting your search query or filters to find what you're looking for.</p>
+        </div>
+
+        <!-- Initial state (no search yet) -->
+        <div class="initial-state-container" *ngIf="!hasSearched && !isLoading">
+            <mat-icon class="initial-state-icon">search</mat-icon>
+            <h2 i18n>Search for workers or entities</h2>
+            <p i18n>Enter a search term in the header to get started.</p>
+        </div>
+
+        <!-- Paginator -->
         <mat-paginator
-            class="paginator" 
+            *ngIf="hasResults"
+            class="paginator"
             #paginator
             (page)="handlePageEvent($event)"
             [length]="searchResultsViewModel.resultList.totalCount"
             [pageSize]="pageSize"
-            [showFirstLastButtons]=true
+            [showFirstLastButtons]="true"
             [pageSizeOptions]="pageSizeOptions"
-            [pageIndex]="searchResultsViewModel.resultList.currentPage-1"
+            [pageIndex]="currentPageIndex"
             aria-label="Select page">
         </mat-paginator>
     </div>
