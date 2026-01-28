@@ -46,10 +46,10 @@ export class SearchService {
         const languageCode = this.languageService.returnLocalization();
 
         try {
-            const url = GET_WORKER_PUBLIC_PROFILE_URL
-                .replace('{workerId}', workerId)
-                .replace('{languageCode}', languageCode);
-            const apiResponse = await this.http.get(url).toPromise();
+            const url = GET_WORKER_PUBLIC_PROFILE_URL;
+            let request = new BaseViewModelRequestDTO('', workerId, languageCode);
+
+            const apiResponse = await this.http.post(url, request).toPromise();
             return apiResponse as BaseResponseModel;
         } catch (error: any) {
             console.error('Error fetching worker profile:', error.message);
