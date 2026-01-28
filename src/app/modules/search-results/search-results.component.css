@@ -59,6 +59,7 @@
 .search-result-list-item {
     animation: fadeInUp 0.3s ease-out;
     animation-fill-mode: both;
+    height: 100%;
 }
 
 .search-result-list-item:nth-child(1) { animation-delay: 0.05s; }

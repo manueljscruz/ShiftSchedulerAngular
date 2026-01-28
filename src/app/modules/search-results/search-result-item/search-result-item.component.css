@@ -9,6 +9,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
     border: 1px solid transparent;
+    height: 100%;
 }
 
 .search-result-item-card:hover {
