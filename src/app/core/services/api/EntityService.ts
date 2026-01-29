@@ -107,9 +107,8 @@ export class EntityService {
      * @returns A promise that resolves to the response from the server.
      */
     async getEntityMembersViewModel(memberListModelRequestDTO: PagedModelRequest) : Promise<any> {
-        
+
         let response = new BaseResponseModel(false, "", null);
-        memberListModelRequestDTO.languageCode = this.languageService.returnLocalization();
 
         try {
             const response = await this.http.post(GET_ENTITY_MEMBERS_VM, memberListModelRequestDTO, {
@@ -131,7 +130,6 @@ export class EntityService {
 
     async getEntityMembers(memberListModelRequestDTO: PagedModelRequest) : Promise<any> {
         let response = new BaseResponseModel(false, "", null);
-        memberListModelRequestDTO.languageCode = this.languageService.returnLocalization();
 
         try {
             const response = await this.http.post(GET_ENTITY_MEMBERS_PAGINATION, memberListModelRequestDTO).toPromise();
@@ -150,11 +148,9 @@ export class EntityService {
     //#region Get Entity Skills
 
     async getEntitySkills(baseViewModelRequest: BaseViewModelRequestDTO) : Promise<any> {
-        let userLanguage = this.languageService.returnLocalization();
         try {
             let url = GET_ENTITY_SKILLS;
-            baseViewModelRequest.languageCode = userLanguage;
-            
+
             const response = await this.http.post(url,baseViewModelRequest).toPromise();
             return response;
         }
@@ -282,9 +278,7 @@ export class EntityService {
     //#region Get Entity Dashboard View Model
 
     async getEntityDashboardViewModel(baseViewModelRequest: BaseViewModelRequestDTO) : Promise<any>{
-        let userLanguage = this.languageService.returnLocalization();
         try {
-            baseViewModelRequest.languageCode = userLanguage;
             const response = await this.http.post(GET_ENTITY_DASHBOARD_VM_URL, baseViewModelRequest).toPromise();
             return response;
             // Process the received data

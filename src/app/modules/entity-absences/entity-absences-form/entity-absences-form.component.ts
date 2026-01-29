@@ -92,8 +92,7 @@ export class EntityAbsencesFormComponent{
         this.absenceToEdit.absenceStartDate,
         this.absenceToEdit.absenceEndDate,
         this.absenceToEdit.absenceStartDate.getTimezoneOffset(),
-        Intl.DateTimeFormat().resolvedOptions().timeZone,
-        ''
+        Intl.DateTimeFormat().resolvedOptions().timeZone
       );
 
       this.loadingScreenService.changeLoadingState(true);

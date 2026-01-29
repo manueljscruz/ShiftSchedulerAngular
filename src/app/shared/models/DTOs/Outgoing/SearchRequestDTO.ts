@@ -7,14 +7,13 @@ export class SearchRequestDTO extends PagedModelRequest {
     constructor(
         entityId: string = '',
         workerId: string = '',
-        languageCode: string = '',
         currentPage: number = 0,
         nextPage: number = 1,
         itemsPerPage: number = 10,
         query: string = '',
         resultType?: string
     ) {
-        super(entityId, workerId, languageCode, currentPage, nextPage, itemsPerPage);
+        super(entityId, workerId, currentPage, nextPage, itemsPerPage);
         this.query = query;
         this.resultType = resultType;
     }

@@ -119,7 +119,7 @@ export class DashboardTabViewComponent {
   private async onTabActivated() {
     this.loadingScreenService.changeLoadingState(true);
 
-    let baseViewModelRequestDTO = new BaseViewModelRequestDTO(this.entityWorkerInstance?.entityId ?? '', this.loggedUser?.userId ?? '', '');
+    let baseViewModelRequestDTO = new BaseViewModelRequestDTO(this.entityWorkerInstance?.entityId ?? '', this.loggedUser?.userId ?? '');
     this.entityDashboardViewModel = await this.entityService.getEntityDashboardViewModel(baseViewModelRequestDTO);
     
     if(this.entityDashboardViewModel == null){

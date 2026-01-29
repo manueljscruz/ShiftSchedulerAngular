@@ -164,7 +164,6 @@ export class EntityWorkersComponent {
     let memberListModelRequestDTO : PagedModelRequest = {
       entityId: this.currentEntityId,
       workerId: this.loggedUser.userId,
-      languageCode: '',
       currentPage: this.currentPageIndex,
       nextPage: this.currentPageIndex,
       itemsPerPage: this.pageSize,
@@ -343,7 +342,6 @@ export class EntityWorkersComponent {
     let memberListModelRequestDTO : MemberListRequestDTO = {
       entityId: this.currentEntityId,
       workerId: this.loggedUser.userId,
-      languageCode: '',
       currentPage: this.currentPageIndex,
       nextPage: nextPageIndex+1,
       itemsPerPage: itemsPerPage,

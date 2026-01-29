@@ -82,7 +82,6 @@ export class SearchResultsComponent implements OnInit {
     const searchRequest = new SearchRequestDTO(
       '',
       '',
-      '',
       this.currentPageIndex,
       this.currentPageIndex + 1,
       this.pageSize,

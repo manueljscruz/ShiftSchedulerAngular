@@ -89,8 +89,7 @@ export class EntityFormComponent {
     // Retrieve the entity profile view model
     let entityProfileViewModelRequestDTO = {
       entityId: this.currentEntityId,
-      workerId: this.loggedUser.userId,
-      languageCode: this.userLanguage
+      workerId: this.loggedUser.userId
     };
 
     let viewModel = await this.entityService.getEntityProfileViewModel(entityProfileViewModelRequestDTO);

@@ -30,7 +30,6 @@ export class AbsenceService {
     async getAbsenceViewModel(entityAbsenceViewModelRequestDTO : BaseViewModelRequestDTO) : Promise<EntityWorkerAbsenceViewModel> {
         let absenceViewModel : EntityWorkerAbsenceViewModel = new EntityWorkerAbsenceViewModel(false, PagedList.Empty(), []);
 
-        entityAbsenceViewModelRequestDTO.languageCode = this.languageService.returnLocalization();
         try{
             absenceViewModel = await this.http.post<EntityWorkerAbsenceViewModel>(GET_ENTITY_ABSENCES_VIEW_MODEL_URL, entityAbsenceViewModelRequestDTO).toPromise() as EntityWorkerAbsenceViewModel;
         }
@@ -45,8 +44,6 @@ export class AbsenceService {
 
     async getAbsencesPage(absencePageRequest: PagedModelRequest) : Promise<PagedList<EntityWorkerAbsenceDTO>> {
       let absencePagedData : PagedList<EntityWorkerAbsenceDTO> = new PagedList<EntityWorkerAbsenceDTO>([], 0, 0, 0);
-
-      absencePageRequest.languageCode = this.languageService.returnLocalization();
 
       try{
         absencePagedData = await this.http.post<PagedList<EntityWorkerAbsenceDTO>>(GET_ENTITY_ABSENCES_PAGINATION, absencePageRequest).toPromise() as PagedList<EntityWorkerAbsenceDTO>;
@@ -67,7 +64,6 @@ export class AbsenceService {
         let response : BaseResponseModel = new BaseResponseModel(false, '', null);
 
         try{
-            addEntityWorkerAbsenceDTO.languageCode = this.languageService.returnLocalization();
             response = await this.http.post<BaseResponseModel>(ADD_ENTITY_ABSENCE_URL, addEntityWorkerAbsenceDTO).toPromise() as BaseResponseModel;
         }
         catch(error: any){
@@ -114,7 +110,6 @@ export class AbsenceService {
     /// </summary>
     async absenceApprovalDecision(absenceDecision : AbsenceApprovalDecisionDTO) : Promise<BaseResponseModel> {
         let response : BaseResponseModel = new BaseResponseModel(false, '', null);
-        absenceDecision.languageCode = this.languageService.returnLocalization();
         try{
             response = await this.http.put<BaseResponseModel>(ENTITY_ABSENCE_APPROVAL_DECISION_URL, absenceDecision).toPromise() as BaseResponseModel;
         }

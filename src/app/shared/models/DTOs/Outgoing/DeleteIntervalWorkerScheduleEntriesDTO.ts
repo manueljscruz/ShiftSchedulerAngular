@@ -5,7 +5,7 @@ export class DeleteIntervalWorkerScheduleEntriesDTO extends BaseViewModelRequest
     endDate: Date;
 
     constructor(entityId: string, workerId: string, startDate: Date, endDate: Date){
-        super(entityId, workerId, '');
+        super(entityId, workerId);
         this.startDate = startDate;
         this.endDate = endDate;
     }

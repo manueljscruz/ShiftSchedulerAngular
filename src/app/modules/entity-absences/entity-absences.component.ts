@@ -119,7 +119,7 @@ export class EntityAbsencesComponent {
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
 
-    let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '');
+    let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId);
     let viewModel = await this.absenceService.getAbsenceViewModel(entityRuleViewModelRequestDTO);
 
     this.loadingScreenService.changeLoadingState(false);
@@ -145,7 +145,6 @@ export class EntityAbsencesComponent {
     let absencePageRequest : PagedModelRequest = {
       entityId: this.currentEntityId,
       workerId: this.loggedUser.userId,
-      languageCode: '',
       currentPage: this.currentPageIndex,
       nextPage: nextPageIndex+1,
       itemsPerPage: pageSize,
@@ -341,7 +340,7 @@ export class EntityAbsencesComponent {
       return;
     }
     else{
-      let absenceApprovalDecision : AbsenceApprovalDecisionDTO = new AbsenceApprovalDecisionDTO(absence.entityWorkerAbsenceId, decisionResult, this.loggedUser.userId,Intl.DateTimeFormat().resolvedOptions().timeZone,'');
+      let absenceApprovalDecision : AbsenceApprovalDecisionDTO = new AbsenceApprovalDecisionDTO(absence.entityWorkerAbsenceId, decisionResult, this.loggedUser.userId,Intl.DateTimeFormat().resolvedOptions().timeZone);
 
       this.loadingScreenService.changeLoadingState(true);
 
@@ -460,8 +459,7 @@ export class EntityAbsencesComponent {
         startDate,
         endDate,
         startDate.getTimezoneOffset(),
-        Intl.DateTimeFormat().resolvedOptions().timeZone,
-        ''
+        Intl.DateTimeFormat().resolvedOptions().timeZone
       );
 
       this.loadingScreenService.changeLoadingState(true);

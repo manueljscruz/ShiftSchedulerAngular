@@ -7,8 +7,8 @@ export class MemberListRequestDTO extends PagedModelRequest {
     /**
      *
      */
-    constructor(entityId: string, workerId: string, languageCode: string, currentPage: number, nextPage: number, itemsPerPage: number, memberFilters: MemberListFilterDTO) {
-        super(entityId, workerId, languageCode, currentPage, nextPage, itemsPerPage);
+    constructor(entityId: string, workerId: string, currentPage: number, nextPage: number, itemsPerPage: number, memberFilters: MemberListFilterDTO) {
+        super(entityId, workerId, currentPage, nextPage, itemsPerPage);
         this.memberFilters = memberFilters;
     }
 }

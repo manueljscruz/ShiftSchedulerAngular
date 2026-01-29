@@ -192,7 +192,6 @@ export class ScheduleCreatorMenuComponent {
         let createParameters : CreateEntityScheduleDTO = new CreateEntityScheduleDTO(
           '',
           '',
-          '',
           this.startDate,
           this.endDate,
           this.singleRoleResponsibility,

@@ -40,7 +40,6 @@ export class ShiftService {
     async getShiftViewModel(entityShiftViewModelRequestDTO : BaseViewModelRequestDTO) : Promise<ShiftViewModel> {
         let shiftVM : ShiftViewModel = new ShiftViewModel([], [], [], false, []);
 
-        entityShiftViewModelRequestDTO.languageCode = this.languageService.returnLocalization();
         try{
             shiftVM = await this.http.post<ShiftViewModel>(GET_ENTITY_SHIFT_VIEW_MODEL_URL, entityShiftViewModelRequestDTO).toPromise() as ShiftViewModel; // <ShiftVMApiResponse>
         }

@@ -142,7 +142,7 @@ export class EntityShiftsComponent {
     this.loadingScreenService.changeLoadingState(true);
 
     // Get the shifts View Model
-    let entityShiftVWRequest = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '');
+    let entityShiftVWRequest = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId);
     this.ShiftViewModel = await this.shiftService.getShiftViewModel(entityShiftVWRequest);
     this.isCurrentUserEntityOwner = this.ShiftViewModel.allowEdit;
 

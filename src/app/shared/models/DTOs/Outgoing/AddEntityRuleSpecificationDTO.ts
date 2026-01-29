@@ -8,9 +8,8 @@ export class AddEntityRuleSpecificationDTO{
     aspectReferenceId2: string;
     referenceName2: string;
     businessAspectId2: number;
-    languageCode: string;
 
-    constructor(entityRuleId: string, specificationId: number, ruleSpecificationValue: number, aspectReferenceId: string, referenceName: string, businessAspectId: number, aspectReferenceId2: string, referenceName2: string, businessAspectId2: number, languageCode: string){
+    constructor(entityRuleId: string, specificationId: number, ruleSpecificationValue: number, aspectReferenceId: string, referenceName: string, businessAspectId: number, aspectReferenceId2: string, referenceName2: string, businessAspectId2: number){
         this.entityRuleId = entityRuleId;
         this.specificationId = specificationId;
         this.ruleSpecificationValue = ruleSpecificationValue;
@@ -20,6 +19,5 @@ export class AddEntityRuleSpecificationDTO{
         this.aspectReferenceId2 = aspectReferenceId2;
         this.referenceName2 = referenceName2;
         this.businessAspectId2 = businessAspectId2;
-        this.languageCode = languageCode;
     }
 }

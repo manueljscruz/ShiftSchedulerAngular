@@ -23,7 +23,6 @@ export class SearchService {
      */
     async search(searchRequest: SearchRequestDTO): Promise<BaseResponseModel> {
         let response = new BaseResponseModel(false, "", null);
-        searchRequest.languageCode = this.languageService.returnLocalization();
 
         try {
             const apiResponse = await this.http.post(SEARCH_URL, searchRequest).toPromise();
@@ -43,11 +42,10 @@ export class SearchService {
      */
     async getWorkerPublicProfile(workerId: string): Promise<BaseResponseModel> {
         let response = new BaseResponseModel(false, "", null);
-        const languageCode = this.languageService.returnLocalization();
 
         try {
             const url = GET_WORKER_PUBLIC_PROFILE_URL;
-            let request = new BaseViewModelRequestDTO('', workerId, languageCode);
+            let request = new BaseViewModelRequestDTO('', workerId);
 
             const apiResponse = await this.http.post(url, request).toPromise();
             return apiResponse as BaseResponseModel;
@@ -66,9 +64,8 @@ export class SearchService {
      */
     async getEntityPublicProfile(entityId: string): Promise<BaseResponseModel> {
         let response = new BaseResponseModel(false, "", null);
-        const languageCode = this.languageService.returnLocalization();
 
-        const request = new BaseViewModelRequestDTO(entityId, '', languageCode);
+        const request = new BaseViewModelRequestDTO(entityId, '');
 
         try {
             const apiResponse = await this.http.post(GET_ENTITY_PUBLIC_PROFILE_URL, request).toPromise();

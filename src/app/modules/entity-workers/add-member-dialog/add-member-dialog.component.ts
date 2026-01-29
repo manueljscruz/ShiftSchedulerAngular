@@ -161,8 +161,8 @@ export class AddMemberDialogComponent {
       }
 
 
-      let newMember : AddNewMemberDTO = this.selectedTabIndex === 1 ? new AddNewMemberDTO(true, this.currentEntityId, this.memberNameInput, '', this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.multipleShifts,  this.selectedShifts, this.partOfRotation,  this.languageService.returnLocalization())
-      :  new AddNewMemberDTO(false, this.currentEntityId, '', this.emailInput, this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.multipleShifts, this.selectedShifts, this.partOfRotation, this.languageService.returnLocalization());
+      let newMember : AddNewMemberDTO = this.selectedTabIndex === 1 ? new AddNewMemberDTO(true, this.currentEntityId, this.memberNameInput, '', this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.multipleShifts,  this.selectedShifts, this.partOfRotation)
+      :  new AddNewMemberDTO(false, this.currentEntityId, '', this.emailInput, this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.multipleShifts, this.selectedShifts, this.partOfRotation);
 
       let apiResponse = await this.entityService.addNewEntityMember(newMember);
 

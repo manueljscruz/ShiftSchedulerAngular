@@ -38,8 +38,7 @@ export class ScheduleService {
     async getScheduleViewModel(entityScheduleViewModelRequestDTO : ScheduleViewModelRequestDTO) : Promise<EntityScheduleViewModel> {
         let scheduleViewModel : EntityScheduleViewModel = new EntityScheduleViewModel([], false, [], [], []);
     
-        entityScheduleViewModelRequestDTO.languageCode = this.languageService.returnLocalization();
-
+        entityScheduleViewModelRequestDTO
         try{
             scheduleViewModel = await this.http.post<EntityScheduleViewModel>(GET_ENTITY_SCHEDULE_VIEW_MODEL_URL, entityScheduleViewModelRequestDTO).toPromise() as EntityScheduleViewModel;
         }
@@ -57,8 +56,7 @@ export class ScheduleService {
     async createSchedule(createEntityScheduleDTO : CreateEntityScheduleDTO) : Promise<BaseResponseModel> {
         let schedules : any;
     
-        createEntityScheduleDTO.languageCode = this.languageService.returnLocalization();
-
+        createEntityScheduleDTO
         try{
             schedules = await firstValueFrom( this.http.post<ScheduleEntryDTO[]>(GENERATE_ENTITY_SCHEDULE, createEntityScheduleDTO));
         }
@@ -76,8 +74,7 @@ export class ScheduleService {
     async assignEntry(assignEntryDTO: AssignEntryDTO): Promise<BaseResponseModel> {
         let response: any;
 
-        assignEntryDTO.languageCode = this.languageService.returnLocalization();
-        
+        assignEntryDTO        
         try{
             response = await this.http.post<ScheduleEntryDTO>(ASSIGN_ENTRY_URL, assignEntryDTO).toPromise() as ScheduleEntryDTO;;
         }
@@ -96,8 +93,7 @@ export class ScheduleService {
     async addScheduleEntry(addScheduleEntryDTO : AddScheduleEntryDTO) : Promise<BaseResponseModel> {
         let response: any;
 
-        addScheduleEntryDTO.languageCode = this.languageService.returnLocalization();
-
+        addScheduleEntryDTO
         try{
             response = await this.http.post<BaseResponseModel>(ADD_SCHEDULE_ENTRY_URL, addScheduleEntryDTO).toPromise() as BaseResponseModel;
         }
@@ -115,8 +111,7 @@ export class ScheduleService {
     async getSchedules(schedulesRequest : ScheduleViewModelRequestDTO) : Promise<ScheduleEntryDTO[]> {
         let schedules: ScheduleEntryDTO[] = [];
 
-        schedulesRequest.languageCode = this.languageService.returnLocalization();
-
+        schedulesRequest
         try{
             schedules = await this.http.post<ScheduleEntryDTO[]>(GET_ENTITY_SCHEDULES_URL, schedulesRequest).toPromise() as ScheduleEntryDTO[];
         }
@@ -151,8 +146,7 @@ export class ScheduleService {
     async ApplyRotationCycle(rotationCycleRequestDTO : ApplyRotationCycleDTO) : Promise<BaseResponseModel> {
         let response: any;
 
-        rotationCycleRequestDTO.languageCode = this.languageService.returnLocalization();
-
+        rotationCycleRequestDTO
         try{
             response = await this.http.post<BaseResponseModel>(APPLY_ROTATION_CYCLE_URL, rotationCycleRequestDTO).toPromise() as BaseResponseModel;
         }
@@ -170,8 +164,7 @@ export class ScheduleService {
     async deleteWorkerEntries(deleteIntervalRequest: DeleteIntervalWorkerScheduleEntriesDTO) : Promise<BaseResponseModel> {
         let response: any;
 
-        deleteIntervalRequest.languageCode = this.languageService.returnLocalization();
-
+        deleteIntervalRequest
         try{
             response = await this.http.delete<BaseResponseModel>(DELETE_WORKER_SCHEDULE_ENTRIES_URL,
                 {
@@ -193,8 +186,7 @@ export class ScheduleService {
     async deleteScheduleEntries(deleteIntervalRequest: DeleteIntervalWorkerScheduleEntriesDTO) : Promise<BaseResponseModel> {
         let response: any;
 
-        deleteIntervalRequest.languageCode = this.languageService.returnLocalization();
-
+        deleteIntervalRequest
         try{
             response = await this.http.delete<BaseResponseModel>(DELETE_SCHEDULE_ENTRIES_URL,
                 {

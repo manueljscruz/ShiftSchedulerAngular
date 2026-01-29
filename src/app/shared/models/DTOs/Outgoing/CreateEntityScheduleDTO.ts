@@ -9,8 +9,8 @@ export class CreateEntityScheduleDTO extends BaseViewModelRequestDTO {
     filteredShifts: string[] = [];
     filteredRules: string[] = [];
 
-    constructor(entityId: string, workerId: string, languageCode: string, startDate: Date, endDate: Date, singleRoleResponsibility : boolean, clearExistingSchedule : boolean, filteredMembers: string[] = [], filteredShifts: string[] = [], filteredRules: string[] = []) {
-        super(entityId, workerId, languageCode);
+    constructor(entityId: string, workerId: string, startDate: Date, endDate: Date, singleRoleResponsibility : boolean, clearExistingSchedule : boolean, filteredMembers: string[] = [], filteredShifts: string[] = [], filteredRules: string[] = []) {
+        super(entityId, workerId);
         this.startDate = startDate;
         this.endDate = endDate;
         this.singleRoleResponsibility = singleRoleResponsibility;

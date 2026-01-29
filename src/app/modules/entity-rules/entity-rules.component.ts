@@ -194,13 +194,13 @@ export class EntityRulesComponent {
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
 
-    let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '');
+    let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId);
     this.rulesViewModel = await this.ruleService.getRuleViewModel(entityRuleViewModelRequestDTO);
     this.isCurrentUserEntityOwner = this.rulesViewModel.allowEdit;
 
     let singleIdentifierDto = new SingleIdentifierDTO(this.currentEntityId);
     this.entityShifts = await this.shiftService.getEntityShifts(singleIdentifierDto);
-    let baseVMRequest = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '');
+    let baseVMRequest = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId);
     this.entitySkills = await this.entityService.getEntitySkills(baseVMRequest);
 
     // Turn off the loading spinner
@@ -390,7 +390,7 @@ export class EntityRulesComponent {
       // Foreach selected rule specification, create a new AddEntityRuleSpecificationDTO object
       let newRuleSpecs : AddEntityRuleSpecificationDTO[] = []; 
       this.selectedRuleSpecs.forEach(ruleSpec => {
-        let newRuleSpec = new AddEntityRuleSpecificationDTO('', 0, ruleSpec.ruleSpecificationValue, ruleSpec.aspectReferenceId, ruleSpec.referenceName, ruleSpec.businessAspectId, ruleSpec.aspectReferenceId2, ruleSpec.referenceName2, ruleSpec.businessAspectId2, '');
+        let newRuleSpec = new AddEntityRuleSpecificationDTO('', 0, ruleSpec.ruleSpecificationValue, ruleSpec.aspectReferenceId, ruleSpec.referenceName, ruleSpec.businessAspectId, ruleSpec.aspectReferenceId2, ruleSpec.referenceName2, ruleSpec.businessAspectId2);
         newRuleSpecs.push(newRuleSpec);
       });
 
@@ -540,7 +540,7 @@ export class EntityRulesComponent {
   //#region Add Rule Specification
 
   async addRuleSpec() {
-    let ruleSpecDTO = new EntityRuleSpecificationDTO('', 0, 0, '', '', 0, '', '', '', 0, '', '');
+    let ruleSpecDTO = new EntityRuleSpecificationDTO('', 0, 0, '', '', 0, '', '', '', 0, '');
 
     // Apply different logic based on the selected rule type
     switch(this.selectedRuleType?.ruleTypeId) {
@@ -724,7 +724,7 @@ export class EntityRulesComponent {
   //#region Save Rule Specification
 
   async saveRuleSpec() {
-    let index = this.selectedRuleSpecs.indexOf(this.selectedRuleSpec? this.selectedRuleSpec : new EntityRuleSpecificationDTO('', 0, 0, '', '', 0, '', '', '', 0, '', ''));
+    let index = this.selectedRuleSpecs.indexOf(this.selectedRuleSpec? this.selectedRuleSpec : new EntityRuleSpecificationDTO('', 0, 0, '', '', 0, '', '', '', 0, ''));
 
     if(this.selectedRuleSpec != undefined){
       // Apply different logic based on the selected rule type

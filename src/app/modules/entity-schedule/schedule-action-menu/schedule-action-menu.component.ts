@@ -247,7 +247,7 @@ export class ScheduleActionMenuComponent {
       return;
     }
 
-    let addScheduleEntryRequest: AddScheduleEntryDTO = new AddScheduleEntryDTO(this.selectedShift.shiftId, this.workingDate, '');
+    let addScheduleEntryRequest: AddScheduleEntryDTO = new AddScheduleEntryDTO(this.selectedShift.shiftId, this.workingDate);
 
     this.loadingScreenService.changeLoadingState(true);
 

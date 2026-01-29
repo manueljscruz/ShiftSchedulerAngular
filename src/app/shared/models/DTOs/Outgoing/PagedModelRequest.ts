@@ -9,8 +9,8 @@ export class PagedModelRequest extends BaseViewModelRequestDTO {
     /**
      *
      */
-    constructor(entityId: string, workerId: string, languageCode: string, currentPage: number, nextPage: number, itemsPerPage: number) {
-        super(entityId, workerId, languageCode);
+    constructor(entityId: string, workerId: string, currentPage: number, nextPage: number, itemsPerPage: number) {
+        super(entityId, workerId);
         currentPage = currentPage;
         nextPage = nextPage;
         itemsPerPage = itemsPerPage;

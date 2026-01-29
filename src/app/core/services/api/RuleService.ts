@@ -18,9 +18,9 @@ import { DeleteEntityRuleSpecDTO } from '../../../shared/models/DTOs/Outgoing/De
 })
 
 export class RuleService {
-    
+
     constructor(private http: HttpClient,
-        private languageService: LanguageServiceService) 
+        private languageService: LanguageServiceService)
         { }
 
     /// <summary>
@@ -29,9 +29,8 @@ export class RuleService {
     async getRuleViewModel(entityRuleViewModelRequestDTO : BaseViewModelRequestDTO) : Promise<EntityRuleViewModel> {
         let ruleVM : EntityRuleViewModel = new EntityRuleViewModel([], false, [], []);
 
-        entityRuleViewModelRequestDTO.languageCode = this.languageService.returnLocalization();
         try{
-            ruleVM = await this.http.post<EntityRuleViewModel>(GET_ENTITY_RULES_VIEW_MODEL_URL, entityRuleViewModelRequestDTO).toPromise() as EntityRuleViewModel; // <RuleVMApiResponse>
+            ruleVM = await this.http.post<EntityRuleViewModel>(GET_ENTITY_RULES_VIEW_MODEL_URL, entityRuleViewModelRequestDTO).toPromise() as EntityRuleViewModel;
         }
         catch(error : any){
             console.error('Error fetching data:', error.message);
@@ -46,9 +45,6 @@ export class RuleService {
         let response : BaseResponseModel = new BaseResponseModel(false, '', null);
 
         try{
-            addEntityRuleDTO.entityRuleSpecifications.forEach((specification : AddEntityRuleSpecificationDTO) => {
-                specification.languageCode = this.languageService.returnLocalization();
-            });
             response = await this.http.post<BaseResponseModel>(ADD_RULE_URL, addEntityRuleDTO).toPromise() as BaseResponseModel;
         }
         catch(error : any){
@@ -64,13 +60,12 @@ export class RuleService {
         let response : BaseResponseModel = new BaseResponseModel(false, '', null);
 
         try{
-            addEntityRuleSpecificationDTO.languageCode = this.languageService.returnLocalization();
             response = await this.http.post<BaseResponseModel>(ADD_RULE_SPEC_URL, addEntityRuleSpecificationDTO).toPromise() as BaseResponseModel;
         }
         catch(error : any){
             console.error('Error fetching data:', error.message);
         }
-        
+
         return response;
     }
 
@@ -81,9 +76,6 @@ export class RuleService {
         let response : BaseResponseModel = new BaseResponseModel(false, '', null);
 
         try{
-            entityRuleDTO.entityRuleSpecificationDTOs.forEach((specification : EntityRuleSpecificationDTO) => {
-                specification.languageCode = this.languageService.returnLocalization();
-            });
             response = await this.http.put<BaseResponseModel>(UPDATE_RULE_URL, entityRuleDTO).toPromise() as BaseResponseModel;
         }
         catch(error : any){
@@ -99,13 +91,12 @@ export class RuleService {
         let response : BaseResponseModel = new BaseResponseModel(false, '', null);
 
         try{
-            entityRuleSpecificationDTO.languageCode = this.languageService.returnLocalization();
             response = await this.http.put<BaseResponseModel>(UPDATE_RULE_SPEC_URL, entityRuleSpecificationDTO).toPromise() as BaseResponseModel;
         }
         catch(error : any){
             console.error('Error fetching data:', error.message);
         }
-        
+
         return response;
     }
 
@@ -117,7 +108,7 @@ export class RuleService {
 
         let deleteObject : DeleteEntityObjectDTO = new DeleteEntityObjectDTO(entityId, entityRuleId);
         try{
-            response = await this.http.delete<BaseResponseModel>(DELETE_RULE_URL, 
+            response = await this.http.delete<BaseResponseModel>(DELETE_RULE_URL,
                 {
                     body: deleteObject
                 }
@@ -138,7 +129,7 @@ export class RuleService {
         let deleteRuleSpecDTO : DeleteEntityRuleSpecDTO = new DeleteEntityRuleSpecDTO(entityId, entityRuleId, parseInt(specId));
 
         try{
-            response = await this.http.delete<BaseResponseModel>(DELETE_RULE_SPEC_URL, 
+            response = await this.http.delete<BaseResponseModel>(DELETE_RULE_SPEC_URL,
                 {
                     body: deleteRuleSpecDTO
                 }
@@ -158,7 +149,7 @@ export class RuleService {
 
         let singleIdentifier : SingleIdentifierDTO = new SingleIdentifierDTO(entityRuleId);
         try{
-            response = await this.http.delete<BaseResponseModel>(DELETE_RULE_SPECS_URL, 
+            response = await this.http.delete<BaseResponseModel>(DELETE_RULE_SPECS_URL,
                 {
                     body: singleIdentifier
                 }).toPromise() as BaseResponseModel;
@@ -168,5 +159,5 @@ export class RuleService {
         }
         return response;
     }
-   
+
 }

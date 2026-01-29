@@ -223,7 +223,7 @@ export class EntityScheduleComponent {
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
 
-    let entityScheduleViewModelRequestDTO = new ScheduleViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, '', this.startDate, this.endDate );
+    let entityScheduleViewModelRequestDTO = new ScheduleViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, this.startDate, this.endDate);
 
     // Get the schedule view model
     this.scheduleViewModel = await this.scheduleService.getScheduleViewModel(entityScheduleViewModelRequestDTO);
@@ -685,7 +685,7 @@ export class EntityScheduleComponent {
         scheduleEntryId = dayShiftEntry.scheduleEntryId;
     }
 
-    let assignEntryDTO : AssignEntryDTO = new AssignEntryDTO(worker.workerId, this.currentEntityId, '', worker.isBot, scheduleEntryId, shift.shiftId, dayEntryDate);
+    let assignEntryDTO : AssignEntryDTO = new AssignEntryDTO(worker.workerId, this.currentEntityId, worker.isBot, scheduleEntryId, shift.shiftId, dayEntryDate);
   
     this.loadingScreenService.changeLoadingState(true);
 
@@ -824,7 +824,6 @@ export class EntityScheduleComponent {
       this.currentEntityId,
       this.workerCycleTracking.workerId,
       this.workerCycleTracking.isBot,
-      '',
       this.cycleStartDate,
       endDate);
 
@@ -918,7 +917,6 @@ export class EntityScheduleComponent {
     let scheduleRequestDTO = new ScheduleViewModelRequestDTO(
       this.currentEntityId,
       this.loggedUser.userId,
-      '',
       this.startDate,
       this.endDate
     );
