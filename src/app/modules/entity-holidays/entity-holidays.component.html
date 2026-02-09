@@ -1,0 +1,193 @@
+<div class="elevated-card-container primary-card-container-height fade-in">
+    <div class="header-and-actions">
+        <h1 i18n>
+            Holidays
+            <button mat-mini-fab class="mobile-menu-toggle" (click)="isMobileActionsOpen = !isMobileActionsOpen">
+                <mat-icon>{{ isMobileActionsOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </button>
+        </h1>
+        <div class="actions" [class.open]="isMobileActionsOpen">
+            <button *ngIf="!isFormActive && entityHolidaysViewModel.isOwner" mat-fab extended class="edit-color-bg" (click)="toggleFormToCreate()">
+                <mat-icon>add</mat-icon>
+                <span i18n>Add Holiday</span>
+            </button>
+            <button *ngIf="isFormActive" mat-fab extended class="secondary-color-bg" (click)="toggleForm(false)">
+                <mat-icon>close</mat-icon>
+                <span i18n>Cancel</span>
+            </button>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="elevated-card-container-content">
+        <div *ngIf="isFormActive">
+            <h2 i18n>{{ isEditing ? 'Edit Holiday' : 'Create Holiday' }}</h2>
+            <form id="holiday-form">
+                <div>
+                    <!-- Holiday Type Toggle -->
+                    <div class="row col-gap form-input-spacer">
+                        <mat-button-toggle-group name="holidayType" [(ngModel)]="isCustomHoliday" (change)="onHolidayTypeChange()">
+                            <mat-button-toggle [value]="true" i18n>Custom Holiday</mat-button-toggle>
+                            <mat-button-toggle [value]="false" i18n>From Catalog</mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </div>
+
+                    <!-- Catalog Selection (when not custom) -->
+                    <div *ngIf="!isCustomHoliday" class="form-input-spacer">
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label i18n>Select Holiday from Catalog</mat-label>
+                            <mat-select name="catalogSelect" [(ngModel)]="selectedCatalogHoliday" (selectionChange)="onCatalogHolidayChange($event)">
+                                <mat-option *ngFor="let catalog of entityHolidaysViewModel.holidayCatalogDTOs" [value]="catalog">
+                                    {{catalog.holidayCatalogLocalizedName}} ({{monthNames[catalog.recurrenceMonth - 1]}} {{catalog.recurrenceDay}})
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Custom Holiday Name (when custom) -->
+                    <div *ngIf="isCustomHoliday" class="form-input-spacer">
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label i18n>Holiday Name</mat-label>
+                            <input matInput name="customHolidayName" [(ngModel)]="customHolidayName" placeholder="Enter holiday name">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Behaviour Selection -->
+                    <div class="form-input-spacer">
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label i18n>Holiday Behaviour</mat-label>
+                            <mat-select name="behaviourSelect" [(ngModel)]="selectedBehaviour" (selectionChange)="onBehaviourChange($event)">
+                                <mat-option *ngFor="let behaviour of entityHolidaysViewModel.holidayBehaviourDTOs" [value]="behaviour">
+                                    {{behaviour.holidayBehaviourLocalizedName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Date Selection -->
+                    <div class="row col-gap">
+                        <div class="form-input-spacer flex-1">
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label i18n>Month</mat-label>
+                                <mat-select name="monthSelect" [(ngModel)]="customMonth">
+                                    <mat-option *ngFor="let month of monthNames; let i = index" [value]="i + 1">
+                                        {{month}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-input-spacer flex-1">
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label i18n>Day</mat-label>
+                                <mat-select name="daySelect" [(ngModel)]="customDay">
+                                    <mat-option *ngFor="let day of days" [value]="day">
+                                        {{day}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- Operating Hours -->
+                    <div class="row col-gap">
+                        <div class="form-input-spacer flex-1">
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label i18n>Operating Start Time (optional)</mat-label>
+                                <input type="time" matInput name="operatingStartTime" [(ngModel)]="operatingStartTime" min="00:00" max="23:59">
+                                <mat-hint i18n>Leave empty for all day</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-input-spacer flex-1">
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label i18n>Operating End Time (optional)</mat-label>
+                                <input type="time" matInput name="operatingEndTime" [(ngModel)]="operatingEndTime" min="00:00" max="23:59">
+                                <mat-hint i18n>Leave empty for all day</mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="form-input-spacer">
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label i18n>Notes</mat-label>
+                            <textarea matInput rows="3" name="holidayNotes" [(ngModel)]="notes" placeholder="Additional notes"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Active Status (for editing) -->
+                    <div *ngIf="isEditing" class="form-input-spacer">
+                        <mat-checkbox [(ngModel)]="isActive" name="isActiveCheckbox" i18n>
+                            Active
+                        </mat-checkbox>
+                    </div>
+                </div>
+            </form>
+            <div class="form-input-spacer end-form-actions">
+                <button class="action-submit-button secondary-color-bg" cdkFocusInitial (click)="saveHoliday()">
+                    <mat-icon *ngIf="isEditing">save</mat-icon>
+                    <span *ngIf="isEditing" i18n>Save</span>
+
+                    <mat-icon *ngIf="!isEditing">add</mat-icon>
+                    <span *ngIf="!isEditing" i18n>Create</span>
+                </button>
+            </div>
+        </div>
+        <div *ngIf="!isFormActive">
+            <div id="holiday-list-container">
+                <mat-table #holidayTable [dataSource]="entityHolidays" class="mat-elevation-z8">
+                    <ng-container matColumnDef="HolidayName">
+                        <mat-header-cell *matHeaderCellDef i18n>Holiday Name</mat-header-cell>
+                        <mat-cell *matCellDef="let holiday">{{ getHolidayDisplayName(holiday) }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Date">
+                        <mat-header-cell *matHeaderCellDef i18n>Date</mat-header-cell>
+                        <mat-cell *matCellDef="let holiday">{{ monthNames[holiday.customMonth - 1] }} {{ holiday.customDay }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Behaviour">
+                        <mat-header-cell *matHeaderCellDef i18n>Behaviour</mat-header-cell>
+                        <mat-cell *matCellDef="let holiday">{{ holiday.holidayBehaviourLocalized?.holidayBehaviourLocalizedName || 'N/A' }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="OperatingHours">
+                        <mat-header-cell *matHeaderCellDef i18n>Operating Hours</mat-header-cell>
+                        <mat-cell *matCellDef="let holiday">{{ getOperatingHoursDisplay(holiday) }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Status">
+                        <mat-header-cell *matHeaderCellDef i18n>Status</mat-header-cell>
+                        <mat-cell *matCellDef="let holiday">
+                            <span [class.active-status]="holiday.isActive" [class.inactive-status]="!holiday.isActive">
+                                {{ holiday.isActive ? 'Active' : 'Inactive' }}
+                            </span>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Actions">
+                        <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
+                        <mat-cell *matCellDef="let holiday">
+                            <ng-container *ngIf="entityHolidaysViewModel.isOwner">
+                                <button mat-icon-button (click)="editHoliday(holiday)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-icon-button (click)="openDeleteDialog('5000','5000', DELETE_HOLIDAY_TITLE, DELETE_HOLIDAY_CONTENT, holiday)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </ng-container>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let holiday; columns: displayedColumns"></mat-row>
+
+                </mat-table>
+
+                <div *ngIf="entityHolidays.length === 0" class="no-data-message">
+                    <mat-icon>event_busy</mat-icon>
+                    <p i18n>No holidays configured yet.</p>
+                    <p *ngIf="entityHolidaysViewModel.isOwner" i18n>Click "Add Holiday" to create your first holiday.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

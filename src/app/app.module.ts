@@ -54,6 +54,7 @@ import { EntityRulesComponent } from './modules/entity-rules/entity-rules.compon
 import { EntityAbsencesComponent } from './modules/entity-absences/entity-absences.component';
 import { EntityAbsencesViewComponent } from './modules/entity-absences/entity-absences-view/entity-absences-view.component';
 import { EntityAbsencesFormComponent } from './modules/entity-absences/entity-absences-form/entity-absences-form.component';
+import { EntityHolidaysComponent } from './modules/entity-holidays/entity-holidays.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -147,6 +148,7 @@ import { PublicProfileComponent } from './modules/public-profile/public-profile.
     EntityAbsencesComponent,
     EntityAbsencesViewComponent,
     EntityAbsencesFormComponent,
+    EntityHolidaysComponent,
     EditMemberDialogComponent,
     GenericMessageDialogComponent,
     ConfirmEmailComponent,

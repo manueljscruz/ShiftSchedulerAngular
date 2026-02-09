@@ -30,6 +30,10 @@ export const DELETE_RULE_SPEC_CONTENT = 'Are you sure you want to delete this ru
 export const DELETE_ABSENCE_TITLE = 'Delete Absence';
 export const DELETE_ABSENCE_CONTENT = 'Are you sure you want to delete this absence?';
 
+// Holidays
+export const DELETE_HOLIDAY_TITLE = 'Delete Holiday';
+export const DELETE_HOLIDAY_CONTENT = 'Are you sure you want to delete this holiday?';
+
 // Schedules
 export const DELETE_WORKER_SCHEDULE_TITLE = 'Delete Schedule Entries';
 export const DELETE_DAILY_WORKER_SCHEDULE_CONTENT = 'Are you sure you want to delete all daily entries for this worker?';

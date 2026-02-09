@@ -95,3 +95,11 @@ const SEARCH_CONTROLLER: string = "Search";
 export const SEARCH_URL: string = BASE_API_URL + SEARCH_CONTROLLER + "/search";
 export const GET_WORKER_PUBLIC_PROFILE_URL: string = BASE_API_URL + SEARCH_CONTROLLER + "/worker";
 export const GET_ENTITY_PUBLIC_PROFILE_URL: string = BASE_API_URL + SEARCH_CONTROLLER + "/entity";
+
+//#region HOLIDAY
+const HOLIDAY_CONTROLLER: string = "Holiday";
+export const GET_ENTITY_HOLIDAYS_VIEW_MODEL_URL: string = BASE_API_URL + HOLIDAY_CONTROLLER + "/get-entity-holidays-view-model";
+export const GET_ENTITY_HOLIDAYS_PAGINATION: string = BASE_API_URL + HOLIDAY_CONTROLLER + "/entity-holiday/get-by-pagination";
+export const ADD_ENTITY_HOLIDAY_URL: string = BASE_API_URL + HOLIDAY_CONTROLLER + "/entity-holiday/add";
+export const UPDATE_ENTITY_HOLIDAY_URL: string = BASE_API_URL + HOLIDAY_CONTROLLER + "/entity-holiday/update";
+export const DELETE_ENTITY_HOLIDAY_URL: string = BASE_API_URL + HOLIDAY_CONTROLLER + "/entity-holiday/delete";
