@@ -4,8 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 import { EntityWorkerDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerDTO';
 import { Entity } from '../../../shared/models/database/entity';
 import { SIDEBAR_ITEM_GROUP_ID } from '../../../shared/constants/UiContants';
-import { ABSENCE_ICON, ENTITY_ADD_ICON, ENTITY_ICON, ENTITY_SCHEDULE_ICON, MEMBERS_ICON, SHIFT_ICON, SHIFT_RULES_ICON } from '../../../shared/constants/IconNamesConstants';
-import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE, NEW_ENTITY_ROUTE, ENTITY_SHIFTS_ROUTE, ENTITY_RULES_ROUTE, ENTITY_ABSENCES_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
+import { ABSENCE_ICON, ENTITY_ADD_ICON, ENTITY_ICON, ENTITY_SCHEDULE_ICON, HOLIDAYS_ICON, MEMBERS_ICON, SHIFT_ICON, SHIFT_RULES_ICON } from '../../../shared/constants/IconNamesConstants';
+import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE, NEW_ENTITY_ROUTE, ENTITY_SHIFTS_ROUTE, ENTITY_RULES_ROUTE, ENTITY_ABSENCES_ROUTE, ENTITY_HOLIDAYS_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +48,8 @@ export class SidebarNavigationService {
       // Add Rules Options
       entityOptionItems.push(new SideBarItemModel('', "Rules", SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', encodedEntityId), []));
 
+      entityOptionItems.push(new SideBarItemModel('', "Holidays", HOLIDAYS_ICON, ENTITY_HOLIDAYS_ROUTE.replace(':entityId', encodedEntityId), []));
+
       entityOptionItems.push(new SideBarItemModel('', "Absences", ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', encodedEntityId), []));
       // Add Schedule Button
       entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', encodedEntityId), []));
@@ -57,18 +59,6 @@ export class SidebarNavigationService {
     });
 
     this.setWorkEntitiesSideBarItems(entityOptionsItems);
-
-    /* Previous implementation
-      // Add Shifts Group
-      let shiftGroup : SideBarItemModel[] = [];
-
-      // Add Shifts Options to Shift Group
-      shiftGroup.push(new SideBarItemModel('', "Shift Management", SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
-      shiftGroup.push(new SideBarItemModel('', "Rules", SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', entityWorkerDTO.entityId), []));
-
-      // Add Group to Entity Options
-      entityOptionItems.push(new SideBarItemModel('', 'Shifts', SHIFT_ICON, "", shiftGroup));
-      */
   }
 
   /// <summary>
@@ -91,6 +81,8 @@ export class SidebarNavigationService {
     // Add Rules Options
     entityOptionItems.push(new SideBarItemModel('', "Rules", SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', encodedEntityId), []));
 
+    entityOptionItems.push(new SideBarItemModel('', "Holidays", HOLIDAYS_ICON, ENTITY_HOLIDAYS_ROUTE.replace(':entityId', encodedEntityId), []));
+      
     entityOptionItems.push(new SideBarItemModel('', "Absences", ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', encodedEntityId), []));
     
     // Add Schedule Button

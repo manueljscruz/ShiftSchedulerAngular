@@ -88,7 +88,7 @@
                     </div>
 
                     <!-- Operating Hours -->
-                    <div class="row col-gap">
+                    <div class="row col-gap" *ngIf="selectedBehaviour?.allowsOperatingTimes">
                         <div class="form-input-spacer flex-1">
                             <mat-form-field appearance="outline" class="full-width">
                                 <mat-label i18n>Operating Start Time (optional)</mat-label>

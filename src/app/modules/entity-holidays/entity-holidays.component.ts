@@ -150,6 +150,9 @@ export class EntityHolidaysComponent {
 
     if (!newState) {
       this.resetFormFields();
+      // Disable operating timers when form is closed
+      this.operatingStartTime = '';
+      this.operatingEndTime = '';
     }
   }
 
@@ -276,6 +279,12 @@ export class EntityHolidaysComponent {
 
   onBehaviourChange($event: MatSelectChange) {
     this.selectedBehaviour = $event.value;
+
+    // Disable operating timers if behaviour is cleared or doesn't allow them
+    if (!this.selectedBehaviour || !this.selectedBehaviour.allowsOperatingTimes) {
+      this.operatingStartTime = '';
+      this.operatingEndTime = '';
+    }
   }
 
   //#endregion
