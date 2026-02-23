@@ -1,7 +1,7 @@
 import { HolidayBehaviourLocalizedDTO } from './HolidayBehaviourLocalizedDTO';
 import { HolidayCatalogLocalizedDTO } from './HolidayCatalogLocalizedDTO';
 
-export interface EntityHolidayDTO {
+export class EntityHolidayDTO {
     entityHolidayId: string;
     entityId: string;
     holidayCatalog: HolidayCatalogLocalizedDTO | null;
@@ -13,4 +13,24 @@ export interface EntityHolidayDTO {
     operatingEndTime: string | null;
     isActive: boolean;
     notes: string;
+
+    constructor() {
+        this.entityHolidayId = '';
+        this.entityId = '';
+        this.holidayCatalog = null;
+        this.holidayBehaviourLocalized = HolidayBehaviourLocalizedDTO.newHolidayBehaviourLocalizedDTO();
+        this.customHolidayName = '';
+        this.customDay = 0;
+        this.customMonth = 0;
+        this.operatingStartTime = null;
+        this.operatingEndTime = null;
+        this.isActive = false;
+        this.notes = '';
+    }
+
+    static newEntityHolidayDTO(): EntityHolidayDTO {
+        return new EntityHolidayDTO();
+    }
 }
+
+

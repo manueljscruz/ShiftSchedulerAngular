@@ -83,6 +83,36 @@
     flex: 1;
 }
 
+mat-button-toggle-group {
+    width: 100%;
+    display: flex !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+}
+
+mat-button-toggle-group mat-button-toggle {
+    flex: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+}
+
+::ng-deep .mat-button-toggle-group-appearance-standard .mat-button-toggle {
+    width: 100% !important;
+}
+
+.paginator {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-self: center;
+}
+
+#holiday-type-toggle{
+    width: 100%;
+    margin-left: 0px;
+}
+
 .active-status {
     color: #4CAF50;
     font-weight: 500;

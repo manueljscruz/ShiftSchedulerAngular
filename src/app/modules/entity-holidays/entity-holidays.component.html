@@ -24,7 +24,7 @@
             <form id="holiday-form">
                 <div>
                     <!-- Holiday Type Toggle -->
-                    <div class="row col-gap form-input-spacer">
+                    <div class="row col-gap form-input-spacer" id="holiday-type-toggle">
                         <mat-button-toggle-group name="holidayType" [(ngModel)]="isCustomHoliday" (change)="onHolidayTypeChange()">
                             <mat-button-toggle [value]="true" i18n>Custom Holiday</mat-button-toggle>
                             <mat-button-toggle [value]="false" i18n>From Catalog</mat-button-toggle>
@@ -68,7 +68,7 @@
                         <div class="form-input-spacer flex-1">
                             <mat-form-field appearance="outline" class="full-width">
                                 <mat-label i18n>Month</mat-label>
-                                <mat-select name="monthSelect" [(ngModel)]="customMonth">
+                                <mat-select name="monthSelect" [(ngModel)]="customMonth" [disabled]="!isCustomHoliday">
                                     <mat-option *ngFor="let month of monthNames; let i = index" [value]="i + 1">
                                         {{month}}
                                     </mat-option>
@@ -78,7 +78,7 @@
                         <div class="form-input-spacer flex-1">
                             <mat-form-field appearance="outline" class="full-width">
                                 <mat-label i18n>Day</mat-label>
-                                <mat-select name="daySelect" [(ngModel)]="customDay">
+                                <mat-select name="daySelect" [(ngModel)]="customDay" [disabled]="!isCustomHoliday">
                                     <mat-option *ngFor="let day of days" [value]="day">
                                         {{day}}
                                     </mat-option>
@@ -133,7 +133,7 @@
         </div>
         <div *ngIf="!isFormActive">
             <div id="holiday-list-container">
-                <mat-table #holidayTable [dataSource]="entityHolidays" class="mat-elevation-z8">
+                <mat-table #holidayTable [dataSource]="entityHolidays.data" class="mat-elevation-z8">
                     <ng-container matColumnDef="HolidayName">
                         <mat-header-cell *matHeaderCellDef i18n>Holiday Name</mat-header-cell>
                         <mat-cell *matCellDef="let holiday">{{ getHolidayDisplayName(holiday) }}</mat-cell>
@@ -141,7 +141,14 @@
 
                     <ng-container matColumnDef="Date">
                         <mat-header-cell *matHeaderCellDef i18n>Date</mat-header-cell>
-                        <mat-cell *matCellDef="let holiday">{{ monthNames[holiday.customMonth - 1] }} {{ holiday.customDay }}</mat-cell>
+                        <mat-cell *matCellDef="let holiday">
+                            @if(holiday.holidayCatalog != null){
+                                {{ monthNames[holiday.holidayCatalog.recurrenceMonth - 1] }} {{ holiday.holidayCatalog.recurrenceDay }}
+                            }
+                            @else{
+                                {{ monthNames[holiday.customMonth - 1] }} {{ holiday.customDay }}
+                            }
+                        </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="Behaviour">
@@ -182,7 +189,19 @@
 
                 </mat-table>
 
-                <div *ngIf="entityHolidays.length === 0" class="no-data-message">
+                <mat-paginator
+                        class="paginator" 
+                        #paginator
+                        (page)="handlePageEvent($event)"
+                        [length]="entityHolidays.totalCount"
+                        [pageSize]="pageSize"
+                        [showFirstLastButtons]=true
+                        [pageSizeOptions]="pageSizeOptions"
+                        [pageIndex]="entityHolidays.currentPage-1"
+                        aria-label="Select page">
+                    </mat-paginator>
+
+                <div *ngIf="entityHolidays.data.length === 0" class="no-data-message">
                     <mat-icon>event_busy</mat-icon>
                     <p i18n>No holidays configured yet.</p>
                     <p *ngIf="entityHolidaysViewModel.isOwner" i18n>Click "Add Holiday" to create your first holiday.</p>

@@ -23,6 +23,7 @@ import { PagedList } from '../../shared/models/DTOs/Incoming/PagedList';
 import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 import { AuthService } from '../../core/services/api/AuthService';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { DeleteEntityObjectDTO } from '../../shared/models/DTOs/Outgoing/DeleteEntityObjectDTO';
 
 @Component({
   selector: 'entity-holidays',
@@ -55,7 +56,7 @@ export class EntityHolidaysComponent {
   entityHolidaysViewModel: EntityHolidaysViewModel = new EntityHolidaysViewModel();
 
   // Entity holidays data
-  entityHolidays: EntityHolidayDTO[] = [];
+  entityHolidays: PagedList<EntityHolidayDTO> = PagedList.Empty();
 
   // Selected holiday being worked on
   selectedHoliday: EntityHolidayDTO | null = null;
@@ -68,6 +69,14 @@ export class EntityHolidaysComponent {
 
   // Selected behaviour for the holiday
   selectedBehaviour: HolidayBehaviourLocalizedDTO | null = null;
+
+  currentPageIndex = 0;
+
+  pageSize = 10;
+
+  totalItems = 0;
+
+  pageSizeOptions: number[] = [5, 10, 25, 100];
 
   // Form fields for new/edit holiday
   customHolidayName: string = '';
@@ -117,7 +126,7 @@ export class EntityHolidaysComponent {
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
 
-    let viewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId);
+    let viewModelRequestDTO = new PagedModelRequest(this.currentEntityId, this.loggedUser.userId, this.currentPageIndex, this.currentPageIndex + 1, this.pageSize);
     let viewModel = await this.holidayService.getHolidayViewModel(viewModelRequestDTO);
 
     this.loadingScreenService.changeLoadingState(false);
@@ -182,7 +191,7 @@ export class EntityHolidaysComponent {
     this.selectedHoliday = { ...holiday };
 
     // Determine if this is a custom holiday or catalog-based
-    this.isCustomHoliday = holiday.holidayCatalog === null;
+    this.isCustomHoliday = holiday.holidayCatalog ? false : true;
 
     if (!this.isCustomHoliday && holiday.holidayCatalog) {
       this.selectedCatalogHoliday = this.entityHolidaysViewModel.holidayCatalogDTOs.find(
@@ -239,18 +248,21 @@ export class EntityHolidaysComponent {
   //#region Delete Holiday
 
   async deleteHoliday(holidayInstance: EntityHolidayDTO) {
-    let index = this.entityHolidays.findIndex(x => x.entityHolidayId === holidayInstance.entityHolidayId);
+    let index = this.entityHolidays.data.findIndex(x => x.entityHolidayId === holidayInstance.entityHolidayId);
 
     this.loadingScreenService.changeLoadingState(true);
 
-    let holidayId = new SingleIdentifierDTO(holidayInstance.entityHolidayId);
-    let response: BaseResponseModel = await this.holidayService.deleteHoliday(holidayId);
+    let holidayDeleteObject = new DeleteEntityObjectDTO(this.currentEntityId, holidayInstance.entityHolidayId);
+    let response: BaseResponseModel = await this.holidayService.deleteHoliday(holidayDeleteObject);
 
     this.loadingScreenService.changeLoadingState(false);
 
     if (response.success) {
       if (index >= 0) {
-        this.entityHolidays.splice(index, 1);
+        let newCount = this.entityHolidays.totalCount - 1;
+        this.totalItems = newCount;
+        this.entityHolidays.totalCount = newCount;
+        this.entityHolidays.data.splice(index, 1);
         this.holidayTable.renderRows();
       }
       this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, response.message));
@@ -339,18 +351,24 @@ export class EntityHolidaysComponent {
       return time.includes(':') && time.split(':').length === 2 ? `${time}:00` : time;
     };
 
+    let dto : EntityHolidayDTO = EntityHolidayDTO.newEntityHolidayDTO();
+
     if (this.isEditing && this.selectedHoliday) {
       // Update existing holiday
       const updateDTO: EntityHolidayDTO = {
         ...this.selectedHoliday,
+        holidayBehaviourLocalized: this.selectedBehaviour? this.selectedBehaviour : this.selectedHoliday.holidayBehaviourLocalized,
+        holidayCatalog: this.isCustomHoliday ? null : this.selectedCatalogHoliday,  // Clear catalog if custom
         customHolidayName: this.isCustomHoliday ? this.customHolidayName : '',
-        customDay: this.customDay,
-        customMonth: this.customMonth,
+        customDay: this.isCustomHoliday ? this.customDay : 0,
+        customMonth: this.isCustomHoliday ? this.customMonth : 0,
         operatingStartTime: formatTimeForApi(this.operatingStartTime),
         operatingEndTime: formatTimeForApi(this.operatingEndTime),
         isActive: this.isActive,
         notes: this.notes
       };
+
+      dto = updateDTO;
 
       this.loadingScreenService.changeLoadingState(true);
       response = await this.holidayService.updateHoliday(updateDTO);
@@ -364,8 +382,8 @@ export class EntityHolidaysComponent {
         holidayBehaviourId: this.selectedBehaviour?.holidayBehaviourId || 0,
         isCustom: this.isCustomHoliday,
         customHolidayName: this.isCustomHoliday ? this.customHolidayName : '',
-        customDay: this.customDay,
-        customMonth: this.customMonth,
+        customDay: this.isCustomHoliday? this.customDay : 0,
+        customMonth: this.isCustomHoliday? this.customMonth : 0,
         operatingStartTime: formatTimeForApi(this.operatingStartTime),
         operatingEndTime: formatTimeForApi(this.operatingEndTime),
         notes: this.notes
@@ -380,21 +398,28 @@ export class EntityHolidaysComponent {
       this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, response.message));
 
       if (this.isEditing) {
-        let index = this.entityHolidays.findIndex(x => x.entityHolidayId === this.selectedHoliday?.entityHolidayId);
+        if(this.selectedHoliday){
+          this.selectedHoliday = dto;
+        }
+        
+        let index = this.entityHolidays.data.findIndex(x => x.entityHolidayId === this.selectedHoliday?.entityHolidayId);
         if (index >= 0 && response.result) {
-          this.entityHolidays[index] = response.result;
-          this.holidayTable.renderRows();
+          this.entityHolidays.data[index] = dto;
+          this.holidayTable?.renderRows();
         }
       }
       else {
         if (response.result) {
-          this.entityHolidays.push(response.result);
-          this.holidayTable.renderRows();
+          this.entityHolidays.data.push(response.result);
+          let newCount = this.entityHolidays.totalCount + 1;
+          this.totalItems = newCount // Increment total items for pagination
+          this.entityHolidays.totalCount = newCount;
+          this.holidayTable?.renderRows();
         }
       }
 
-      this.isEditing = false;
       this.toggleForm(false);
+      this.isEditing = false;
     }
     else {
       this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, response.message));
@@ -454,7 +479,7 @@ export class EntityHolidaysComponent {
 
   getOperatingHoursDisplay(holiday: EntityHolidayDTO): string {
     if (!holiday.operatingStartTime && !holiday.operatingEndTime) {
-      return 'All Day';
+      return 'N/A';
     }
 
     const formatTime = (time: string | null): string => {
@@ -464,6 +489,43 @@ export class EntityHolidaysComponent {
     };
 
     return `${formatTime(holiday.operatingStartTime)} - ${formatTime(holiday.operatingEndTime)}`;
+  }
+
+  //#endregion
+
+  //#region Handle Page Event
+
+  async handlePageEvent($event: PageEvent) {
+    this.currentPageIndex = $event.pageIndex;
+    this.pageSize = $event.pageSize;
+
+    await this.GetEntityHolidays(this.currentPageIndex, this.pageSize);
+  }
+
+  //#endregion
+
+  //#region Get Entity Holidays
+
+  async GetEntityHolidays(currentPageIndex: number, pageSize: number) {
+    if(!this.loggedUser){
+      return;
+    }
+
+    let holidaysPageRequest : PagedModelRequest = {
+      entityId : this.currentEntityId,
+      workerId : this.loggedUser.userId,
+      currentPage : this.currentPageIndex,
+      nextPage : currentPageIndex+1,
+      itemsPerPage : pageSize
+    }
+
+    this.loadingScreenService.changeLoadingState(true);
+
+    let data = await this.holidayService.getHolidaysPage(holidaysPageRequest);
+
+    this.entityHolidaysViewModel.entityHolidayDTOs = data;
+
+    this.loadingScreenService.changeLoadingState(false);
   }
 
   //#endregion

@@ -16,6 +16,7 @@ import { EntityHolidayDTO } from '../../../shared/models/DTOs/Incoming/EntityHol
 import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 import { PagedModelRequest } from '../../../shared/models/DTOs/Outgoing/PagedModelRequest';
 import { PagedList } from '../../../shared/models/DTOs/Incoming/PagedList';
+import { DeleteEntityObjectDTO } from '../../../shared/models/DTOs/Outgoing/DeleteEntityObjectDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +31,7 @@ export class HolidayService {
     /// <summary>
     /// Get entity holidays view model
     /// </summary>
-    async getHolidayViewModel(requestDTO: BaseViewModelRequestDTO): Promise<EntityHolidaysViewModel> {
+    async getHolidayViewModel(requestDTO: PagedModelRequest): Promise<EntityHolidaysViewModel> {
         let holidayViewModel: EntityHolidaysViewModel = new EntityHolidaysViewModel();
 
         try {
@@ -106,13 +107,14 @@ export class HolidayService {
     /// <summary>
     /// Deletes a holiday instance
     /// </summary>
-    async deleteHoliday(holidayId: SingleIdentifierDTO): Promise<BaseResponseModel> {
+    async deleteHoliday(deleteObject: DeleteEntityObjectDTO): Promise<BaseResponseModel> {
         let response: BaseResponseModel = new BaseResponseModel(false, '', null);
 
         try {
-            response = await this.http.post<BaseResponseModel>(
-                DELETE_ENTITY_HOLIDAY_URL,
-                holidayId
+            response = await this.http.delete<BaseResponseModel>(
+                DELETE_ENTITY_HOLIDAY_URL,{
+                    body: deleteObject
+                }
             ).toPromise() || {} as BaseResponseModel;
         }
         catch (error: any) {
