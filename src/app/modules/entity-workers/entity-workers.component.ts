@@ -118,6 +118,8 @@ export class EntityWorkersComponent {
   // Mobile actions menu toggle
   public isMobileActionsOpen: boolean = false;
 
+  showInactive: boolean = false;
+
   currentPageIndex = 0;
 
   pageSize = 10;
@@ -167,6 +169,7 @@ export class EntityWorkersComponent {
       currentPage: this.currentPageIndex,
       nextPage: this.currentPageIndex,
       itemsPerPage: this.pageSize,
+      showInactive: this.showInactive
     };
 
     this.entityMembersViewModel = await this.entityService.getEntityMembersViewModel(memberListModelRequestDTO);
@@ -346,6 +349,7 @@ export class EntityWorkersComponent {
       nextPage: nextPageIndex+1,
       itemsPerPage: itemsPerPage,
       memberFilters: filters ? filters : new MemberListFilterDTO(),
+      showInactive: this.showInactive
     };
 
     this.loadingScreenService.changeLoadingState(true);

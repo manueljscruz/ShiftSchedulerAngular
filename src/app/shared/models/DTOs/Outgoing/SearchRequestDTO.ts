@@ -11,9 +11,10 @@ export class SearchRequestDTO extends PagedModelRequest {
         nextPage: number = 1,
         itemsPerPage: number = 10,
         query: string = '',
-        resultType?: string
+        resultType?: string,
+        showInactive: boolean = false
     ) {
-        super(entityId, workerId, currentPage, nextPage, itemsPerPage);
+        super(entityId, workerId, currentPage, nextPage, itemsPerPage, showInactive);
         this.query = query;
         this.resultType = resultType;
     }

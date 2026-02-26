@@ -78,6 +78,8 @@ export class EntityHolidaysComponent {
 
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
+  showInactive: boolean = false;
+
   // Form fields for new/edit holiday
   customHolidayName: string = '';
   customDay: number = 1;
@@ -126,7 +128,9 @@ export class EntityHolidaysComponent {
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
 
-    let viewModelRequestDTO = new PagedModelRequest(this.currentEntityId, this.loggedUser.userId, this.currentPageIndex, this.currentPageIndex + 1, this.pageSize);
+    let viewModelRequestDTO = new PagedModelRequest(this.currentEntityId, this.loggedUser.userId, this.currentPageIndex, this.currentPageIndex + 1, this.pageSize,
+      this.showInactive
+    );
     let viewModel = await this.holidayService.getHolidayViewModel(viewModelRequestDTO);
 
     this.loadingScreenService.changeLoadingState(false);
@@ -516,7 +520,8 @@ export class EntityHolidaysComponent {
       workerId : this.loggedUser.userId,
       currentPage : this.currentPageIndex,
       nextPage : currentPageIndex+1,
-      itemsPerPage : pageSize
+      itemsPerPage : pageSize,
+      showInactive : this.showInactive
     }
 
     this.loadingScreenService.changeLoadingState(true);

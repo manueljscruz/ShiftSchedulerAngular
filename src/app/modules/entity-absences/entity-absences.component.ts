@@ -82,6 +82,8 @@ export class EntityAbsencesComponent {
   /// </summary>
   selectedAbsenceType?: AbsenceTypeLocalizedDTO;
 
+  showInactive: boolean = false;
+
   @ViewChild(MatTable) absenceTable!: MatTable<EntityWorkerAbsenceDTO>;
 
   currentPageIndex = 0;
@@ -148,6 +150,7 @@ export class EntityAbsencesComponent {
       currentPage: this.currentPageIndex,
       nextPage: nextPageIndex+1,
       itemsPerPage: pageSize,
+      showInactive: this.showInactive
     };
 
     this.loadingScreenService.changeLoadingState(true);
