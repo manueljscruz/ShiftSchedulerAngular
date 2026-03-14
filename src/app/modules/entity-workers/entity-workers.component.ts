@@ -25,8 +25,9 @@ import { PagedModelRequest } from '../../shared/models/DTOs/Outgoing/PagedModelR
 import { EntityWorkerMemberCardComponent } from "../../shared/components/entity-worker-member-card/entity-worker-member-card.component";
 import { WorkerFiltersDialogComponent } from './worker-filters-dialog/worker-filters-dialog.component';
 import { MemberListFilterDTO } from '../../shared/models/DTOs/Outgoing/MemberListFilterDTO';
-import { MemberListRequestDTO } from '../../shared/models/DTOs/Outgoing/MemberListRequestDTO';
 import { AuthService } from '../../core/services/api/AuthService';
+import { BotToUserDialogComponent } from './bot-to-user-dialog/bot-to-user-dialog.component';
+import { MemberPagedModelRequestDTO } from '../../shared/models/DTOs/Outgoing/MemberPagedModelRequestDTO';
 
 /**
  * Entity Workers Component
@@ -120,6 +121,8 @@ export class EntityWorkersComponent {
 
   showInactive: boolean = false;
 
+  activeFilters: MemberListFilterDTO = new MemberListFilterDTO();
+
   currentPageIndex = 0;
 
   pageSize = 10;
@@ -163,18 +166,25 @@ export class EntityWorkersComponent {
     }
 
     this.currentPageIndex = 1;
-    let memberListModelRequestDTO : PagedModelRequest = {
+    let memberListModelRequestDTO : MemberPagedModelRequestDTO = {
       entityId: this.currentEntityId,
       workerId: this.loggedUser.userId,
       currentPage: this.currentPageIndex,
       nextPage: this.currentPageIndex,
       itemsPerPage: this.pageSize,
-      showInactive: this.showInactive
+      showInactive: this.showInactive,
+      memberFilters: new MemberListFilterDTO()
     };
 
+    let response = await this.entityService.getEntityMembers(memberListModelRequestDTO);
+    this.loadingScreenService.changeLoadingState(false);
+    if(response == null || response.data.length === 0){
+      this.entityMembersViewModel = new EntityMembersViewModel("", [], [], [], new PagedList([], 1, 10, 0));
+      return;
+    }
     this.entityMembersViewModel = await this.entityService.getEntityMembersViewModel(memberListModelRequestDTO);
     this.isCurrentUserEntityOwner = this.entityMembersViewModel.entityOwnerId === this.loggedUser.userId ? true : false;
-    this.loadingScreenService.changeLoadingState(false);
+    
   }
 
   //#endregion
@@ -184,26 +194,27 @@ export class EntityWorkersComponent {
   /// <summary>
   /// Method that activates or deactivates the filter options
   /// </summary>
-  toggleFilters() {
-    // this.isFilterActive = !this.isFilterActive;
-    
+  async toggleFilters() {
 
     const dialogRef = this.dialog.open(WorkerFiltersDialogComponent, {
       width: '400px',
-      data: { 
-        enterAnimationDuration: UI_DIALOG_ENTRANCE_DURATION, 
-        exitAnimationDuration: UI_DIALOG_EXIT_DURATION, 
+      data: {
+        enterAnimationDuration: UI_DIALOG_ENTRANCE_DURATION,
+        exitAnimationDuration: UI_DIALOG_EXIT_DURATION,
         entityUsedSkills: this.entityMembersViewModel.entityUsedSkills,
-        entityShifts: this.entityMembersViewModel.shifts
+        entityShifts: this.entityMembersViewModel.shifts,
+        activeFilters: this.activeFilters
       }
     });
 
-    dialogRef.componentInstance.onFiltersClose.subscribe((result: any) => {
+    dialogRef.componentInstance.onFiltersClose.subscribe(async (result: any) => {
       dialogRef.close();
 
       // If result is not null, then apply filters
       if(result){
-        
+        this.activeFilters = result as MemberListFilterDTO;
+        this.currentPageIndex = 0;
+        await this.GetMembersPage(this.currentPageIndex, this.pageSize, this.activeFilters);
       }
     });
 
@@ -342,7 +353,7 @@ export class EntityWorkersComponent {
       return;
     }
 
-    let memberListModelRequestDTO : MemberListRequestDTO = {
+    let memberListModelRequestDTO : MemberPagedModelRequestDTO = {
       entityId: this.currentEntityId,
       workerId: this.loggedUser.userId,
       currentPage: this.currentPageIndex,
@@ -367,10 +378,52 @@ export class EntityWorkersComponent {
     this.currentPageIndex = $event.pageIndex;
     this.pageSize = $event.pageSize;
 
-    await this.GetMembersPage(this.currentPageIndex, this.pageSize);
+    await this.GetMembersPage(this.currentPageIndex, this.pageSize, this.activeFilters);
   }
 
   //#endregion
+
+  //#region Convert Bot to User
+
+  onConvertBotToUser(botForConversion: EntityWorkerMemberDTO) {
+    let currentEntityId = this.currentEntityId;
+    const dialogRef = this.dialog.open(BotToUserDialogComponent, {
+      width: '500px',
+      data: { 
+        enterAnimationDuration: UI_DIALOG_ENTRANCE_DURATION, 
+        exitAnimationDuration: UI_DIALOG_EXIT_DURATION,
+        currentEntityId: currentEntityId,
+        selectedBot: botForConversion
+      }
+    });
+
+    dialogRef.componentInstance.onBotConverted.subscribe((result: BaseResponseModel) => {
+      dialogRef.close();
+
+      if(result.success){
+        this.snackManagerService.showSuccessSnackbar(new SnackbarUIModel(5, result.message));
+        
+
+        // Locate bot in members list
+        let index = this.entityMembersViewModel.entityMembers.data.findIndex(x => x.workerId === botForConversion.workerId);
+        if(index >= 0){
+          this.entityMembersViewModel.entityMembers.data.splice(index,1);
+        }
+
+        // Locate user in members list and update to reflect bot conversion
+        let convertedUser = result.result as EntityWorkerMemberDTO;
+        let userIndex = this.entityMembersViewModel.entityMembers.data.findIndex(x => x.workerId === convertedUser.workerId);
+
+        // if user is in the current members list page, update their info. If not, do nothing as they will appear with correct info when user navigates to their page in the pagination
+        if(userIndex >= 0){
+          this.entityMembersViewModel.entityMembers.data[userIndex] = convertedUser;
+        }
+      }
+    });
+  }
+
+  //#endregion
+
 
   //#endregion
 

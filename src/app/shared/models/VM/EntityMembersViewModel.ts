@@ -9,7 +9,6 @@ export class EntityMembersViewModel {
     entityUsedSkills: SkillDTO[] = [];
     shifts: ShiftDTO[];
     entityMembers: PagedList<EntityWorkerMemberDTO>;
-    // entityMembers: EntityWorkerMemberDTO[];
 
     constructor(entityOwnerId : string, skills: SkillDTO[], entityUsedSkills : SkillDTO[], shifts: ShiftDTO[], entityMembers: PagedList<EntityWorkerMemberDTO>) {
         this.entityOwnerId = entityOwnerId;

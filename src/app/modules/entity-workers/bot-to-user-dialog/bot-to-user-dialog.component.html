@@ -1,0 +1,74 @@
+<div id="bot-to-user-dialog">
+    <h1 i18n>Convert Bot to User</h1>
+
+    <mat-dialog-content>
+
+        <!-- Bot Info -->
+        <div class="bot-info-section">
+            <div class="bot-card">
+                <div class="bot-card-header">
+                    <mat-icon class="bot-icon">smart_toy</mat-icon>
+                    <span class="bot-name">{{ selectedBot?.workerName }}</span>
+                </div>
+                <mat-chip-set *ngIf="selectedBot?.skillSet?.length">
+                    <mat-chip *ngFor="let skill of selectedBot?.skillSet"
+                        [ngStyle]="{ 'background-color': skill.skillHexBGColor, '--mdc-chip-label-text-color': skill.skillHexFontColor }">
+                        {{ skill.skillLocalizedName }}
+                    </mat-chip>
+                </mat-chip-set>
+                <span class="no-skills-label" *ngIf="!selectedBot?.skillSet?.length" i18n>No skills assigned</span>
+            </div>
+        </div>
+
+        <!-- Transfer Label -->
+        <div class="transfer-label">
+            <mat-icon>arrow_downward</mat-icon>
+            <span i18n>Select a worker to receive the bot's skills and assignments</span>
+        </div>
+
+        <!-- Eligible Workers Grid -->
+        <div class="workers-loading" *ngIf="isLoadingWorkers">
+            <mat-spinner diameter="36"></mat-spinner>
+            <span i18n>Loading eligible workers...</span>
+        </div>
+
+        <div class="workers-grid" *ngIf="!isLoadingWorkers">
+            <div *ngFor="let worker of eligibleWorkersForConversion"
+                class="worker-selection-card"
+                [class.selected]="selectedWorkerForConversion?.workerId === worker.workerId"
+                (click)="selectedWorkerForConversion = worker">
+                <mat-icon class="check-icon">check_circle</mat-icon>
+                <div class="worker-card-header">
+                    <mat-icon class="worker-icon">person</mat-icon>
+                    <span class="worker-name">{{ worker.workerName }}</span>
+                </div>
+                <mat-chip-set *ngIf="worker?.skillSet?.length">
+                    <mat-chip *ngFor="let skill of worker.skillSet"
+                        [ngStyle]="{ 'background-color': skill.skillHexBGColor, '--mdc-chip-label-text-color': skill.skillHexFontColor }">
+                        {{ skill.skillLocalizedName }}
+                    </mat-chip>
+                </mat-chip-set>
+                <span class="no-skills-label" *ngIf="!worker?.skillSet?.length" i18n>No skills</span>
+            </div>
+
+            <div class="no-workers-message" *ngIf="!eligibleWorkersForConversion?.length">
+                <mat-icon>group_off</mat-icon>
+                <span i18n>No eligible workers available for conversion</span>
+            </div>
+        </div>
+
+    </mat-dialog-content>
+
+    <div class="actions">
+        <button mat-fab extended class="secondary-color-bg" [mat-dialog-close]="false">
+            <mat-icon>close</mat-icon>
+            <span i18n>Cancel</span>
+        </button>
+        <button mat-fab extended class="add-color-bg"
+            [disabled]="!selectedWorkerForConversion?.workerId"
+            (click)="onConvertBotToUser()">
+            <mat-icon>swap_horiz</mat-icon>
+            <span i18n>Convert</span>
+        </button>
+    </div>
+</div>

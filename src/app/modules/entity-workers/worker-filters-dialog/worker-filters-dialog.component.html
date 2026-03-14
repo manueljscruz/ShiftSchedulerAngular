@@ -8,7 +8,7 @@
         <!-- Name Input -->
         <mat-form-field appearance="outline">
             <mat-label i18n>Worker Name</mat-label>
-            <input matInput placeholder="Worker Name" name="worker-name-filter">
+            <input matInput [(ngModel)]="nameFilter" placeholder="Worker Name" name="worker-name-filter">
         </mat-form-field>
 
         <!-- Order Options -->
@@ -48,7 +48,20 @@
             <mat-label i18n>Works Week Ends</mat-label>
             <mat-checkbox [(ngModel)]="worksWeekEnds" name="weekends-value-bool"></mat-checkbox>
         </ng-container>
-        
+
+        <!-- Member Type Filter -->
+        <div class="filter-row">
+            <mat-label i18n>Filter by Member Type</mat-label>
+            <mat-checkbox [(ngModel)]="applyMemberTypeFilter" name="apply-member-type-filter"></mat-checkbox>
+        </div>
+
+        <ng-container *ngIf="applyMemberTypeFilter">
+            <mat-radio-group [(ngModel)]="isBot" name="member-type-filter" class="member-type-radio-group">
+                <mat-radio-button [value]="false" i18n>Workers</mat-radio-button>
+                <mat-radio-button [value]="true" i18n>Bots</mat-radio-button>
+            </mat-radio-group>
+        </ng-container>
+
     </mat-dialog-content>
 
     <mat-dialog-actions class="dialog-footer">

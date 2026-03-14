@@ -37,6 +37,7 @@ export const DELETE_ENTITY_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/d
 export const ADD_NEW_ENTITY_MEMBER_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/add-new-entity-member";
 export const UPDATE_ENTITY_MEMBER_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/update-entity-member";
 export const DELETE_ENTITY_MEMBER_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/delete-entity-member";
+export const CONVERT_BOT_TO_USER_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/convert-bot-to-user";
 
 //#region SHIFT
 const SHIFT_CONTROLLER : string = "Shift";

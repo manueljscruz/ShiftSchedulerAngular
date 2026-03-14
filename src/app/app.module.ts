@@ -113,6 +113,8 @@ import { ForgotPasswordDialogComponent } from './modules/home/forgot-password-di
 import { ResetPasswordComponent } from './modules/reset-password/reset-password.component';
 import { EmailNotConfirmedDialogComponent } from './modules/home/email-not-confirmed-dialog/email-not-confirmed-dialog.component';
 import { PublicProfileComponent } from './modules/public-profile/public-profile.component';
+import { BotToUserDialogComponent } from './modules/entity-workers/bot-to-user-dialog/bot-to-user-dialog.component';
+import { MatRadioGroup, MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -189,7 +191,8 @@ import { PublicProfileComponent } from './modules/public-profile/public-profile.
     ForgotPasswordDialogComponent,
     ResetPasswordComponent,
     EmailNotConfirmedDialogComponent,
-    PublicProfileComponent
+    PublicProfileComponent,
+    BotToUserDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -221,6 +224,8 @@ import { PublicProfileComponent } from './modules/public-profile/public-profile.
     MatMenuModule,
     MatSidenavModule,
     MatTooltipModule,
+    MatRadioGroup,
+    MatRadioModule,
     CalendarModule.forRoot({
         provide: DateAdapter,
         useFactory: adapterFactory,

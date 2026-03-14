@@ -11,6 +11,8 @@ export const NOT_OWNER_OF_INTANCE_CONTENT = 'You cannot edit this information.';
 // Members
 export const DELETE_MEMBER_TITLE = 'Delete Member';
 export const DELETE_MEMBER_CONTENT = 'Are you sure you want to remove this member?';
+export const CONVERT_MEMBER_TITLE = 'Transfer Bot to Member';
+export const CONVERT_MEMBER_CONTENT = 'You are about to transfer all skills, assignments, and responsibilities from this {{0}} to a new {{1}}. This action cannot be undone. Do you wish to proceed?';
 
 // Shifts
 export const DELETE_SHIFT_BREAK_TITLE = 'Delete Shift Break';

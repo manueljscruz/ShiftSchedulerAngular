@@ -1,21 +1,19 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, DELETE_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_DASHBOARD_VM_URL, GET_ENTITY_MEMBERS_PAGINATION, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
+import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, CONVERT_BOT_TO_USER_URL, DELETE_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_DASHBOARD_VM_URL, GET_ENTITY_MEMBERS_PAGINATION, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
 import { EntityProfileViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityProfileViewModelRequestDTO';
-import { Entity } from '../../../shared/models/database/entity';
 import { FormEntityDTO } from '../../../shared/models/DTOs/Outgoing/FormEntityDTO';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
-import { response } from 'express';
 import { LanguageServiceService } from '../language-service.service';
 import { AddNewMemberDTO } from '../../../shared/models/DTOs/Outgoing/AddNewMemberDTO';
 import { EditMemberDTO } from '../../../shared/models/DTOs/Outgoing/EditMemberDTO';
 import { DeleteMemberDTO } from '../../../shared/models/DTOs/Outgoing/DeleteMemberDTO';
-import { HTTP_METHOD_DELETE, HTTP_METHOD_GET, HTTP_STATUS_NO_CONTENT, HTTP_STATUS_OK } from '../../../shared/constants/HttpConstants';
+import { HTTP_METHOD_DELETE, HTTP_STATUS_NO_CONTENT} from '../../../shared/constants/HttpConstants';
 import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
-import { DeleteEntityObjectDTO } from '../../../shared/models/DTOs/Outgoing/DeleteEntityObjectDTO';
 import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 import { PagedModelRequest } from '../../../shared/models/DTOs/Outgoing/PagedModelRequest';
-import { DashboardEntityViewModel } from '../../../shared/models/VM/DashboardEntityViewModel';
+import { ConvertBotToUserDTO } from '../../../shared/models/DTOs/Outgoing/ConvertBotToUserDTO';
+import { MemberPagedModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/MemberPagedModelRequestDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -106,12 +104,12 @@ export class EntityService {
      * @param entityId - The ID of the entity.
      * @returns A promise that resolves to the response from the server.
      */
-    async getEntityMembersViewModel(memberListModelRequestDTO: PagedModelRequest) : Promise<any> {
+    async getEntityMembersViewModel(memberListModelRequest: MemberPagedModelRequestDTO) : Promise<any> {
 
         let response = new BaseResponseModel(false, "", null);
 
         try {
-            const response = await this.http.post(GET_ENTITY_MEMBERS_VM, memberListModelRequestDTO, {
+            const response = await this.http.post(GET_ENTITY_MEMBERS_VM, memberListModelRequest, {
                 withCredentials: true
             }).toPromise();
             return response;
@@ -128,7 +126,7 @@ export class EntityService {
 
     //#region Get Entity Members
 
-    async getEntityMembers(memberListModelRequestDTO: PagedModelRequest) : Promise<any> {
+    async getEntityMembers(memberListModelRequestDTO: MemberPagedModelRequestDTO) : Promise<any> {
         let response = new BaseResponseModel(false, "", null);
 
         try {
@@ -290,5 +288,25 @@ export class EntityService {
 
     //#endregion
 
+    //#region Convert Bot To User
+
+    /**
+     * Converts a bot member to a regular user.
+     * @param convertBotToUserDTO - The data for converting bot to user.
+     * @returns A promise that resolves to the response from the server.
+     */
+    async convertBotToUser(convertBotToUserDTO: ConvertBotToUserDTO): Promise<any> {
+        let response = new BaseResponseModel(false, "", null);
+        try {
+            response = await this.http.post(CONVERT_BOT_TO_USER_URL, convertBotToUserDTO).toPromise() as BaseResponseModel;
+        } catch (error: any) {
+            console.error('Error converting bot to user:', error.message);
+            response.message = error.message;
+        }
+
+        return response;
+    }
+
+    //#endregion
 
 }

@@ -29,18 +29,33 @@ export class WorkerFiltersDialogComponent {
   selectedShifts: ShiftDTO[] = [];
 
   partOfRotation: boolean = false;
-  
+
   worksWeekDays: boolean = false;
 
   worksWeekEnds: boolean = false;
 
+  applyMemberTypeFilter: boolean = false;
+
+  isBot: boolean = false;
+
   // Events
   @Output() onFiltersClose: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { 
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.skillSelections = data.entityUsedSkills;
     this.shiftSelections = data.entityShifts;
 
+    const filters: MemberListFilterDTO = data.activeFilters;
+    if (filters) {
+      this.nameFilter = filters.nameFilter ?? '';
+      this.selectedSkills = filters.selectedSkills ?? [];
+      this.selectedShifts = filters.selectedShifts ?? [];
+      this.partOfRotation = filters.partOfRotation ?? false;
+      this.worksWeekDays = filters.worksWeekDays ?? false;
+      this.worksWeekEnds = filters.worksWeekEnds ?? false;
+      this.applyMemberTypeFilter = filters.applyMemberTypeFilter ?? false;
+      this.isBot = filters.isBot ?? false;
+    }
   }
 
   onRotationChange($event: MatCheckboxChange) {
@@ -60,6 +75,8 @@ export class WorkerFiltersDialogComponent {
 
     let filterMembersDTO: MemberListFilterDTO = {
       nameFilter: this.nameFilter,
+      applyMemberTypeFilter: this.applyMemberTypeFilter,
+      isBot: this.applyMemberTypeFilter ? this.isBot : false,
       selectedSkills: this.selectedSkills,
       selectedShifts: this.selectedShifts,
       partOfRotation: this.partOfRotation,

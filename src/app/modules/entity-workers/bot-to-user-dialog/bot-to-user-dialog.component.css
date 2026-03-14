@@ -1,0 +1,181 @@
+#bot-to-user-dialog {
+    padding: 20px;
+}
+
+/* ---- Bot Info ---- */
+
+.bot-info-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.bot-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 24px;
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    background-color: #f5f5f5;
+    min-width: 200px;
+    text-align: center;
+}
+
+.bot-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bot-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: #757575;
+}
+
+.bot-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* ---- Transfer Label ---- */
+
+.transfer-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 16px;
+    color: #757575;
+    font-size: 0.85rem;
+}
+
+.transfer-label mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+/* ---- Workers Loading ---- */
+
+.workers-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 32px;
+    color: #757575;
+    font-size: 0.9rem;
+}
+
+/* ---- Workers Grid ---- */
+
+.workers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 4px 2px;
+}
+
+.worker-selection-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    background-color: #fafafa;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+}
+
+.worker-selection-card:hover {
+    border-color: #90caf9;
+    background-color: #f0f8ff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.worker-selection-card.selected {
+    border-color: #1976d2;
+    background-color: #e3f2fd;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.25);
+}
+
+.worker-card-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.worker-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+    color: #757575;
+}
+
+.worker-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.check-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #1976d2;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.worker-selection-card.selected .check-icon {
+    opacity: 1;
+}
+
+.no-skills-label {
+    font-size: 0.78rem;
+    color: #9e9e9e;
+    font-style: italic;
+}
+
+/* ---- Empty State ---- */
+
+.no-workers-message {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 32px;
+    color: #9e9e9e;
+    font-size: 0.9rem;
+}
+
+.no-workers-message mat-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+}
+
+/* ---- Actions ---- */
+
+.actions {
+    display: flex;
+    column-gap: 10px;
+    padding-top: 16px;
+}
+
+.actions button {
+    flex: 1;
+}

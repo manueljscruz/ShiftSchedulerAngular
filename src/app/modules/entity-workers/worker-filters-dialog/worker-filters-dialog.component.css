@@ -9,3 +9,17 @@
   padding: 1rem;
   border-bottom: 1px solid #ddd;
 }
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.member-type-radio-group {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
