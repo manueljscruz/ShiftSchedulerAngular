@@ -1,4 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { EntityRuleViewModel } from '../../shared/models/VM/EntityRuleViewModel';
 import { ActivatedRoute } from '@angular/router';
@@ -36,7 +38,9 @@ import { AuthService } from '../../core/services/api/AuthService';
   templateUrl: './entity-rules.component.html',
   styleUrl: './entity-rules.component.css'
 })
-export class EntityRulesComponent {
+export class EntityRulesComponent implements OnDestroy {
+
+  private destroy$ = new Subject<void>();
   DELETE_RULE_TITLE = DELETE_RULE_TITLE;
   DELETE_RULE_CONTENT = DELETE_RULE_CONTENT;
   DELETE_RULE_SPEC_TITLE = DELETE_RULE_SPEC_TITLE;
@@ -174,14 +178,30 @@ export class EntityRulesComponent {
     private ruleValidatorService: RuleValidatorService,
     private authService: AuthService
   ) {
-    this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
   }
 
   //#region Methods
 
   //#region On Init
 
-  async ngOnInit() {
+  ngOnInit(): void {
+    this.route.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        const entityId = params.get('entityId') || '';
+        if (entityId) {
+          this.currentEntityId = entityId;
+          this.loadViewData();
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private async loadViewData(): Promise<void> {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.loggedUser = currentUser;
@@ -193,6 +213,7 @@ export class EntityRulesComponent {
 
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
+    this.rulesViewModel = new EntityRuleViewModel([]);
 
     let entityRuleViewModelRequestDTO = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId);
     this.rulesViewModel = await this.ruleService.getRuleViewModel(entityRuleViewModelRequestDTO);

@@ -1,4 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { FILTER_ICON } from '../../shared/constants/IconNamesConstants';
 import { EntityMembersViewModel } from '../../shared/models/VM/EntityMembersViewModel';
 import { EntityService } from '../../core/services/api/EntityService';
@@ -57,7 +59,9 @@ import { MemberPagedModelRequestDTO } from '../../shared/models/DTOs/Outgoing/Me
   templateUrl: './entity-workers.component.html',
   styleUrl: './entity-workers.component.css',
 })
-export class EntityWorkersComponent {
+export class EntityWorkersComponent implements OnDestroy {
+
+  private destroy$ = new Subject<void>();
 
   UI_DIALOG_ENTRANCE_DURATION = UI_DIALOG_ENTRANCE_DURATION;
   UI_DIALOG_EXIT_DURATION = UI_DIALOG_EXIT_DURATION;
@@ -144,7 +148,6 @@ export class EntityWorkersComponent {
     private authService: AuthService
   ) {
     this.entityMembersViewModel = new EntityMembersViewModel("", [], [], [], new PagedList([], 1, 10, 0));
-    this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || ''; // decodedEntityId;
   }
 
   //#endregion
@@ -153,19 +156,38 @@ export class EntityWorkersComponent {
   
   //#region On Init
 
-  async ngOnInit() {
-    this.loadingScreenService.changeLoadingState(true);
+  ngOnInit(): void {
+    this.route.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        const entityId = params.get('entityId') || '';
+        if (entityId) {
+          this.currentEntityId = entityId;
+          this.loadViewData();
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private async loadViewData(): Promise<void> {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.loggedUser = currentUser;
     }
 
     if (!this.loggedUser) {
-      this.loadingScreenService.changeLoadingState(false);
       return;
     }
 
+    this.loadingScreenService.changeLoadingState(true);
+    this.entityMembersViewModel = new EntityMembersViewModel("", [], [], [], new PagedList([], 1, 10, 0));
+    this.activeFilters = new MemberListFilterDTO();
     this.currentPageIndex = 1;
+
     let memberListModelRequestDTO : MemberPagedModelRequestDTO = {
       entityId: this.currentEntityId,
       workerId: this.loggedUser.userId,
@@ -179,12 +201,10 @@ export class EntityWorkersComponent {
     let response = await this.entityService.getEntityMembers(memberListModelRequestDTO);
     this.loadingScreenService.changeLoadingState(false);
     if(response == null || response.data.length === 0){
-      this.entityMembersViewModel = new EntityMembersViewModel("", [], [], [], new PagedList([], 1, 10, 0));
       return;
     }
     this.entityMembersViewModel = await this.entityService.getEntityMembersViewModel(memberListModelRequestDTO);
     this.isCurrentUserEntityOwner = this.entityMembersViewModel.entityOwnerId === this.loggedUser.userId ? true : false;
-    
   }
 
   //#endregion

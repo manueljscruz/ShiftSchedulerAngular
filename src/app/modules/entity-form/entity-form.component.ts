@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EntityService } from '../../core/services/api/EntityService';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
@@ -26,7 +28,9 @@ import { AuthService } from '../../core/services/api/AuthService';
   styleUrl: './entity-form.component.css'
 })
 
-export class EntityFormComponent {
+export class EntityFormComponent implements OnDestroy {
+
+  private destroy$ = new Subject<void>();
 
   /// <summary>
   /// ViewModel for the entity profile page
@@ -72,7 +76,6 @@ export class EntityFormComponent {
     private router: Router,
     private authService: AuthService
   ) {
-    this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.loggedUser = currentUser;
@@ -80,12 +83,31 @@ export class EntityFormComponent {
     this.userLanguage = this.languageService.returnLocalization();
   }
 
-  async ngOnInit() {
+  ngOnInit(): void {
+    this.route.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        const entityId = params.get('entityId') || '';
+        if (entityId) {
+          this.currentEntityId = entityId;
+          this.loadViewData();
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private async loadViewData(): Promise<void> {
     if (!this.loggedUser) {
       return;
     }
 
     this.loadingScreenService.changeLoadingState(true);
+    this.entityProfileViewModel = new EntityProfileViewModel(new EntityDTO('','','','',0), false, []);
+    this.isEditing = false;
 
     // Retrieve the entity profile view model
     let entityProfileViewModelRequestDTO = {

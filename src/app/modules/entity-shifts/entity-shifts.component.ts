@@ -1,4 +1,6 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { ActivatedRoute } from '@angular/router';
 import { ShiftDTO } from '../../shared/models/DTOs/Incoming/ShiftDTO';
@@ -29,7 +31,9 @@ import { AuthService } from '../../core/services/api/AuthService';
   templateUrl: './entity-shifts.component.html',
   styleUrl: './entity-shifts.component.css'
 })
-export class EntityShiftsComponent {
+export class EntityShiftsComponent implements OnDestroy {
+
+  private destroy$ = new Subject<void>();
 
   //#region CONSTANTS
   // CONSTANTS
@@ -119,7 +123,6 @@ export class EntityShiftsComponent {
     private authService: AuthService
   )
   {
-    this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
   }
 
   //#endregion
@@ -128,7 +131,24 @@ export class EntityShiftsComponent {
 
   //#region On Init
 
-  async ngOnInit() {
+  ngOnInit(): void {
+    this.route.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        const entityId = params.get('entityId') || '';
+        if (entityId) {
+          this.currentEntityId = entityId;
+          this.loadViewData();
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private async loadViewData(): Promise<void> {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.loggedUser = currentUser;
@@ -140,6 +160,8 @@ export class EntityShiftsComponent {
 
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
+    this.ShiftViewModel = new ShiftViewModel([], [], [], false, []);
+    this.isFormActive = false;
 
     // Get the shifts View Model
     let entityShiftVWRequest = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId);

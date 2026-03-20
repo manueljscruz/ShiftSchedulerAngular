@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CalendarEvent } from 'angular-calendar';
 import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { ActivatedRoute } from '@angular/router';
@@ -83,7 +85,9 @@ import { AuthService } from '../../core/services/api/AuthService';
   styleUrl: './entity-schedule.component.css'
 })
 
-export class EntityScheduleComponent {
+export class EntityScheduleComponent implements OnDestroy {
+
+  private destroy$ = new Subject<void>();
 
   //#region CONSTANTS
 
@@ -198,7 +202,6 @@ export class EntityScheduleComponent {
     private scheduleService: ScheduleService,
     private scheduleAuxService: ScheduleAuxService,
     private authService: AuthService) {
-      this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
       this.scheduleList = [];
   }
 
@@ -208,7 +211,24 @@ export class EntityScheduleComponent {
 
   //#region On Init
 
-  async ngOnInit() {
+  ngOnInit(): void {
+    this.route.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        const entityId = params.get('entityId') || '';
+        if (entityId) {
+          this.currentEntityId = entityId;
+          this.loadViewData();
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private async loadViewData(): Promise<void> {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.loggedUser = currentUser;
@@ -222,6 +242,8 @@ export class EntityScheduleComponent {
 
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
+    this.scheduleViewModel = new EntityScheduleViewModel([], false, [], [], []);
+    this.scheduleEntries = [];
 
     let entityScheduleViewModelRequestDTO = new ScheduleViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId, this.startDate, this.endDate);
 

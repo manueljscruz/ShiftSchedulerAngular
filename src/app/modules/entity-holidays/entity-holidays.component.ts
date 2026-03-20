@@ -1,4 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { EntityHolidaysViewModel } from '../../shared/models/VM/EntityHolidaysViewModel';
 import { EntityHolidayDTO } from '../../shared/models/DTOs/Incoming/EntityHolidayDTO';
 import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
@@ -31,7 +33,9 @@ import { DeleteEntityObjectDTO } from '../../shared/models/DTOs/Outgoing/DeleteE
   styleUrl: './entity-holidays.component.css',
   providers: [provideNativeDateAdapter()],
 })
-export class EntityHolidaysComponent {
+export class EntityHolidaysComponent implements OnDestroy {
+
+  private destroy$ = new Subject<void>();
 
   DELETE_HOLIDAY_TITLE = DELETE_HOLIDAY_TITLE;
   DELETE_HOLIDAY_CONTENT = DELETE_HOLIDAY_CONTENT;
@@ -110,12 +114,28 @@ export class EntityHolidaysComponent {
     private holidayService: HolidayService,
     private authService: AuthService
   ) {
-    this.currentEntityId = this.route.snapshot.paramMap.get('entityId') || '';
   }
 
   //#region Ng On Init
 
-  async ngOnInit() {
+  ngOnInit(): void {
+    this.route.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        const entityId = params.get('entityId') || '';
+        if (entityId) {
+          this.currentEntityId = entityId;
+          this.loadViewData();
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private async loadViewData(): Promise<void> {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.loggedUser = currentUser;
@@ -127,6 +147,8 @@ export class EntityHolidaysComponent {
 
     // Turn on the loading spinner
     this.loadingScreenService.changeLoadingState(true);
+    this.entityHolidaysViewModel = new EntityHolidaysViewModel();
+    this.entityHolidays = PagedList.Empty();
 
     let viewModelRequestDTO = new PagedModelRequest(this.currentEntityId, this.loggedUser.userId, this.currentPageIndex, this.currentPageIndex + 1, this.pageSize,
       this.showInactive
