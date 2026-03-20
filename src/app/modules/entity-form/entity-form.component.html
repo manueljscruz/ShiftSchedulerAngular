@@ -70,16 +70,33 @@
     </div>
     <mat-divider></mat-divider>
     <div class="elevated-card-container-content">
-        <h3 i18n>Child Entities</h3>
-        <div *ngIf="entityProfileViewModel.childrenEntities?.length === 0">
-            <p i18n>No child entities found.</p>
+        <h3 i18n>Entity Hierarchy</h3>
+        <div *ngIf="orgChartNodes.length > 0; else noHierarchy" class="org-chart-wrapper">
+            <p-organizationChart
+                [value]="orgChartNodes"
+                (onNodeSelect)="onOrgNodeSelect($event)">
+                <ng-template let-node pTemplate="parent">
+                    <div class="org-node org-node--parent">
+                        <mat-icon>corporate_fare</mat-icon>
+                        <span>{{ node.label }}</span>
+                    </div>
+                </ng-template>
+                <ng-template let-node pTemplate="current">
+                    <div class="org-node org-node--current">
+                        <mat-icon>corporate_fare</mat-icon>
+                        <span>{{ node.label }}</span>
+                    </div>
+                </ng-template>
+                <ng-template let-node pTemplate="child">
+                    <div class="org-node org-node--child">
+                        <mat-icon>corporate_fare</mat-icon>
+                        <span>{{ node.label }}</span>
+                    </div>
+                </ng-template>
+            </p-organizationChart>
         </div>
-        <div *ngFor="let child of entityProfileViewModel.childrenEntities" class="child-entity-item">
-            <mat-icon>corporate_fare</mat-icon>
-            <span>{{ child.entityName }}</span>
-            <button mat-icon-button [routerLink]="['/dashboard/entity-form', child.entityId]">
-                <mat-icon>arrow_forward</mat-icon>
-            </button>
-        </div>
+        <ng-template #noHierarchy>
+            <p i18n>No hierarchy data available.</p>
+        </ng-template>
     </div>
 </div>

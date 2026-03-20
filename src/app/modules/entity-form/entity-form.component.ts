@@ -17,6 +17,7 @@ import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { FormEntityDTO } from '../../shared/models/DTOs/Outgoing/FormEntityDTO';
 import { DASHBOARD_HOME_ROUTE } from '../../shared/constants/ViewRoutesConstants';
+import { TreeNode } from 'primeng/api';
 import { SIDEBAR_ITEM_GROUP_ID } from '../../shared/constants/UiContants';
 import { SidebarNavigationService } from '../../core/services/ui/sidebar-navigation.service';
 import { LanguageServiceService } from '../../core/services/language-service.service';
@@ -59,6 +60,11 @@ export class EntityFormComponent implements OnDestroy {
 
   // Mobile actions menu toggle
   public isMobileActionsOpen: boolean = false;
+
+  /// <summary>
+  /// Nodes for the p-organizationChart hierarchy visualization
+  /// </summary>
+  orgChartNodes: TreeNode[] = [];
 
 
   /// <summary>
@@ -128,6 +134,51 @@ export class EntityFormComponent implements OnDestroy {
 
     // Sets the initial entity type if the entity can be edited
     this.setInitialEntityType();
+
+    // Build the org chart hierarchy
+    this.buildOrgChartNodes();
+  }
+
+  /// <summary>
+  /// Builds the TreeNode array for the p-organizationChart hierarchy display.
+  /// Produces: [parent?] -> current -> [children...]
+  /// </summary>
+  private buildOrgChartNodes(): void {
+    const currentNode: TreeNode = {
+      label: this.entityProfileViewModel.entityDTO.entityName,
+      type: 'current',
+      data: { entityId: this.currentEntityId },
+      expanded: true,
+      children: this.entityProfileViewModel.childrenEntities.map(child => ({
+        label: child.entityName,
+        type: 'child',
+        data: { entityId: child.entityId },
+        expanded: false
+      }))
+    };
+
+    if (this.entityProfileViewModel.parentEntity) {
+      this.orgChartNodes = [{
+        label: this.entityProfileViewModel.parentEntity.entityName,
+        type: 'parent',
+        data: { entityId: this.entityProfileViewModel.parentEntity.entityId },
+        expanded: true,
+        children: [currentNode]
+      }];
+    } else {
+      this.orgChartNodes = [currentNode];
+    }
+  }
+
+  /// <summary>
+  /// Handles node selection in the org chart — navigates to the selected entity
+  /// if it differs from the currently viewed entity.
+  /// </summary>
+  onOrgNodeSelect(event: { node: TreeNode }): void {
+    const entityId = event.node?.data?.entityId;
+    if (entityId && entityId !== this.currentEntityId) {
+      this.router.navigate(['/dashboard/entity-form', entityId]);
+    }
   }
 
   /// <summary>

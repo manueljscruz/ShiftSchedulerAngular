@@ -74,6 +74,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ScheduleEventViewHolderComponent } from './modules/entity-schedule/schedule-event-view-holder/schedule-event-view-holder.component';
 import { WorkerSkillSelectorComponent } from './modules/entity-schedule/worker-skill-selector/worker-skill-selector.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { OrganizationChartModule } from 'primeng/organizationchart';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { MatDateFormats } from '@angular/material/core';
@@ -233,6 +234,7 @@ import { MatRadioGroup, MatRadioModule } from '@angular/material/radio';
         useFactory: adapterFactory,
     }),
     MatPaginatorModule,
+    OrganizationChartModule,
     A11yModule
 ],
   providers: [
