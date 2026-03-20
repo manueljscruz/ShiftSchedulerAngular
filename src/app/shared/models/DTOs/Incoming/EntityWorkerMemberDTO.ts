@@ -12,6 +12,7 @@ export class EntityWorkerMemberDTO{
     multipleShiftAssignments : boolean;
     assignedShifts: ShiftDTO[];
 
+    isGeneralManager: boolean = false;
     isSelected: boolean = false;
     selectedSkills: SkillDTO[] = [];
 
