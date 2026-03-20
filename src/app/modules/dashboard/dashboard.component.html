@@ -1,7 +1,7 @@
 <loading-screen></loading-screen>
 <div id="dashboard-container">
     <!-- Desktop sidebar - fixed position, always visible on desktop -->
-    <div id="desktop-sidebar" class="show-desktop-only">
+    <div id="desktop-sidebar" class="show-desktop-only" [class.expanded]="isSidebarExpanded">
         <app-sidebar [workEntitiesSideBarItems]="workEntitiesSideBarItems" (logoutEvent)="logout()"></app-sidebar>
     </div>
 

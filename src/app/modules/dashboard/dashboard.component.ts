@@ -37,6 +37,7 @@ export class DashboardComponent implements OnDestroy {
   showSidebar: boolean = true;
   sidebarOpen: boolean = false;
   isMobile: boolean = false;
+  isSidebarExpanded: boolean = false;
   workEntitiesSideBarItems: SideBarItemModel[] = [];
 
   // Subscription management
@@ -77,6 +78,12 @@ export class DashboardComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(items => {
         this.workEntitiesSideBarItems = items;
+      });
+
+    this.sidebarNavigationService.isNestedPanelOpen$()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(isExpanded => {
+        this.isSidebarExpanded = isExpanded;
       });
   }
 

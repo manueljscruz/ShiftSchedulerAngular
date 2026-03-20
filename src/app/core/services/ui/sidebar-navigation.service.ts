@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SideBarItemModel } from '../../../shared/models/UI/SideBarItemModel';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { EntityWorkerDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerDTO';
 import { SIDEBAR_ITEM_GROUP_ID } from '../../../shared/constants/UiContants';
 import { ABSENCE_ICON, ENTITY_ICON, ENTITY_SCHEDULE_ICON, HOLIDAYS_ICON, MEMBERS_ICON, SHIFT_ICON, SHIFT_RULES_ICON } from '../../../shared/constants/IconNamesConstants';
@@ -13,7 +14,32 @@ export class SidebarNavigationService {
 
   private workEntitiesSideBarItems: BehaviorSubject<SideBarItemModel[]> = new BehaviorSubject<SideBarItemModel[]>([]);
 
+  // Tracks how many Level-2 (nested) expansion panels are currently open.
+  private nestedPanelsOpen: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
   constructor() { }
+
+  /// <summary>
+  /// Emits true whenever at least one nested sidebar panel is open.
+  /// Dashboard binds to this to apply the expanded CSS class.
+  /// </summary>
+  isNestedPanelOpen$(): Observable<boolean> {
+    return this.nestedPanelsOpen.pipe(map(count => count > 0));
+  }
+
+  /// <summary>
+  /// Called by sidebar-item-group when a nested panel opens.
+  /// </summary>
+  incrementNestedPanels(): void {
+    this.nestedPanelsOpen.next(this.nestedPanelsOpen.value + 1);
+  }
+
+  /// <summary>
+  /// Called by sidebar-item-group when a nested panel closes or the component is destroyed while open.
+  /// </summary>
+  decrementNestedPanels(): void {
+    this.nestedPanelsOpen.next(Math.max(0, this.nestedPanelsOpen.value - 1));
+  }
 
   getWorkEntitiesSideBarItems(): BehaviorSubject<SideBarItemModel[]> {
     return this.workEntitiesSideBarItems;

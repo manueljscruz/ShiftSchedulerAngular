@@ -34,6 +34,12 @@
     position: sticky;
     top: 0;
     overflow-y: auto; /* Allows scrolling if menu items exceed viewport height */
+    transition: width 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Applied when one or more Level-2 sidebar panels are open */
+#desktop-sidebar.expanded {
+    width: 320px;
 }
 
 /* ===== Mobile Sidenav Container (<768px) ===== */

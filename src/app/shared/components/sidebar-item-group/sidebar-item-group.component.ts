@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { BOOTSTRAP_ICON_PREFIX } from '../../constants/IconNamesConstants';
 import { SideBarItemModel } from '../../models/UI/SideBarItemModel';
+import { SidebarNavigationService } from '../../../core/services/ui/sidebar-navigation.service';
 
 /**
  * Sidebar Item Group Component
@@ -28,7 +29,7 @@ import { SideBarItemModel } from '../../models/UI/SideBarItemModel';
   templateUrl: './sidebar-item-group.component.html',
   styleUrl: './sidebar-item-group.component.css'
 })
-export class SidebarItemGroupComponent {
+export class SidebarItemGroupComponent implements OnDestroy {
 
   //#region Constants
 
@@ -66,6 +67,12 @@ export class SidebarItemGroupComponent {
    */
   @Input() public sidebarItemGroupIcon: string = '';
 
+  /**
+   * True when this group is rendered inside another sidebar-item-group (Level 2+).
+   * When true, opening/closing this panel updates the sidebar width counter.
+   */
+  @Input() public isNested: boolean = false;
+
   //#endregion
 
   //#region Output Events
@@ -79,12 +86,16 @@ export class SidebarItemGroupComponent {
 
   //#endregion
 
+  //#region Private State
+
+  // Tracks whether this panel is currently open, used by ngOnDestroy to avoid counter drift.
+  private isPanelOpen: boolean = false;
+
+  //#endregion
+
   //#region Constructor
 
-  constructor()
-  {
-
-  }
+  constructor(private sidebarNavigationService: SidebarNavigationService) { }
 
   //#endregion
 
@@ -93,30 +104,45 @@ export class SidebarItemGroupComponent {
   /**
    * Handles navigation click from any child component.
    * Propagates the event up to parent component.
-   * Called by both sidebar-item and nested sidebar-item-group children.
    */
   onChildNavigationClick() {
     this.navigationEvent.emit();
+  }
+
+  /// <summary>
+  /// Called when the mat-expansion-panel opens.
+  /// Increments the nested panel counter when this is a Level-2+ group.
+  /// </summary>
+  onPanelOpened(): void {
+    this.isPanelOpen = true;
+    if (this.isNested) this.sidebarNavigationService.incrementNestedPanels();
+  }
+
+  /// <summary>
+  /// Called when the mat-expansion-panel closes.
+  /// Decrements the nested panel counter when this is a Level-2+ group.
+  /// </summary>
+  onPanelClosed(): void {
+    this.isPanelOpen = false;
+    if (this.isNested) this.sidebarNavigationService.decrementNestedPanels();
   }
 
   //#endregion
 
   //#region Lifecycle Hooks
 
-  ngOnInit()
-  {
-    // Debug logging available if needed
-    // console.log(this.sidebarGroupItems);
-  }
+  ngOnInit() { }
 
-  /**
-   * Change detection hook.
-   * Currently empty but available for responding to input changes.
-   * Could be used to react to dynamic sidebar structure updates.
-   */
-  ngOnChanges()
-  {
+  ngOnChanges() { }
 
+  /// <summary>
+  /// Decrements the counter if this nested panel is destroyed while still open,
+  /// preventing the sidebar from staying permanently wide.
+  /// </summary>
+  ngOnDestroy(): void {
+    if (this.isNested && this.isPanelOpen) {
+      this.sidebarNavigationService.decrementNestedPanels();
+    }
   }
 
   //#endregion
