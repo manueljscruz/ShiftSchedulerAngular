@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { SideBarItemModel } from '../../../shared/models/UI/SideBarItemModel';
 import { BehaviorSubject } from 'rxjs';
 import { EntityWorkerDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerDTO';
-import { Entity } from '../../../shared/models/database/entity';
 import { SIDEBAR_ITEM_GROUP_ID } from '../../../shared/constants/UiContants';
-import { ABSENCE_ICON, ENTITY_ADD_ICON, ENTITY_ICON, ENTITY_SCHEDULE_ICON, HOLIDAYS_ICON, MEMBERS_ICON, SHIFT_ICON, SHIFT_RULES_ICON } from '../../../shared/constants/IconNamesConstants';
-import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE, NEW_ENTITY_ROUTE, ENTITY_SHIFTS_ROUTE, ENTITY_RULES_ROUTE, ENTITY_ABSENCES_ROUTE, ENTITY_HOLIDAYS_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
+import { ABSENCE_ICON, ENTITY_ICON, ENTITY_SCHEDULE_ICON, HOLIDAYS_ICON, MEMBERS_ICON, SHIFT_ICON, SHIFT_RULES_ICON } from '../../../shared/constants/IconNamesConstants';
+import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE, ENTITY_SHIFTS_ROUTE, ENTITY_RULES_ROUTE, ENTITY_ABSENCES_ROUTE, ENTITY_HOLIDAYS_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +13,7 @@ export class SidebarNavigationService {
 
   private workEntitiesSideBarItems: BehaviorSubject<SideBarItemModel[]> = new BehaviorSubject<SideBarItemModel[]>([]);
 
-  constructor() 
-  { }
+  constructor() { }
 
   getWorkEntitiesSideBarItems(): BehaviorSubject<SideBarItemModel[]> {
     return this.workEntitiesSideBarItems;
@@ -26,97 +24,148 @@ export class SidebarNavigationService {
   }
 
   /// <summary>
-  /// Adds the initial sidebar items for the work entities
+  /// Builds the sidebar tree from a flat list of EntityWorkerDTOs.
+  /// Entities with an explicit role get a full feature sub-menu.
+  /// Ancestor entities (no role) get only a Home navigation link.
+  /// Child entities are nested under their parent using the recursive sidebar-item-group component.
   /// </summary>
   addInitialWorkEntitiesSideBarItems(entityWorkerDTOs: EntityWorkerDTO[]) {
 
-    // Create general container
-    let entityOptionsItems: SideBarItemModel[] = [];
+    // Step 1: Create a sidebar node for every entity
+    const nodeMap = new Map<string, SideBarItemModel>();
 
-    // For each entity, add a sidebar group
-    entityWorkerDTOs.forEach(entityWorkerDTO => {
-      let entityOptionItems: SideBarItemModel[] = [];
-
-      let encodedEntityId = encodeURIComponent(entityWorkerDTO.entityId);
-
-      // Add Home Button
-      entityOptionItems.push(new SideBarItemModel('', "Home", ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', encodedEntityId), []));
-      // Add Members Button
-      entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', encodedEntityId), []));
-      // Add Shifts Options 
-      entityOptionItems.push(new SideBarItemModel('', "Shift Management", SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', encodedEntityId), []));
-      // Add Rules Options
-      entityOptionItems.push(new SideBarItemModel('', "Rules", SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', encodedEntityId), []));
-
-      entityOptionItems.push(new SideBarItemModel('', "Holidays", HOLIDAYS_ICON, ENTITY_HOLIDAYS_ROUTE.replace(':entityId', encodedEntityId), []));
-
-      entityOptionItems.push(new SideBarItemModel('', "Absences", ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', encodedEntityId), []));
-      // Add Schedule Button
-      entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', encodedEntityId), []));
-
-      entityOptionsItems.push(new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', encodedEntityId), entityWorkerDTO.entityName, ENTITY_ICON, "", entityOptionItems));
-    
+    entityWorkerDTOs.forEach(dto => {
+      const encodedId = encodeURIComponent(dto.entityId);
+      const node = new SideBarItemModel(
+        SIDEBAR_ITEM_GROUP_ID.replace('{id}', encodedId),
+        dto.entityName,
+        ENTITY_ICON,
+        '',
+        this.buildFeatureSubItems(dto, encodedId)
+      );
+      nodeMap.set(dto.entityId, node);
     });
 
-    this.setWorkEntitiesSideBarItems(entityOptionsItems);
+    // Step 2: Build tree — nest child nodes under their parent node
+    const rootItems: SideBarItemModel[] = [];
+
+    entityWorkerDTOs.forEach(dto => {
+      const node = nodeMap.get(dto.entityId)!;
+      if (dto.parentEntityId && nodeMap.has(dto.parentEntityId)) {
+        nodeMap.get(dto.parentEntityId)!.sidebarItemChildren.push(node);
+      } else {
+        rootItems.push(node);
+      }
+    });
+
+    this.setWorkEntitiesSideBarItems(rootItems);
   }
 
   /// <summary>
-  /// Adds a new entity to the sidebar
+  /// Adds a new entity to the sidebar after creation.
+  /// New entities always carry an explicit role (creator is General Manager).
+  /// If the entity has a parent already in the sidebar, it is nested under it.
   /// </summary>
-  addNewWorkEntitySideBarItem(newEntity: Entity) {
-    let entityOptionItems: SideBarItemModel[] = [];
-      
-    let encodedEntityId = encodeURIComponent(newEntity.entityId);
+  addNewWorkEntitySideBarItem(dto: EntityWorkerDTO) {
+    const encodedId = encodeURIComponent(dto.entityId);
 
-    // Add Home Button
-    entityOptionItems.push(new SideBarItemModel('', "Home", ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', encodedEntityId), []));
+    const newNode = new SideBarItemModel(
+      SIDEBAR_ITEM_GROUP_ID.replace('{id}', encodedId),
+      dto.entityName,
+      ENTITY_ICON,
+      '',
+      this.buildFeatureSubItems(dto, encodedId)
+    );
 
-    // Add Members Button
-    entityOptionItems.push(new SideBarItemModel('', "Members", MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', encodedEntityId), []));
+    const currentItems = this.getWorkEntitiesSideBarItems().value;
 
-    // Add Shifts Options 
-    entityOptionItems.push(new SideBarItemModel('', "Shift Management", SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', encodedEntityId), []));
+    if (dto.parentEntityId) {
+      const encodedParentId = encodeURIComponent(dto.parentEntityId);
+      const parentNode = this.findNodeById(currentItems, SIDEBAR_ITEM_GROUP_ID.replace('{id}', encodedParentId));
+      if (parentNode) {
+        parentNode.sidebarItemChildren.push(newNode);
+        this.setWorkEntitiesSideBarItems([...currentItems]);
+        return;
+      }
+    }
 
-    // Add Rules Options
-    entityOptionItems.push(new SideBarItemModel('', "Rules", SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', encodedEntityId), []));
-
-    entityOptionItems.push(new SideBarItemModel('', "Holidays", HOLIDAYS_ICON, ENTITY_HOLIDAYS_ROUTE.replace(':entityId', encodedEntityId), []));
-      
-    entityOptionItems.push(new SideBarItemModel('', "Absences", ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', encodedEntityId), []));
-    
-    // Add Schedule Button
-    entityOptionItems.push(new SideBarItemModel('', "Schedule", ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', encodedEntityId), []));
-
-
-    let sidebarGroupModel = new SideBarItemModel(SIDEBAR_ITEM_GROUP_ID.replace('{id}', encodedEntityId), newEntity.entityName, ENTITY_ICON, "", entityOptionItems);
- 
-    let currentItems = this.getWorkEntitiesSideBarItems().value;
-    currentItems.push(sidebarGroupModel);
+    currentItems.push(newNode);
     this.setWorkEntitiesSideBarItems(currentItems);
   }
 
   /// <summary>
-  /// Updates a work entity name from the sidebar
+  /// Updates a work entity name in the sidebar (searches recursively).
   /// </summary>
   updateWorkEntitySideBarItem(entityId: string, newName: string) {
-    let encodedEntityId = encodeURIComponent(entityId);
-    let currentItems = this.getWorkEntitiesSideBarItems().value;
-    let itemToUpdate = currentItems.find(item => item.sidebarItemId === SIDEBAR_ITEM_GROUP_ID.replace('{id}',encodedEntityId));
-    if(!itemToUpdate) return;
-    itemToUpdate.updateName(newName);
-    this.setWorkEntitiesSideBarItems(currentItems);
+    const encodedId = encodeURIComponent(entityId);
+    const currentItems = this.getWorkEntitiesSideBarItems().value;
+    const node = this.findNodeById(currentItems, SIDEBAR_ITEM_GROUP_ID.replace('{id}', encodedId));
+    if (!node) return;
+    node.updateName(newName);
+    this.setWorkEntitiesSideBarItems([...currentItems]);
   }
 
   /// <summary>
-  /// Deletes a work entity from the sidebar
+  /// Removes a work entity from the sidebar (searches recursively).
   /// </summary>
   deleteWorkEntitySideBarItem(entityId: string) {
-    let encodedEntityId = encodeURIComponent(entityId);
-    let currentItems = this.getWorkEntitiesSideBarItems().value;
-    let itemToDelete = currentItems.find(item => item.sidebarItemId === SIDEBAR_ITEM_GROUP_ID.replace('{id}',encodedEntityId));
-    if(!itemToDelete) return;
-    currentItems = currentItems.filter(item => item.sidebarItemId !== SIDEBAR_ITEM_GROUP_ID.replace('{id}',encodedEntityId));
+    const encodedId = encodeURIComponent(entityId);
+    const targetId = SIDEBAR_ITEM_GROUP_ID.replace('{id}', encodedId);
+    const currentItems = this.removeNodeById(this.getWorkEntitiesSideBarItems().value, targetId);
     this.setWorkEntitiesSideBarItems(currentItems);
   }
+
+  // #region Private Helpers
+
+  /// <summary>
+  /// Builds the feature sub-items for an entity sidebar node.
+  /// All entities get a Home link.
+  /// Only entities with an explicit role get the full management menu.
+  /// </summary>
+  private buildFeatureSubItems(dto: EntityWorkerDTO, encodedId: string): SideBarItemModel[] {
+    const items: SideBarItemModel[] = [];
+
+    items.push(new SideBarItemModel('', 'Home', ENTITY_ICON, ENTITY_FORM_ROUTE.replace(':entityId', encodedId), []));
+
+    if (dto.entityPermissionRoleId != null) {
+      items.push(new SideBarItemModel('', 'Members', MEMBERS_ICON, ENTITY_WORKERS_ROUTE.replace(':entityId', encodedId), []));
+      items.push(new SideBarItemModel('', 'Shift Management', SHIFT_ICON, ENTITY_SHIFTS_ROUTE.replace(':entityId', encodedId), []));
+      items.push(new SideBarItemModel('', 'Rules', SHIFT_RULES_ICON, ENTITY_RULES_ROUTE.replace(':entityId', encodedId), []));
+      items.push(new SideBarItemModel('', 'Holidays', HOLIDAYS_ICON, ENTITY_HOLIDAYS_ROUTE.replace(':entityId', encodedId), []));
+      items.push(new SideBarItemModel('', 'Absences', ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', encodedId), []));
+      items.push(new SideBarItemModel('', 'Schedule', ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', encodedId), []));
+    }
+
+    return items;
+  }
+
+  /// <summary>
+  /// Recursively searches a sidebar tree for a node by its sidebarItemId.
+  /// </summary>
+  private findNodeById(items: SideBarItemModel[], targetId: string): SideBarItemModel | null {
+    for (const item of items) {
+      if (item.sidebarItemId === targetId) return item;
+      if (item.sidebarItemChildren.length > 0) {
+        const found = this.findNodeById(item.sidebarItemChildren, targetId);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+
+  /// <summary>
+  /// Recursively removes a node by sidebarItemId from the tree, returning the updated list.
+  /// </summary>
+  private removeNodeById(items: SideBarItemModel[], targetId: string): SideBarItemModel[] {
+    return items
+      .filter(item => item.sidebarItemId !== targetId)
+      .map(item => {
+        if (item.sidebarItemChildren.length > 0) {
+          item.sidebarItemChildren = this.removeNodeById(item.sidebarItemChildren, targetId);
+        }
+        return item;
+      });
+  }
+
+  // #endregion
 }

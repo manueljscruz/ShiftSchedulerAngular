@@ -281,7 +281,7 @@ export class EntityHolidaysComponent {
   //#region Edit Holiday
 
   editHoliday(holidayInstance: EntityHolidayDTO) {
-    if (!this.entityHolidaysViewModel.isOwner) {
+    if (!this.entityHolidaysViewModel.allowEdit) {
       this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, NOT_OWNER_OF_INTANCE_CONTENT));
       return;
     }

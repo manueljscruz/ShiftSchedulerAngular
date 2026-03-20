@@ -26,7 +26,7 @@ export class EditMemberDialogComponent {
   /// <summary>
   /// The entity worker member to be edited
   /// </summary
-  entityWorkerMember: EntityWorkerMemberDTO = new EntityWorkerMemberDTO('', '', false, false, false, [], false, false, false, false, []);
+  entityWorkerMember: EntityWorkerMemberDTO = new EntityWorkerMemberDTO('', '', false, [], false, false, false, false, []);
 
   /// <summary>
   /// The current entity identifier

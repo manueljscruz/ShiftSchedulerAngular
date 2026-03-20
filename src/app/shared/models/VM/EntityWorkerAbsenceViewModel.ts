@@ -3,12 +3,12 @@ import { EntityWorkerAbsenceDTO } from "../DTOs/Incoming/EntityWorkerAbsenceDTO"
 import { PagedList } from "../DTOs/Incoming/PagedList";
 
 export class EntityWorkerAbsenceViewModel {
-    isOwner: boolean;
+    allowEdit: boolean;
     entityWorkerAbsences: PagedList<EntityWorkerAbsenceDTO>;
     absenceTypeLocalizeds: AbsenceTypeLocalizedDTO[];
 
-    constructor(isOwner: boolean, entityWorkerAbsences: PagedList<EntityWorkerAbsenceDTO>, absenceTypeLocalizeds: AbsenceTypeLocalizedDTO[]) {
-        this.isOwner = isOwner;
+    constructor(allowEdit: boolean, entityWorkerAbsences: PagedList<EntityWorkerAbsenceDTO>, absenceTypeLocalizeds: AbsenceTypeLocalizedDTO[]) {
+        this.allowEdit = allowEdit;
         this.entityWorkerAbsences = entityWorkerAbsences;
         this.absenceTypeLocalizeds = absenceTypeLocalizeds;
     }

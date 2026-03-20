@@ -7,7 +7,7 @@
             </button>
         </h1>
         <div class="actions" [class.open]="isMobileActionsOpen">
-            <button *ngIf="!isFormActive && entityHolidaysViewModel.isOwner" mat-fab extended class="edit-color-bg" (click)="toggleFormToCreate()">
+            <button *ngIf="!isFormActive && entityHolidaysViewModel.allowEdit" mat-fab extended class="edit-color-bg" (click)="toggleFormToCreate()">
                 <mat-icon>add</mat-icon>
                 <span i18n>Add Holiday</span>
             </button>
@@ -173,7 +173,7 @@
                     <ng-container matColumnDef="Actions">
                         <mat-header-cell *matHeaderCellDef i18n>Actions</mat-header-cell>
                         <mat-cell *matCellDef="let holiday">
-                            <ng-container *ngIf="entityHolidaysViewModel.isOwner">
+                            <ng-container *ngIf="entityHolidaysViewModel.allowEdit">
                                 <button mat-icon-button (click)="editHoliday(holiday)">
                                     <mat-icon>edit</mat-icon>
                                 </button>
@@ -204,7 +204,7 @@
                 <div *ngIf="entityHolidays.data.length === 0" class="no-data-message">
                     <mat-icon>event_busy</mat-icon>
                     <p i18n>No holidays configured yet.</p>
-                    <p *ngIf="entityHolidaysViewModel.isOwner" i18n>Click "Add Holiday" to create your first holiday.</p>
+                    <p *ngIf="entityHolidaysViewModel.allowEdit" i18n>Click "Add Holiday" to create your first holiday.</p>
                 </div>
             </div>
         </div>

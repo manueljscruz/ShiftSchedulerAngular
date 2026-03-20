@@ -5,20 +5,20 @@ import { HolidayTypeLocalizedDTO } from '../DTOs/Incoming/HolidayTypeLocalizedDT
 import { PagedList } from '../DTOs/Incoming/PagedList';
 
 export class EntityHolidaysViewModel {
-    isOwner: boolean;
+    allowEdit: boolean;
     holidayCatalogDTOs: HolidayCatalogLocalizedDTO[];
     holidayBehaviourDTOs: HolidayBehaviourLocalizedDTO[];
     holidayTypeDTOs: HolidayTypeLocalizedDTO[];
     entityHolidayDTOs: PagedList<EntityHolidayDTO>;
 
     constructor(
-        isOwner: boolean = false,
+        allowEdit: boolean = false,
         holidayCatalogDTOs: HolidayCatalogLocalizedDTO[] = [],
         holidayBehaviourDTOs: HolidayBehaviourLocalizedDTO[] = [],
         holidayTypeDTOs: HolidayTypeLocalizedDTO[] = [],
         entityHolidayDTOs: PagedList<EntityHolidayDTO> = PagedList.Empty()
     ) {
-        this.isOwner = isOwner;
+        this.allowEdit = allowEdit;
         this.holidayCatalogDTOs = holidayCatalogDTOs;
         this.holidayBehaviourDTOs = holidayBehaviourDTOs;
         this.holidayTypeDTOs = holidayTypeDTOs;

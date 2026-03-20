@@ -554,7 +554,7 @@ export class EntityAbsencesComponent {
       return response;
     }
 
-    else if(this.entityWorkerAbsencesViewModel.isOwner === false) {
+    else if(this.entityWorkerAbsencesViewModel.allowEdit === false) {
       response.message = 'You do not have permissions to apply decision regarding absences.';
       return response;
     }

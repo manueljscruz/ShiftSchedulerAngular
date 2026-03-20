@@ -14,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE } from '../../shared/constants/ViewRoutesConstants';
 import { SideBarItemModel } from '../../shared/models/UI/SideBarItemModel';
 import { BOOTSTRAP_ICON_PREFIX, ENTITY_ICON, ENTITY_SCHEDULE_ICON, MEMBERS_ICON } from '../../shared/constants/IconNamesConstants';
+import { EntityWorkerDTO } from '../../shared/models/DTOs/Incoming/EntityWorkerDTO';
 import { SIDEBAR_ITEM_GROUP_ID, SIDERBAR_ITEM_GROUP_ENTITIES_CONTAINER } from '../../shared/constants/UiContants';
 import { SidebarNavigationService } from '../../core/services/ui/sidebar-navigation.service';
 import { AuthService } from '../../core/services/api/AuthService';
@@ -89,7 +90,14 @@ export class NewEntityComponent {
 
     if(response.success){
       this.clearFormInputs();
-      this.sidebarNavigationService.addNewWorkEntitySideBarItem(response.result);
+      // Creator is always assigned General Manager (role ID 1)
+      const newEntityDTO = new EntityWorkerDTO(
+        response.result.entityId,
+        response.result.entityName,
+        response.result.parentEntityId ?? null,
+        1
+      );
+      this.sidebarNavigationService.addNewWorkEntitySideBarItem(newEntityDTO);
       this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Entity created successfully'));
       this.router.navigate([ENTITY_FORM_ROUTE.replace(':entityId', response.result.entityId)]);
     }

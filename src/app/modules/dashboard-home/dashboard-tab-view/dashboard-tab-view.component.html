@@ -4,7 +4,7 @@
     <mat-divider></mat-divider>
 
     <!-- Owner Dashboard Displays and Shortcuts -->
-    <div id="dashboard-row" class="dashboard-icon-button-row" *ngIf="entityWorkerInstance?.isOwner">
+    <div id="dashboard-row" class="dashboard-icon-button-row" *ngIf="entityWorkerInstance?.entityPermissionRoleId !== null">
         <button mat-fab extended class="dashboard-icon-button" [routerLink]="membersRouterLink"> 
             <div class="icon-and-badge-text">
                 <mat-icon>people</mat-icon>

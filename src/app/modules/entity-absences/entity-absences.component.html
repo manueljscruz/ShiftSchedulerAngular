@@ -118,7 +118,7 @@
                         <mat-header-cell *matHeaderCellDef i18n>Status</mat-header-cell>
                         <mat-cell *matCellDef="let absence">
                             <!-- If its entity owner and there was no decision yet -->
-                            <ng-container *ngIf="entityWorkerAbsencesViewModel.isOwner && absence.absenceDecisionOwner === '' || entityWorkerAbsencesViewModel.isOwner && absence.absenceDecisionBeingEdited">
+                            <ng-container *ngIf="entityWorkerAbsencesViewModel.allowEdit && absence.absenceDecisionOwner === '' || entityWorkerAbsencesViewModel.allowEdit && absence.absenceDecisionBeingEdited">
                                 <button mat-icon-button color="success" (click)="applyDecision(absence, true)">
                                     <mat-icon>thumb_up</mat-icon>
                                 </button>
@@ -131,18 +131,18 @@
                             </ng-container>
                 
                             <!-- If its entity owner and a decision has been made -->
-                            <ng-container *ngIf="entityWorkerAbsencesViewModel.isOwner && absence.absenceDecisionOwner != '' && !absence.absenceDecisionBeingEdited">
+                            <ng-container *ngIf="entityWorkerAbsencesViewModel.allowEdit && absence.absenceDecisionOwner != '' && !absence.absenceDecisionBeingEdited">
                                 <span>{{absence.absenceApproved ? 'Approved' : 'Not Approved'}}</span>
                                 <button mat-icon-button (click)="editDecision(absence)">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </ng-container>
                 
-                            <ng-container *ngIf="!entityWorkerAbsencesViewModel.isOwner && absence.absenceDecisionOwner === ''">
+                            <ng-container *ngIf="!entityWorkerAbsencesViewModel.allowEdit && absence.absenceDecisionOwner === ''">
                                 <span i18n>Pending</span>
                             </ng-container>
                 
-                            <ng-container *ngIf="!entityWorkerAbsencesViewModel.isOwner && absence.absenceDecisionOwner != ''">
+                            <ng-container *ngIf="!entityWorkerAbsencesViewModel.allowEdit && absence.absenceDecisionOwner != ''">
                                 <span i18n>{{absence.absenceApproved ? 'Approved' : 'Not Approved'}}</span>
                             </ng-container>
                             

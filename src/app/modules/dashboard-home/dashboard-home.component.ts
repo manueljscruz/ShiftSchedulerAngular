@@ -41,9 +41,10 @@ export class DashboardHomeComponent implements OnDestroy {
 
         if (this.loggedUser) {
           try {
-            this.workEntities = await this.entityService.getEntitiesByWorkerId(
-              this.loggedUser.userId
-            );
+            const allEntities = await this.entityService.getEntitiesByWorkerId(this.loggedUser.userId);
+            // Only show entities where the user has an explicit role as dashboard tabs.
+            // Ancestor path nodes (entityPermissionRoleId === null) are navigation-only.
+            this.workEntities = allEntities.filter((dto: EntityWorkerDTO) => dto.entityPermissionRoleId != null);
           } catch (error) {
             console.error('Failed to load entities:', error);
             // Error will be handled by interceptor
