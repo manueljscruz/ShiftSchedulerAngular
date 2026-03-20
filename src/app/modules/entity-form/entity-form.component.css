@@ -56,6 +56,18 @@
     padding-right: 10px;
 }
 
+.child-entity-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.child-entity-item span {
+    flex: 1;
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 767.98px) {
     .header-and-actions {

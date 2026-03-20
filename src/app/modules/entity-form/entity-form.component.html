@@ -11,6 +11,10 @@
                 <mat-icon>edit</mat-icon>
                 <span i18n>Edit</span>
             </button>
+            <button mat-fab extended class="add-color-bg" (click)="openAddChildEntityDialog()">
+                <mat-icon>add</mat-icon>
+                <span i18n>Add Child Entity</span>
+            </button>
             <button mat-fab extended class="delete-color-bg"(click)="openDeleteEntityDialog('3000ms', '1500ms')">
                 <mat-icon>delete</mat-icon>
                 <span i18n>Delete</span>
@@ -63,5 +67,19 @@
                 </button>
             </div>
         </form>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="elevated-card-container-content">
+        <h3 i18n>Child Entities</h3>
+        <div *ngIf="entityProfileViewModel.childrenEntities?.length === 0">
+            <p i18n>No child entities found.</p>
+        </div>
+        <div *ngFor="let child of entityProfileViewModel.childrenEntities" class="child-entity-item">
+            <mat-icon>corporate_fare</mat-icon>
+            <span>{{ child.entityName }}</span>
+            <button mat-icon-button [routerLink]="['/dashboard/entity-form', child.entityId]">
+                <mat-icon>arrow_forward</mat-icon>
+            </button>
+        </div>
     </div>
 </div>

@@ -40,6 +40,7 @@ import { UITestsComponent } from './modules/uitests/uitests.component';
 import {MatDividerModule} from '@angular/material/divider';
 import { EntityFormComponent } from './modules/entity-form/entity-form.component';
 import { DeleteEntityWarningDialogComponent } from './modules/entity-form/delete-entity-warning-dialog/delete-entity-warning-dialog.component';
+import { AddChildEntityDialogComponent } from './modules/entity-form/add-child-entity-dialog/add-child-entity-dialog.component';
 import { AddMemberDialogComponent } from './modules/entity-workers/add-member-dialog/add-member-dialog.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { EntityShiftsComponent } from './modules/entity-shifts/entity-shifts.component';
@@ -140,6 +141,7 @@ import { MatRadioGroup, MatRadioModule } from '@angular/material/radio';
     UITestsComponent,
     EntityFormComponent,
     DeleteEntityWarningDialogComponent,
+    AddChildEntityDialogComponent,
     AddMemberDialogComponent,
     EntityShiftsComponent,
     ShiftBreakDialogFormComponent,

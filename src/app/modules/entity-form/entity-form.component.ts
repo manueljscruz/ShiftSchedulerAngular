@@ -8,10 +8,11 @@ import { EntityDTO } from '../../shared/models/DTOs/Incoming/EntityDTO';
 import { EntityTypeLocalizedDTO } from '../../shared/models/DTOs/Incoming/EntityTypeLocalizedDTO';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteEntityWarningDialogComponent } from './delete-entity-warning-dialog/delete-entity-warning-dialog.component';
+import { AddChildEntityDialogComponent } from './add-child-entity-dialog/add-child-entity-dialog.component';
+import { Entity } from '../../shared/models/database/entity';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
-import { Entity } from '../../shared/models/database/entity';
 import { FormEntityDTO } from '../../shared/models/DTOs/Outgoing/FormEntityDTO';
 import { DASHBOARD_HOME_ROUTE } from '../../shared/constants/ViewRoutesConstants';
 import { SIDEBAR_ITEM_GROUP_ID } from '../../shared/constants/UiContants';
@@ -149,6 +150,27 @@ export class EntityFormComponent {
     this.loadingScreenService.changeLoadingState(false);
   }
   
+
+  openAddChildEntityDialog() {
+    const dialogRef = this.dialog.open(AddChildEntityDialogComponent, {
+      width: '500px',
+      data: {
+        entityTypes: this.entityProfileViewModel.entityTypeLocalizeds,
+        parentEntityId: this.currentEntityId,
+        workerId: this.loggedUser?.userId
+      }
+    });
+
+    dialogRef.componentInstance.onChildEntityCreated.subscribe((result: BaseResponseModel) => {
+      dialogRef.close();
+      if (result.success) {
+        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Child entity created successfully'));
+        this.entityProfileViewModel.childrenEntities.push(result.result as Entity);
+      } else {
+        this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to create child entity: ' + result.message));
+      }
+    });
+  }
 
   openDeleteEntityDialog(enterAnimationDuration: string, exitAnimationDuration: string){
     const dialogRef = this.dialog.open(DeleteEntityWarningDialogComponent, {
