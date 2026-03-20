@@ -54,6 +54,12 @@
                         <span *ngIf="isLoading" i18n>Signing in...</span>
                     </button>
                 </form>
+                <div class="back-to-home-row">
+                    <a routerLink="/" [class.disabled]="isLoading">
+                        <mat-icon>arrow_back</mat-icon>
+                        <span i18n>Back to Home</span>
+                    </a>
+                </div>
             </mat-card>
         </div>
     </div>
