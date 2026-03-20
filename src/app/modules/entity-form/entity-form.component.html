@@ -74,6 +74,7 @@
         <div *ngIf="orgChartNodes.length > 0; else noHierarchy" class="org-chart-wrapper">
             <p-organizationChart
                 [value]="orgChartNodes"
+                selectionMode="single"
                 (onNodeSelect)="onOrgNodeSelect($event)">
                 <ng-template let-node pTemplate="parent">
                     <div class="org-node org-node--parent">
