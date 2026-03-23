@@ -76,14 +76,14 @@
                             <th mat-header-cell *matHeaderCellDef i18n>Actions</th>
                             <td mat-cell *matCellDef="let member">
                                 <button *ngIf="member.isBot" mat-icon-button (click)="onConvertBotToUser(member)">
-                                    <mat-icon>compare-arrows</mat-icon>
+                                    <mat-icon>compare_arrows</mat-icon>
                                 </button>
 
                                 <button mat-icon-button color="primary" (click)="onEditMember(member)">
                                     <mat-icon>edit</mat-icon>
                                 </button>
-                                <button mat-icon-button color="warn" (click)="onDeleteMember(member)">
-                                    <mat-icon>delete</mat-icon>
+                                <button mat-icon-button color="warn" (click)="onRemoveMemberFromList(member)" [matTooltip]="member.isBot ? 'Delete' : 'Kick Out'">
+                                    <mat-icon>{{ member.isBot ? 'delete' : 'person_remove' }}</mat-icon>
                                 </button>
                             </td>
                         </ng-container>

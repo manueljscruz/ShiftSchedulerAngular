@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EntityWorkerMemberDTO } from '../../models/DTOs/Incoming/EntityWorkerMemberDTO';
 import { MatDialog } from '@angular/material/dialog';
-import { DELETE_MEMBER_CONTENT, DELETE_MEMBER_TITLE } from '../../constants/UITextConstants';
+import { DELETE_MEMBER_CONTENT, DELETE_MEMBER_TITLE, KICK_OUT_MEMBER_CONTENT, KICK_OUT_MEMBER_TITLE } from '../../constants/UITextConstants';
 import { GenericWarningDialogComponent } from '../generic-warning-dialog/generic-warning-dialog.component';
 
 @Component({
@@ -13,32 +13,37 @@ export class EntityWorkerMemberCardComponent {
 
   DELETE_MEMBER_TITLE = DELETE_MEMBER_TITLE;
   DELETE_MEMBER_CONTENT = DELETE_MEMBER_CONTENT;
+  KICK_OUT_MEMBER_TITLE = KICK_OUT_MEMBER_TITLE;
+  KICK_OUT_MEMBER_CONTENT = KICK_OUT_MEMBER_CONTENT;
 
   @Input() entityWorkerMember: EntityWorkerMemberDTO = new EntityWorkerMemberDTO('', '', false, [], false, false, false, false, []);
   @Input() allowActions: boolean = false;
   @Output() editWorkerTemplateEvent = new EventEmitter<EntityWorkerMemberDTO>();
   @Output() deleteWorkerTemplateEvent = new EventEmitter<EntityWorkerMemberDTO>();
 
-  constructor(private dialog: MatDialog) {
-    
-  }
+  constructor(private dialog: MatDialog) {}
 
   editWorker(workerToEdit: EntityWorkerMemberDTO) {
     this.editWorkerTemplateEvent.emit(workerToEdit);
-  } 
+  }
 
-  removeWorker(enterAnimationDuration: string, exitAnimationDuration: string, workerToRemove: EntityWorkerMemberDTO, title: string, message: string) {
+  removeWorker(workerToRemove: EntityWorkerMemberDTO) {
+    const isBot = workerToRemove.isBot;
+
     const dialogRef = this.dialog.open(GenericWarningDialogComponent, {
       width: '500px',
-      data: { enterAnimationDuration, exitAnimationDuration, warningTitle: title, warningMessage: message, isDeleteWarning: true }
+      data: {
+        warningTitle: isBot ? DELETE_MEMBER_TITLE : KICK_OUT_MEMBER_TITLE,
+        warningMessage: isBot ? DELETE_MEMBER_CONTENT : KICK_OUT_MEMBER_CONTENT,
+        isDeleteWarning: isBot,
+        isKickOut: !isBot
+      }
     });
 
-    dialogRef.afterClosed().subscribe(async result =>{
-      if(result){
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
         this.deleteWorkerTemplateEvent.emit(workerToRemove);
       }
     });
   }
-
-  
 }

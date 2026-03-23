@@ -7,7 +7,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatIcon } from '@angular/material/icon';
 import { BaseResponseModel } from '../../shared/models/baseResponseModel';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Inject } from '@angular/core';
 import { LocalService } from '../../core/services/local.service';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
@@ -38,6 +38,7 @@ export class LoginComponent {
 constructor(private loginRegisterService: WorkerService,
   private authService: AuthService,
   private router: Router,
+  private route: ActivatedRoute,
   private loadingScreenService: LoadingSpinnerManagerService,
   private snackbarManagerService: SnackbarManagerService,
   private sessionService: SessionService,
@@ -94,8 +95,9 @@ constructor(private loginRegisterService: WorkerService,
         // Clear password for security
         this.clearPassword();
 
-        // Navigate to dashboard
-        this.router.navigate(['/dashboard']);
+        // Navigate to returnUrl if present, otherwise to dashboard
+        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+        this.router.navigateByUrl(returnUrl ?? '/dashboard');
       } else {
         this.isLoading = false;
         this.clearPassword();

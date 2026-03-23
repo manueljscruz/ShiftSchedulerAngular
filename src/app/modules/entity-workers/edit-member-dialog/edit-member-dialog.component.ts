@@ -13,6 +13,7 @@ import { EditMemberDTO } from '../../../shared/models/DTOs/Outgoing/EditMemberDT
 import { EntityService } from '../../../core/services/api/EntityService';
 import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { UpdateMemberPermissionDTO } from '../../../shared/models/DTOs/Outgoing/UpdateMemberPermissionDTO';
 
 @Component({
   selector: 'app-edit-member-dialog',
@@ -75,6 +76,23 @@ export class EditMemberDialogComponent {
   multipleShiftAssignments : boolean = false;
 
   /// <summary>
+  /// Permission fields (human members only)
+  /// </summary>
+  entityPermissionRoleId: number = 0;
+  canManageChildren: boolean = false;
+  partOfRoster: boolean = false;
+
+  readonly roleOptions = [
+    { id: 1, label: 'General Manager' },
+    { id: 2, label: 'Manager' },
+    { id: 3, label: 'Viewer' }
+  ];
+
+  get isManagerRole(): boolean {
+    return this.entityPermissionRoleId === 2;
+  }
+
+  /// <summary>
   /// The text to display on the execute action button.
   /// </summary>
   executeActionText: string = 'Save';
@@ -124,6 +142,10 @@ export class EditMemberDialogComponent {
 
     this.selectedSkills = this.entityWorkerMember.skillSet != undefined ? [...this.entityWorkerMember.skillSet] : [];
     this.selectedShifts = this.entityWorkerMember.assignedShifts != undefined ? [...this.entityWorkerMember.assignedShifts] : [];
+
+    this.entityPermissionRoleId = this.entityWorkerMember.entityPermissionRoleId;
+    this.canManageChildren = this.entityWorkerMember.canManageChildren;
+    this.partOfRoster = this.entityWorkerMember.partOfRoster;
   }
 
   //#endregion
@@ -163,6 +185,20 @@ export class EditMemberDialogComponent {
       this.loadingScreenService.changeLoadingState(false);
 
       if(apiResponse.success){
+        if(!this.entityWorkerMember.isBot){
+          const permissionDto = new UpdateMemberPermissionDTO(
+            this.entityWorkerMember.workerId,
+            this.currentEntityId,
+            this.entityPermissionRoleId,
+            this.canManageChildren,
+            this.partOfRoster
+          );
+          await this.entityService.updateMemberPermission(permissionDto);
+          this.entityWorkerMember.entityPermissionRoleId = this.entityPermissionRoleId;
+          this.entityWorkerMember.canManageChildren = this.canManageChildren;
+          this.entityWorkerMember.partOfRoster = this.partOfRoster;
+          this.entityWorkerMember.isGeneralManager = this.entityPermissionRoleId === 1;
+        }
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Member successfully updated.'));
         this.entityWorkerMember.workerName = this.nameInput;
         this.entityWorkerMember.skillSet = this.selectedSkills;

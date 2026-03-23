@@ -95,6 +95,17 @@ export class AddMemberDialogComponent {
   selectedShifts: ShiftDTO[] = [];
 
   /// <summary>
+  /// Role for the invited human member (invite tab only)
+  /// </summary>
+  entityPermissionRoleId: number = 3; // Default: Viewer
+
+  readonly roleOptions = [
+    { id: 1, label: 'General Manager' },
+    { id: 2, label: 'Manager' },
+    { id: 3, label: 'Viewer' }
+  ];
+
+  /// <summary>
   /// Event emitter for when a member is added or invited.
   /// </summary>
   @Output() onMemberAdded: EventEmitter<any> = new EventEmitter<any>();
@@ -161,8 +172,9 @@ export class AddMemberDialogComponent {
       }
 
 
-      let newMember : AddNewMemberDTO = this.selectedTabIndex === 1 ? new AddNewMemberDTO(true, this.currentEntityId, this.memberNameInput, '', this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.multipleShifts,  this.selectedShifts, this.partOfRotation)
-      :  new AddNewMemberDTO(false, this.currentEntityId, '', this.emailInput, this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.multipleShifts, this.selectedShifts, this.partOfRotation);
+      let newMember : AddNewMemberDTO = this.selectedTabIndex === 1
+        ? new AddNewMemberDTO(true, this.currentEntityId, this.memberNameInput, '', this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.multipleShifts, this.selectedShifts, this.partOfRotation)
+        : new AddNewMemberDTO(false, this.currentEntityId, '', this.emailInput, this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.multipleShifts, this.selectedShifts, this.partOfRotation, this.entityPermissionRoleId);
 
       let apiResponse = await this.entityService.addNewEntityMember(newMember);
 

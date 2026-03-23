@@ -44,6 +44,31 @@
             </div>
         </div>
 
+        <!-- Permission Section (human members only) -->
+        <ng-container *ngIf="!entityWorkerMember.isBot">
+            <mat-divider style="margin: 16px 0"></mat-divider>
+            <div class="row">
+                <mat-form-field appearance="outline">
+                    <mat-label i18n>Role</mat-label>
+                    <mat-select [(ngModel)]="entityPermissionRoleId" name="roleId">
+                        <mat-option *ngFor="let role of roleOptions" [value]="role.id">
+                            {{ role.label }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <div class="col-auto d-flex align-items-center" *ngIf="isManagerRole">
+                    <mat-label i18n>Can Manage Children</mat-label>
+                    <mat-checkbox [(ngModel)]="canManageChildren" name="canManageChildren"></mat-checkbox>
+                </div>
+                <div class="col-auto d-flex align-items-center">
+                    <mat-label i18n>Part of Roster</mat-label>
+                    <mat-checkbox [(ngModel)]="partOfRoster" name="partOfRoster"></mat-checkbox>
+                </div>
+            </div>
+        </ng-container>
+
     </form>
     <div class="actions">
         <button mat-fab extended class="secondary-color-bg" [mat-dialog-close]="false">

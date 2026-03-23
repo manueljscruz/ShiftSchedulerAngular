@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ENTITY_ICON, ENTITY_ADD_ICON, DASHBOARD_HOME_ICON, PROFILE_ICON, LOGOUT_ICON, SETTINGS_ICON, HELP_ICON } from '../../constants/IconNamesConstants';
+import { ENTITY_ICON, ENTITY_ADD_ICON, DASHBOARD_HOME_ICON, PROFILE_ICON, LOGOUT_ICON, SETTINGS_ICON, HELP_ICON, INVITATIONS_ICON } from '../../constants/IconNamesConstants';
 import { SideBarItemModel } from '../../models/UI/SideBarItemModel';
-import { LANDING_PAGE_ROUTE, DASHBOARD_ROUTE, DASHBOARD_HOME_ROUTE, PROFILE_ROUTE, NEW_ENTITY_ROUTE, SETTINGS_ROUTE, HELP_ROUTE } from '../../constants/ViewRoutesConstants';
+import { LANDING_PAGE_ROUTE, DASHBOARD_ROUTE, DASHBOARD_HOME_ROUTE, PROFILE_ROUTE, NEW_ENTITY_ROUTE, SETTINGS_ROUTE, HELP_ROUTE, MY_INVITATIONS_ROUTE } from '../../constants/ViewRoutesConstants';
 import { SIDERBAR_ITEM_GROUP_ENTITIES_CONTAINER } from '../../constants/UiContants';
 import { MatDivider } from "@angular/material/divider";
 
@@ -39,6 +39,7 @@ export class AppSidebarComponent {
   ENTITY_ADD_ICON: string = ENTITY_ADD_ICON;
   SETTINGS_ICON: string = SETTINGS_ICON;
   HELP_ICON: string = HELP_ICON;
+  INVITATIONS_ICON: string = INVITATIONS_ICON;
 
   //#endregion
 
@@ -52,6 +53,7 @@ export class AppSidebarComponent {
   NEW_ENTITY_ROUTE: string = NEW_ENTITY_ROUTE;
   SETTINGS_ROUTE: string = SETTINGS_ROUTE;
   HELP_ROUTE: string = HELP_ROUTE;
+  MY_INVITATIONS_ROUTE: string = MY_INVITATIONS_ROUTE;
 
   //#endregion
 

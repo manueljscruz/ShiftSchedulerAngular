@@ -38,6 +38,10 @@ export const ADD_NEW_ENTITY_MEMBER_URL : string = BASE_API_URL + ENTITY_CONTROLL
 export const UPDATE_ENTITY_MEMBER_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/update-entity-member";
 export const DELETE_ENTITY_MEMBER_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/delete-entity-member";
 export const CONVERT_BOT_TO_USER_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/convert-bot-to-user";
+export const UPDATE_MEMBER_PERMISSION_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/update-member-permission";
+export const GET_PENDING_INVITATIONS_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/pending-invitations/{workerId}";
+export const ACCEPT_INVITATION_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/accept-invitation";
+export const DECLINE_INVITATION_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/decline-invitation";
 
 //#region SHIFT
 const SHIFT_CONTROLLER : string = "Shift";

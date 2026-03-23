@@ -1,0 +1,39 @@
+<div id="my-invitations">
+    <h1 i18n>My Invitations</h1>
+
+    <div *ngIf="isLoading" class="loading-state">
+        <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+    </div>
+
+    <div *ngIf="!isLoading && pendingInvitations.length === 0" class="empty-state">
+        <mat-icon>mark_email_unread</mat-icon>
+        <p i18n>No pending invitations</p>
+    </div>
+
+    <div class="invitations-list" *ngIf="!isLoading && pendingInvitations.length > 0">
+        <mat-card class="invitation-card" *ngFor="let invitation of pendingInvitations">
+            <mat-card-content>
+                <div class="invitation-info">
+                    <div class="invitation-entity">
+                        <mat-icon>business</mat-icon>
+                        <span class="entity-name">{{ invitation.entityName }}</span>
+                    </div>
+                    <div class="invitation-details">
+                        <span class="role-badge">{{ invitation.roleName }}</span>
+                        <span class="invite-date">{{ invitation.inviteDate | date:'dd/MM/yyyy' }}</span>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-fab extended class="add-color-bg" (click)="accept(invitation)">
+                    <mat-icon>check</mat-icon>
+                    <span i18n>Accept</span>
+                </button>
+                <button mat-fab extended class="secondary-color-bg" (click)="decline(invitation)">
+                    <mat-icon>close</mat-icon>
+                    <span i18n>Decline</span>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

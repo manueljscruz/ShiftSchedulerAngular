@@ -41,6 +41,7 @@ import { SearchResultsComponent } from './modules/search-results/search-results.
 import { SettingsComponent } from './modules/settings/settings.component';
 import { ResetPasswordComponent } from './modules/reset-password/reset-password.component';
 import { PublicProfileComponent } from './modules/public-profile/public-profile.component';
+import { MyInvitationsComponent } from './modules/my-invitations/my-invitations.component';
 import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
@@ -61,6 +62,7 @@ const routes: Routes = [
     { path: 'view/:type/:id', component: PublicProfileComponent},
     { path: 'new-entity', component: NewEntityComponent},
     { path: 'settings', component: SettingsComponent},
+    { path: 'my-invitations', component: MyInvitationsComponent},
     { path: 'entity-form/:entityId', component: EntityFormComponent},
     { path: 'entity-workers/:entityId', component: EntityWorkersComponent},
     { path: 'entity-schedule/:entityId', component: EntityScheduleComponent},

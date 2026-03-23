@@ -20,9 +20,11 @@
                         <mat-icon>edit</mat-icon>
                         <span i18n>Edit</span>
                     </button>
-                    <button mat-raised-button color="warn" (click)="removeWorker('5000','5000', entityWorkerMember, DELETE_MEMBER_TITLE, DELETE_MEMBER_CONTENT)" class="action-button">
-                        <mat-icon>delete</mat-icon>
-                        <span i18n>Remove</span>
+                    <button mat-raised-button color="warn" (click)="removeWorker(entityWorkerMember)" class="action-button">
+                        <mat-icon *ngIf="entityWorkerMember.isBot">delete</mat-icon>
+                        <mat-icon *ngIf="!entityWorkerMember.isBot">person_remove</mat-icon>
+                        <span *ngIf="entityWorkerMember.isBot" i18n>Delete</span>
+                        <span *ngIf="!entityWorkerMember.isBot" i18n>Kick Out</span>
                     </button>
                 </div>
             </div>

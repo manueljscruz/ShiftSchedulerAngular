@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, CONVERT_BOT_TO_USER_URL, DELETE_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_DASHBOARD_VM_URL, GET_ENTITY_MEMBERS_PAGINATION, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL } from '../../../shared/constants/APIPathsConstants';
+import { ACCEPT_INVITATION_URL, ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, CONVERT_BOT_TO_USER_URL, DECLINE_INVITATION_URL, DELETE_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_DASHBOARD_VM_URL, GET_ENTITY_MEMBERS_PAGINATION, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, GET_PENDING_INVITATIONS_URL, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL, UPDATE_MEMBER_PERMISSION_URL } from '../../../shared/constants/APIPathsConstants';
 import { EntityProfileViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/EntityProfileViewModelRequestDTO';
 import { FormEntityDTO } from '../../../shared/models/DTOs/Outgoing/FormEntityDTO';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
@@ -14,6 +14,8 @@ import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/Single
 import { PagedModelRequest } from '../../../shared/models/DTOs/Outgoing/PagedModelRequest';
 import { ConvertBotToUserDTO } from '../../../shared/models/DTOs/Outgoing/ConvertBotToUserDTO';
 import { MemberPagedModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/MemberPagedModelRequestDTO';
+import { UpdateMemberPermissionDTO } from '../../../shared/models/DTOs/Outgoing/UpdateMemberPermissionDTO';
+import { AcceptDeclineInvitationDTO } from '../../../shared/models/DTOs/Outgoing/AcceptDeclineInvitationDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -253,21 +255,25 @@ export class EntityService {
         try {
             const httpResponse = await this.http.request<BaseResponseModel>(HTTP_METHOD_DELETE, DELETE_ENTITY_MEMBER_URL, {
                 body: workerData,
-                observe: 'response'  // Ensure we get the full HttpResponse
+                observe: 'response'
             }).toPromise();
-    
+
             if (httpResponse?.status === HTTP_STATUS_NO_CONTENT) {
                 response.success = true;
-                response.message = "Entity member succesfully deleted.";
+                response.message = "Entity member successfully deleted.";
                 return response;
             }
-    
-            response = httpResponse?.body as BaseResponseModel || new BaseResponseModel(true, "No content returned", null);
+
+            response = httpResponse?.body as BaseResponseModel || new BaseResponseModel(false, "Unexpected response.", null);
         } catch (error: any) {
-            console.error('Error fetching data:', error.message);
-            response.message = error.message;
+            const status = error?.status;
+            if (status === 404) {
+                response.message = error?.error ?? 'Member not found.';
+            } else {
+                response.message = error?.error ?? error?.message ?? 'An unexpected error occurred.';
+            }
         }
-    
+
         return response;
     }
     
@@ -284,6 +290,66 @@ export class EntityService {
             console.error('Error fetching data:', error.message);
             // Handle the error appropriately (e.g., display an error message)
         }
+    }
+
+    //#endregion
+
+    //#region Update Member Permission
+
+    async updateMemberPermission(dto: UpdateMemberPermissionDTO): Promise<BaseResponseModel> {
+        let response = new BaseResponseModel(false, '', null);
+        try {
+            response = await this.http.put(UPDATE_MEMBER_PERMISSION_URL, dto).toPromise() as BaseResponseModel;
+        } catch (error: any) {
+            console.error('Error updating member permission:', error.message);
+            response.message = error.message;
+        }
+        return response;
+    }
+
+    //#endregion
+
+    //#region Get Pending Invitations
+
+    async getPendingInvitations(workerId: string): Promise<any> {
+        let response = new BaseResponseModel(false, '', null);
+        try {
+            response = await this.http.get(GET_PENDING_INVITATIONS_URL.replace('{workerId}', workerId)).toPromise() as BaseResponseModel;
+        } catch (error: any) {
+            console.error('Error fetching pending invitations:', error.message);
+            response.message = error.message;
+        }
+        return response;
+    }
+
+    //#endregion
+
+    //#region Accept Invitation
+
+    async acceptInvitation(dto: AcceptDeclineInvitationDTO): Promise<BaseResponseModel> {
+        let response = new BaseResponseModel(false, '', null);
+        try {
+            response = await this.http.post(ACCEPT_INVITATION_URL, dto).toPromise() as BaseResponseModel;
+        } catch (error: any) {
+            console.error('Error accepting invitation:', error.message);
+            response.message = error.message;
+        }
+        return response;
+    }
+
+    //#endregion
+
+    //#region Decline Invitation
+
+    async declineInvitation(dto: AcceptDeclineInvitationDTO): Promise<BaseResponseModel> {
+        let response = new BaseResponseModel(false, '', null);
+        try {
+            response = await this.http.post(DECLINE_INVITATION_URL, dto).toPromise() as BaseResponseModel;
+        } catch (error: any) {
+            console.error('Error declining invitation:', error.message);
+            response.message = error.message;
+        }
+        return response;
     }
 
     //#endregion

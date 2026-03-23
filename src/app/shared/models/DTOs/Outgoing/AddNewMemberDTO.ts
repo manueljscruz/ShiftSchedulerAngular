@@ -38,7 +38,9 @@ export class AddNewMemberDTO {
 
     assignedShifts: ShiftDTO[] = [];
 
-    constructor(isBot: boolean, destinationEntityId : string, name: string, email: string, skills: SkillDTO[], worksWeekDays: boolean, worksWeekends: boolean, multipleShiftAssignments : boolean, shifts: ShiftDTO[], partOfRotation: boolean){
+    entityPermissionRoleId: number = 3;
+
+    constructor(isBot: boolean, destinationEntityId : string, name: string, email: string, skills: SkillDTO[], worksWeekDays: boolean, worksWeekends: boolean, multipleShiftAssignments : boolean, shifts: ShiftDTO[], partOfRotation: boolean, entityPermissionRoleId: number = 3){
         this.isBot = isBot;
         this.destinationEntityId = destinationEntityId;
         this.memberName = name;
@@ -49,6 +51,6 @@ export class AddNewMemberDTO {
         this.worksWeekDays = worksWeekDays;
         this.worksWeekends = worksWeekends;
         this.multipleShiftAssignments = multipleShiftAssignments;
-
+        this.entityPermissionRoleId = entityPermissionRoleId;
     }
 }

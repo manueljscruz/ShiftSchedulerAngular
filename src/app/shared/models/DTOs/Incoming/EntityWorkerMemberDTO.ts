@@ -13,6 +13,9 @@ export class EntityWorkerMemberDTO{
     assignedShifts: ShiftDTO[];
 
     isGeneralManager: boolean = false;
+    entityPermissionRoleId: number = 0;
+    canManageChildren: boolean = false;
+    partOfRoster: boolean = false;
     isSelected: boolean = false;
     selectedSkills: SkillDTO[] = [];
 

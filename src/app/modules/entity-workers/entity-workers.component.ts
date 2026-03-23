@@ -17,7 +17,8 @@ import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { UI_DIALOG_ENTRANCE_DURATION, UI_DIALOG_EXIT_DURATION } from '../../shared/constants/UiContants';
 import { EditMemberDialogComponent } from './edit-member-dialog/edit-member-dialog.component';
 import { DeleteMemberDTO } from '../../shared/models/DTOs/Outgoing/DeleteMemberDTO';
-import { DELETE_MEMBER_CONTENT, DELETE_MEMBER_TITLE } from '../../shared/constants/UITextConstants';
+import { DELETE_MEMBER_CONTENT, DELETE_MEMBER_TITLE, KICK_OUT_MEMBER_CONTENT, KICK_OUT_MEMBER_TITLE } from '../../shared/constants/UITextConstants';
+import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 import { BaseViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatSort } from '@angular/material/sort';
@@ -67,6 +68,8 @@ export class EntityWorkersComponent implements OnDestroy {
   UI_DIALOG_EXIT_DURATION = UI_DIALOG_EXIT_DURATION;
   DELETE_MEMBER_TITLE = DELETE_MEMBER_TITLE;
   DELETE_MEMBER_CONTENT = DELETE_MEMBER_CONTENT;
+  KICK_OUT_MEMBER_TITLE = KICK_OUT_MEMBER_TITLE;
+  KICK_OUT_MEMBER_CONTENT = KICK_OUT_MEMBER_CONTENT;
 
   //#region Properties
 
@@ -314,6 +317,33 @@ export class EntityWorkersComponent implements OnDestroy {
     }
 
     this.deleteMember(workerToDelete);
+  }
+
+  //#endregion
+
+  //#region On Remove Member From List (with confirmation dialog)
+
+  onRemoveMemberFromList(workerToRemove: EntityWorkerMemberDTO) {
+    if (workerToRemove == null) {
+      return;
+    }
+
+    const isBot = workerToRemove.isBot;
+    const dialogRef = this.dialog.open(GenericWarningDialogComponent, {
+      width: '500px',
+      data: {
+        warningTitle: isBot ? DELETE_MEMBER_TITLE : KICK_OUT_MEMBER_TITLE,
+        warningMessage: isBot ? DELETE_MEMBER_CONTENT : KICK_OUT_MEMBER_CONTENT,
+        isDeleteWarning: isBot,
+        isKickOut: !isBot
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteMember(workerToRemove);
+      }
+    });
   }
 
   //#endregion

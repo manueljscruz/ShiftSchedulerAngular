@@ -117,6 +117,7 @@ import { EmailNotConfirmedDialogComponent } from './modules/home/email-not-confi
 import { PublicProfileComponent } from './modules/public-profile/public-profile.component';
 import { BotToUserDialogComponent } from './modules/entity-workers/bot-to-user-dialog/bot-to-user-dialog.component';
 import { MatRadioGroup, MatRadioModule } from '@angular/material/radio';
+import { MyInvitationsComponent } from './modules/my-invitations/my-invitations.component';
 
 @NgModule({
   declarations: [
@@ -127,6 +128,7 @@ import { MatRadioGroup, MatRadioModule } from '@angular/material/radio';
     HomeComponent,
     DashboardComponent,
     AppSidebarComponent,
+    MyInvitationsComponent,
     AppHeaderComponent,
     SidebarItemComponent,
     SidebarItemGroupComponent,

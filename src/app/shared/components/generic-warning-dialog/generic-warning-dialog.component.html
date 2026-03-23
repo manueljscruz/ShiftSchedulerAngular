@@ -13,7 +13,13 @@
                 <span i18n>Delete</span>
             </button>
         </ng-container>
-        <ng-container *ngIf="!isDeleteWarning">
+        <ng-container *ngIf="isKickOut">
+            <button mat-fab extended class="warn-color-bg" [mat-dialog-close]="true">
+                <mat-icon>{{KICK_OUT_ICON}}</mat-icon>
+                <span i18n>Kick Out</span>
+            </button>
+        </ng-container>
+        <ng-container *ngIf="!isDeleteWarning && !isKickOut">
             <button mat-fab extended class="edit-color-bg" [mat-dialog-close]="true">
                 <mat-icon>{{DONE_ICON}}</mat-icon>
                 <span i18n>Confirm</span>
