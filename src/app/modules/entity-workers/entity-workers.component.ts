@@ -254,7 +254,7 @@ export class EntityWorkersComponent implements OnDestroy {
     let currentEntityId = this.currentEntityId;
     const dialogRef = this.dialog.open(AddMemberDialogComponent, {
       width: '500px',
-      data: { enterAnimationDuration, exitAnimationDuration, skillList, currentEntityId, shiftList: this.entityMembersViewModel.shifts }
+      data: { enterAnimationDuration, exitAnimationDuration, skillList, currentEntityId, shiftList: this.entityMembersViewModel.shifts, rolesList: this.entityMembersViewModel.entityPermissionRoles }
     });
 
     dialogRef.componentInstance.onMemberAdded.subscribe((result: BaseResponseModel) => {
@@ -282,11 +282,12 @@ export class EntityWorkersComponent implements OnDestroy {
   onEditMember(editWorker: EntityWorkerMemberDTO) {
     let skillList = this.entityMembersViewModel.skills;
     let shiftsList = this.entityMembersViewModel.shifts;
+    let rolesList = this.entityMembersViewModel.entityPermissionRoles;
     let currentEntityId = this.currentEntityId;
-    
+
     const dialogRef = this.dialog.open(EditMemberDialogComponent, {
       width: '500px',
-      data: { UI_DIALOG_ENTRANCE_DURATION, UI_DIALOG_EXIT_DURATION, editWorker, skillList, currentEntityId, shiftsList }
+      data: { UI_DIALOG_ENTRANCE_DURATION, UI_DIALOG_EXIT_DURATION, editWorker, skillList, currentEntityId, shiftsList, rolesList }
     });
     
     dialogRef.componentInstance.onMemberEdited.subscribe((result: BaseResponseModel) => {

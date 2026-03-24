@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { EntityPermissionRoleDTO } from '../../../shared/models/DTOs/Incoming/EntityPermissionRoleDTO';
 import { EntityWorkerDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerDTO';
 import { EntityWorkerMemberDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerMemberDTO';
 import { SkillDTO } from '../../../shared/models/DTOs/Incoming/SkillDTO';
@@ -82,11 +83,7 @@ export class EditMemberDialogComponent {
   canManageChildren: boolean = false;
   partOfRoster: boolean = false;
 
-  readonly roleOptions = [
-    { id: 1, label: 'General Manager' },
-    { id: 2, label: 'Manager' },
-    { id: 3, label: 'Viewer' }
-  ];
+  roleOptions: EntityPermissionRoleDTO[] = [];
 
   get isManagerRole(): boolean {
     return this.entityPermissionRoleId === 2;
@@ -127,6 +124,7 @@ export class EditMemberDialogComponent {
     this.localizedSkills = this.data.skillList;
     this.currentEntityId = this.data.currentEntityId;
     this.entityShifts = this.data.shiftsList;
+    this.roleOptions = this.data.rolesList ?? [];
 
     this.nameInput = this.entityWorkerMember.workerName;
 

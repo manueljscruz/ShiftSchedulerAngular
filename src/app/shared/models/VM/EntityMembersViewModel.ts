@@ -1,4 +1,5 @@
 import { EntityWorkerMemberDTO } from "../DTOs/Incoming/EntityWorkerMemberDTO";
+import { EntityPermissionRoleDTO } from "../DTOs/Incoming/EntityPermissionRoleDTO";
 import { PagedList } from "../DTOs/Incoming/PagedList";
 import { ShiftDTO } from "../DTOs/Incoming/ShiftDTO";
 import { SkillDTO } from "../DTOs/Incoming/SkillDTO";
@@ -9,6 +10,7 @@ export class EntityMembersViewModel {
     entityUsedSkills: SkillDTO[] = [];
     shifts: ShiftDTO[];
     entityMembers: PagedList<EntityWorkerMemberDTO>;
+    entityPermissionRoles: EntityPermissionRoleDTO[] = [];
 
     constructor(entityOwnerId : string, skills: SkillDTO[], entityUsedSkills : SkillDTO[], shifts: ShiftDTO[], entityMembers: PagedList<EntityWorkerMemberDTO>) {
         this.entityOwnerId = entityOwnerId;

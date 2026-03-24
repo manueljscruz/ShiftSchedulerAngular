@@ -12,6 +12,7 @@ import { AddNewMemberDTO } from '../../../shared/models/DTOs/Outgoing/AddNewMemb
 import { LanguageServiceService } from '../../../core/services/language-service.service';
 import { EntityService } from '../../../core/services/api/EntityService';
 import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
+import { EntityPermissionRoleDTO } from '../../../shared/models/DTOs/Incoming/EntityPermissionRoleDTO';
 
 @Component({
   selector: 'add-member-dialog',
@@ -99,11 +100,7 @@ export class AddMemberDialogComponent {
   /// </summary>
   entityPermissionRoleId: number = 3; // Default: Viewer
 
-  readonly roleOptions = [
-    { id: 1, label: 'General Manager' },
-    { id: 2, label: 'Manager' },
-    { id: 3, label: 'Viewer' }
-  ];
+  roleOptions: EntityPermissionRoleDTO[] = [];
 
   /// <summary>
   /// Event emitter for when a member is added or invited.
@@ -118,6 +115,7 @@ export class AddMemberDialogComponent {
     this.localizedSkills = data.skillList;
     this.currentEntityId = data.currentEntityId;
     this.entityShifts = data.shiftList;
+    this.roleOptions = data.rolesList ?? [];
   }
 
   ngOnInit() {

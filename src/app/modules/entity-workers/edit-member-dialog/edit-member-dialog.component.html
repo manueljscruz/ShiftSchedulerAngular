@@ -51,8 +51,8 @@
                 <mat-form-field appearance="outline">
                     <mat-label i18n>Role</mat-label>
                     <mat-select [(ngModel)]="entityPermissionRoleId" name="roleId">
-                        <mat-option *ngFor="let role of roleOptions" [value]="role.id">
-                            {{ role.label }}
+                        <mat-option *ngFor="let role of roleOptions" [value]="role.entityPermissionRoleId">
+                            {{ role.entityPermissionRoleDisplayValue }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
