@@ -360,7 +360,8 @@ export class EntityWorkersComponent implements OnDestroy {
     if(apiResponse.success){
       let index = this.entityMembersViewModel.entityMembers.data.findIndex(x => x.workerId === workerToDelete.workerId);
       if(index >= 0){
-        this.entityMembersViewModel.entityMembers.data.splice(index, 1);
+        this.entityMembersViewModel.entityMembers.data = this.entityMembersViewModel.entityMembers.data.filter(x => x.workerId !== workerToDelete.workerId);
+        this.entityMembersViewModel.entityMembers.totalCount--;
 
         this.snackManagerService.showSuccessSnackbar(new SnackbarUIModel(5, apiResponse.message));
       }

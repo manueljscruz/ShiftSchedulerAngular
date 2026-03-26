@@ -100,6 +100,8 @@ export class AddMemberDialogComponent {
   /// </summary>
   entityPermissionRoleId: number = 3; // Default: Viewer
 
+  partOfRoster: boolean = false;
+
   roleOptions: EntityPermissionRoleDTO[] = [];
 
   /// <summary>
@@ -172,7 +174,7 @@ export class AddMemberDialogComponent {
 
       let newMember : AddNewMemberDTO = this.selectedTabIndex === 1
         ? new AddNewMemberDTO(true, this.currentEntityId, this.memberNameInput, '', this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.multipleShifts, this.selectedShifts, this.partOfRotation)
-        : new AddNewMemberDTO(false, this.currentEntityId, '', this.emailInput, this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.multipleShifts, this.selectedShifts, this.partOfRotation, this.entityPermissionRoleId);
+        : new AddNewMemberDTO(false, this.currentEntityId, '', this.emailInput, this.selectedSkills, this.worksWeekDays, this.worksWeekends, this.multipleShifts, this.selectedShifts, this.partOfRotation, this.entityPermissionRoleId, this.partOfRoster);
 
       let apiResponse = await this.entityService.addNewEntityMember(newMember);
 

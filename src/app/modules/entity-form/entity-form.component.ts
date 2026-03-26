@@ -289,7 +289,7 @@ export class EntityFormComponent implements OnDestroy {
     }
 
     this.loadingScreenService.changeLoadingState(true);
-    await this.entityService.deleteEntity(this.currentEntityId).then(response => {
+    await this.entityService.deleteEntity(this.currentEntityId, this.loggedUser?.userId ?? '').then(response => {
       if(response.success){
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Entity deleted successfully'));
         this.sidebarNavigationService.deleteWorkEntitySideBarItem(this.currentEntityId);

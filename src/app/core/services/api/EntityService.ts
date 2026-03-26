@@ -11,6 +11,7 @@ import { DeleteMemberDTO } from '../../../shared/models/DTOs/Outgoing/DeleteMemb
 import { HTTP_METHOD_DELETE, HTTP_STATUS_NO_CONTENT} from '../../../shared/constants/HttpConstants';
 import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { SingleIdentifierDTO } from '../../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
+import { DeleteEntityDTO } from '../../../shared/models/DTOs/Outgoing/DeleteEntityDTO';
 import { PagedModelRequest } from '../../../shared/models/DTOs/Outgoing/PagedModelRequest';
 import { ConvertBotToUserDTO } from '../../../shared/models/DTOs/Outgoing/ConvertBotToUserDTO';
 import { MemberPagedModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/MemberPagedModelRequestDTO';
@@ -190,15 +191,14 @@ export class EntityService {
      * @param entityId - The ID of the entity to delete.
      * @returns A promise that resolves to the response from the server.
      */
-    async deleteEntity(entityId: string) : Promise<BaseResponseModel> {
+    async deleteEntity(entityId: string, workerId: string) : Promise<BaseResponseModel> {
         let response = new BaseResponseModel(false, "", null);
-        let deleteEntityObject : SingleIdentifierDTO = new SingleIdentifierDTO(entityId);
+        let deleteEntityObject = new DeleteEntityDTO(entityId, workerId);
         try {
             let apiResponse = await this.http.delete(DELETE_ENTITY_URL, {
                 body: deleteEntityObject,
             }).toPromise();
             response = apiResponse as BaseResponseModel;
-            // Process the received data
         } catch (error : any) {
             console.error('Error fetching data:', error.message);
             response.message = error.message;

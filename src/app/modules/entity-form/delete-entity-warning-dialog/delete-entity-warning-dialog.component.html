@@ -1,14 +1,14 @@
 <div id="delete-entity-dialog">
-    <h1 i18n>Delete {{entityName}}</h1>
+    <h1 i18n>Delete "{{entityName}}"</h1>
     <p i18n>Are you sure you want to delete this entity? All data will be erased and everyone associated with this work entity will no longer have access.</p>
-    <div class="actions">
+    <mat-dialog-actions class="dialog-footer">
         <button mat-fab extended class="secondary-color-bg" [mat-dialog-close]="false">
             <mat-icon>close</mat-icon>
             <span i18n>Cancel</span>
         </button>
-        <button mat-fab extended class="delete-color-bg" [mat-dialog-close]="true">
+        <button mat-fab extended class="warn-color-bg" [mat-dialog-close]="true">
             <mat-icon>delete</mat-icon>
             <span i18n>Delete</span>
         </button>
-    </div>
+    </mat-dialog-actions>
 </div>

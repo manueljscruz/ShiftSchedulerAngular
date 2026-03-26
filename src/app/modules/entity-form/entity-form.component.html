@@ -15,7 +15,7 @@
                 <mat-icon>add</mat-icon>
                 <span i18n>Add Child Entity</span>
             </button>
-            <button mat-fab extended class="delete-color-bg"(click)="openDeleteEntityDialog('3000ms', '1500ms')">
+            <button mat-fab extended class="delete-color-bg" *ngIf="entityProfileViewModel?.allowDelete" (click)="openDeleteEntityDialog('3000ms', '1500ms')">
                 <mat-icon>delete</mat-icon>
                 <span i18n>Delete</span>
             </button>
