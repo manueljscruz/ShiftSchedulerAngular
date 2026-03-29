@@ -11,6 +11,8 @@ export class EntityMembersViewModel {
     shifts: ShiftDTO[];
     entityMembers: PagedList<EntityWorkerMemberDTO>;
     entityPermissionRoles: EntityPermissionRoleDTO[] = [];
+    currentUserPermissionRoleId: number = 0;
+    currentUserCanManageChildren: boolean = false;
 
     constructor(entityOwnerId : string, skills: SkillDTO[], entityUsedSkills : SkillDTO[], shifts: ShiftDTO[], entityMembers: PagedList<EntityWorkerMemberDTO>) {
         this.entityOwnerId = entityOwnerId;

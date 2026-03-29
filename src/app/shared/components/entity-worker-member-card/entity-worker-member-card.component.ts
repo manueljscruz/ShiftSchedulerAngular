@@ -18,8 +18,11 @@ export class EntityWorkerMemberCardComponent {
 
   @Input() entityWorkerMember: EntityWorkerMemberDTO = new EntityWorkerMemberDTO('', '', false, [], false, false, false, false, []);
   @Input() allowActions: boolean = false;
+  @Input() selectionMode: boolean = false;
+  @Input() isSelected: boolean = false;
   @Output() editWorkerTemplateEvent = new EventEmitter<EntityWorkerMemberDTO>();
   @Output() deleteWorkerTemplateEvent = new EventEmitter<EntityWorkerMemberDTO>();
+  @Output() selectionChange = new EventEmitter<boolean>();
 
   constructor(private dialog: MatDialog) {}
 

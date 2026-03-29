@@ -31,6 +31,7 @@ import { MemberListFilterDTO } from '../../shared/models/DTOs/Outgoing/MemberLis
 import { AuthService } from '../../core/services/api/AuthService';
 import { BotToUserDialogComponent } from './bot-to-user-dialog/bot-to-user-dialog.component';
 import { MemberPagedModelRequestDTO } from '../../shared/models/DTOs/Outgoing/MemberPagedModelRequestDTO';
+import { TransferMemberDialogComponent } from './transfer-member-dialog/transfer-member-dialog.component';
 
 /**
  * Entity Workers Component
@@ -109,9 +110,14 @@ export class EntityWorkersComponent implements OnDestroy {
   public nameFilter: string = '';
 
   /// <summary>
-  /// Is current user entity owner flag
+  /// Flag indicating the current user can add, edit, and delete members (GM or Manager role)
   /// </summary>
-  public isCurrentUserEntityOwner: boolean = false;
+  public canManageMembers: boolean = false;
+
+  /// <summary>
+  /// Flag indicating the current user can transfer/copy members (GM, or Manager with CanManageChildren)
+  /// </summary>
+  public canTransferCopyMembers: boolean = false;
   
   /// <summary>
   /// Flag to determine if the view is in grid mode
@@ -137,6 +143,9 @@ export class EntityWorkersComponent implements OnDestroy {
   totalItems = 0;
 
   pageSizeOptions: number[] = [5, 10, 25, 100];
+
+  isSelectionMode: boolean = false;
+  selectedMembers: EntityWorkerMemberDTO[] = [];
 
   //#endregion
   
@@ -207,7 +216,14 @@ export class EntityWorkersComponent implements OnDestroy {
       return;
     }
     this.entityMembersViewModel = await this.entityService.getEntityMembersViewModel(memberListModelRequestDTO);
-    this.isCurrentUserEntityOwner = this.entityMembersViewModel.entityOwnerId === this.loggedUser.userId ? true : false;
+
+    const GENERAL_MANAGER_ID = 1;
+    const MANAGER_ID = 2;
+    const roleId = this.entityMembersViewModel.currentUserPermissionRoleId;
+    const canManageChildren = this.entityMembersViewModel.currentUserCanManageChildren;
+
+    this.canManageMembers = roleId === GENERAL_MANAGER_ID || roleId === MANAGER_ID;
+    this.canTransferCopyMembers = roleId === GENERAL_MANAGER_ID || (roleId === MANAGER_ID && canManageChildren);
   }
 
   //#endregion
@@ -470,6 +486,58 @@ export class EntityWorkersComponent implements OnDestroy {
         if(userIndex >= 0){
           this.entityMembersViewModel.entityMembers.data[userIndex] = convertedUser;
         }
+      }
+    });
+  }
+
+  //#endregion
+
+  //#region Selection Mode
+
+  toggleSelectionMode(): void {
+    this.isSelectionMode = !this.isSelectionMode;
+    if (!this.isSelectionMode) {
+      this.selectedMembers = [];
+      this.entityMembersViewModel.entityMembers.data.forEach(m => m.isSelected = false);
+    }
+  }
+
+  onMemberSelectionChange(member: EntityWorkerMemberDTO, checked: boolean): void {
+    member.isSelected = checked;
+    if (checked) {
+      if (!this.selectedMembers.find(m => m.workerId === member.workerId)) {
+        this.selectedMembers.push(member);
+      }
+    } else {
+      this.selectedMembers = this.selectedMembers.filter(m => m.workerId !== member.workerId);
+    }
+  }
+
+  //#endregion
+
+  //#region Open Transfer / Copy Dialog
+
+  openTransferMemberDialog(): void {
+    if (this.selectedMembers.length === 0) return;
+
+    const dialogRef = this.dialog.open(TransferMemberDialogComponent, {
+      width: '560px',
+      data: {
+        selectedMembers: this.selectedMembers,
+        sourceEntityId: this.currentEntityId,
+        entityPermissionRoles: this.entityMembersViewModel.entityPermissionRoles,
+        entitySkills: this.entityMembersViewModel.skills
+      }
+    });
+
+    dialogRef.componentInstance.onMembersTransferred.subscribe((result: BaseResponseModel) => {
+      dialogRef.close();
+      if (result.success) {
+        this.snackManagerService.showSuccessSnackbar(new SnackbarUIModel(5, result.message));
+        this.toggleSelectionMode();
+        this.GetMembersPage(this.currentPageIndex, this.pageSize, this.activeFilters);
+      } else {
+        this.snackManagerService.showFailSnackbar(new SnackbarUIModel(5, result.message));
       }
     });
   }

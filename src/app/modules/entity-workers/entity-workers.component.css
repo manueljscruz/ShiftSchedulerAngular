@@ -38,6 +38,18 @@
     align-self: center;
 }
 
+.selection-action-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background-color: var(--mat-sys-primary-container, #e8f0fe);
+    border-radius: 4px;
+    margin: 8px 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 767.98px) {
     .header-and-actions {

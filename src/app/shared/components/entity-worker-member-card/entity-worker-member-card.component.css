@@ -1,3 +1,20 @@
+.selection-overlay {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+}
+
+.elevated-card-container {
+  position: relative;
+  transition: outline 0.15s ease;
+}
+
+.card-selected {
+  outline: 2px solid var(--mat-sys-primary, #1976d2);
+  border-radius: 8px;
+}
+
 .entity-worker-member-item{
     width: 100%;
     min-width: 260px;

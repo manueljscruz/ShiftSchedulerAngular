@@ -116,6 +116,7 @@ import { ResetPasswordComponent } from './modules/reset-password/reset-password.
 import { EmailNotConfirmedDialogComponent } from './modules/home/email-not-confirmed-dialog/email-not-confirmed-dialog.component';
 import { PublicProfileComponent } from './modules/public-profile/public-profile.component';
 import { BotToUserDialogComponent } from './modules/entity-workers/bot-to-user-dialog/bot-to-user-dialog.component';
+import { TransferMemberDialogComponent } from './modules/entity-workers/transfer-member-dialog/transfer-member-dialog.component';
 import { MatRadioGroup, MatRadioModule } from '@angular/material/radio';
 import { MyInvitationsComponent } from './modules/my-invitations/my-invitations.component';
 
@@ -197,7 +198,8 @@ import { MyInvitationsComponent } from './modules/my-invitations/my-invitations.
     ResetPasswordComponent,
     EmailNotConfirmedDialogComponent,
     PublicProfileComponent,
-    BotToUserDialogComponent
+    BotToUserDialogComponent,
+    TransferMemberDialogComponent
   ],
   imports: [
     BrowserModule,

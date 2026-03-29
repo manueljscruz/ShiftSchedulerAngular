@@ -191,7 +191,12 @@ export class EditMemberDialogComponent {
             this.canManageChildren,
             this.partOfRoster
           );
-          await this.entityService.updateMemberPermission(permissionDto);
+          const permResponse = await this.entityService.updateMemberPermission(permissionDto);
+          if(!permResponse.success){
+            this.loadingScreenService.changeLoadingState(false);
+            this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, permResponse.message));
+            return;
+          }
           this.entityWorkerMember.entityPermissionRoleId = this.entityPermissionRoleId;
           this.entityWorkerMember.canManageChildren = this.canManageChildren;
           this.entityWorkerMember.partOfRoster = this.partOfRoster;

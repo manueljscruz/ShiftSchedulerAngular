@@ -42,6 +42,8 @@ export const UPDATE_MEMBER_PERMISSION_URL : string = BASE_API_URL + ENTITY_CONTR
 export const GET_PENDING_INVITATIONS_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/pending-invitations/{workerId}";
 export const ACCEPT_INVITATION_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/accept-invitation";
 export const DECLINE_INVITATION_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/decline-invitation";
+export const GET_UMBRELLA_ENTITIES_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/get-umbrella/{entityId}";
+export const TRANSFER_COPY_MEMBERS_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/transfer-copy-members";
 
 //#region SHIFT
 const SHIFT_CONTROLLER : string = "Shift";

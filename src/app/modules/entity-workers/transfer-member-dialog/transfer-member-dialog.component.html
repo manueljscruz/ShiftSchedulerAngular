@@ -1,0 +1,133 @@
+<h2 mat-dialog-title i18n>Transfer / Copy Members</h2>
+
+<mat-dialog-content>
+  <mat-tab-group animationDuration="200ms">
+
+    <!-- Tab 1: Destination & Mode -->
+    <mat-tab label="Destination">
+      <div class="tab-content">
+
+        <!-- Operation mode -->
+        <div class="mode-section">
+          <p class="section-label" i18n>Operation</p>
+          <mat-button-toggle-group [(ngModel)]="isTransfer" class="mode-toggle">
+            <mat-button-toggle [value]="false">
+              <mat-icon>content_copy</mat-icon>
+              <span i18n>Copy</span>
+            </mat-button-toggle>
+            <mat-button-toggle [value]="true">
+              <mat-icon>swap_horiz</mat-icon>
+              <span i18n>Transfer (Move)</span>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+          <p class="mode-description" *ngIf="!isTransfer" i18n>
+            Members will remain in the source entity and gain access to the destination.
+          </p>
+          <p class="mode-description warn-text" *ngIf="isTransfer" i18n>
+            Members will be removed from the source entity and added to the destination.
+          </p>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Destination entity -->
+        <div class="destination-section">
+          <p class="section-label" i18n>Destination Entity</p>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label i18n>Select entity</mat-label>
+            <mat-select [(ngModel)]="destinationEntityId" required>
+              <mat-option *ngFor="let entity of umbrellaEntities" [value]="entity.entityId">
+                {{ entity.entityName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Selected members summary -->
+        <div class="members-summary">
+          <p class="section-label" i18n>Selected ({{ memberConfigs.length }})</p>
+          <div class="member-chip-list">
+            <mat-chip *ngFor="let cfg of memberConfigs">
+              <mat-icon *ngIf="cfg.member.isBot" matChipAvatar>smart_toy</mat-icon>
+              <mat-icon *ngIf="!cfg.member.isBot" matChipAvatar>person</mat-icon>
+              {{ cfg.member.workerName }}
+            </mat-chip>
+          </div>
+        </div>
+
+      </div>
+    </mat-tab>
+
+    <!-- Tab 2: Configuration per member -->
+    <mat-tab label="Configuration">
+      <div class="tab-content">
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let cfg of memberConfigs">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon class="member-icon">{{ cfg.member.isBot ? 'smart_toy' : 'person' }}</mat-icon>
+                {{ cfg.member.workerName }}
+              </mat-panel-title>
+              <mat-panel-description *ngIf="!cfg.member.isBot">
+                {{ getRoleLabel(cfg.entityPermissionRoleId) }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <!-- Role + permissions (humans only) -->
+            <div *ngIf="!cfg.member.isBot" class="config-section">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label i18n>Role</mat-label>
+                <mat-select [(ngModel)]="cfg.entityPermissionRoleId">
+                  <mat-option *ngFor="let role of roleOptions" [value]="role.entityPermissionRoleId">
+                    {{ role.entityPermissionRoleDisplayValue }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-checkbox *ngIf="isManagerRole(cfg)" [(ngModel)]="cfg.canManageChildren" i18n>Can Manage Children</mat-checkbox>
+              <mat-checkbox [(ngModel)]="cfg.partOfRoster" i18n>Part of Roster</mat-checkbox>
+            </div>
+
+            <mat-divider *ngIf="!cfg.member.isBot"></mat-divider>
+
+            <!-- Scheduling flags -->
+            <div class="config-section">
+              <mat-checkbox [(ngModel)]="cfg.partOfRotation" (change)="onRotationChange(cfg, $event.checked)" i18n>Part of Rotation</mat-checkbox>
+
+              <div *ngIf="!cfg.partOfRotation" class="weekday-options">
+                <mat-checkbox [(ngModel)]="cfg.worksWeekDays" i18n>Works Weekdays</mat-checkbox>
+                <mat-checkbox [(ngModel)]="cfg.worksWeekends" i18n>Works Weekends</mat-checkbox>
+              </div>
+
+              <mat-checkbox [(ngModel)]="cfg.multipleShiftAssignments" i18n>Multiple Shift Assignments</mat-checkbox>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <!-- Skills -->
+            <div class="config-section">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label i18n>Skills</mat-label>
+                <mat-select [(ngModel)]="cfg.selectedSkills" multiple [compareWith]="compareSkills">
+                  <mat-option *ngFor="let skill of availableSkills" [value]="skill">
+                    {{ skill.skillLocalizedName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close i18n>Cancel</button>
+  <button mat-flat-button color="primary" (click)="confirm()" [disabled]="!destinationEntityId">
+    <mat-icon>{{ isTransfer ? 'swap_horiz' : 'content_copy' }}</mat-icon>
+    <span i18n>{{ isTransfer ? 'Transfer' : 'Copy' }}</span>
+  </button>
+</mat-dialog-actions>
