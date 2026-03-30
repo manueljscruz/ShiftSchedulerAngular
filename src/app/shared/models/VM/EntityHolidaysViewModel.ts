@@ -6,6 +6,8 @@ import { PagedList } from '../DTOs/Incoming/PagedList';
 
 export class EntityHolidaysViewModel {
     allowEdit: boolean;
+    isOwner: boolean = false;
+    parentEntityId: string | null = null;
     holidayCatalogDTOs: HolidayCatalogLocalizedDTO[];
     holidayBehaviourDTOs: HolidayBehaviourLocalizedDTO[];
     holidayTypeDTOs: HolidayTypeLocalizedDTO[];

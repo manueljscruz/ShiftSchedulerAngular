@@ -7,6 +7,10 @@
             </button>
         </h1>
         <div class="actions" [class.open]="isMobileActionsOpen">
+            <button *ngIf="entityHolidaysViewModel.parentEntityId && entityHolidaysViewModel.allowEdit" mat-fab extended class="secondary-color-bg" (click)="openImportDialog()">
+                <mat-icon>download</mat-icon>
+                <span i18n>Import Holidays</span>
+            </button>
             <button *ngIf="!isFormActive && entityHolidaysViewModel.allowEdit" mat-fab extended class="edit-color-bg" (click)="toggleFormToCreate()">
                 <mat-icon>add</mat-icon>
                 <span i18n>Add Holiday</span>

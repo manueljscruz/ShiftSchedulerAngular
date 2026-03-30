@@ -1,0 +1,60 @@
+<div class="dialog-container">
+    <h2 mat-dialog-title i18n>
+        Import from Parent
+    </h2>
+
+    <mat-dialog-content>
+        <p class="dialog-subtitle" i18n>
+            Select the items you want to import from the parent entity. Existing items with the same name or type will be skipped.
+        </p>
+
+        <!-- Loading state -->
+        <div *ngIf="isLoading" class="loading-wrapper">
+            <mat-spinner diameter="40"></mat-spinner>
+        </div>
+
+        <!-- Empty state -->
+        <div *ngIf="!isLoading && getItems().length === 0" class="empty-state">
+            <mat-icon>inbox</mat-icon>
+            <p i18n>No items available to import from the parent entity.</p>
+        </div>
+
+        <!-- Item list -->
+        <div *ngIf="!isLoading && getItems().length > 0">
+            <!-- Select All -->
+            <div class="select-all-row">
+                <mat-checkbox
+                    [checked]="selectAll"
+                    [indeterminate]="selectedIds.length > 0 && !selectAll"
+                    (change)="onSelectAll($event.checked)">
+                    <span i18n>Select All</span>
+                </mat-checkbox>
+                <span class="selected-count">{{ selectedIds.length }} / {{ getItems().length }} selected</span>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <!-- Items -->
+            <mat-list>
+                <mat-list-item *ngFor="let item of getItems()">
+                    <mat-checkbox
+                        [checked]="isSelected(getItemId(item))"
+                        (change)="onItemToggle(getItemId(item), $event.checked)">
+                        {{ getItemLabel(item) }}
+                    </mat-checkbox>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close i18n>Cancel</button>
+        <button
+            mat-flat-button
+            color="primary"
+            [disabled]="selectedIds.length === 0 || isLoading"
+            (click)="confirm()">
+            <span i18n>Import</span>
+        </button>
+    </mat-dialog-actions>
+</div>

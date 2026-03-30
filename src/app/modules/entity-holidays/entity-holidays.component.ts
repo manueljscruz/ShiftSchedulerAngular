@@ -24,6 +24,8 @@ import { PagedModelRequest } from '../../shared/models/DTOs/Outgoing/PagedModelR
 import { PagedList } from '../../shared/models/DTOs/Incoming/PagedList';
 import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 import { AuthService } from '../../core/services/api/AuthService';
+import { EntityService } from '../../core/services/api/EntityService';
+import { ImportConfigDialogComponent } from '../../shared/components/import-config-dialog/import-config-dialog.component';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { DeleteEntityObjectDTO } from '../../shared/models/DTOs/Outgoing/DeleteEntityObjectDTO';
 
@@ -112,7 +114,8 @@ export class EntityHolidaysComponent implements OnDestroy {
     private snackbarManagerService: SnackbarManagerService,
     private loadingScreenService: LoadingSpinnerManagerService,
     private holidayService: HolidayService,
-    private authService: AuthService
+    private authService: AuthService,
+    private entityService: EntityService
   ) {
   }
 
@@ -135,7 +138,7 @@ export class EntityHolidaysComponent implements OnDestroy {
     this.destroy$.complete();
   }
 
-  private async loadViewData(): Promise<void> {
+  public async loadViewData(): Promise<void> {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.loggedUser = currentUser;
@@ -553,6 +556,20 @@ export class EntityHolidaysComponent implements OnDestroy {
     this.entityHolidaysViewModel.entityHolidayDTOs = data;
 
     this.loadingScreenService.changeLoadingState(false);
+  }
+
+  //#endregion
+
+  //#region Import Config
+
+  openImportDialog(): void {
+    const dialogRef = this.dialog.open(ImportConfigDialogComponent, {
+      data: { entityId: this.currentEntityId, type: 'holidays' }
+    });
+    dialogRef.componentInstance.onImportComplete.subscribe(() => {
+      dialogRef.close();
+      this.loadViewData();
+    });
   }
 
   //#endregion

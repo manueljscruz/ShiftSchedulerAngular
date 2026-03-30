@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTab, MatTabsModule} from '@angular/material/tabs';
 import { MatError } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatListModule } from '@angular/material/list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
@@ -117,6 +118,7 @@ import { EmailNotConfirmedDialogComponent } from './modules/home/email-not-confi
 import { PublicProfileComponent } from './modules/public-profile/public-profile.component';
 import { BotToUserDialogComponent } from './modules/entity-workers/bot-to-user-dialog/bot-to-user-dialog.component';
 import { TransferMemberDialogComponent } from './modules/entity-workers/transfer-member-dialog/transfer-member-dialog.component';
+import { ImportConfigDialogComponent } from './shared/components/import-config-dialog/import-config-dialog.component';
 import { MatRadioGroup, MatRadioModule } from '@angular/material/radio';
 import { MyInvitationsComponent } from './modules/my-invitations/my-invitations.component';
 
@@ -199,7 +201,8 @@ import { MyInvitationsComponent } from './modules/my-invitations/my-invitations.
     EmailNotConfirmedDialogComponent,
     PublicProfileComponent,
     BotToUserDialogComponent,
-    TransferMemberDialogComponent
+    TransferMemberDialogComponent,
+    ImportConfigDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -213,6 +216,7 @@ import { MyInvitationsComponent } from './modules/my-invitations/my-invitations.
     HttpClientModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    MatListModule,
     MatCheckboxModule,
     MatIconModule,
     MatExpansionModule,

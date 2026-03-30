@@ -11,6 +11,7 @@ export class ShiftViewModel{
     allowEdit: boolean;
     shiftBreakTemplates: ShiftBreakTemplateDTO[];
     shiftTemplates: ShiftTemplateDTO[];
+    parentEntityId: string | null = null;
 
     constructor(shifts: ShiftDTO[], shiftBreakTypeLocalizeds: ShiftBreakTypeLocalizedDTO[], shiftRotations: EntityShiftRotationDTO[], allowEdit: boolean = false, shiftBreakTemplates: ShiftBreakTemplateDTO[] = [], shiftTemplates: ShiftTemplateDTO[] = []){
         this.shifts = shifts;

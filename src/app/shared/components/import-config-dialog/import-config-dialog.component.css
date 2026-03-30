@@ -1,0 +1,48 @@
+.dialog-container {
+    min-width: 380px;
+    max-width: 500px;
+}
+
+.dialog-subtitle {
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+}
+
+.loading-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 32px 0;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 0;
+    color: var(--mat-sys-on-surface-variant);
+}
+
+.empty-state mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+}
+
+.select-all-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+.selected-count {
+    font-size: 0.85rem;
+    color: var(--mat-sys-on-surface-variant);
+}
+
+mat-list {
+    max-height: 320px;
+    overflow-y: auto;
+}

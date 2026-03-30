@@ -7,6 +7,7 @@ export class EntityRuleViewModel{
     allowEdit: boolean;
     businessAspectsLocalizeds: BusinessAspectLocalizedDTO[];
     ruleTypeLocalizeds: RuleTypeLocalizedDTO[];
+    parentEntityId: string | null = null;
 
     constructor(entityRules: EntityRuleDTO[], allowEdit: boolean = false, businessAspectsLocalizeds: BusinessAspectLocalizedDTO[] = [], ruleTypesLocalizeds: RuleTypeLocalizedDTO[] = []){
         this.entityRules = entityRules;

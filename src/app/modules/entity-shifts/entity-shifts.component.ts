@@ -25,6 +25,8 @@ import { EntityShiftRotationDTO } from '../../shared/models/DTOs/Incoming/Entity
 import { UpdateShiftRotationDTO } from '../../shared/models/DTOs/Outgoing/UpdateShiftRotationDTO';
 import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 import { AuthService } from '../../core/services/api/AuthService';
+import { EntityService } from '../../core/services/api/EntityService';
+import { ImportConfigDialogComponent } from '../../shared/components/import-config-dialog/import-config-dialog.component';
 
 @Component({
   selector: 'app-entity-shifts',
@@ -120,7 +122,8 @@ export class EntityShiftsComponent implements OnDestroy {
     private loadingScreenService: LoadingSpinnerManagerService,
     private shiftService: ShiftService,
     private cdRef: ChangeDetectorRef,
-    private authService: AuthService
+    private authService: AuthService,
+    private entityService: EntityService
   )
   {
   }
@@ -148,7 +151,7 @@ export class EntityShiftsComponent implements OnDestroy {
     this.destroy$.complete();
   }
 
-  private async loadViewData(): Promise<void> {
+  public async loadViewData(): Promise<void> {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.loggedUser = currentUser;
@@ -749,9 +752,19 @@ export class EntityShiftsComponent implements OnDestroy {
 
   //#endregion
 
+  //#region Import Config
+
+  openImportDialog(): void {
+    const dialogRef = this.dialog.open(ImportConfigDialogComponent, {
+      data: { entityId: this.currentEntityId, type: 'shifts' }
+    });
+    dialogRef.componentInstance.onImportComplete.subscribe(() => {
+      dialogRef.close();
+      this.loadViewData();
+    });
+  }
+
+  //#endregion
+
   //#endregion
 }
-
-
-
-

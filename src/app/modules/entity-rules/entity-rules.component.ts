@@ -32,6 +32,7 @@ import { RuleValidatorService } from '../../core/services/rule-validator.service
 import { SingleIdentifierDTO } from '../../shared/models/DTOs/Outgoing/SingleIdentifierDTO';
 import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 import { AuthService } from '../../core/services/api/AuthService';
+import { ImportConfigDialogComponent } from '../../shared/components/import-config-dialog/import-config-dialog.component';
 
 @Component({
   selector: 'entity-rules',
@@ -201,7 +202,7 @@ export class EntityRulesComponent implements OnDestroy {
     this.destroy$.complete();
   }
 
-  private async loadViewData(): Promise<void> {
+  public async loadViewData(): Promise<void> {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.loggedUser = currentUser;
@@ -950,6 +951,20 @@ export class EntityRulesComponent implements OnDestroy {
         this.visibleSpecValueInput = false;
         break;
     }
+  }
+
+  //#endregion
+
+  //#region Import Config
+
+  openImportDialog(): void {
+    const dialogRef = this.dialog.open(ImportConfigDialogComponent, {
+      data: { entityId: this.currentEntityId, type: 'rules' }
+    });
+    dialogRef.componentInstance.onImportComplete.subscribe(() => {
+      dialogRef.close();
+      this.loadViewData();
+    });
   }
 
   //#endregion
