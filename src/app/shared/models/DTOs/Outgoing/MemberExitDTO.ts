@@ -3,4 +3,10 @@ export class MemberExitDTO {
     entityId: string = '';
     isBot: boolean = false;
     dateToExit: string = '';
+
+    constructor(workerId: string = '', entityId: string = '', isBot: boolean = false) {
+        this.workerId = workerId;
+        this.entityId = entityId;
+        this.isBot = isBot;
+    }
 }

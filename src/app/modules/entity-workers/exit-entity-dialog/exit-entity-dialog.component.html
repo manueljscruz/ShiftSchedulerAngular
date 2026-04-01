@@ -4,6 +4,7 @@
     <mat-radio-group [(ngModel)]="exitMode" name="exit-mode" style="display: flex; flex-direction: column; gap: 8px;">
         <mat-radio-button value="immediate" i18n>Exit immediately</mat-radio-button>
         <mat-radio-button value="scheduled" i18n>Schedule exit date</mat-radio-button>
+        <mat-radio-button *ngIf="hasScheduledExit" value="cancel" i18n>Cancel scheduled exit</mat-radio-button>
     </mat-radio-group>
 
     <div *ngIf="exitMode === 'scheduled'" style="margin-top: 16px;">
@@ -15,14 +16,18 @@
         </mat-form-field>
     </div>
 
+    <p *ngIf="exitMode === 'cancel'" style="margin-top: 12px; color: var(--mat-sys-on-surface-variant);" i18n>
+        Your scheduled exit will be removed and you will remain an active member.
+    </p>
+
     <div class="actions" style="display: flex; gap: 8px; margin-top: 16px; justify-content: flex-end;">
         <button mat-fab extended class="secondary-color-bg" [mat-dialog-close]="false">
             <mat-icon>close</mat-icon>
             <span i18n>Cancel</span>
         </button>
         <button mat-fab extended class="warn-color-bg" (click)="confirm()" [disabled]="!canConfirm || isLoading">
-            <mat-icon>exit_to_app</mat-icon>
-            <span i18n>Confirm</span>
+            <mat-icon>{{ exitMode === 'cancel' ? 'undo' : 'exit_to_app' }}</mat-icon>
+            <span i18n>{{ exitMode === 'cancel' ? 'Cancel Exit' : 'Confirm' }}</span>
         </button>
     </div>
 </div>

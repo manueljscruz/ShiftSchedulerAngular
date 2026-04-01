@@ -47,6 +47,7 @@ export const TRANSFER_COPY_MEMBERS_URL : string = BASE_API_URL + ENTITY_CONTROLL
 export const GET_IMPORT_CANDIDATES_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/import-candidates/{entityId}";
 export const IMPORT_CONFIG_URL : string = BASE_API_URL + ENTITY_CONTROLLER + "/import-config";
 export const SET_MEMBER_DATE_TO_EXIT_URL: string = BASE_API_URL + ENTITY_CONTROLLER + '/set-member-date-to-exit';
+export const CANCEL_MEMBER_EXIT_URL: string = BASE_API_URL + ENTITY_CONTROLLER + '/cancel-member-exit';
 
 //#region SHIFT
 const SHIFT_CONTROLLER : string = "Shift";

@@ -10,13 +10,13 @@ import { EntityWorkerMemberDTO } from '../../../shared/models/DTOs/Incoming/Enti
 @Component({
   selector: 'app-exit-entity-dialog',
   templateUrl: './exit-entity-dialog.component.html',
-  styleUrl: './exit-entity-dialog.component.css'
+  styleUrl: './exit-entity-dialog.component.css',
 })
 export class ExitEntityDialogComponent {
 
   @Output() onExitConfirmed: EventEmitter<void> = new EventEmitter<void>();
 
-  exitMode: 'immediate' | 'scheduled' = 'immediate';
+  exitMode: 'immediate' | 'scheduled' | 'cancel' = 'immediate';
   scheduledDate: Date | null = null;
   today: Date = new Date();
   tomorrow: Date = new Date(new Date().setDate(new Date().getDate() + 1));
@@ -30,8 +30,15 @@ export class ExitEntityDialogComponent {
     private snackbarService: SnackbarManagerService
   ) {}
 
+  get hasScheduledExit(): boolean {
+    const d = this.data.workerMember.dateToExit;
+    if (!d) return false;
+    const date = new Date(d);
+    return !isNaN(date.getTime()) && date.getFullYear() > 1 && date > new Date();
+  }
+
   get canConfirm(): boolean {
-    if (this.exitMode === 'immediate') return true;
+    if (this.exitMode === 'immediate' || this.exitMode === 'cancel') return true;
     return this.scheduledDate !== null;
   }
 
@@ -45,11 +52,17 @@ export class ExitEntityDialogComponent {
     dto.workerId = this.data.workerMember.workerId;
     dto.entityId = this.data.currentEntityId;
     dto.isBot = this.data.workerMember.isBot;
-    dto.dateToExit = this.exitMode === 'immediate'
-      ? new Date().toISOString()
-      : this.scheduledDate!.toISOString();
 
-    const response = await this.entityService.setMemberDateToExit(dto);
+    let response;
+
+    if (this.exitMode === 'cancel') {
+      response = await this.entityService.cancelMemberExit(dto);
+    } else {
+      dto.dateToExit = this.exitMode === 'immediate'
+        ? new Date().toISOString()
+        : this.scheduledDate!.toISOString();
+      response = await this.entityService.setMemberDateToExit(dto);
+    }
 
     this.isLoading = false;
     this.loadingService.changeLoadingState(false);

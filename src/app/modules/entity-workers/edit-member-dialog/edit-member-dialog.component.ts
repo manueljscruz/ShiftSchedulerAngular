@@ -15,6 +15,7 @@ import { EntityService } from '../../../core/services/api/EntityService';
 import { ShiftDTO } from '../../../shared/models/DTOs/Incoming/ShiftDTO';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { UpdateMemberPermissionDTO } from '../../../shared/models/DTOs/Outgoing/UpdateMemberPermissionDTO';
+import { MemberExitDTO } from '../../../shared/models/DTOs/Outgoing/MemberExitDTO';
 
 @Component({
   selector: 'app-edit-member-dialog',
@@ -90,6 +91,7 @@ export class EditMemberDialogComponent {
   }
 
   dateToExitValue: Date | null = null;
+  originalDateToExit: string | null = null;
   today: Date = new Date();
 
   get canSetDateToExit(): boolean {
@@ -158,6 +160,15 @@ export class EditMemberDialogComponent {
     this.entityPermissionRoleId = this.entityWorkerMember.entityPermissionRoleId;
     this.canManageChildren = this.entityWorkerMember.canManageChildren;
     this.partOfRoster = this.entityWorkerMember.partOfRoster;
+
+    // Initialize exit date from existing value if set
+    if (this.entityWorkerMember.dateToExit) {
+      const d = new Date(this.entityWorkerMember.dateToExit);
+      if (!isNaN(d.getTime()) && d.getFullYear() > 1) {
+        this.dateToExitValue = d;
+      }
+    }
+    this.originalDateToExit = this.entityWorkerMember.dateToExit;
   }
 
   //#endregion
@@ -193,6 +204,10 @@ export class EditMemberDialogComponent {
       let editWorkerDTO = new EditMemberDTO(this.entityWorkerMember.workerId, this.currentEntityId, this.entityWorkerMember.isBot, this.nameInput, this.selectedSkills, this.partOfRotation, this.worksWeekDays, this.worksWeekends, this.multipleShiftAssignments, this.selectedShifts);
       if (this.dateToExitValue) {
         editWorkerDTO.dateToExit = this.dateToExitValue.toISOString();
+      } else if (this.originalDateToExit && !this.dateToExitValue) {
+        // Exit date was cleared — cancel the scheduled exit
+        const cancelDto = new MemberExitDTO(this.entityWorkerMember.workerId, this.currentEntityId, this.entityWorkerMember.isBot);
+        await this.entityService.cancelMemberExit(cancelDto);
       }
 
       let apiResponse = await this.entityService.updateEntityMember(editWorkerDTO);
