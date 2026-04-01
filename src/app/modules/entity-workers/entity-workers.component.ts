@@ -552,13 +552,16 @@ export class EntityWorkersComponent implements OnDestroy {
   onLeaveEntity(): void {
     if (!this.loggedUser) return;
 
-    // Build a minimal member DTO from the logged-in user —
-    // avoids pagination dependency (user may not be on the current page)
-    const selfMember = new EntityWorkerMemberDTO(
-      this.loggedUser.userId,
-      this.loggedUser.userDisplayName ?? '',
-      false, [], false, false, false, false, []
-    );
+    // Prefer the full member DTO from the current page (has dateToExit populated).
+    // Fall back to a minimal DTO when the user is on a different paginated page —
+    // in that case hasScheduledExit will be false, which is an acceptable degradation.
+    const selfMember = this.entityMembersViewModel.entityMembers.data
+      .find(m => m.workerId === this.loggedUser!.userId)
+      ?? new EntityWorkerMemberDTO(
+           this.loggedUser.userId,
+           this.loggedUser.userDisplayName ?? '',
+           false, [], false, false, false, false, []
+         );
 
     const dialogRef = this.dialog.open(ExitEntityDialogComponent, {
       width: '400px',
