@@ -90,7 +90,7 @@
             <div id="shift-rotation-container">
                 <div class="header-and-actions">
                     <h2>Shift Rotation</h2>
-                    <div class="actions">
+                    <div class="actions" *ngIf="isCurrentUserEntityOwner">
                         <button mat-fab extended class="edit-color-bg" (click)="changeRotation()">
                             <mat-icon>add</mat-icon>
                             <span i18n>Set Shift Rotation</span>

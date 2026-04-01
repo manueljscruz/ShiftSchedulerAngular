@@ -118,6 +118,7 @@ import { EmailNotConfirmedDialogComponent } from './modules/home/email-not-confi
 import { PublicProfileComponent } from './modules/public-profile/public-profile.component';
 import { BotToUserDialogComponent } from './modules/entity-workers/bot-to-user-dialog/bot-to-user-dialog.component';
 import { TransferMemberDialogComponent } from './modules/entity-workers/transfer-member-dialog/transfer-member-dialog.component';
+import { ExitEntityDialogComponent } from './modules/entity-workers/exit-entity-dialog/exit-entity-dialog.component';
 import { ImportConfigDialogComponent } from './shared/components/import-config-dialog/import-config-dialog.component';
 import { MatRadioGroup, MatRadioModule } from '@angular/material/radio';
 import { MyInvitationsComponent } from './modules/my-invitations/my-invitations.component';
@@ -202,7 +203,8 @@ import { MyInvitationsComponent } from './modules/my-invitations/my-invitations.
     PublicProfileComponent,
     BotToUserDialogComponent,
     TransferMemberDialogComponent,
-    ImportConfigDialogComponent
+    ImportConfigDialogComponent,
+    ExitEntityDialogComponent
   ],
   imports: [
     BrowserModule,

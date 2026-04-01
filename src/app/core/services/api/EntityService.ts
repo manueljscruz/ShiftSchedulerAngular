@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ACCEPT_INVITATION_URL, ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, CONVERT_BOT_TO_USER_URL, DECLINE_INVITATION_URL, DELETE_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_DASHBOARD_VM_URL, GET_ENTITY_MEMBERS_PAGINATION, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, GET_IMPORT_CANDIDATES_URL, GET_PENDING_INVITATIONS_URL, GET_UMBRELLA_ENTITIES_URL, IMPORT_CONFIG_URL, TRANSFER_COPY_MEMBERS_URL, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL, UPDATE_MEMBER_PERMISSION_URL } from '../../../shared/constants/APIPathsConstants';
+import { ACCEPT_INVITATION_URL, ADD_ENTITY_URL, ADD_NEW_ENTITY_MEMBER_URL, CONVERT_BOT_TO_USER_URL, DECLINE_INVITATION_URL, DELETE_ENTITY_MEMBER_URL, DELETE_ENTITY_URL, GET_ENTITIES_BY_WORKER_URL, GET_ENTITY_DASHBOARD_VM_URL, GET_ENTITY_MEMBERS_PAGINATION, GET_ENTITY_MEMBERS_VM, GET_ENTITY_PROFILE_VM, GET_ENTITY_SKILLS, GET_IMPORT_CANDIDATES_URL, GET_PENDING_INVITATIONS_URL, GET_UMBRELLA_ENTITIES_URL, IMPORT_CONFIG_URL, SET_MEMBER_DATE_TO_EXIT_URL, TRANSFER_COPY_MEMBERS_URL, UPDATE_ENTITY_MEMBER_URL, UPDATE_ENTITY_URL, UPDATE_MEMBER_PERMISSION_URL } from '../../../shared/constants/APIPathsConstants';
 import { ImportCandidatesDTO } from '../../../shared/models/DTOs/Incoming/ImportCandidatesDTO';
 import { ImportConfigDTO } from '../../../shared/models/DTOs/Outgoing/ImportConfigDTO';
 import { TransferMembersDTO } from '../../../shared/models/DTOs/Outgoing/TransferMembersDTO';
@@ -20,6 +20,7 @@ import { ConvertBotToUserDTO } from '../../../shared/models/DTOs/Outgoing/Conver
 import { MemberPagedModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/MemberPagedModelRequestDTO';
 import { UpdateMemberPermissionDTO } from '../../../shared/models/DTOs/Outgoing/UpdateMemberPermissionDTO';
 import { AcceptDeclineInvitationDTO } from '../../../shared/models/DTOs/Outgoing/AcceptDeclineInvitationDTO';
+import { MemberExitDTO } from '../../../shared/models/DTOs/Outgoing/MemberExitDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -419,6 +420,17 @@ export class EntityService {
             response = await this.http.post(IMPORT_CONFIG_URL, dto).toPromise() as BaseResponseModel;
         } catch (error: any) {
             console.error('Error importing config from parent:', error.message);
+            response.message = error.message;
+        }
+        return response;
+    }
+
+    async setMemberDateToExit(dto: MemberExitDTO): Promise<BaseResponseModel> {
+        let response = new BaseResponseModel(false, '', null);
+        try {
+            response = await this.http.post(SET_MEMBER_DATE_TO_EXIT_URL, dto).toPromise() as BaseResponseModel;
+        } catch (error: any) {
+            console.error('Error setting member date to exit:', error.message);
             response.message = error.message;
         }
         return response;

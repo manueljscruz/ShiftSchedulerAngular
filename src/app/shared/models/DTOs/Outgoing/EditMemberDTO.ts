@@ -12,6 +12,7 @@ export class EditMemberDTO{
     worksWeekends: boolean = false;
     multipleShiftAssignments : boolean;
     assignedShifts: ShiftDTO[] = [];
+    dateToExit: string | null = null;
 
     constructor(workerId: string, entityId: string, isBot: boolean, workerName: string, assignedSkills: SkillDTO[], partOfRotation: boolean, worksWeedDays: boolean, worksWeekends: boolean, multipleShiftAssignments : boolean, assignedShifts: ShiftDTO[]){
         this.workerId = workerId;

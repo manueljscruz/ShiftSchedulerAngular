@@ -69,6 +69,19 @@
             </div>
         </ng-container>
 
+        <!-- Exit Date (visible to GM for anyone, or Manager for Viewers/Bots) -->
+        <ng-container *ngIf="canSetDateToExit">
+            <mat-divider style="margin: 16px 0"></mat-divider>
+            <div class="row">
+                <mat-form-field appearance="outline">
+                    <mat-label i18n>Exit Date</mat-label>
+                    <input matInput [matDatepicker]="exitDatePicker" [(ngModel)]="dateToExitValue" [min]="today" name="exit-date">
+                    <mat-datepicker-toggle matSuffix [for]="exitDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #exitDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </ng-container>
+
     </form>
     <div class="actions">
         <button mat-fab extended class="secondary-color-bg" [mat-dialog-close]="false">

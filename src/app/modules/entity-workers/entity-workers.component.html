@@ -31,6 +31,14 @@
             </div>
         </div>
 
+        <!-- Leave Entity (self-exit) — visible to all members -->
+        <div style="margin: 8px 0;">
+            <button mat-fab extended class="warn-color-bg" (click)="onLeaveEntity()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span i18n>Leave Entity</span>
+            </button>
+        </div>
+
         <!-- Selection action bar -->
         <div class="selection-action-bar" *ngIf="isSelectionMode && selectedMembers.length > 0">
             <span>{{ selectedMembers.length }} member(s) selected</span>

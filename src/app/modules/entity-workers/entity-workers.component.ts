@@ -32,6 +32,7 @@ import { AuthService } from '../../core/services/api/AuthService';
 import { BotToUserDialogComponent } from './bot-to-user-dialog/bot-to-user-dialog.component';
 import { MemberPagedModelRequestDTO } from '../../shared/models/DTOs/Outgoing/MemberPagedModelRequestDTO';
 import { TransferMemberDialogComponent } from './transfer-member-dialog/transfer-member-dialog.component';
+import { ExitEntityDialogComponent } from './exit-entity-dialog/exit-entity-dialog.component';
 
 /**
  * Entity Workers Component
@@ -539,6 +540,32 @@ export class EntityWorkersComponent implements OnDestroy {
       } else {
         this.snackManagerService.showFailSnackbar(new SnackbarUIModel(5, result.message));
       }
+    });
+  }
+
+  //#endregion
+
+  //#region On Leave Entity (self-exit)
+
+  onLeaveEntity(): void {
+    if (!this.loggedUser) return;
+
+    const currentMember = this.entityMembersViewModel.entityMembers.data
+      .find(m => m.workerId === this.loggedUser!.userId);
+
+    if (!currentMember) return;
+
+    const dialogRef = this.dialog.open(ExitEntityDialogComponent, {
+      width: '400px',
+      data: {
+        currentEntityId: this.currentEntityId,
+        workerMember: currentMember
+      }
+    });
+
+    dialogRef.componentInstance.onExitConfirmed.subscribe(() => {
+      dialogRef.close();
+      this.loadViewData();
     });
   }
 

@@ -89,6 +89,20 @@ export class EditMemberDialogComponent {
     return this.entityPermissionRoleId === 2;
   }
 
+  dateToExitValue: Date | null = null;
+  today: Date = new Date();
+
+  get canSetDateToExit(): boolean {
+    const GENERAL_MANAGER_ID = 1;
+    const MANAGER_ID = 2;
+    const VIEWER_ID = 3;
+    const me = this.data.currentUserRoleId ?? 0;
+    const target = this.entityWorkerMember.entityPermissionRoleId;
+    const isTargetBot = this.entityWorkerMember.isBot;
+    return me === GENERAL_MANAGER_ID ||
+      (me === MANAGER_ID && (target === VIEWER_ID || isTargetBot));
+  }
+
   /// <summary>
   /// The text to display on the execute action button.
   /// </summary>
@@ -177,7 +191,10 @@ export class EditMemberDialogComponent {
       this.loadingScreenService.changeLoadingState(true);
 
       let editWorkerDTO = new EditMemberDTO(this.entityWorkerMember.workerId, this.currentEntityId, this.entityWorkerMember.isBot, this.nameInput, this.selectedSkills, this.partOfRotation, this.worksWeekDays, this.worksWeekends, this.multipleShiftAssignments, this.selectedShifts);
-      
+      if (this.dateToExitValue) {
+        editWorkerDTO.dateToExit = this.dateToExitValue.toISOString();
+      }
+
       let apiResponse = await this.entityService.updateEntityMember(editWorkerDTO);
 
       this.loadingScreenService.changeLoadingState(false);
