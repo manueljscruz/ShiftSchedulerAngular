@@ -31,8 +31,8 @@
             </div>
         </div>
 
-        <!-- Leave Entity (self-exit) — visible to all members -->
-        <div style="margin: 8px 0;">
+        <!-- Leave Entity (self-exit) — visible to all members once page is loaded -->
+        <div style="margin: 8px 0;" *ngIf="loggedUser && entityMembersViewModel.entityOwnerId">
             <button mat-fab extended class="warn-color-bg" (click)="onLeaveEntity()">
                 <mat-icon>exit_to_app</mat-icon>
                 <span i18n>Leave Entity</span>

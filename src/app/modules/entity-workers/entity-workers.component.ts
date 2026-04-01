@@ -302,9 +302,11 @@ export class EntityWorkersComponent implements OnDestroy {
     let rolesList = this.entityMembersViewModel.entityPermissionRoles;
     let currentEntityId = this.currentEntityId;
 
+    const currentUserRoleId = this.entityMembersViewModel.currentUserPermissionRoleId;
+
     const dialogRef = this.dialog.open(EditMemberDialogComponent, {
       width: '500px',
-      data: { UI_DIALOG_ENTRANCE_DURATION, UI_DIALOG_EXIT_DURATION, editWorker, skillList, currentEntityId, shiftsList, rolesList }
+      data: { UI_DIALOG_ENTRANCE_DURATION, UI_DIALOG_EXIT_DURATION, editWorker, skillList, currentEntityId, shiftsList, rolesList, currentUserRoleId }
     });
     
     dialogRef.componentInstance.onMemberEdited.subscribe((result: BaseResponseModel) => {
@@ -550,16 +552,19 @@ export class EntityWorkersComponent implements OnDestroy {
   onLeaveEntity(): void {
     if (!this.loggedUser) return;
 
-    const currentMember = this.entityMembersViewModel.entityMembers.data
-      .find(m => m.workerId === this.loggedUser!.userId);
-
-    if (!currentMember) return;
+    // Build a minimal member DTO from the logged-in user —
+    // avoids pagination dependency (user may not be on the current page)
+    const selfMember = new EntityWorkerMemberDTO(
+      this.loggedUser.userId,
+      this.loggedUser.userDisplayName ?? '',
+      false, [], false, false, false, false, []
+    );
 
     const dialogRef = this.dialog.open(ExitEntityDialogComponent, {
       width: '400px',
       data: {
         currentEntityId: this.currentEntityId,
-        workerMember: currentMember
+        workerMember: selfMember
       }
     });
 
