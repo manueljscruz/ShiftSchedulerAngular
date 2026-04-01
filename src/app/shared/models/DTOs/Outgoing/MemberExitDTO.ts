@@ -2,7 +2,7 @@ export class MemberExitDTO {
     workerId: string = '';
     entityId: string = '';
     isBot: boolean = false;
-    dateToExit: string = '';
+    dateToExit: string | null = null;
 
     constructor(workerId: string = '', entityId: string = '', isBot: boolean = false) {
         this.workerId = workerId;
