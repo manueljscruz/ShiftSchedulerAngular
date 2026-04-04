@@ -12,154 +12,181 @@
                 <mat-button-toggle checked="true" value="list">List</mat-button-toggle>
             </mat-button-toggle-group>
 
-            <!-- Start Date -->
-            <mat-form-field appearance="outline" class="date-field">
-                <mat-label i18n>Start Date</mat-label>
-                <input matInput [matDatepicker]="startDatePicker" [value]="startDate" (dateChange)="onStartDateChange($event)"> <!-- (change)="onStartDateChange($event)" -->
-                <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #startDatePicker></mat-datepicker>
-            </mat-form-field>
+            <div class="action-group">
+                <mat-form-field appearance="outline" class="date-field">
+                    <mat-label i18n>Start Date</mat-label>
+                    <input matInput [matDatepicker]="startDatePicker" [value]="startDate" (dateChange)="onStartDateChange($event)">
+                    <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                </mat-form-field>
 
-            <!-- End Date -->
+                <mat-form-field appearance="outline" class="date-field">
+                    <mat-label i18n>End Date</mat-label>
+                    <input matInput [matDatepicker]="endDatePicker" [value]="endDate" (dateChange)="onEndDateChange($event)">
+                    <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                </mat-form-field>
 
-            <mat-form-field appearance="outline" class="date-field">
-                <mat-label i18n>End Date</mat-label>
-                <input matInput [matDatepicker]="endDatePicker" [value]="endDate" (dateChange)="onEndDateChange($event)">
-                <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #endDatePicker></mat-datepicker>
-            </mat-form-field>
+                <button mat-fab extended color="primary" (click)="onApplySearch()">
+                    <mat-icon>search</mat-icon>
+                    <span i18n>Search</span>
+                </button>
+            </div>
 
-            <button mat-fab extended color="primary" (click)="exportScheduleToExcel()">
-                <mat-icon>import_export</mat-icon>
-                <span i18n>Export</span>
-            </button>
-
-            <button mat-fab extended color="primary" (click)="onApplySearch()">
-                <mat-icon>search</mat-icon>
-                <span i18n>Search</span>
-            </button>
-            <button *ngIf="isCurrentUserEntityOwner" mat-fab extended class="delete-color-bg" (click)="onDeleteSchedule()">
-                <mat-icon>delete</mat-icon>
-                <span i18n>Delete Schedule</span>
-            </button>
-            <button *ngIf="isCurrentUserEntityOwner" mat-fab extended color="primary" (click)="onCreateSchedule()">
-                <mat-icon>build</mat-icon>
-                <span i18n>Create Schedule</span>
-            </button>
+            <div class="action-group">
+                <button mat-fab extended color="primary" (click)="exportScheduleToExcel()">
+                    <mat-icon>import_export</mat-icon>
+                    <span i18n>Export</span>
+                </button>
+                <button *ngIf="isCurrentUserEntityOwner" mat-fab extended color="primary" (click)="onCreateSchedule()">
+                    <mat-icon>build</mat-icon>
+                    <span i18n>Create Schedule</span>
+                </button>
+                <button *ngIf="isCurrentUserEntityOwner" mat-icon-button color="warn" (click)="onDeleteSchedule()" matTooltip="Delete Schedule">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
         </div>
     </div>
+
     <mat-divider></mat-divider>
+
+    <div class="rotation-banner" *ngIf="isCycleTracking">
+        <mat-icon>loop</mat-icon>
+        <span>Rotation tracking active for <strong>{{ workerCycleTracking.workerName }}</strong> — use the ⋮ row menu to end or cancel.</span>
+        <button mat-button (click)="onCancelCycleOp()">Cancel</button>
+    </div>
+
     <div class="elevated-card-container-content">
         <div>
-            <!-- *ngSwitchCase="CalendarView.Month" -->
             <mwl-calendar-month-view *ngIf="isCalendarView"
                 [viewDate]="viewDate"
                 [events]="events"
                 (eventClicked)="showEvent($event)"
-                (dayClicked)="dayClicked($event)"
-            >
+                (dayClicked)="dayClicked($event)">
             </mwl-calendar-month-view>
 
-            
             <div id="schedule-list" *ngIf="isListView">
                 <table mat-table [dataSource]="scheduleList" class="mat-elevation-z8">
-                
+
                     <ng-container *ngFor="let column of calendarListColumns" [matColumnDef]="column">
-                        <th mat-header-cell *matHeaderCellDef> {{ column  }} </th>
-                        <td mat-cell *matCellDef="let element" [ngStyle]="getCellStyle(column, element[column])" > <!-- (click)="onScheduleListCellClick(element, column)" -->
-                            
-                            <!-- If its a manager/owner that is using this view -->
-                            <ng-container *ngIf="isCurrentUserEntityOwner">
 
-                                <!-- If the column is not the employee column, allow for actions -->
-                                <ng-container *ngIf="column != EMPLOYEE_COLUMN">
-                                    <div [matMenuTriggerFor]="menu">
-                                        <span>
-                                            {{ element[column]?.alias || element[column] }}
-                                        </span>
-                                    </div>
-                                </ng-container>
+                        <!-- Header cell -->
+                        <th mat-header-cell *matHeaderCellDef
+                            [class.today-col]="isDateColumn(column) && isToday(column)"
+                            [class.weekend-col]="isDateColumn(column) && isWeekend(column)">
+                            <ng-container *ngIf="column === EMPLOYEE_COLUMN">Employee</ng-container>
+                            <ng-container *ngIf="column === TIME_COLUMN">Hours</ng-container>
+                            <ng-container *ngIf="column === ACTIONS_COLUMN"></ng-container>
+                            <ng-container *ngIf="isDateColumn(column)">{{ column }}</ng-container>
+                        </th>
 
-                                <!-- If the column is the employee column, show just text -->
-                                <ng-container *ngIf="column === EMPLOYEE_COLUMN">
-                                    <span>
-                                        {{ element[column]?.alias || element[column] }}
-                                    </span>
-                                </ng-container>
-                                
-                                <!-- Action Menu for the schedule entry-->
-                                <mat-menu #menu="matMenu">
-                                    <button mat-menu-item (click)="onOpenEntry(element, column)"> <!-- .id -->
-                                        <mat-icon>{{SCHEDULE_ICON}}</mat-icon>
-                                        <span>View Day Schedule</span>
-                                    </button>
-                                    <button mat-menu-item (click)="onManageDaySchedule(element.id, column)">
-                                        <mat-icon>{{MAT_EDIT_ICON}}</mat-icon>
-                                        <span>Manage Day Schedule</span>
-                                    </button>
-                                    <mat-divider></mat-divider>
-                                    <button mat-menu-item [matMenuTriggerFor]="shiftMenu">
-                                        <mat-icon>{{SCHEDULE_ICON}}</mat-icon>
-                                        <span>Assign Shift</span>
+                        <!-- Data cell -->
+                        <td mat-cell *matCellDef="let element"
+                            [class.today-col]="isDateColumn(column) && isToday(column)"
+                            [class.weekend-col]="isDateColumn(column) && isWeekend(column)">
+
+                            <!-- Employee column -->
+                            <ng-container *ngIf="column === EMPLOYEE_COLUMN">
+                                <span class="employee-name">{{ element[column] }}</span>
+                            </ng-container>
+
+                            <!-- Hours column -->
+                            <ng-container *ngIf="column === TIME_COLUMN">
+                                <span class="hours-value">{{ element[column] }} hrs</span>
+                            </ng-container>
+
+                            <!-- Row actions column (owners only) -->
+                            <ng-container *ngIf="column === ACTIONS_COLUMN && isCurrentUserEntityOwner">
+                                <button mat-icon-button [matMenuTriggerFor]="rowMenu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #rowMenu="matMenu">
+                                    <button mat-menu-item (click)="onClearEmployeeAssignments(element.id, '')">
+                                        <mat-icon>{{ CLOSE_ICON }}</mat-icon>
+                                        <span>Clear All Assignments</span>
                                     </button>
                                     <ng-container *ngIf="element.isPartOfRotation">
-                                        <button mat-menu-item (click)="onStartRotationCycle(element.id, column)" [disabled]="isCycleTracking">
-                                            <mat-icon>{{MAT_EDIT_ICON}}</mat-icon>
+                                        <mat-divider></mat-divider>
+                                        <button mat-menu-item (click)="openStartRotationDialog(element)" [disabled]="isCycleTracking">
+                                            <mat-icon>{{ SWAP_ICON }}</mat-icon>
                                             <span>Start Rotation Cycle</span>
                                         </button>
-                                        <button mat-menu-item (click)="onCancelCycleOp()" [disabled]="!isCycleTracking">
-                                            <mat-icon>{{CANCEL_ICON}}</mat-icon>
-                                            <span>Cancel Rotation</span>
-                                        </button>
-                                        <button mat-menu-item (click)="onEndRotationCycle(element.id, column)" [disabled]="!isCycleTracking">
-                                            <mat-icon>{{DONE_ICON}}</mat-icon>
+                                        <button mat-menu-item (click)="openEndRotationDialog()"
+                                                [disabled]="!isCycleTracking || workerCycleTracking.workerId !== element.id">
+                                            <mat-icon>{{ DONE_ICON }}</mat-icon>
                                             <span>End Rotation Cycle</span>
                                         </button>
-                                    </ng-container> 
-                                    <button mat-menu-item (click)="onClearDailyEmployeeAssignments(element.id, column)">
-                                        <mat-icon>{{CLOSE_ICON}}</mat-icon>
-                                        <span>Clear Daily Assignments</span>
-                                    </button>
-                                    <button mat-menu-item (click)="onClearEmployeeAssignments(element.id, column)">
-                                        <mat-icon>{{CLOSE_ICON}}</mat-icon>
-                                        <span>Clear All Employee Assignments</span>
-                                    </button>
-                                </mat-menu>
-
-                                <mat-menu #shiftMenu="matMenu">
-                                    <ng-container *ngFor="let option of scheduleViewModel.shifts">
-                                        <button mat-menu-item (click)="assignShiftToEmployee(element.id, column, option.shiftId)">
-                                            <mat-icon>{{ SCHEDULE_ICON }}</mat-icon>
-                                            <span>{{ option.shiftName }}</span>
+                                        <button mat-menu-item (click)="onCancelCycleOp()"
+                                                [disabled]="!isCycleTracking || workerCycleTracking.workerId !== element.id">
+                                            <mat-icon>{{ CANCEL_ICON }}</mat-icon>
+                                            <span>Cancel Rotation</span>
                                         </button>
                                     </ng-container>
                                 </mat-menu>
                             </ng-container>
 
-                            <!-- If its a regular user that is using this view -->
-                            <ng-container *ngIf="!isCurrentUserEntityOwner">
-                                <ng-container *ngIf="loggedUser?.userId === element.id">
-                                    <div [matMenuTriggerFor]="userMenu">
-                                        <span>
-                                            {{ element[column]?.alias || element[column] }}
+                            <!-- Date column — Owner view -->
+                            <ng-container *ngIf="isDateColumn(column) && isCurrentUserEntityOwner">
+                                <div class="cell-wrapper">
+                                    <ng-container *ngIf="element[column]?.alias; else emptyOwnerCell">
+                                        <span class="shift-chip" [style.background-color]="element[column].color">
+                                            {{ element[column].alias }}
                                         </span>
-                                    </div>
-                                </ng-container>
-                                <ng-container *ngIf="loggedUser?.userId !== element.id">
-                                    <span>
-                                        {{ element[column]?.alias || element[column] }}
-                                    </span>
-                                </ng-container>
-
-                                <!-- Action Menu for the schedule entry-->
-                                <mat-menu #userMenu="matMenu">
-                                    <button mat-menu-item (click)="onOpenEntry(element.id, column)">
-                                        <mat-icon>{{SCHEDULE_ICON}}</mat-icon>
-                                        <span>View Entry</span>
-                                    </button>
-                                </mat-menu>
-
+                                        <div class="cell-actions">
+                                            <button mat-icon-button (click)="onOpenEntry(element, column)" matTooltip="View">
+                                                <mat-icon>visibility</mat-icon>
+                                            </button>
+                                            <button mat-icon-button (click)="onManageDaySchedule(element.id, column)" matTooltip="Manage">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                            <button mat-icon-button (click)="onClearDailyEmployeeAssignments(element.id, column)" matTooltip="Clear day">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                        </div>
+                                    </ng-container>
+                                    <ng-template #emptyOwnerCell>
+                                        <div class="empty-cell">
+                                            <button mat-icon-button [matMenuTriggerFor]="quickAssignMenu" class="add-btn" matTooltip="Assign shift">
+                                                <mat-icon>add</mat-icon>
+                                            </button>
+                                        </div>
+                                        <mat-menu #quickAssignMenu="matMenu">
+                                            <button mat-menu-item *ngFor="let shift of scheduleViewModel.shifts"
+                                                (click)="assignShiftToEmployee(element.id, column, shift.shiftId)">
+                                                <mat-icon>{{ SCHEDULE_ICON }}</mat-icon>
+                                                <span>{{ shift.shiftName }}</span>
+                                            </button>
+                                        </mat-menu>
+                                    </ng-template>
+                                </div>
                             </ng-container>
+
+                            <!-- Date column — Regular user view -->
+                            <ng-container *ngIf="isDateColumn(column) && !isCurrentUserEntityOwner">
+                                <div class="cell-wrapper">
+                                    <ng-container *ngIf="element[column]?.alias">
+                                        <ng-container *ngIf="loggedUser?.userId === element.id">
+                                            <span class="shift-chip clickable" [style.background-color]="element[column].color"
+                                                  [matMenuTriggerFor]="userMenu">
+                                                {{ element[column].alias }}
+                                            </span>
+                                            <mat-menu #userMenu="matMenu">
+                                                <button mat-menu-item (click)="onOpenEntry(element, column)">
+                                                    <mat-icon>{{ SCHEDULE_ICON }}</mat-icon>
+                                                    <span>View Entry</span>
+                                                </button>
+                                            </mat-menu>
+                                        </ng-container>
+                                        <ng-container *ngIf="loggedUser?.userId !== element.id">
+                                            <span class="shift-chip" [style.background-color]="element[column].color">
+                                                {{ element[column].alias }}
+                                            </span>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+
                         </td>
                     </ng-container>
 
@@ -167,8 +194,20 @@
                     <tr mat-row *matRowDef="let row; columns: calendarListColumns;"></tr>
                 </table>
 
+                <div *ngIf="scheduleList?.length === 0" class="no-data-message">
+                    <ng-container *ngIf="scheduleViewModel.entityWorkerMembers.length === 0">
+                        <mat-icon>group</mat-icon>
+                        <p i18n>No members found in this entity.</p>
+                        <p i18n>Add members before creating a schedule.</p>
+                    </ng-container>
+                    <ng-container *ngIf="scheduleViewModel.entityWorkerMembers.length > 0">
+                        <mat-icon>calendar_today</mat-icon>
+                        <p i18n>No schedule for this period.</p>
+                        <p *ngIf="isCurrentUserEntityOwner" i18n>Click "Create Schedule" to generate shift assignments.</p>
+                    </ng-container>
+                </div>
             </div>
-            
+
         </div>
     </div>
 </div>

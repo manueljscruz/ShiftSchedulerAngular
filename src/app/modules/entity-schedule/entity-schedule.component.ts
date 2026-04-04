@@ -38,6 +38,7 @@ import * as htmlToImage from 'html-to-image';
 import * as XLSX from 'xlsx';
 import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 import { AuthService } from '../../core/services/api/AuthService';
+import { RotationDatePickerDialogComponent } from './rotation-date-picker-dialog/rotation-date-picker-dialog.component';
 
 /**
  * Entity Schedule Component
@@ -93,6 +94,7 @@ export class EntityScheduleComponent implements OnDestroy {
 
   EMPLOYEE_COLUMN: string = 'employee';
   TIME_COLUMN: string = 'time';
+  ACTIONS_COLUMN: string = 'actions';
   SCHEDULE_ICON: string = SCHEDULE_ICON;
   SWAP_ICON: string = SWAP_ICON;
   MAT_EDIT_ICON: string = MAT_EDIT_ICON;
@@ -488,6 +490,11 @@ export class EntityScheduleComponent implements OnDestroy {
     // Add the time column
     this.calendarListColumns.push(this.TIME_COLUMN);
 
+    // Add the row-actions column (owners only — column always added, content hidden for non-owners)
+    if (this.isCurrentUserEntityOwner) {
+      this.calendarListColumns.push(this.ACTIONS_COLUMN);
+    }
+
     // For each worker member, create a new object with the worker name, the date and time columns
     this.scheduleViewModel.entityWorkerMembers.forEach((workerMember) => {
       let workerData = {
@@ -524,14 +531,25 @@ export class EntityScheduleComponent implements OnDestroy {
                     color = scheduleEntry.shiftDTO.shiftColorHex || '#FFFFFF';
                   }
                   
-                  // Assuming shiftDuration is a Date object representing the duration, calculate hours
-                  let duration : Date = scheduleEntry.shiftDTO.shiftDuration;
+                  // Calculate hours from shiftDuration — may be a Date (after createSchedule mapping),
+                  // a "HH:MM" / "HH:MM:SS" string (from normal API load), or a number.
+                  let duration = scheduleEntry.shiftDTO.shiftDuration.toString();
                   let hours = 0;
+
+                  let parts = duration.split(':').map(Number);
+                  hours = (parts[0] || 0) + (parts[1] || 0) / 60;
+                  
+                  /*
                   if (duration instanceof Date) {
                     hours = duration.getUTCHours() + duration.getUTCMinutes() / 60;
+                  } else if (typeof duration === 'string' && duration.includes(':')) {
+                    const parts = duration.split(':').map(Number);
+                    hours = (parts[0] || 0) + (parts[1] || 0) / 60;
                   } else if (typeof duration === 'number') {
                     hours = duration;
                   }
+                  */
+                  
 
                   // Add the hours to the worker data
                   workerData.time += hours;
@@ -541,13 +559,9 @@ export class EntityScheduleComponent implements OnDestroy {
           });
         }
 
-        if (!assignment.trim()) {
-          assignment = 'NA';
-        }
-
-        workerData = {... workerData, 
+        workerData = {... workerData,
           [date]: {
-            alias: assignment.trim() || 'NA',
+            alias: assignment.trim(),
             color: color
           }
         };
@@ -555,6 +569,7 @@ export class EntityScheduleComponent implements OnDestroy {
         dateMonitor.setDate(dateMonitor.getDate() + 1);
       }
 
+      workerData.time = Math.round(workerData.time * 10) / 10;
       this.scheduleList = [...this.scheduleList, workerData];
     });
 
@@ -562,22 +577,47 @@ export class EntityScheduleComponent implements OnDestroy {
 
   //#endregion
 
-  //#region Get Cell Style
+  //#region Column type helpers
 
-  getCellStyle(column: string, cellValue: any): { [klass: string]: any } {
-    // Skip special columns
-    if (column === this.EMPLOYEE_COLUMN || column === this.TIME_COLUMN) {
-      return {};
-    }
+  isDateColumn(column: string): boolean {
+    return column !== this.EMPLOYEE_COLUMN && column !== this.TIME_COLUMN && column !== this.ACTIONS_COLUMN;
+  }
 
-    // If cellValue is an object with a color, use it
-    if (cellValue && typeof cellValue === 'object' && cellValue.color) {
-      return {
-        'background-color': cellValue.color
-      };
-    }
+  isToday(dateStr: string): boolean {
+    return dateStr === this.formatDateString(new Date().toISOString());
+  }
 
-    return {};
+  isWeekend(dateStr: string): boolean {
+    const day = new Date(dateStr + 'T00:00:00').getDay();
+    return day === 0 || day === 6;
+  }
+
+  //#endregion
+
+  //#region Rotation dialog openers
+
+  openStartRotationDialog(element: any): void {
+    const dialogRef = this.dialog.open(RotationDatePickerDialogComponent, {
+      width: '350px',
+      data: { title: 'Select Rotation Start Date', minDate: this.startDate, maxDate: this.endDate }
+    });
+    dialogRef.afterClosed().subscribe((selectedDate: Date | undefined) => {
+      if (selectedDate) {
+        this.onStartRotationCycle(element.id, selectedDate.toISOString());
+      }
+    });
+  }
+
+  openEndRotationDialog(): void {
+    const dialogRef = this.dialog.open(RotationDatePickerDialogComponent, {
+      width: '350px',
+      data: { title: 'Select Rotation End Date', minDate: this.cycleStartDate, maxDate: this.endDate }
+    });
+    dialogRef.afterClosed().subscribe((selectedDate: Date | undefined) => {
+      if (selectedDate) {
+        this.onEndRotationCycle(this.workerCycleTracking.workerId, selectedDate.toISOString());
+      }
+    });
   }
 
   //#endregion

@@ -82,6 +82,12 @@
                 <mat-header-row *matHeaderRowDef="['ShiftName', 'ShiftAlias', 'ShiftDescription', 'ShiftStartHour', 'ShiftDuration', 'Actions']"></mat-header-row>
                 <mat-row *matRowDef="let shift; columns: ['ShiftName', 'ShiftAlias', 'ShiftDescription', 'ShiftStartHour', 'ShiftDuration', 'Actions']"></mat-row>
             </mat-table>
+
+            <div *ngIf="ShiftViewModel.shifts.length === 0" class="no-data-message">
+                <mat-icon>schedule</mat-icon>
+                <p i18n>No shifts defined yet.</p>
+                <p *ngIf="isCurrentUserEntityOwner" i18n>Click "Add Shift" to create your first shift pattern.</p>
+            </div>
             <!-- End of Shift Table -->
 
             <mat-divider id="shift-table-rotation-separator"></mat-divider>

@@ -146,6 +146,12 @@
                         [pageIndex]="entityMembersViewModel.entityMembers.currentPage-1"
                         aria-label="Select page">
                     </mat-paginator>
+
+                <div *ngIf="entityMembersViewModel.entityMembers.data.length === 0" class="no-data-message">
+                    <mat-icon>group</mat-icon>
+                    <p i18n>No members yet.</p>
+                    <p *ngIf="canManageMembers" i18n>Click "Add Member" to invite your first team member.</p>
+                </div>
             </div>
         </div>
     </div>

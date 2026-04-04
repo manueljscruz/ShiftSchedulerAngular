@@ -1,23 +1,246 @@
-<div class="settings-container elevated-card-container primary-card-container-height">
-    <div class="wip-content">
-        <mat-icon class="wip-icon">construction</mat-icon>
-        <h1 class="wip-title" i18n>Settings</h1>
-        <h2 class="wip-subtitle" i18n>Work in Progress</h2>
-        <p class="wip-message" i18n>
-            This feature is currently under development.
-            <br/>
-            Check back soon for application settings and preferences!
-        </p>
-        <mat-divider></mat-divider>
-        <div class="coming-soon">
-            <h3 i18n>Coming Soon:</h3>
-            <ul>
-                <li i18n>Language Preferences</li>
-                <li i18n>Notification Settings</li>
-                <li i18n>Theme Customization</li>
-                <li i18n>Account Management</li>
-                <li i18n>Privacy Controls</li>
-            </ul>
-        </div>
+<div class="elevated-card-container primary-card-container-height fade-in">
+
+    <div class="header-and-actions">
+        <h1 i18n>Settings</h1>
     </div>
+
+    <mat-divider></mat-divider>
+
+    <mat-tab-group animationDuration="200ms" class="settings-tabs">
+
+        <!-- ═══════════════════════════════════════════════════════ PREFERENCES -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">tune</mat-icon>
+                <span i18n>Preferences</span>
+            </ng-template>
+
+            <div class="tab-content">
+
+                <!-- Language -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <mat-icon>language</mat-icon>
+                        <div>
+                            <h2 i18n>Language</h2>
+                            <p i18n>Choose the display language for the application.</p>
+                        </div>
+                    </div>
+
+                    <div class="section-body">
+                        <mat-form-field appearance="outline" class="settings-field">
+                            <mat-label i18n>Language</mat-label>
+                            <mat-select [(ngModel)]="selectedLanguageCode">
+                                <mat-option *ngFor="let lang of languages" [value]="lang.code">
+                                    {{ lang.nativeLabel }} &nbsp;
+                                    <span class="lang-sub">({{ lang.label }})</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <div class="info-note" *ngIf="selectedLanguageCode !== currentLanguage.code">
+                            <mat-icon>info</mat-icon>
+                            <span i18n>The page will reload to apply the new language.</span>
+                        </div>
+
+                        <div class="section-actions">
+                            <button mat-flat-button color="primary"
+                                    [disabled]="selectedLanguageCode === currentLanguage.code"
+                                    (click)="applyLanguage()" i18n>
+                                Apply Language
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <mat-divider></mat-divider>
+
+                <!-- Timezone -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <mat-icon>schedule</mat-icon>
+                        <div>
+                            <h2 i18n>Timezone</h2>
+                            <p i18n>Controls how dates and times are displayed throughout the app.</p>
+                        </div>
+                    </div>
+
+                    <div class="section-body">
+                        <mat-form-field appearance="outline" class="settings-field">
+                            <mat-label i18n>Timezone</mat-label>
+                            <input matInput
+                                   [(ngModel)]="selectedTimezone"
+                                   [matAutocomplete]="tzAuto"
+                                   (ngModelChange)="timezoneFilter = $event"
+                                   placeholder="Search timezone…">
+                            <mat-autocomplete #tzAuto="matAutocomplete">
+                                <mat-option *ngFor="let tz of filteredTimezones" [value]="tz">
+                                    {{ tz }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+
+                        <div class="section-actions">
+                            <button mat-flat-button color="primary" (click)="saveTimezone()" i18n>
+                                Save Timezone
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </mat-tab>
+
+        <!-- ═══════════════════════════════════════════════════════ NOTIFICATIONS -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">notifications</mat-icon>
+                <span i18n>Notifications</span>
+            </ng-template>
+
+            <div class="tab-content">
+                <div class="settings-section">
+                    <div class="section-header">
+                        <mat-icon>email</mat-icon>
+                        <div>
+                            <h2 i18n>Email Notifications</h2>
+                            <p i18n>Choose which events trigger an email notification.</p>
+                        </div>
+                    </div>
+
+                    <div class="section-body">
+                        <div class="notification-list">
+
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <span class="notification-title" i18n>Entity invitations</span>
+                                    <span class="notification-desc" i18n>
+                                        Receive an email when someone invites you to join an entity.
+                                    </span>
+                                </div>
+                                <mat-checkbox [(ngModel)]="notifications.emailOnInvitation" color="primary">
+                                </mat-checkbox>
+                            </div>
+
+                            <mat-divider></mat-divider>
+
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <span class="notification-title" i18n>Absence decisions</span>
+                                    <span class="notification-desc" i18n>
+                                        Receive an email when an owner approves or declines your absence request.
+                                    </span>
+                                </div>
+                                <mat-checkbox [(ngModel)]="notifications.emailOnAbsenceDecision" color="primary">
+                                </mat-checkbox>
+                            </div>
+
+                            <mat-divider></mat-divider>
+
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <span class="notification-title" i18n>Schedule published</span>
+                                    <span class="notification-desc" i18n>
+                                        Receive an email when a new schedule is created for your entity.
+                                    </span>
+                                </div>
+                                <mat-checkbox [(ngModel)]="notifications.emailOnSchedulePublished" color="primary">
+                                </mat-checkbox>
+                            </div>
+
+                        </div>
+
+                        <div class="section-actions">
+                            <button mat-flat-button color="primary" (click)="saveNotifications()" i18n>
+                                Save Preferences
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+
+        <!-- ═══════════════════════════════════════════════════════ SECURITY -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">lock</mat-icon>
+                <span i18n>Security</span>
+            </ng-template>
+
+            <div class="tab-content">
+                <div class="settings-section">
+                    <div class="section-header">
+                        <mat-icon>key</mat-icon>
+                        <div>
+                            <h2 i18n>Change Password</h2>
+                            <p i18n>Update your account password. You will remain logged in after changing it.</p>
+                        </div>
+                    </div>
+
+                    <div class="section-body">
+
+                        <!-- Current Password -->
+                        <mat-form-field appearance="outline" class="settings-field">
+                            <mat-label i18n>Current Password</mat-label>
+                            <input matInput
+                                   [type]="showCurrentPassword ? 'text' : 'password'"
+                                   [(ngModel)]="currentPassword"
+                                   name="currentPassword"
+                                   autocomplete="current-password">
+                            <button mat-icon-button matSuffix type="button"
+                                    (click)="showCurrentPassword = !showCurrentPassword"
+                                    [attr.aria-label]="'Toggle current password visibility'">
+                                <mat-icon>{{ showCurrentPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                            </button>
+                        </mat-form-field>
+
+                        <!-- New Password -->
+                        <mat-form-field appearance="outline" class="settings-field">
+                            <mat-label i18n>New Password</mat-label>
+                            <input matInput
+                                   [type]="showNewPassword ? 'text' : 'password'"
+                                   [(ngModel)]="newPassword"
+                                   name="newPassword"
+                                   autocomplete="new-password">
+                            <button mat-icon-button matSuffix type="button"
+                                    (click)="showNewPassword = !showNewPassword"
+                                    [attr.aria-label]="'Toggle new password visibility'">
+                                <mat-icon>{{ showNewPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                            </button>
+                            <mat-hint i18n>Minimum 6 characters</mat-hint>
+                        </mat-form-field>
+
+                        <!-- Confirm New Password -->
+                        <mat-form-field appearance="outline" class="settings-field">
+                            <mat-label i18n>Confirm New Password</mat-label>
+                            <input matInput
+                                   [type]="showConfirmPassword ? 'text' : 'password'"
+                                   [(ngModel)]="confirmPassword"
+                                   name="confirmPassword"
+                                   autocomplete="new-password">
+                            <button mat-icon-button matSuffix type="button"
+                                    (click)="showConfirmPassword = !showConfirmPassword"
+                                    [attr.aria-label]="'Toggle confirm password visibility'">
+                                <mat-icon>{{ showConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="confirmPassword && newPassword !== confirmPassword" i18n>
+                                Passwords do not match.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div class="section-actions">
+                            <button mat-flat-button color="primary"
+                                    [disabled]="!currentPassword || !newPassword || !confirmPassword"
+                                    (click)="changePassword()" i18n>
+                                Change Password
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+
+    </mat-tab-group>
+
 </div>

@@ -3,7 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap, filter, first } from 'rxjs';
 import { LoginDTO } from '../../../shared/models/DTOs/Outgoing/LoginDTO';
-import { LOGIN_URL, LOGOUT_URL, REFRESH_TOKEN_URL, FORGOT_PASSWORD_URL, RESET_PASSWORD_URL, CONFIRM_EMAIL_URL, RESEND_CONFIRMATION_EMAIL_URL } from '../../../shared/constants/APIPathsConstants';
+import { LOGIN_URL, LOGOUT_URL, REFRESH_TOKEN_URL, FORGOT_PASSWORD_URL, RESET_PASSWORD_URL, CONFIRM_EMAIL_URL, RESEND_CONFIRMATION_EMAIL_URL, CHANGE_PASSWORD_URL } from '../../../shared/constants/APIPathsConstants';
 import { LoginResponseDTO } from '../../../shared/models/DTOs/Incoming/LoginResponseDTO';
 import { UserDTO } from '../../../shared/models/DTOs/Incoming/UserDTO';
 import { BaseResponseModel } from '../../../shared/models/baseResponseModel';
@@ -11,6 +11,7 @@ import { ForgotPasswordRequestDTO } from '../../../shared/models/DTOs/Outgoing/F
 import { ResetPasswordRequestDTO } from '../../../shared/models/DTOs/Outgoing/ResetPasswordRequestDTO';
 import { ConfirmEmailRequestDTO } from '../../../shared/models/DTOs/Outgoing/ConfirmEmailRequestDTO';
 import { ResendConfirmationEmailDTO } from '../../../shared/models/DTOs/Outgoing/ResendConfirmationEmailDTO';
+import { ChangePasswordRequestDTO } from '../../../shared/models/DTOs/Outgoing/ChangePasswordRequestDTO';
 import { response } from 'express';
 
 @Injectable({
@@ -194,5 +195,16 @@ export class AuthService {
     resendConfirmationEmail(email: string): Observable<BaseResponseModel> {
         const requestDTO = new ResendConfirmationEmailDTO(email);
         return this.http.post<BaseResponseModel>(RESEND_CONFIRMATION_EMAIL_URL, requestDTO);
+    }
+
+    /**
+     * Change password using current password (requires auth)
+     */
+    async changePassword(requestDTO: ChangePasswordRequestDTO): Promise<any> {
+        try {
+            return await this.http.post(CHANGE_PASSWORD_URL, requestDTO, { withCredentials: true }).toPromise();
+        } catch (error: any) {
+            return { result: false, success: false, message: error?.error ?? 'An error occurred while changing your password.' };
+        }
     }
 }

@@ -178,6 +178,12 @@
                         aria-label="Select page">
                     </mat-paginator>
 
+                <div *ngIf="entityWorkerAbsences.data.length === 0" class="no-data-message">
+                    <mat-icon>event_available</mat-icon>
+                    <p i18n>No absences recorded yet.</p>
+                    <p i18n>Click "Add Absence" to submit a time-off request.</p>
+                </div>
+
             </div>
         </div>
     </div>

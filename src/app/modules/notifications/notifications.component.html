@@ -1,0 +1,64 @@
+<div id="notifications">
+
+    <!-- Header -->
+    <div class="page-header">
+        <h1 i18n>Notifications</h1>
+        <button mat-raised-button
+                color="primary"
+                [disabled]="!hasUnread"
+                (click)="markAllAsRead()">
+            <mat-icon>done_all</mat-icon>
+            <span i18n>Mark All Read</span>
+        </button>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="loading-state">
+        <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+    </div>
+
+    <!-- Empty state -->
+    <div *ngIf="!isLoading && notifications.length === 0" class="empty-state">
+        <mat-icon>notifications_none</mat-icon>
+        <p i18n>No notifications yet.</p>
+        <p i18n>You will be notified about invitations, absences, and schedule assignments here.</p>
+    </div>
+
+    <!-- Notifications list -->
+    <div class="notifications-list" *ngIf="!isLoading && notifications.length > 0">
+        <mat-card class="notification-card"
+                  *ngFor="let notification of notifications"
+                  [class.unread]="!notification.isRead">
+            <mat-card-content>
+                <div class="notification-row">
+                    <div class="notification-indicator" *ngIf="!notification.isRead"></div>
+                    <div class="notification-body">
+                        <p class="notification-message" [class.bold]="!notification.isRead">
+                            {{ notification.message }}
+                        </p>
+                        <span class="notification-date">{{ formatDate(notification.createdAt) }}</span>
+                    </div>
+                    <div class="notification-actions">
+                        <button mat-icon-button
+                                *ngIf="!notification.isRead"
+                                matTooltip="Mark as read"
+                                (click)="markAsRead(notification)">
+                            <mat-icon>mark_email_read</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- Paginator -->
+    <mat-paginator *ngIf="notifications.length > 0"
+                   [length]="totalCount"
+                   [pageSize]="pageSize"
+                   [pageIndex]="pageIndex"
+                   [pageSizeOptions]="[10, 20, 50]"
+                   (page)="onPageChange($event)"
+                   showFirstLastButtons>
+    </mat-paginator>
+
+</div>

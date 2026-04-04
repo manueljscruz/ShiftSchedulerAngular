@@ -22,6 +22,7 @@ export const ENTITY_HOLIDAYS_ROUTE: string = "/dashboard/entity-holidays/:entity
 export const ENTITY_ABSENCES_ROUTE: string = "/dashboard/entity-absences/:entityId";
 export const PUBLIC_PROFILE_ROUTE: string = "/dashboard/view/:type/:id";
 export const MY_INVITATIONS_ROUTE: string = "/dashboard/my-invitations";
+export const NOTIFICATIONS_ROUTE: string = "/dashboard/notifications";
 
 // HELP DOCS ROUTE
 export const HELPDOCS_INTRO_ROUTE: string = "intro";

@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { SEARCH_RESULTS_ROUTE } from '../../constants/ViewRoutesConstants';
+import { SEARCH_RESULTS_ROUTE, NOTIFICATIONS_ROUTE } from '../../constants/ViewRoutesConstants';
+import { NotificationService } from '../../../core/services/api/NotificationService';
 
 /**
  * App Header Component
@@ -28,8 +29,9 @@ export class AppHeaderComponent {
 
   //#region Constants
 
-  // Route for search results page
+  // Route constants
   SEARCH_RESULTS_ROUTE = SEARCH_RESULTS_ROUTE;
+  NOTIFICATIONS_ROUTE = NOTIFICATIONS_ROUTE;
 
   //#endregion
 
@@ -63,7 +65,8 @@ export class AppHeaderComponent {
   //#region Constructor
 
   constructor(private elRef: ElementRef,
-    private router: Router
+    private router: Router,
+    public notificationService: NotificationService
   ) {
 
   }
@@ -78,6 +81,10 @@ export class AppHeaderComponent {
    */
   onMenuButtonClick() {
     this.menuButtonClicked.emit();
+  }
+
+  goToNotifications() {
+    this.router.navigate([NOTIFICATIONS_ROUTE]);
   }
 
   //#endregion

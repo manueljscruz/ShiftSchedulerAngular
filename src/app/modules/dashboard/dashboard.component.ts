@@ -11,6 +11,7 @@ import { EntityService } from '../../core/services/api/EntityService';
 import { SIDEBAR_ITEM_GROUP_ID } from '../../shared/constants/UiContants';
 import { SidebarNavigationService } from '../../core/services/ui/sidebar-navigation.service';
 import { AuthService } from '../../core/services/api/AuthService';
+import { NotificationService } from '../../core/services/api/NotificationService';
 
 @Component({
   selector: 'app-dashboard',
@@ -46,10 +47,14 @@ export class DashboardComponent implements OnDestroy {
   constructor(private router: Router,
     private entityService: EntityService,
     private sidebarNavigationService: SidebarNavigationService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private notificationService: NotificationService) {
   }
 
   async ngOnInit() {
+    // Start notification polling
+    this.notificationService.startPolling();
+
     // Initialize mobile detection
     this.checkScreenSize();
 
@@ -88,6 +93,7 @@ export class DashboardComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
+    this.notificationService.stopPolling();
     this.destroy$.next();
     this.destroy$.complete();
   }

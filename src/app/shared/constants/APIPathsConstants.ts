@@ -17,6 +17,7 @@ export const RESET_PASSWORD_URL : string = BASE_API_URL + "Auth/reset-password";
 export const REGISTER_URL : string = BASE_API_URL + "user/register";
 export const CONFIRM_EMAIL_URL : string = BASE_API_URL + "user/confirm-email";
 export const RESEND_CONFIRMATION_EMAIL_URL : string = BASE_API_URL + "Auth/resend-confirmation-email";
+export const CHANGE_PASSWORD_URL : string = BASE_API_URL + "Auth/change-password";
 export const UPDATE_USER_URL : string = BASE_API_URL + "user/update";
 
 // EntityType
@@ -114,3 +115,10 @@ export const GET_ENTITY_HOLIDAYS_PAGINATION: string = BASE_API_URL + HOLIDAY_CON
 export const ADD_ENTITY_HOLIDAY_URL: string = BASE_API_URL + HOLIDAY_CONTROLLER + "/entity-holiday/add";
 export const UPDATE_ENTITY_HOLIDAY_URL: string = BASE_API_URL + HOLIDAY_CONTROLLER + "/entity-holiday/update";
 export const DELETE_ENTITY_HOLIDAY_URL: string = BASE_API_URL + HOLIDAY_CONTROLLER + "/entity-holiday/delete";
+
+//#region NOTIFICATION
+const NOTIFICATION_CONTROLLER: string = "Notification";
+export const GET_MY_NOTIFICATIONS_URL: string = BASE_API_URL + NOTIFICATION_CONTROLLER + "/my";
+export const GET_UNREAD_COUNT_URL: string = BASE_API_URL + NOTIFICATION_CONTROLLER + "/unread-count";
+export const MARK_NOTIFICATION_READ_URL: string = BASE_API_URL + NOTIFICATION_CONTROLLER + "/mark-read";
+export const MARK_ALL_READ_URL: string = BASE_API_URL + NOTIFICATION_CONTROLLER + "/mark-all-read";

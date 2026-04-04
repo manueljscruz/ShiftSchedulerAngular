@@ -12,4 +12,14 @@
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
     </div>
+    <button mat-icon-button
+            class="notification-bell"
+            (click)="goToNotifications()"
+            matTooltip="Notifications"
+            [matBadge]="(notificationService.unreadCount | async) || null"
+            matBadgeColor="warn"
+            matBadgeSize="small"
+            [matBadgeHidden]="((notificationService.unreadCount | async) ?? 0) === 0">
+        <mat-icon>notifications</mat-icon>
+    </button>
 </div>

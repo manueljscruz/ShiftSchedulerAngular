@@ -53,6 +53,12 @@
                     <mat-row *matRowDef="let shift; columns: ['RuleTypeDisplay', 'RuleTypeDescription', 'Actions']"></mat-row>
 
             </mat-table>
+
+            <div *ngIf="rulesViewModel.entityRules.length === 0" class="no-data-message">
+                <mat-icon>rule</mat-icon>
+                <p i18n>No rules configured yet.</p>
+                <p *ngIf="isCurrentUserEntityOwner" i18n>Click "Add Rule" to define scheduling constraints.</p>
+            </div>
         </div>
         <!-- Rule Form -->
         <div *ngIf="isFormActive">

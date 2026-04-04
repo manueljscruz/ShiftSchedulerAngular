@@ -22,6 +22,11 @@
   flex-shrink: 0;
 }
 
+.notification-bell {
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
 #search-bar {
   flex: 1;
   display: flex;

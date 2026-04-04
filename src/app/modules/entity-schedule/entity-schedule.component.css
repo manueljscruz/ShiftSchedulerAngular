@@ -23,6 +23,8 @@
     padding-bottom: 5px;
     gap: 10px;
     flex-wrap: wrap;
+    flex: 1;
+    justify-content: flex-end;
 }
 
 /* Mobile menu toggle button - hidden on desktop */
@@ -43,6 +45,167 @@
 #schedule-list table {
     width: max-content;
     min-width: 100%;
+}
+
+/* Sticky employee column (first) */
+#schedule-list table th:first-child,
+#schedule-list table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background-color: white;
+}
+#schedule-list table th:first-child {
+    z-index: 3;
+}
+
+/* Sticky actions column (last) */
+#schedule-list table th:last-child,
+#schedule-list table td:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 2;
+    background-color: white;
+}
+#schedule-list table th:last-child {
+    z-index: 3;
+}
+
+/* Today column highlight */
+.today-col {
+    background-color: rgba(192, 50, 33, 0.07) !important;
+}
+#schedule-list table th.today-col {
+    font-weight: 700;
+    color: #C03221;
+}
+
+/* Weekend column subtle tint */
+.weekend-col {
+    background-color: #f7f7f7 !important;
+}
+
+/* Rotation tracking banner */
+.rotation-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+    border-radius: 0 4px 4px 0;
+    margin: 8px 0;
+    font-size: 14px;
+}
+.rotation-banner mat-icon {
+    color: #f59f00;
+    flex-shrink: 0;
+}
+.rotation-banner span {
+    flex: 1;
+}
+
+/* Toolbar action groups */
+.action-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Cell wrapper for date columns */
+.cell-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    min-width: 80px;
+}
+
+/* Shift chip — fades out on cell hover */
+.shift-chip {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    letter-spacing: 0.3px;
+    transition: opacity 0.15s ease;
+}
+.cell-wrapper:hover .shift-chip {
+    opacity: 0;
+}
+.shift-chip.clickable {
+    cursor: pointer;
+}
+
+/* Action buttons — fill the cell wrapper, centered, fade in on hover */
+.cell-actions {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+.cell-wrapper:hover .cell-actions {
+    opacity: 1;
+}
+.cell-actions ::ng-deep .mat-mdc-icon-button {
+    --mdc-icon-button-state-layer-size: 28px;
+}
+.cell-actions ::ng-deep .mat-mdc-icon-button.mat-mdc-button-base {
+    padding: 0;
+}
+
+/* Empty unassigned cell */
+.empty-cell {
+    width: 100%;
+    min-height: 48px;
+    min-width: 80px;
+    border: 1px dashed #d0d0d0;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Add button inside empty cell — hidden until hover */
+.add-btn {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+.cell-wrapper:hover .add-btn {
+    opacity: 1;
+}
+.add-btn ::ng-deep .mat-mdc-icon-button {
+    --mdc-icon-button-state-layer-size: 28px;
+}
+.add-btn ::ng-deep .mat-mdc-icon-button.mat-mdc-button-base {
+    padding: 0;
+}
+
+/* Hours column */
+.hours-value {
+    font-weight: 600;
+    white-space: nowrap;
+    display: block;
+    text-align: right;
+    padding-right: 4px;
+}
+
+/* Employee name */
+.employee-name {
+    white-space: nowrap;
+    font-weight: 500;
 }
 
 .date-field {

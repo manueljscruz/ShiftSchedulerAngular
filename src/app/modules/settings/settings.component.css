@@ -1,111 +1,177 @@
-.settings-container {
+/* ─── Container ──────────────────────────────────────────────────────────────── */
+
+.elevated-card-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-.wip-content {
-    text-align: center;
-    max-width: 600px;
-    padding: 2rem;
+/* ─── Tabs ───────────────────────────────────────────────────────────────────── */
+
+.settings-tabs {
+    flex: 1;
+    overflow: auto;
 }
 
-.wip-icon {
-    font-size: 80px;
-    width: 80px;
-    height: 80px;
-    color: #FFA500;
-    margin-bottom: 1rem;
+.tab-icon {
+    margin-right: 6px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
 }
 
-.wip-title {
-    font-size: 2.5rem;
-    font-weight: 500;
-    color: #1a237e;
-    margin: 1rem 0;
+.tab-content {
+    padding: 24px;
+    max-width: 680px;
 }
 
-.wip-subtitle {
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: #666;
-    margin: 0.5rem 0 1.5rem 0;
+/* ─── Section ────────────────────────────────────────────────────────────────── */
+
+.settings-section {
+    padding: 24px 0;
 }
 
-.wip-message {
-    font-size: 1.125rem;
-    color: #424242;
-    line-height: 1.8;
-    margin-bottom: 2rem;
+.settings-section:first-child {
+    padding-top: 8px;
 }
 
-mat-divider {
-    margin: 2rem 0;
+.section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
 }
 
-.coming-soon {
-    text-align: left;
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border-left: 4px solid #3f51b5;
-}
-
-.coming-soon h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #283593;
-    margin: 0 0 1rem 0;
-}
-
-.coming-soon ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.coming-soon li {
-    padding: 0.5rem 0;
-    color: #424242;
-    font-size: 1rem;
-    position: relative;
-    padding-left: 1.5rem;
-}
-
-.coming-soon li::before {
-    content: '🔹';
-    position: absolute;
-    left: 0;
+.section-header > mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
     color: #3f51b5;
+    margin-top: 2px;
+    flex-shrink: 0;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .settings-container {
-        padding: 1rem;
+.section-header h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a237e;
+    margin: 0 0 4px 0;
+}
+
+.section-header p {
+    font-size: 0.875rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.section-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-left: 38px;
+}
+
+/* ─── Fields ─────────────────────────────────────────────────────────────────── */
+
+.settings-field {
+    width: 100%;
+    max-width: 400px;
+}
+
+.lang-sub {
+    color: #999;
+    font-size: 0.85em;
+}
+
+/* ─── Info note ──────────────────────────────────────────────────────────────── */
+
+.info-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #e65100;
+    background: #fff3e0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    max-width: 400px;
+}
+
+.info-note mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+/* ─── Actions ────────────────────────────────────────────────────────────────── */
+
+.section-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+/* ─── Notifications ──────────────────────────────────────────────────────────── */
+
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 560px;
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 20px;
+    background: #fff;
+}
+
+.notification-item:hover {
+    background: #fafafa;
+}
+
+.notification-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.notification-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.notification-desc {
+    font-size: 0.8rem;
+    color: #888;
+    line-height: 1.4;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+    .tab-content {
+        padding: 16px;
     }
 
-    .wip-content {
-        padding: 1rem;
+    .section-body {
+        padding-left: 0;
     }
 
-    .wip-icon {
-        font-size: 60px;
-        width: 60px;
-        height: 60px;
+    .settings-field {
+        max-width: 100%;
     }
 
-    .wip-title {
-        font-size: 2rem;
-    }
-
-    .wip-subtitle {
-        font-size: 1.25rem;
-    }
-
-    .wip-message {
-        font-size: 1rem;
+    .notification-list {
+        max-width: 100%;
     }
 }
