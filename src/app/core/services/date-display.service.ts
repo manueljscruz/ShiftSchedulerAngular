@@ -27,7 +27,11 @@ export class DateDisplayService {
     const offsetArray = offset.split(':');
     const hours = parseInt(offsetArray[0]);
     const minutes = parseInt(offsetArray[1]);
-    return hours*60 + minutes;
+    // Apply the sign of the hours component to the minutes so that negative
+    // half-hour offsets (e.g. "-05:30") are calculated correctly.
+    // hours < 0  →  -5*60 - 30 = -330  ✓  (was: -300 + 30 = -270)
+    const sign = hours < 0 ? -1 : 1;
+    return hours * 60 + sign * minutes;
   }
 
   /**

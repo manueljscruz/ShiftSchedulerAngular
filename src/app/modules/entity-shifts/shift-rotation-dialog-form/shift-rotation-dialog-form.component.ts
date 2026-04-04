@@ -87,7 +87,8 @@ export class ShiftRotationDialogFormComponent {
         // Calculate days, hours, minutes from decimal value
         let days = Math.floor(this.leaveDurationInput / 24);
         let hours = Math.floor(this.leaveDurationInput) - (days * 24);
-        let minutes = (this.leaveDurationInput % 1) * 60;
+        let minutes = Math.round((this.leaveDurationInput % 1) * 60);
+        if (minutes === 60) { minutes = 0; hours += 1; if (hours === 24) { hours = 0; days += 1; } }
         this.entityRotation.leaveDurationText = days != 0 ? `${days}.${hours}:${minutes}:00` : `${hours}:${minutes}:00`;
         
         // Reset shift info
@@ -148,7 +149,17 @@ export class ShiftRotationDialogFormComponent {
   setDurationAndLabel(value: number): string {
     let days = Math.floor(value / 24);
     let hours = Math.floor(value) - (days * 24);
-    let minutes = (value % 1) * 60;
+    let minutes = Math.round((value % 1) * 60);
+
+    // Handle rounding overflow: 59.5 min rounds to 60
+    if (minutes === 60) {
+      minutes = 0;
+      hours += 1;
+      if (hours === 24) {
+        hours = 0;
+        days += 1;
+      }
+    }
 
     this.leaveDuration = days != 0 ? days +' ' + hours + ':' + minutes : hours + ':' + minutes;
 
@@ -176,7 +187,8 @@ export class ShiftRotationDialogFormComponent {
         minutes = parseInt(timeSplit[1]);
       }
       else if(timeSplit.length == 2){
-        minutes = parseInt(timeSplit[0]);
+        hours = parseInt(timeSplit[0]);
+        minutes = parseInt(timeSplit[1]);
       }
     }
     else{
@@ -186,7 +198,8 @@ export class ShiftRotationDialogFormComponent {
         minutes = parseInt(timeSplit[1]);
       }
       else if(timeSplit.length == 2){
-        minutes = parseInt(timeSplit[0]);
+        hours = parseInt(timeSplit[0]);
+        minutes = parseInt(timeSplit[1]);
       }
     }
 

@@ -49,7 +49,7 @@ export class NotificationService implements OnDestroy {
     private async fetchUnreadCount(): Promise<number> {
         try {
             const response = await this.http
-                .get<BaseResponseModel<number>>(GET_UNREAD_COUNT_URL)
+                .get<BaseResponseModel>(GET_UNREAD_COUNT_URL)
                 .toPromise();
             return response?.result ?? 0;
         } catch {
@@ -60,7 +60,7 @@ export class NotificationService implements OnDestroy {
     async getMyNotifications(page: number = 1, pageSize: number = 20): Promise<UserNotificationDTO[]> {
         try {
             const response = await this.http
-                .get<BaseResponseModel<UserNotificationDTO[]>>(
+                .get<BaseResponseModel>(
                     `${GET_MY_NOTIFICATIONS_URL}?page=${page}&pageSize=${pageSize}`
                 )
                 .toPromise();
@@ -73,7 +73,7 @@ export class NotificationService implements OnDestroy {
     async markAsRead(id: string): Promise<boolean> {
         try {
             const response = await this.http
-                .put<BaseResponseModel<boolean>>(`${MARK_NOTIFICATION_READ_URL}/${id}`, {})
+                .put<BaseResponseModel>(`${MARK_NOTIFICATION_READ_URL}/${id}`, {})
                 .toPromise();
             if (response?.success) {
                 const current = this.unreadCount$.getValue();
@@ -89,7 +89,7 @@ export class NotificationService implements OnDestroy {
     async markAllAsRead(): Promise<boolean> {
         try {
             const response = await this.http
-                .put<BaseResponseModel<boolean>>(MARK_ALL_READ_URL, {})
+                .put<BaseResponseModel>(MARK_ALL_READ_URL, {})
                 .toPromise();
             if (response?.success) {
                 this.unreadCount$.next(0);
