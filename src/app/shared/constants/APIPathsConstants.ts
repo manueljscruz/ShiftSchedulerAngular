@@ -122,3 +122,21 @@ export const GET_MY_NOTIFICATIONS_URL: string = BASE_API_URL + NOTIFICATION_CONT
 export const GET_UNREAD_COUNT_URL: string = BASE_API_URL + NOTIFICATION_CONTROLLER + "/unread-count";
 export const MARK_NOTIFICATION_READ_URL: string = BASE_API_URL + NOTIFICATION_CONTROLLER + "/mark-read";
 export const MARK_ALL_READ_URL: string = BASE_API_URL + NOTIFICATION_CONTROLLER + "/mark-all-read";
+
+
+//#region ADMIN
+const LOCALIZATION_CONTROLLER: string = "Localization";
+export const GET_ALL_LOCALIZATIONS_URL: string = BASE_API_URL + LOCALIZATION_CONTROLLER + "/get-all";
+
+const ADMIN_TYPES_CONTROLLER: string = "AdminTypes";
+export const ADMIN_TYPES_GET_ALL_URL: string = BASE_API_URL + ADMIN_TYPES_CONTROLLER + "/{typeKey}";
+export const ADMIN_TYPES_GET_BY_ID_URL: string = BASE_API_URL + ADMIN_TYPES_CONTROLLER + "/{typeKey}/{id}";
+export const ADMIN_TYPES_UPSERT_URL: string = BASE_API_URL + ADMIN_TYPES_CONTROLLER + "/{typeKey}";
+export const ADMIN_TYPES_DELETE_URL: string = BASE_API_URL + ADMIN_TYPES_CONTROLLER + "/{typeKey}/{id}";
+export const GET_ADMIN_DASHBOARD_URL: string = BASE_API_URL + "Home/admin-dashboard";
+
+// Admin complex entity managers
+export const ADMIN_HOLIDAY_BEHAVIOURS_URL: string = BASE_API_URL + "AdminHolidayBehaviours";
+export const ADMIN_RULE_TYPES_URL: string = BASE_API_URL + "AdminRuleTypes";
+export const ADMIN_HOLIDAY_CATALOGS_URL: string = BASE_API_URL + "AdminHolidayCatalogs";
+export const ADMIN_NOTIFICATION_TYPES_URL: string = BASE_API_URL + "AdminNotificationTypes";

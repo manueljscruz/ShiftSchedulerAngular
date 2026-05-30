@@ -48,6 +48,7 @@ import { EntityShiftsComponent } from './modules/entity-shifts/entity-shifts.com
 import { ShiftBreakDialogFormComponent } from './modules/entity-shifts/shift-break-dialog-form/shift-break-dialog-form.component';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatRippleModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HeaderLessTabsDirective } from './shared/directives/header-less-tabs.directive';
 import { ShiftTemplateCardComponent } from './shared/components/shift-template-card/shift-template-card.component';
 import {MatTableModule} from '@angular/material/table';
@@ -125,6 +126,20 @@ import { MatRadioGroup, MatRadioModule } from '@angular/material/radio';
 import { MyInvitationsComponent } from './modules/my-invitations/my-invitations.component';
 import { NotificationsComponent } from './modules/notifications/notifications.component';
 import { MatBadgeModule } from '@angular/material/badge';
+import { AdminLoginComponent } from './modules/admin-login/admin-login.component';
+import { AdminDashboardComponent } from './modules/admin-dashboard/admin-dashboard.component';
+import { AdminDashboardHomeComponent } from './modules/admin-dashboard-home/admin-dashboard-home.component';
+import { AdminSubscriptionsComponent } from './modules/admin-subscriptions/admin-subscriptions.component';
+import { AdminTypeManagerComponent } from './modules/admin-type-manager/admin-type-manager.component';
+import { AdminTypeFormDialogComponent } from './modules/admin-type-manager/admin-type-form-dialog/admin-type-form-dialog.component';
+import { AdminHolidayBehaviourManagerComponent } from './modules/admin-holiday-behaviour-manager/admin-holiday-behaviour-manager.component';
+import { AdminHolidayBehaviourFormDialogComponent } from './modules/admin-holiday-behaviour-manager/admin-holiday-behaviour-form-dialog/admin-holiday-behaviour-form-dialog.component';
+import { AdminRuleTypeManagerComponent } from './modules/admin-rule-type-manager/admin-rule-type-manager.component';
+import { AdminRuleTypeFormDialogComponent } from './modules/admin-rule-type-manager/admin-rule-type-form-dialog/admin-rule-type-form-dialog.component';
+import { AdminHolidayCatalogManagerComponent } from './modules/admin-holiday-catalog-manager/admin-holiday-catalog-manager.component';
+import { AdminHolidayCatalogFormDialogComponent } from './modules/admin-holiday-catalog-manager/admin-holiday-catalog-form-dialog/admin-holiday-catalog-form-dialog.component';
+import { AdminNotificationTypeManagerComponent } from './modules/admin-notification-type-manager/admin-notification-type-manager.component';
+import { AdminNotificationTypeFormDialogComponent } from './modules/admin-notification-type-manager/admin-notification-type-form-dialog/admin-notification-type-form-dialog.component';
 
 @NgModule({
   declarations: [
@@ -209,7 +224,21 @@ import { MatBadgeModule } from '@angular/material/badge';
     ImportConfigDialogComponent,
     ExitEntityDialogComponent,
     RotationDatePickerDialogComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    AdminLoginComponent,
+    AdminDashboardComponent,
+    AdminDashboardHomeComponent,
+    AdminSubscriptionsComponent,
+    AdminTypeManagerComponent,
+    AdminTypeFormDialogComponent,
+    AdminHolidayBehaviourManagerComponent,
+    AdminHolidayBehaviourFormDialogComponent,
+    AdminRuleTypeManagerComponent,
+    AdminRuleTypeFormDialogComponent,
+    AdminHolidayCatalogManagerComponent,
+    AdminHolidayCatalogFormDialogComponent,
+    AdminNotificationTypeManagerComponent,
+    AdminNotificationTypeFormDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -242,6 +271,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatMenuModule,
     MatSidenavModule,
     MatTooltipModule,
+    MatSlideToggleModule,
     MatRadioGroup,
     MatRadioModule,
     CalendarModule.forRoot({

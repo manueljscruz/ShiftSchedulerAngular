@@ -1,0 +1,72 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'New' }} Rule Type</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="form">
+
+        <div class="row-2">
+            <mat-form-field appearance="outline" class="flex-grow">
+                <mat-label>Internal Name</mat-label>
+                <input matInput formControlName="internalName" />
+                <mat-error *ngIf="form.get('internalName')?.hasError('required')">Required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 90px">
+                <mat-label>Order #</mat-label>
+                <input matInput type="number" formControlName="orderNo" />
+            </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description" />
+        </mat-form-field>
+
+        <div class="toggles-row">
+            <mat-slide-toggle formControlName="multipleSpecification" color="primary">
+                Multiple Specification
+            </mat-slide-toggle>
+            <mat-slide-toggle formControlName="isSpecValuesBoolean" color="primary">
+                Boolean Spec Values
+            </mat-slide-toggle>
+        </div>
+
+        <div *ngIf="data.businessAspects.length > 0" class="section">
+            <p class="section-title">Business Aspects</p>
+            <div class="aspects-grid">
+                <mat-checkbox
+                    *ngFor="let aspect of data.businessAspects"
+                    [checked]="isAspectSelected(aspect.id)"
+                    (change)="toggleAspect(aspect.id)"
+                    color="primary">
+                    {{ aspect.internalName }}
+                </mat-checkbox>
+            </div>
+        </div>
+
+        <div *ngIf="data.languages.length > 0" class="section">
+            <p class="section-title">Localizations</p>
+            <div formArrayName="localizations">
+                <div *ngFor="let locCtrl of localizationsArray.controls; let i = index"
+                     [formGroupName]="i"
+                     class="localization-row">
+                    <span class="lang-code">{{ locCtrl.get('localizationCode')?.value }}</span>
+                    <mat-form-field appearance="outline" class="loc-field">
+                        <mat-label>Display name</mat-label>
+                        <input matInput formControlName="displayValue" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="loc-field">
+                        <mat-label>Description</mat-label>
+                        <input matInput formControlName="descriptionValue" />
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="submit()" [disabled]="form.invalid">
+        {{ isEdit ? 'Save' : 'Create' }}
+    </button>
+</mat-dialog-actions>

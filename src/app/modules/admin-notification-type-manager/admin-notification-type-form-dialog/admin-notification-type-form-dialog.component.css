@@ -1,0 +1,43 @@
+.full-width { width: 100%; }
+
+.section { margin-top: 16px; }
+
+.section-title { font-size: 13px; font-weight: 500; color: rgba(0,0,0,0.6); margin: 0 0 4px; }
+
+.section-hint {
+    font-size: 12px;
+    color: rgba(0,0,0,0.5);
+    margin: 0 0 12px;
+}
+
+.section-hint code {
+    font-family: monospace;
+    background: #f5f5f5;
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: #c62828;
+}
+
+.localization-block {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.localization-block:last-child { border-bottom: none; }
+
+.lang-code {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a237e;
+    min-width: 36px;
+    text-transform: uppercase;
+    padding-top: 16px;
+}
+
+.loc-fields { flex: 1; display: flex; flex-direction: column; gap: 0; }
+
+mat-dialog-content { min-width: 460px; max-height: 74vh; }

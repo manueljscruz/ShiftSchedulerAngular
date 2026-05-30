@@ -1,0 +1,117 @@
+<div id="type-manager-container">
+
+    <div id="type-selector">
+        <p class="type-selector-title">Simple Types</p>
+        <ng-container *ngFor="let c of allConfigs">
+            <a *ngIf="!c.routePath"
+               class="type-selector-item"
+               [routerLink]="['/admin/dashboard/configuration', c.typeKey]"
+               routerLinkActive="active">
+                <mat-icon>{{ c.icon }}</mat-icon>
+                <span>{{ c.label }}</span>
+            </a>
+        </ng-container>
+
+        <p class="type-selector-subtitle">Advanced</p>
+        <ng-container *ngFor="let c of allConfigs">
+            <a *ngIf="c.routePath"
+               class="type-selector-item"
+               [routerLink]="'/admin/dashboard/' + c.routePath"
+               routerLinkActive="active">
+                <mat-icon>{{ c.icon }}</mat-icon>
+                <span>{{ c.label }}</span>
+            </a>
+        </ng-container>
+    </div>
+
+    <div id="type-content">
+
+        <div class="type-header">
+            <div class="type-header-left">
+                <mat-icon>menu_book</mat-icon>
+                <h2>Holiday Catalogs</h2>
+            </div>
+            <button mat-flat-button color="primary" (click)="openForm()">
+                <mat-icon>add</mat-icon>
+                New Holiday Catalog
+            </button>
+        </div>
+
+        <div *ngIf="isLoading" class="loading-container">
+            <mat-spinner diameter="40"></mat-spinner>
+        </div>
+
+        <div *ngIf="!isLoading">
+
+            <div *ngIf="items.length === 0" class="empty-state">
+                <mat-icon>inbox</mat-icon>
+                <p>No Holiday Catalogs yet. Create the first one.</p>
+            </div>
+
+            <mat-table *ngIf="items.length > 0" [dataSource]="items" class="type-table mat-elevation-z1">
+
+                <ng-container matColumnDef="holidayName">
+                    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <div>
+                            <div>{{ row.holidayName }}</div>
+                            <div class="sub-text" *ngIf="row.holidayDescription">{{ row.holidayDescription }}</div>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="type">
+                    <mat-header-cell *matHeaderCellDef>Type / Behaviour</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <div>
+                            <div>{{ row.holidayTypeName }}</div>
+                            <div class="sub-text">{{ row.holidayBehaviourName }}</div>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="recurrence">
+                    <mat-header-cell *matHeaderCellDef>Recurrence</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{ formatRecurrence(row) }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="active">
+                    <mat-header-cell *matHeaderCellDef>Active</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-icon [style.color]="row.isActive ? '#4caf50' : '#bdbdbd'">
+                            {{ row.isActive ? 'check_circle' : 'cancel' }}
+                        </mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="localizations">
+                    <mat-header-cell *matHeaderCellDef>Localizations</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <span class="localization-summary">
+                            {{ row.localizations?.length ? row.localizations.length + ' lang(s)' : '—' }}
+                        </span>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="actions-cell">
+                        <button mat-icon-button (click)="openForm(row)" matTooltip="Edit">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="confirmDelete(row)" matTooltip="Delete">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            </mat-table>
+
+        </div>
+
+    </div>
+
+</div>

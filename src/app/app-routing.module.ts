@@ -44,6 +44,16 @@ import { PublicProfileComponent } from './modules/public-profile/public-profile.
 import { MyInvitationsComponent } from './modules/my-invitations/my-invitations.component';
 import { NotificationsComponent } from './modules/notifications/notifications.component';
 import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
+import { AdminLoginComponent } from './modules/admin-login/admin-login.component';
+import { AdminDashboardComponent } from './modules/admin-dashboard/admin-dashboard.component';
+import { AdminDashboardHomeComponent } from './modules/admin-dashboard-home/admin-dashboard-home.component';
+import { AdminSubscriptionsComponent } from './modules/admin-subscriptions/admin-subscriptions.component';
+import { AdminTypeManagerComponent } from './modules/admin-type-manager/admin-type-manager.component';
+import { AdminHolidayBehaviourManagerComponent } from './modules/admin-holiday-behaviour-manager/admin-holiday-behaviour-manager.component';
+import { AdminRuleTypeManagerComponent } from './modules/admin-rule-type-manager/admin-rule-type-manager.component';
+import { AdminHolidayCatalogManagerComponent } from './modules/admin-holiday-catalog-manager/admin-holiday-catalog-manager.component';
+import { AdminNotificationTypeManagerComponent } from './modules/admin-notification-type-manager/admin-notification-type-manager.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -55,6 +65,18 @@ const routes: Routes = [
   { path: 'cookies-policy', component: CookiesPolicyComponent},
   { path: 'contacts', component: ContactsComponent},
   { path: 'privacy-policy', component: PrivacyPolicyComponent},
+  { path: 'admin/login', component: AdminLoginComponent },
+  { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [adminGuard], children: [
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: 'home', component: AdminDashboardHomeComponent },
+    { path: 'subscriptions', component: AdminSubscriptionsComponent },
+    { path: 'configuration/holiday-behaviours',  component: AdminHolidayBehaviourManagerComponent },
+    { path: 'configuration/rule-types',          component: AdminRuleTypeManagerComponent },
+    { path: 'configuration/holiday-catalogs',    component: AdminHolidayCatalogManagerComponent },
+    { path: 'configuration/notification-types',  component: AdminNotificationTypeManagerComponent },
+    { path: 'configuration',                     component: AdminTypeManagerComponent },
+    { path: 'configuration/:typeKey',            component: AdminTypeManagerComponent }
+  ]},
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard], children: [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
     { path: 'home', component: DashboardHomeComponent},

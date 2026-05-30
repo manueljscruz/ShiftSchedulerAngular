@@ -1,0 +1,138 @@
+#admin-home {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    max-width: 960px;
+}
+
+.admin-home-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin: 0 0 6px;
+}
+
+.admin-home-header p {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Stat Cards */
+.admin-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.admin-stat-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08) !important;
+}
+
+.stat-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: rgba(26, 35, 126, 0.08);
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.stat-icon-wrap mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: #1a237e;
+}
+
+.stat-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a237e;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #94a3b8;
+}
+
+/* Recent Activity */
+.recent-activity-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.activity-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.activity-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a237e;
+    margin: 0;
+}
+
+.activity-title mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.activity-period {
+    font-weight: 400;
+    color: #94a3b8;
+    font-size: 0.8rem;
+}
+
+.activity-table {
+    width: 100%;
+    font-size: 13px;
+}
+
+.activity-empty {
+    font-size: 13px;
+    color: #94a3b8;
+    padding: 16px 0;
+    font-style: italic;
+}
+
+/* Loading */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    padding: 48px 0;
+}
+
+@media (max-width: 700px) {
+    .admin-stat-grid {
+        grid-template-columns: 1fr;
+    }
+    .recent-activity-section {
+        grid-template-columns: 1fr;
+    }
+}

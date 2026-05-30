@@ -1,0 +1,76 @@
+.full-width {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.color-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.color-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.color-label {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.color-picker {
+    width: 60px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.color-preview-box {
+    padding: 6px 16px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.localizations-section {
+    margin-top: 8px;
+}
+
+.localizations-title {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.localization-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.lang-code {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a237e;
+    min-width: 36px;
+    text-transform: uppercase;
+}
+
+.localization-input {
+    flex: 1;
+}
+
+mat-dialog-content {
+    min-width: 400px;
+    max-height: 70vh;
+}

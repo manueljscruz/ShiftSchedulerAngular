@@ -102,6 +102,9 @@ export class AuthService {
             { withCredentials: true }
         ).pipe(
             tap(response => {
+                if (response.user) {
+                    response.user.isAdmin = response.isAdmin ?? false;
+                }
                 this.isAuthenticatedSubject.next(true);
                 this.currentUserSubject.next(response.user);
                 this.isInitializedSubject.next(true); // Mark initialized on login

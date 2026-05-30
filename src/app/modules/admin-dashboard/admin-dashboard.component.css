@@ -1,0 +1,221 @@
+#admin-dashboard-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #1e3a5f;
+    overflow: hidden;
+}
+
+/* ===== Sidebar ===== */
+#admin-desktop-sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+#admin-mobile-sidenav-container {
+    width: 100%;
+    height: 100vh;
+}
+
+.admin-mobile-sidenav {
+    width: 240px;
+}
+
+.admin-sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #1e3a5f;
+    color: #ffffff;
+}
+
+.admin-sidebar-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 28px 20px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-logo-text {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+}
+
+.sidebar-logo-accent {
+    color: #93c5fd;
+}
+
+.sidebar-admin-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #1e3a5f;
+    background-color: #93c5fd;
+    padding: 2px 10px;
+    border-radius: 20px;
+}
+
+.admin-sidebar-nav {
+    flex: 1;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.admin-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.admin-nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+}
+
+.admin-nav-item.active {
+    background-color: rgba(147, 197, 253, 0.15);
+    color: #93c5fd;
+}
+
+.admin-nav-item mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+}
+
+.admin-sidebar-footer {
+    padding: 16px 12px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.admin-logout-btn:hover {
+    background-color: rgba(255, 100, 100, 0.12);
+    color: #fca5a5;
+}
+
+.admin-logout-btn mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+}
+
+/* ===== Content Area ===== */
+#admin-dashboard-view {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    height: 100vh;
+    background-color: #f5f7fa;
+    overflow: hidden;
+}
+
+#admin-dashboard-content {
+    padding: 24px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: calc(100vh - 64px - 1px);
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+/* ===== Header ===== */
+.admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 64px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    flex-shrink: 0;
+}
+
+.admin-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-header-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e3a5f;
+    letter-spacing: 0.3px;
+}
+
+.menu-toggle {
+    color: #1e3a5f;
+}
+
+.admin-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.admin-user-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    color: #1e3a5f;
+}
+
+/* ===== Utility ===== */
+.show-desktop-only { display: flex; }
+.hide-desktop      { display: none; }
+
+@media (max-width: 767.98px) {
+    .show-desktop-only { display: none !important; }
+    .hide-desktop      { display: block !important; }
+
+    #admin-dashboard-content {
+        padding: 16px;
+        height: calc(100vh - 64px - 1px);
+    }
+}

@@ -1,0 +1,55 @@
+<div id="admin-login-view">
+    <div class="container">
+        <div class="col-sm d-flex justify-content-center">
+            <mat-card id="admin-login-card">
+                <div class="row" id="admin-login-logo">
+                    <span class="logo-text">Shift<span class="logo-accent">Scheduler</span></span>
+                    <span class="admin-badge">Back Office</span>
+                </div>
+                <form id="admin-login-form">
+                    <span>Email</span>
+                    <mat-form-field appearance="outline">
+                        <mat-icon matPrefix>alternate_email</mat-icon>
+                        <input matInput
+                               type="email"
+                               [(ngModel)]="email"
+                               name="email"
+                               [disabled]="isLoading"
+                               (keyup.enter)="login()"
+                               required>
+                    </mat-form-field>
+
+                    <span>Password</span>
+                    <mat-form-field appearance="outline">
+                        <mat-icon matPrefix>lock</mat-icon>
+                        <input matInput
+                               [type]="hidePassword ? 'password' : 'text'"
+                               [(ngModel)]="password"
+                               name="password"
+                               [disabled]="isLoading"
+                               (keyup.enter)="login()"
+                               required>
+                        <button mat-icon-button
+                                matSuffix
+                                type="button"
+                                (click)="togglePasswordVisibility()"
+                                [disabled]="isLoading">
+                            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                    </mat-form-field>
+
+                    <button id="admin-login-button"
+                            class="w-100"
+                            [class.loading]="isLoading"
+                            type="button"
+                            (click)="login()"
+                            [disabled]="isLoading">
+                        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+                        <span *ngIf="!isLoading">Sign in</span>
+                        <span *ngIf="isLoading">Signing in...</span>
+                    </button>
+                </form>
+            </mat-card>
+        </div>
+    </div>
+</div>

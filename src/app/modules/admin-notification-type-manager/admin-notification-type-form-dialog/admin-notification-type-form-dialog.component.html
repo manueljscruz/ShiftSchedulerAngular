@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'New' }} Notification Type</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="form">
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Type Code</mat-label>
+            <input matInput formControlName="notificationTypeCode" placeholder="e.g. INVITATION_SENT" />
+            <mat-hint>Internal identifier used by the system. Use UPPER_SNAKE_CASE.</mat-hint>
+            <mat-error *ngIf="form.get('notificationTypeCode')?.hasError('required')">Required</mat-error>
+        </mat-form-field>
+
+        <div *ngIf="data.languages.length > 0" class="section">
+            <p class="section-title">Localized Messages</p>
+            <p class="section-hint">Use <code>&#123;0&#125;</code> as a placeholder for dynamic context (e.g. entity name).</p>
+            <div formArrayName="localizations">
+                <div *ngFor="let locCtrl of localizationsArray.controls; let i = index"
+                     [formGroupName]="i"
+                     class="localization-block">
+                    <span class="lang-code">{{ locCtrl.get('localizationCode')?.value }}</span>
+                    <div class="loc-fields">
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Display name</mat-label>
+                            <input matInput formControlName="displayValue" />
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Message template</mat-label>
+                            <textarea matInput formControlName="messageTemplate" rows="2"
+                                      placeholder="e.g. You have been invited to join &#123;0&#125;."></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="submit()" [disabled]="form.invalid">
+        {{ isEdit ? 'Save' : 'Create' }}
+    </button>
+</mat-dialog-actions>

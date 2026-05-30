@@ -26,9 +26,14 @@ export const AuthErrorInterceptor: HttpInterceptorFn = (req, next) => {
       // Handle 401 Unauthorized
       if (error.status === 401) {
 
-        // Don't try to refresh if this IS the refresh/login/logout request
-        if (req.url.includes(REFRESH_TOKEN_URL) || req.url.includes(LOGIN_URL) || req.url.includes(LOGOUT_URL)) {
-          // Auth operation failed - logout ONCE
+        // Login request returned 401 = wrong credentials.
+        // Let the error propagate so the calling component (login page) can handle it.
+        if (req.url.includes(LOGIN_URL)) {
+          return throwError(() => error);
+        }
+
+        // Refresh or logout returned 401 — session is dead. Clear state and redirect once.
+        if (req.url.includes(REFRESH_TOKEN_URL) || req.url.includes(LOGOUT_URL)) {
           if (!isLoggingOut) {
             isLoggingOut = true;
             console.log('Auth failed - clearing state and redirecting');

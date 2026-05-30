@@ -1,0 +1,93 @@
+#admin-subscriptions {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    max-width: 960px;
+}
+
+.admin-subscriptions-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin: 0 0 6px;
+}
+
+.admin-subscriptions-header p {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.admin-subscriptions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.admin-sub-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 20px 20px 16px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+}
+
+.sub-card-icon mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    color: #1e3a5f;
+    opacity: 0.5;
+}
+
+.sub-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #94a3b8;
+}
+
+.sub-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e3a5f;
+}
+
+.sub-value.coming-soon {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #cbd5e1;
+    font-style: italic;
+}
+
+.admin-sub-table-placeholder {
+    border-radius: 12px !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+    padding: 0 !important;
+}
+
+.placeholder-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 60px 24px;
+    color: #cbd5e1;
+}
+
+.placeholder-inner mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+}
+
+.placeholder-inner span {
+    font-size: 0.9rem;
+    font-style: italic;
+}

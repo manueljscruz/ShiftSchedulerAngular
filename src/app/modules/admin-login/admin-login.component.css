@@ -1,0 +1,195 @@
+#admin-login-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #0d1b2a 100%);
+  overflow: hidden;
+}
+
+#admin-login-view::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+  animation: rotate 25s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+#admin-login-card {
+  position: relative;
+  z-index: 2;
+  min-width: 320px;
+  max-width: 420px;
+  width: 90%;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+              0 0 100px rgba(59, 130, 246, 0.08);
+  padding: 40px 32px;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+#admin-login-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 28px;
+  margin-bottom: 24px;
+  position: relative;
+  gap: 8px;
+}
+
+#admin-login-logo::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #1e3a5f 0%, #3b82f6 100%);
+  border-radius: 2px;
+}
+
+.logo-text {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  letter-spacing: -0.5px;
+}
+
+.logo-accent {
+  color: #C03221;
+}
+
+.admin-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background-color: #1e3a5f;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+#admin-login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#admin-login-form span {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+  margin-top: 12px;
+}
+
+#admin-login-form span:first-of-type {
+  margin-top: 0;
+}
+
+:host ::ng-deep #admin-login-card .mat-mdc-form-field {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+:host ::ng-deep #admin-login-card .mat-mdc-text-field-wrapper {
+  border-radius: 10px !important;
+}
+
+:host ::ng-deep #admin-login-card .mdc-notched-outline__leading {
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+  border-right: none !important;
+}
+
+:host ::ng-deep #admin-login-card .mdc-notched-outline__trailing {
+  border-top-right-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+  border-left: none !important;
+}
+
+:host ::ng-deep #admin-login-card .mdc-notched-outline__notch {
+  border-radius: 0 !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+:host ::ng-deep #admin-login-card .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+:host ::ng-deep #admin-login-card .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+:host ::ng-deep #admin-login-card .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: #1e3a5f !important;
+  border-width: 2px !important;
+}
+
+:host ::ng-deep #admin-login-card .mat-mdc-form-field .mat-icon {
+  color: #545E75;
+}
+
+:host ::ng-deep #admin-login-card .mat-mdc-form-field.mat-focused .mat-icon {
+  color: #1e3a5f;
+}
+
+#admin-login-button {
+  margin-top: 20px;
+  height: 48px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background-color: #1e3a5f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.35);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#admin-login-button:hover:not(:disabled) {
+  background-color: #162d4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(30, 58, 95, 0.45);
+}
+
+#admin-login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+#admin-login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 576px) {
+  #admin-login-card {
+    min-width: 280px;
+    padding: 32px 24px;
+  }
+}

@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>
+    {{ isEdit ? 'Edit' : 'New' }} {{ data.config.label }}
+</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="form" id="type-form">
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Internal Name</mat-label>
+            <input matInput formControlName="internalName" placeholder="e.g. Nurse, Sick Leave" />
+            <mat-error *ngIf="form.get('internalName')?.hasError('required')">
+                Internal name is required
+            </mat-error>
+        </mat-form-field>
+
+        <div *ngIf="data.hasColors" class="color-row">
+            <div class="color-field">
+                <mat-label class="color-label">Background Color</mat-label>
+                <input type="color" formControlName="hexBGColor" class="color-picker" />
+            </div>
+            <div class="color-field">
+                <mat-label class="color-label">Font Color</mat-label>
+                <input type="color" formControlName="hexFontColor" class="color-picker" />
+            </div>
+            <div class="color-preview-box"
+                 [style.background-color]="form.get('hexBGColor')?.value"
+                 [style.color]="form.get('hexFontColor')?.value">
+                {{ form.get('internalName')?.value || 'Preview' }}
+            </div>
+        </div>
+
+        <div *ngIf="data.languages.length > 0" class="localizations-section">
+            <p class="localizations-title">Display Names by Language</p>
+            <div formArrayName="localizations">
+                <div *ngFor="let locCtrl of localizationsArray.controls; let i = index"
+                     [formGroupName]="i"
+                     class="localization-row">
+                    <span class="lang-code">{{ locCtrl.get('localizationCode')?.value }}</span>
+                    <mat-form-field appearance="outline" class="localization-input">
+                        <mat-label>Display value</mat-label>
+                        <input matInput formControlName="displayValue" />
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="submit()" [disabled]="form.invalid">
+        {{ isEdit ? 'Save' : 'Create' }}
+    </button>
+</mat-dialog-actions>

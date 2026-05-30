@@ -1,0 +1,97 @@
+<div id="type-manager-container">
+
+    <!-- Sidebar (shared across all config pages) -->
+    <div id="type-selector">
+        <p class="type-selector-title">Simple Types</p>
+        <ng-container *ngFor="let c of allConfigs">
+            <a *ngIf="!c.routePath"
+               class="type-selector-item"
+               [routerLink]="['/admin/dashboard/configuration', c.typeKey]"
+               routerLinkActive="active">
+                <mat-icon>{{ c.icon }}</mat-icon>
+                <span>{{ c.label }}</span>
+            </a>
+        </ng-container>
+
+        <p class="type-selector-subtitle">Advanced</p>
+        <ng-container *ngFor="let c of allConfigs">
+            <a *ngIf="c.routePath"
+               class="type-selector-item"
+               [routerLink]="'/admin/dashboard/' + c.routePath"
+               routerLinkActive="active">
+                <mat-icon>{{ c.icon }}</mat-icon>
+                <span>{{ c.label }}</span>
+            </a>
+        </ng-container>
+    </div>
+
+    <!-- Main Content -->
+    <div id="type-content">
+
+        <div class="type-header">
+            <div class="type-header-left">
+                <mat-icon>event</mat-icon>
+                <h2>Holiday Behaviours</h2>
+            </div>
+            <button mat-flat-button color="primary" (click)="openForm()">
+                <mat-icon>add</mat-icon>
+                New Holiday Behaviour
+            </button>
+        </div>
+
+        <div *ngIf="isLoading" class="loading-container">
+            <mat-spinner diameter="40"></mat-spinner>
+        </div>
+
+        <div *ngIf="!isLoading">
+
+            <div *ngIf="items.length === 0" class="empty-state">
+                <mat-icon>inbox</mat-icon>
+                <p>No Holiday Behaviours yet. Create the first one.</p>
+            </div>
+
+            <mat-table *ngIf="items.length > 0" [dataSource]="items" class="type-table mat-elevation-z1">
+
+                <ng-container matColumnDef="internalName">
+                    <mat-header-cell *matHeaderCellDef>Internal Name</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{ row.internalName }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="allowsOperatingTimes">
+                    <mat-header-cell *matHeaderCellDef>Allows Operating Times</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-icon [style.color]="row.allowsOperatingTimes ? '#4caf50' : '#bdbdbd'">
+                            {{ row.allowsOperatingTimes ? 'check_circle' : 'cancel' }}
+                        </mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="localizations">
+                    <mat-header-cell *matHeaderCellDef>Localizations</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <span class="localization-summary">{{ getLocalizationSummary(row) }}</span>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="actions-cell">
+                        <button mat-icon-button (click)="openForm(row)" matTooltip="Edit">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="confirmDelete(row)" matTooltip="Delete">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            </mat-table>
+
+        </div>
+
+    </div>
+
+</div>

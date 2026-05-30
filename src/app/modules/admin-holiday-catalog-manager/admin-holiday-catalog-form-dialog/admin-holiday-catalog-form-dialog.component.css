@@ -1,0 +1,16 @@
+.full-width { width: 100%; }
+
+.row-2 { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 4px; }
+.flex-1 { flex: 1; }
+.flex-2 { flex: 2; }
+
+.toggles-row { display: flex; gap: 24px; margin-bottom: 20px; flex-wrap: wrap; }
+
+.section { margin-top: 12px; }
+.section-title { font-size: 13px; font-weight: 500; color: rgba(0,0,0,0.6); margin: 0 0 10px; }
+
+.localization-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.lang-code { font-size: 12px; font-weight: 600; color: #1a237e; min-width: 36px; text-transform: uppercase; }
+.loc-field { flex: 1; }
+
+mat-dialog-content { min-width: 480px; max-height: 72vh; }

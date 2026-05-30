@@ -1,0 +1,127 @@
+<div id="admin-home">
+
+    <div class="admin-home-header">
+        <h1>Welcome, {{ loggedUser?.userDisplayName }}</h1>
+        <p>You are signed in as an administrator.</p>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <ng-container *ngIf="!isLoading && viewModel">
+
+        <!-- Stat Cards -->
+        <div class="admin-stat-grid">
+            <mat-card class="admin-stat-card">
+                <div class="stat-icon-wrap">
+                    <mat-icon>people</mat-icon>
+                </div>
+                <div class="stat-text">
+                    <span class="stat-value">{{ viewModel.totalUsers }}</span>
+                    <span class="stat-label">Total Users</span>
+                </div>
+            </mat-card>
+
+            <mat-card class="admin-stat-card">
+                <div class="stat-icon-wrap">
+                    <mat-icon>business</mat-icon>
+                </div>
+                <div class="stat-text">
+                    <span class="stat-value">{{ viewModel.totalEntities }}</span>
+                    <span class="stat-label">Total Entities</span>
+                </div>
+            </mat-card>
+
+            <mat-card class="admin-stat-card">
+                <div class="stat-icon-wrap">
+                    <mat-icon>badge</mat-icon>
+                </div>
+                <div class="stat-text">
+                    <span class="stat-value">{{ viewModel.activeMembers }}</span>
+                    <span class="stat-label">Active Members</span>
+                </div>
+            </mat-card>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity-section">
+
+            <!-- Recent Entities -->
+            <div class="activity-panel">
+                <h3 class="activity-title">
+                    <mat-icon>business</mat-icon>
+                    New Entities <span class="activity-period">(last 7 days)</span>
+                </h3>
+
+                <div *ngIf="viewModel.recentEntities.length === 0" class="activity-empty">
+                    No new entities in the last 7 days.
+                </div>
+
+                <mat-table *ngIf="viewModel.recentEntities.length > 0"
+                           [dataSource]="viewModel.recentEntities"
+                           class="activity-table mat-elevation-z1">
+
+                    <ng-container matColumnDef="entityName">
+                        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.entityName }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="entityTypeName">
+                        <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.entityTypeName }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="createdAt">
+                        <mat-header-cell *matHeaderCellDef>Created</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.createdAt | date:'dd/MM/yyyy' }}</mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="recentEntityColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: recentEntityColumns;"></mat-row>
+
+                </mat-table>
+            </div>
+
+            <!-- Recent Members -->
+            <div class="activity-panel">
+                <h3 class="activity-title">
+                    <mat-icon>group_add</mat-icon>
+                    New Members <span class="activity-period">(last 7 days)</span>
+                </h3>
+
+                <div *ngIf="viewModel.recentMembers.length === 0" class="activity-empty">
+                    No new memberships in the last 7 days.
+                </div>
+
+                <mat-table *ngIf="viewModel.recentMembers.length > 0"
+                           [dataSource]="viewModel.recentMembers"
+                           class="activity-table mat-elevation-z1">
+
+                    <ng-container matColumnDef="userDisplayName">
+                        <mat-header-cell *matHeaderCellDef>User</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.userDisplayName }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="entityName">
+                        <mat-header-cell *matHeaderCellDef>Entity</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.entityName }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="joinedAt">
+                        <mat-header-cell *matHeaderCellDef>Joined</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.joinedAt | date:'dd/MM/yyyy' }}</mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="recentMemberColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: recentMemberColumns;"></mat-row>
+
+                </mat-table>
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</div>
