@@ -20,6 +20,7 @@ export const ENTITY_SHIFTS_ROUTE: string = "/dashboard/entity-shifts/:entityId";
 export const ENTITY_RULES_ROUTE: string = "/dashboard/entity-rules/:entityId";
 export const ENTITY_HOLIDAYS_ROUTE: string = "/dashboard/entity-holidays/:entityId";
 export const ENTITY_ABSENCES_ROUTE: string = "/dashboard/entity-absences/:entityId";
+export const ENTITY_BILLING_ROUTE: string = "/dashboard/entity-billing/:entityId";
 export const PUBLIC_PROFILE_ROUTE: string = "/dashboard/view/:type/:id";
 export const MY_INVITATIONS_ROUTE: string = "/dashboard/my-invitations";
 export const NOTIFICATIONS_ROUTE: string = "/dashboard/notifications";

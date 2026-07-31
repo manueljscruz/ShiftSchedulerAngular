@@ -4,8 +4,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EntityWorkerDTO } from '../../../shared/models/DTOs/Incoming/EntityWorkerDTO';
 import { SIDEBAR_ITEM_GROUP_ID } from '../../../shared/constants/UiContants';
-import { ABSENCE_ICON, ENTITY_ICON, ENTITY_SCHEDULE_ICON, HOLIDAYS_ICON, MEMBERS_ICON, SHIFT_ICON, SHIFT_RULES_ICON } from '../../../shared/constants/IconNamesConstants';
-import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE, ENTITY_SHIFTS_ROUTE, ENTITY_RULES_ROUTE, ENTITY_ABSENCES_ROUTE, ENTITY_HOLIDAYS_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
+import { ABSENCE_ICON, BILLING_ICON, ENTITY_ICON, ENTITY_SCHEDULE_ICON, HOLIDAYS_ICON, MEMBERS_ICON, SHIFT_ICON, SHIFT_RULES_ICON } from '../../../shared/constants/IconNamesConstants';
+import { ENTITY_FORM_ROUTE, ENTITY_SCHEDULE_ROUTE, ENTITY_WORKERS_ROUTE, ENTITY_SHIFTS_ROUTE, ENTITY_RULES_ROUTE, ENTITY_ABSENCES_ROUTE, ENTITY_HOLIDAYS_ROUTE, ENTITY_BILLING_ROUTE } from '../../../shared/constants/ViewRoutesConstants';
 
 @Injectable({
   providedIn: 'root'
@@ -160,6 +160,7 @@ export class SidebarNavigationService {
       items.push(new SideBarItemModel('', 'Holidays', HOLIDAYS_ICON, ENTITY_HOLIDAYS_ROUTE.replace(':entityId', encodedId), []));
       items.push(new SideBarItemModel('', 'Absences', ABSENCE_ICON, ENTITY_ABSENCES_ROUTE.replace(':entityId', encodedId), []));
       items.push(new SideBarItemModel('', 'Schedule', ENTITY_SCHEDULE_ICON, ENTITY_SCHEDULE_ROUTE.replace(':entityId', encodedId), []));
+      items.push(new SideBarItemModel('', 'Billing', BILLING_ICON, ENTITY_BILLING_ROUTE.replace(':entityId', encodedId), []));
     }
 
     return items;
