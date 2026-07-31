@@ -1,0 +1,110 @@
+<div id="entity-billing">
+
+    <div class="billing-header">
+        <div class="billing-header-text">
+            <h1 i18n>Billing</h1>
+            <p i18n>Track your current subscription, usage, and payment methods.</p>
+        </div>
+        <button mat-stroked-button (click)="openHistoryDialog()" *ngIf="!isLoading && summary">
+            <mat-icon>history</mat-icon>
+            <span i18n>View history</span>
+        </button>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <ng-container *ngIf="!isLoading && summary">
+
+        <!-- Stat Cards -->
+        <div class="billing-stat-grid">
+            <mat-card class="billing-stat-card">
+                <div class="stat-icon-wrap">
+                    <mat-icon>workspace_premium</mat-icon>
+                </div>
+                <div class="stat-text">
+                    <span class="stat-value">{{ summary.currentPlan.subscriptionPlanTypeName }}</span>
+                    <span class="stat-label" i18n>{{ summary.currentPlan.subscriptionDurationTypeName }} plan</span>
+                </div>
+            </mat-card>
+
+            <mat-card class="billing-stat-card">
+                <div class="stat-icon-wrap">
+                    <mat-icon>event_available</mat-icon>
+                </div>
+                <div class="stat-text">
+                    <span class="stat-value">{{ summary.currentPlan.startDate | date:'dd/MM/yyyy' }}</span>
+                    <span class="stat-label" i18n>Start date</span>
+                </div>
+            </mat-card>
+
+            <mat-card class="billing-stat-card">
+                <div class="stat-icon-wrap">
+                    <mat-icon>event_repeat</mat-icon>
+                </div>
+                <div class="stat-text">
+                    <span class="stat-value">{{ summary.currentPlan.endDate | date:'dd/MM/yyyy' }}</span>
+                    <span class="stat-label" i18n>Renewal date</span>
+                </div>
+            </mat-card>
+
+            <mat-card class="billing-stat-card">
+                <div class="stat-icon-wrap">
+                    <mat-icon>payments</mat-icon>
+                </div>
+                <div class="stat-text">
+                    <span class="stat-value">{{ summary.estimatedAmount | currency:'EUR' }}</span>
+                    <span class="stat-label" i18n>Estimated next payment</span>
+                </div>
+            </mat-card>
+        </div>
+
+        <!-- Usage -->
+        <div class="usage-section">
+            <h3 class="section-title" i18n>Usage</h3>
+
+            <div class="usage-item">
+                <div class="usage-item-header">
+                    <span i18n>Members</span>
+                    <span *ngIf="summary.usage.toScale && summary.usage.membersIncluded">
+                        {{ summary.usage.membersUsed }} / {{ summary.usage.membersIncluded }}
+                    </span>
+                    <span *ngIf="!summary.usage.toScale" i18n>{{ summary.usage.membersUsed }} (unlimited)</span>
+                </div>
+                <mat-progress-bar *ngIf="summary.usage.toScale && summary.usage.membersIncluded"
+                                   mode="determinate"
+                                   [value]="membersProgress">
+                </mat-progress-bar>
+            </div>
+
+            <div class="usage-item">
+                <div class="usage-item-header">
+                    <span i18n>Schedule generations</span>
+                    <span>{{ summary.usage.generationsUsed }} / {{ summary.usage.generationsIncluded }}</span>
+                </div>
+                <mat-progress-bar mode="determinate" [value]="generationsProgress"></mat-progress-bar>
+            </div>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="payment-methods-section">
+            <h3 class="section-title" i18n>Payment methods</h3>
+
+            <div *ngIf="summary.paymentMethods.length === 0" class="activity-empty" i18n>
+                No payment methods on file.
+            </div>
+
+            <div class="payment-method-list" *ngIf="summary.paymentMethods.length > 0">
+                <div class="payment-method-row" *ngFor="let pm of summary.paymentMethods">
+                    <mat-icon>credit_card</mat-icon>
+                    <span>{{ pm.cardBrand }} •••• {{ pm.lastFourDigits }}</span>
+                    <span class="default-badge" *ngIf="pm.isDefault" i18n>Default</span>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+
+</div>
