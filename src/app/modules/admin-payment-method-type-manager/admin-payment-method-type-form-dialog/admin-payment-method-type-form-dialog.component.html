@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'New' }} Payment Method Type</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="form">
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" placeholder="e.g. Card, MBWay, PayPal" />
+            <mat-error *ngIf="form.get('name')?.hasError('required')">Required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Available Countries</mat-label>
+            <input matInput formControlName="countryCodesText" placeholder="e.g. PT, DE, FR" />
+            <mat-hint>Comma-separated ISO 3166-1 alpha-2 country codes. Leave empty to make this method available in every country.</mat-hint>
+        </mat-form-field>
+
+        <div class="toggles-row">
+            <mat-slide-toggle formControlName="isActive" color="primary">Active</mat-slide-toggle>
+        </div>
+
+        <div *ngIf="data.languages.length > 0" class="section">
+            <p class="section-title">Localizations</p>
+            <div formArrayName="localizations">
+                <div *ngFor="let locCtrl of localizationsArray.controls; let i = index"
+                     [formGroupName]="i"
+                     class="localization-row">
+                    <span class="lang-code">{{ locCtrl.get('localizationCode')?.value }}</span>
+                    <mat-form-field appearance="outline" class="loc-field">
+                        <mat-label>Display name</mat-label>
+                        <input matInput formControlName="displayValue" />
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="submit()" [disabled]="form.invalid">
+        {{ isEdit ? 'Save' : 'Create' }}
+    </button>
+</mat-dialog-actions>

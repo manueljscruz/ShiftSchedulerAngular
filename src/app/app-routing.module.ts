@@ -54,6 +54,11 @@ import { AdminHolidayBehaviourManagerComponent } from './modules/admin-holiday-b
 import { AdminRuleTypeManagerComponent } from './modules/admin-rule-type-manager/admin-rule-type-manager.component';
 import { AdminHolidayCatalogManagerComponent } from './modules/admin-holiday-catalog-manager/admin-holiday-catalog-manager.component';
 import { AdminNotificationTypeManagerComponent } from './modules/admin-notification-type-manager/admin-notification-type-manager.component';
+import { AdminSubscriptionPlanTypeManagerComponent } from './modules/admin-subscription-plan-type-manager/admin-subscription-plan-type-manager.component';
+import { AdminSubscriptionDurationTypeManagerComponent } from './modules/admin-subscription-duration-type-manager/admin-subscription-duration-type-manager.component';
+import { AdminPaymentMethodTypeManagerComponent } from './modules/admin-payment-method-type-manager/admin-payment-method-type-manager.component';
+import { AdminSubscriptionPlanDurationPriceManagerComponent } from './modules/admin-subscription-plan-duration-price-manager/admin-subscription-plan-duration-price-manager.component';
+import { AdminCampaignManagerComponent } from './modules/admin-campaign-manager/admin-campaign-manager.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -74,6 +79,11 @@ const routes: Routes = [
     { path: 'configuration/rule-types',          component: AdminRuleTypeManagerComponent },
     { path: 'configuration/holiday-catalogs',    component: AdminHolidayCatalogManagerComponent },
     { path: 'configuration/notification-types',  component: AdminNotificationTypeManagerComponent },
+    { path: 'configuration/subscription-plan-types',           component: AdminSubscriptionPlanTypeManagerComponent },
+    { path: 'configuration/subscription-duration-types',       component: AdminSubscriptionDurationTypeManagerComponent },
+    { path: 'configuration/payment-method-types',              component: AdminPaymentMethodTypeManagerComponent },
+    { path: 'configuration/subscription-plan-duration-prices', component: AdminSubscriptionPlanDurationPriceManagerComponent },
+    { path: 'configuration/campaigns',                         component: AdminCampaignManagerComponent },
     { path: 'configuration',                     component: AdminTypeManagerComponent },
     { path: 'configuration/:typeKey',            component: AdminTypeManagerComponent }
   ]},

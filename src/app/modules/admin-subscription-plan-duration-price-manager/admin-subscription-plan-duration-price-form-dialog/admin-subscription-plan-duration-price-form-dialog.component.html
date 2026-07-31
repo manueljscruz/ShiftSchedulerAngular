@@ -1,0 +1,67 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'New' }} Subscription Price</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="form">
+
+        <div class="row-2">
+            <mat-form-field appearance="outline" class="flex-1">
+                <mat-label>Plan Type</mat-label>
+                <mat-select formControlName="subscriptionPlanTypeId">
+                    <mat-option *ngFor="let t of data.planTypes" [value]="t.id">{{ t.name }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('subscriptionPlanTypeId')?.hasError('required')">Required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="flex-1">
+                <mat-label>Duration Type</mat-label>
+                <mat-select formControlName="subscriptionDurationTypeId">
+                    <mat-option *ngFor="let d of data.durationTypes" [value]="d.id">{{ d.name }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('subscriptionDurationTypeId')?.hasError('required')">Required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="row-2">
+            <mat-form-field appearance="outline" class="flex-1">
+                <mat-label>Base Price</mat-label>
+                <input matInput type="number" formControlName="basePrice" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="flex-1">
+                <mat-label>Members Included</mat-label>
+                <input matInput type="number" formControlName="scaleRequirement" />
+            </mat-form-field>
+        </div>
+
+        <div class="toggles-row">
+            <mat-slide-toggle formControlName="toScale" color="primary">Scale price above member limit</mat-slide-toggle>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width" *ngIf="form.get('toScale')?.value">
+            <mat-label>Price Per Extra Member</mat-label>
+            <input matInput type="number" formControlName="pricePerExtraMember" />
+        </mat-form-field>
+
+        <div class="row-2">
+            <mat-form-field appearance="outline" class="flex-1">
+                <mat-label>Generations Included</mat-label>
+                <input matInput type="number" formControlName="includedGenerations" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="flex-1">
+                <mat-label>Price Per Extra Generation</mat-label>
+                <input matInput type="number" formControlName="pricePerExtraGeneration" />
+            </mat-form-field>
+        </div>
+
+        <div class="toggles-row">
+            <mat-slide-toggle formControlName="isPublicPlan" color="primary">Public (visible for self-service)</mat-slide-toggle>
+            <mat-slide-toggle formControlName="isActive" color="primary">Active</mat-slide-toggle>
+        </div>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="submit()" [disabled]="form.invalid">
+        {{ isEdit ? 'Save' : 'Create' }}
+    </button>
+</mat-dialog-actions>

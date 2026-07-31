@@ -1,0 +1,10 @@
+.full-width { width: 100%; }
+.row-2 { display: flex; gap: 12px; }
+.flex-grow { flex: 1; }
+.toggles-row { display: flex; gap: 24px; margin: 8px 0 16px; }
+.section { margin-top: 16px; }
+.section-title { font-size: 13px; font-weight: 500; color: rgba(0,0,0,0.6); margin: 0 0 8px; }
+.localization-row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 4px; }
+.lang-code { font-size: 12px; font-weight: 600; color: #1a237e; min-width: 32px; text-transform: uppercase; padding-top: 16px; }
+.loc-field { flex: 1; }
+mat-dialog-content { min-width: 460px; max-height: 74vh; }

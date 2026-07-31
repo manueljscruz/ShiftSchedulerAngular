@@ -1,0 +1,27 @@
+#type-manager-container { display: flex; height: 100%; min-height: 0; overflow: hidden; }
+
+#type-selector { width: 220px; min-width: 220px; background: #f5f5f5; border-right: 1px solid #e0e0e0; padding: 16px 0; overflow-y: auto; }
+
+.type-selector-title { font-size: 11px; font-weight: 700; color: rgba(0,0,0,0.45); text-transform: uppercase; letter-spacing: 0.08em; padding: 0 16px; margin: 0 0 8px; }
+.type-selector-subtitle { font-size: 11px; font-weight: 700; color: rgba(0,0,0,0.45); text-transform: uppercase; letter-spacing: 0.08em; padding: 12px 16px 0; margin: 0 0 8px; border-top: 1px solid #e0e0e0; }
+
+.type-selector-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; text-decoration: none; color: rgba(0,0,0,0.7); font-size: 14px; transition: background 0.15s; cursor: pointer; }
+.type-selector-item mat-icon { font-size: 18px; width: 18px; height: 18px; color: rgba(0,0,0,0.5); }
+.type-selector-item:hover { background: rgba(0,0,0,0.05); }
+.type-selector-item.active { background: rgba(26,35,126,0.08); color: #1a237e; font-weight: 600; }
+.type-selector-item.active mat-icon { color: #1a237e; }
+
+#type-content { flex: 1; padding: 24px; overflow-y: auto; }
+
+.type-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.type-header-left { display: flex; align-items: center; gap: 10px; }
+.type-header-left mat-icon { font-size: 26px; width: 26px; height: 26px; color: #1a237e; }
+.type-header-left h2 { margin: 0; font-size: 20px; font-weight: 600; color: #1a237e; }
+
+.type-table { width: 100%; }
+.sub-text { font-size: 11px; color: rgba(0,0,0,0.5); margin-top: 2px; }
+.localization-summary { font-size: 12px; color: rgba(0,0,0,0.6); }
+.actions-cell { justify-content: flex-end; }
+.loading-container { display: flex; justify-content: center; padding: 48px 0; }
+.empty-state { display: flex; flex-direction: column; align-items: center; padding: 48px 0; color: rgba(0,0,0,0.38); gap: 8px; }
+.empty-state mat-icon { font-size: 40px; width: 40px; height: 40px; }

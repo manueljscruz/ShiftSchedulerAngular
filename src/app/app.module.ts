@@ -140,6 +140,16 @@ import { AdminHolidayCatalogManagerComponent } from './modules/admin-holiday-cat
 import { AdminHolidayCatalogFormDialogComponent } from './modules/admin-holiday-catalog-manager/admin-holiday-catalog-form-dialog/admin-holiday-catalog-form-dialog.component';
 import { AdminNotificationTypeManagerComponent } from './modules/admin-notification-type-manager/admin-notification-type-manager.component';
 import { AdminNotificationTypeFormDialogComponent } from './modules/admin-notification-type-manager/admin-notification-type-form-dialog/admin-notification-type-form-dialog.component';
+import { AdminSubscriptionPlanTypeManagerComponent } from './modules/admin-subscription-plan-type-manager/admin-subscription-plan-type-manager.component';
+import { AdminSubscriptionPlanTypeFormDialogComponent } from './modules/admin-subscription-plan-type-manager/admin-subscription-plan-type-form-dialog/admin-subscription-plan-type-form-dialog.component';
+import { AdminSubscriptionDurationTypeManagerComponent } from './modules/admin-subscription-duration-type-manager/admin-subscription-duration-type-manager.component';
+import { AdminSubscriptionDurationTypeFormDialogComponent } from './modules/admin-subscription-duration-type-manager/admin-subscription-duration-type-form-dialog/admin-subscription-duration-type-form-dialog.component';
+import { AdminPaymentMethodTypeManagerComponent } from './modules/admin-payment-method-type-manager/admin-payment-method-type-manager.component';
+import { AdminPaymentMethodTypeFormDialogComponent } from './modules/admin-payment-method-type-manager/admin-payment-method-type-form-dialog/admin-payment-method-type-form-dialog.component';
+import { AdminSubscriptionPlanDurationPriceManagerComponent } from './modules/admin-subscription-plan-duration-price-manager/admin-subscription-plan-duration-price-manager.component';
+import { AdminSubscriptionPlanDurationPriceFormDialogComponent } from './modules/admin-subscription-plan-duration-price-manager/admin-subscription-plan-duration-price-form-dialog/admin-subscription-plan-duration-price-form-dialog.component';
+import { AdminCampaignManagerComponent } from './modules/admin-campaign-manager/admin-campaign-manager.component';
+import { AdminCampaignFormDialogComponent } from './modules/admin-campaign-manager/admin-campaign-form-dialog/admin-campaign-form-dialog.component';
 
 @NgModule({
   declarations: [
@@ -238,7 +248,17 @@ import { AdminNotificationTypeFormDialogComponent } from './modules/admin-notifi
     AdminHolidayCatalogManagerComponent,
     AdminHolidayCatalogFormDialogComponent,
     AdminNotificationTypeManagerComponent,
-    AdminNotificationTypeFormDialogComponent
+    AdminNotificationTypeFormDialogComponent,
+    AdminSubscriptionPlanTypeManagerComponent,
+    AdminSubscriptionPlanTypeFormDialogComponent,
+    AdminSubscriptionDurationTypeManagerComponent,
+    AdminSubscriptionDurationTypeFormDialogComponent,
+    AdminPaymentMethodTypeManagerComponent,
+    AdminPaymentMethodTypeFormDialogComponent,
+    AdminSubscriptionPlanDurationPriceManagerComponent,
+    AdminSubscriptionPlanDurationPriceFormDialogComponent,
+    AdminCampaignManagerComponent,
+    AdminCampaignFormDialogComponent
   ],
   imports: [
     BrowserModule,

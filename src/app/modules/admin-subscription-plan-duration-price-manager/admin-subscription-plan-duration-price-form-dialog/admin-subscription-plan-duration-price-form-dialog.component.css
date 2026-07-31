@@ -1,0 +1,5 @@
+.full-width { width: 100%; }
+.row-2 { display: flex; gap: 12px; }
+.flex-1 { flex: 1; }
+.toggles-row { display: flex; gap: 24px; margin: 8px 0 16px; flex-wrap: wrap; }
+mat-dialog-content { min-width: 480px; max-height: 74vh; }

@@ -1,0 +1,98 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'New' }} Campaign</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="form">
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" placeholder="e.g. Black Friday" />
+            <mat-error *ngIf="form.get('name')?.hasError('required')">Required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description" />
+        </mat-form-field>
+
+        <div class="row-2">
+            <mat-form-field appearance="outline" class="flex-1">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="startPicker" formControlName="startDate" />
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+                <mat-error *ngIf="form.get('startDate')?.hasError('required')">Required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="flex-1">
+                <mat-label>End Date (optional)</mat-label>
+                <input matInput [matDatepicker]="endPicker" formControlName="endDate" />
+                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="row-2">
+            <mat-form-field appearance="outline" class="flex-1">
+                <mat-label>Discount Percentage</mat-label>
+                <input matInput type="number" formControlName="promotionPercent" />
+                <span matSuffix>%</span>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="flex-1">
+                <mat-label>Max Redemptions</mat-label>
+                <input matInput type="number" formControlName="maxRedemptions" />
+                <mat-hint>0 = unlimited</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Coupon Code (optional)</mat-label>
+            <input matInput formControlName="couponCode" />
+            <mat-hint>Leave empty for automatic application.</mat-hint>
+        </mat-form-field>
+
+        <div class="toggles-row">
+            <mat-slide-toggle formControlName="isActive" color="primary">Active</mat-slide-toggle>
+        </div>
+
+        <div *ngIf="data.planOptions.length > 0" class="section">
+            <p class="section-title">Eligible Subscription Prices</p>
+            <div class="plans-grid">
+                <mat-checkbox
+                    *ngFor="let plan of data.planOptions"
+                    [checked]="isPlanSelected(plan.id)"
+                    (change)="togglePlan(plan.id)"
+                    color="primary">
+                    {{ plan.label }}
+                </mat-checkbox>
+            </div>
+        </div>
+
+        <div *ngIf="data.languages.length > 0" class="section">
+            <p class="section-title">Localizations</p>
+            <div formArrayName="localizations">
+                <div *ngFor="let locCtrl of localizationsArray.controls; let i = index"
+                     [formGroupName]="i"
+                     class="localization-block">
+                    <span class="lang-code">{{ locCtrl.get('localizationCode')?.value }}</span>
+                    <div class="loc-fields">
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Localized name</mat-label>
+                            <input matInput formControlName="nameDisplayValue" />
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Localized description</mat-label>
+                            <input matInput formControlName="descriptionDisplayValue" />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="submit()" [disabled]="form.invalid">
+        {{ isEdit ? 'Save' : 'Create' }}
+    </button>
+</mat-dialog-actions>

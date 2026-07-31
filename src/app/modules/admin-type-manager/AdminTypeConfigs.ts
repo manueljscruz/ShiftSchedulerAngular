@@ -17,6 +17,11 @@ export const ADMIN_TYPE_CONFIGS: TypeManagerConfig[] = [
     { typeKey: 'rule-types',           label: 'Rule Types',           icon: 'rule',          routePath: 'configuration/rule-types'          },
     { typeKey: 'holiday-catalogs',     label: 'Holiday Catalogs',     icon: 'menu_book',     routePath: 'configuration/holiday-catalogs'    },
     { typeKey: 'notification-types',   label: 'Notification Types',   icon: 'notifications', routePath: 'configuration/notification-types'  },
+    { typeKey: 'subscription-plan-types',           label: 'Subscription Plan Types',     icon: 'workspace_premium', routePath: 'configuration/subscription-plan-types'           },
+    { typeKey: 'subscription-duration-types',        label: 'Subscription Duration Types', icon: 'schedule',          routePath: 'configuration/subscription-duration-types'       },
+    { typeKey: 'payment-method-types',               label: 'Payment Method Types',        icon: 'payments',          routePath: 'configuration/payment-method-types'              },
+    { typeKey: 'subscription-plan-duration-prices',  label: 'Subscription Prices',         icon: 'sell',              routePath: 'configuration/subscription-plan-duration-prices' },
+    { typeKey: 'campaigns',                          label: 'Campaigns',                   icon: 'campaign',          routePath: 'configuration/campaigns'                         },
 ];
 
 export function getTypeConfig(typeKey: string): TypeManagerConfig | undefined {
