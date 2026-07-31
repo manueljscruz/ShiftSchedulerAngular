@@ -55,6 +55,8 @@ import {MatTableModule} from '@angular/material/table';
 import { GenericWarningDialogComponent } from './shared/components/generic-warning-dialog/generic-warning-dialog.component';
 import { EntityRulesComponent } from './modules/entity-rules/entity-rules.component';
 import { EntityAbsencesComponent } from './modules/entity-absences/entity-absences.component';
+import { EntityBillingComponent } from './modules/entity-billing/entity-billing.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { EntityAbsencesViewComponent } from './modules/entity-absences/entity-absences-view/entity-absences-view.component';
 import { EntityAbsencesFormComponent } from './modules/entity-absences/entity-absences-form/entity-absences-form.component';
 import { EntityHolidaysComponent } from './modules/entity-holidays/entity-holidays.component';
@@ -258,7 +260,8 @@ import { AdminCampaignFormDialogComponent } from './modules/admin-campaign-manag
     AdminSubscriptionPlanDurationPriceManagerComponent,
     AdminSubscriptionPlanDurationPriceFormDialogComponent,
     AdminCampaignManagerComponent,
-    AdminCampaignFormDialogComponent
+    AdminCampaignFormDialogComponent,
+    EntityBillingComponent
   ],
   imports: [
     BrowserModule,
@@ -272,6 +275,7 @@ import { AdminCampaignFormDialogComponent } from './modules/admin-campaign-manag
     HttpClientModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatListModule,
     MatCheckboxModule,
     MatIconModule,
