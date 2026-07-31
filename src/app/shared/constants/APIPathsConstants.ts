@@ -145,3 +145,8 @@ export const ADMIN_SUBSCRIPTION_DURATION_TYPES_URL: string = BASE_API_URL + "Adm
 export const ADMIN_PAYMENT_METHOD_TYPES_URL: string = BASE_API_URL + "AdminPaymentMethodTypes";
 export const ADMIN_SUBSCRIPTION_PLAN_DURATION_PRICES_URL: string = BASE_API_URL + "AdminSubscriptionPlanDurationPrices";
 export const ADMIN_CAMPAIGNS_URL: string = BASE_API_URL + "AdminCampaigns";
+
+//#endregion
+
+//#region BILLING
+export const ENTITY_BILLING_URL: string = BASE_API_URL + "EntityBilling";

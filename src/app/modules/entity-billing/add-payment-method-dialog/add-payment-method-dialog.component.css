@@ -1,0 +1,25 @@
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+}
+
+.card-hint {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin: 0 0 12px;
+}
+
+.card-element-container {
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.error-message {
+    color: #dc2626;
+    font-size: 0.85rem;
+    margin: 12px 0 0;
+}
