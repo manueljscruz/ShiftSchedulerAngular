@@ -13,6 +13,7 @@ import { EntityFormComponent } from './modules/entity-form/entity-form.component
 import { EntityShiftsComponent } from './modules/entity-shifts/entity-shifts.component';
 import { EntityRulesComponent } from './modules/entity-rules/entity-rules.component';
 import { EntityAbsencesComponent } from './modules/entity-absences/entity-absences.component';
+import { EntityBillingComponent } from './modules/entity-billing/entity-billing.component';
 import { EntityHolidaysComponent } from './modules/entity-holidays/entity-holidays.component';
 import { ConfirmEmailComponent } from './modules/confirm-email/confirm-email.component';
 import { HelpdocsComponent } from './modules/helpdocs/helpdocs.component';
@@ -103,6 +104,7 @@ const routes: Routes = [
     { path: 'entity-shifts/:entityId', component: EntityShiftsComponent},
     { path: 'entity-rules/:entityId', component: EntityRulesComponent},
     { path: 'entity-absences/:entityId', component: EntityAbsencesComponent},
+    { path: 'entity-billing/:entityId', component: EntityBillingComponent},
     { path: 'entity-holidays/:entityId', component: EntityHolidaysComponent},
     { path: 'help', component: HelpdocsComponent, children: [
       { path: '', redirectTo: 'intro', pathMatch: 'full' },
