@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
@@ -10,6 +11,7 @@ import { AuthService } from '../../core/services/api/AuthService';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
+import { SubscriptionHistoryDialogComponent } from './subscription-history-dialog/subscription-history-dialog.component';
 
 @Component({
   selector: 'entity-billing',
@@ -29,6 +31,7 @@ export class EntityBillingComponent implements OnInit, OnDestroy {
   public isLoading: boolean = false;
 
   constructor(private route: ActivatedRoute,
+    private dialog: MatDialog,
     private billingService: BillingService,
     private authService: AuthService,
     private snackbarManagerService: SnackbarManagerService,
@@ -77,6 +80,28 @@ export class EntityBillingComponent implements OnInit, OnDestroy {
     }
 
     this.summary = summary;
+  }
+
+  async openHistoryDialog(): Promise<void> {
+    if (!this.loggedUser) {
+      return;
+    }
+
+    this.loadingScreenService.changeLoadingState(true);
+    const request = new BaseViewModelRequestDTO(this.currentEntityId, this.loggedUser.userId);
+    const history = await this.billingService.getHistory(request);
+    this.loadingScreenService.changeLoadingState(false);
+
+    const dialogRef = this.dialog.open(SubscriptionHistoryDialogComponent, {
+      width: '700px',
+      data: { history }
+    });
+
+    dialogRef.componentInstance.closeOp.subscribe((result: boolean) => {
+      if (result) {
+        dialogRef.close();
+      }
+    });
   }
 
   get membersProgress(): number {

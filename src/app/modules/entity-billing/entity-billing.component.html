@@ -1,8 +1,14 @@
 <div id="entity-billing">
 
     <div class="billing-header">
-        <h1 i18n>Billing</h1>
-        <p i18n>Track your current subscription, usage, and payment methods.</p>
+        <div class="billing-header-text">
+            <h1 i18n>Billing</h1>
+            <p i18n>Track your current subscription, usage, and payment methods.</p>
+        </div>
+        <button mat-stroked-button (click)="openHistoryDialog()" *ngIf="!isLoading && summary">
+            <mat-icon>history</mat-icon>
+            <span i18n>View history</span>
+        </button>
     </div>
 
     <!-- Loading -->

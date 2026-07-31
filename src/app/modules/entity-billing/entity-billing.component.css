@@ -5,14 +5,21 @@
     max-width: 960px;
 }
 
-.billing-header h1 {
+.billing-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.billing-header-text h1 {
     font-size: 1.6rem;
     font-weight: 700;
     color: #1e3a5f;
     margin: 0 0 6px;
 }
 
-.billing-header p {
+.billing-header-text p {
     font-size: 0.9rem;
     color: #64748b;
     margin: 0;

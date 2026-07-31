@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { BillingSummaryDTO } from '../../../shared/models/DTOs/Incoming/billing/BillingSummaryDTO';
+import { SubscriptionHistoryItemDTO } from '../../../shared/models/DTOs/Incoming/billing/SubscriptionHistoryItemDTO';
 import { ENTITY_BILLING_URL } from '../../../shared/constants/APIPathsConstants';
 
 @Injectable({
@@ -26,5 +27,21 @@ export class BillingService {
         }
 
         return summary;
+    }
+
+    /// <summary>
+    /// Get the subscription history for an entity
+    /// </summary>
+    async getHistory(request: BaseViewModelRequestDTO): Promise<SubscriptionHistoryItemDTO[]> {
+        let history: SubscriptionHistoryItemDTO[] = [];
+
+        try {
+            history = await this.http.get<SubscriptionHistoryItemDTO[]>(`${ENTITY_BILLING_URL}/${request.entityId}/history`).toPromise() as SubscriptionHistoryItemDTO[];
+        }
+        catch (error: any) {
+            console.error('Error fetching subscription history:', error.message);
+        }
+
+        return history;
     }
 }

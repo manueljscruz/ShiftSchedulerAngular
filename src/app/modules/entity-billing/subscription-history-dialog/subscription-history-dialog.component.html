@@ -1,0 +1,50 @@
+<div id="subscription-history-dialog">
+    <h2 mat-dialog-title i18n>Subscription history</h2>
+
+    <mat-dialog-content>
+        <ng-container *ngIf="history.length > 0">
+            <mat-table [dataSource]="history" class="history-table mat-elevation-z1">
+
+                <ng-container matColumnDef="plan">
+                    <mat-header-cell *matHeaderCellDef i18n>Plan</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{ row.subscriptionPlanTypeName }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="duration">
+                    <mat-header-cell *matHeaderCellDef i18n>Duration</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{ row.subscriptionDurationTypeName }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="startDate">
+                    <mat-header-cell *matHeaderCellDef i18n>Start date</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{ row.startDate | date:'dd/MM/yyyy' }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="endDate">
+                    <mat-header-cell *matHeaderCellDef i18n>End date</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{ row.endDate | date:'dd/MM/yyyy' }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef i18n>Status</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{ row.status }}</mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="historyColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: historyColumns;"></mat-row>
+
+            </mat-table>
+        </ng-container>
+
+        <div *ngIf="history.length === 0" class="history-empty" i18n>
+            No subscription history found.
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button mat-fab extended class="secondary-color-bg flex-1" (click)="closeDialog()">
+            <mat-icon>{{CANCEL_ICON}}</mat-icon>
+            <span i18n>Close</span>
+        </button>
+    </mat-dialog-actions>
+</div>

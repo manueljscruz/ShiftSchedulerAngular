@@ -56,6 +56,7 @@ import { GenericWarningDialogComponent } from './shared/components/generic-warni
 import { EntityRulesComponent } from './modules/entity-rules/entity-rules.component';
 import { EntityAbsencesComponent } from './modules/entity-absences/entity-absences.component';
 import { EntityBillingComponent } from './modules/entity-billing/entity-billing.component';
+import { SubscriptionHistoryDialogComponent } from './modules/entity-billing/subscription-history-dialog/subscription-history-dialog.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { EntityAbsencesViewComponent } from './modules/entity-absences/entity-absences-view/entity-absences-view.component';
 import { EntityAbsencesFormComponent } from './modules/entity-absences/entity-absences-form/entity-absences-form.component';
@@ -261,7 +262,8 @@ import { AdminCampaignFormDialogComponent } from './modules/admin-campaign-manag
     AdminSubscriptionPlanDurationPriceFormDialogComponent,
     AdminCampaignManagerComponent,
     AdminCampaignFormDialogComponent,
-    EntityBillingComponent
+    EntityBillingComponent,
+    SubscriptionHistoryDialogComponent
   ],
   imports: [
     BrowserModule,
