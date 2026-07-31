@@ -1,0 +1,32 @@
+<div id="add-payment-method-dialog">
+    <h2 mat-dialog-title i18n>Add payment method</h2>
+
+    <mat-dialog-content>
+
+        <div *ngIf="isLoading" class="loading-container">
+            <mat-spinner diameter="32"></mat-spinner>
+        </div>
+
+        <ng-container *ngIf="!isLoading">
+            <p class="card-hint" i18n>Card details are handled directly by Stripe and never reach our servers.</p>
+
+            <div #cardElementContainer class="card-element-container"></div>
+
+            <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+        </ng-container>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button mat-fab extended class="secondary-color-bg flex-1" (click)="cancel()" [disabled]="isSubmitting">
+            <mat-icon>{{CANCEL_ICON}}</mat-icon>
+            <span i18n>Cancel</span>
+        </button>
+        <button mat-fab extended class="primary-color-bg flex-1" (click)="submit()" [disabled]="isLoading || isSubmitting">
+            <mat-icon *ngIf="isSubmitting">
+                <mat-spinner diameter="18"></mat-spinner>
+            </mat-icon>
+            <span i18n>Save card</span>
+        </button>
+    </mat-dialog-actions>
+</div>

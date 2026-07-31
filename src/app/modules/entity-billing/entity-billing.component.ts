@@ -1,15 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { UserDTO } from '../../shared/models/DTOs/Incoming/UserDTO';
 import { BaseViewModelRequestDTO } from '../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
-import { BillingSummaryDTO } from '../../shared/models/DTOs/Incoming/billing/BillingSummaryDTO';
+import { BillingSummaryDTO, PaymentMethodSummaryDTO } from '../../shared/models/DTOs/Incoming/billing/BillingSummaryDTO';
 import { BillingService } from '../../core/services/api/BillingService';
 import { AuthService } from '../../core/services/api/AuthService';
 import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.service';
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
+import { AddPaymentMethodDialogComponent } from './add-payment-method-dialog/add-payment-method-dialog.component';
+import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 
 @Component({
   selector: 'entity-billing',
@@ -29,6 +32,7 @@ export class EntityBillingComponent implements OnInit, OnDestroy {
   public isLoading: boolean = false;
 
   constructor(private route: ActivatedRoute,
+    private dialog: MatDialog,
     private billingService: BillingService,
     private authService: AuthService,
     private snackbarManagerService: SnackbarManagerService,
@@ -77,6 +81,80 @@ export class EntityBillingComponent implements OnInit, OnDestroy {
     }
 
     this.summary = summary;
+  }
+
+  openAddPaymentMethodDialog(): void {
+    const dialogRef = this.dialog.open(AddPaymentMethodDialogComponent, {
+      width: '500px',
+      data: { entityId: this.currentEntityId }
+    });
+
+    dialogRef.componentInstance.closeOp.subscribe((result: PaymentMethodSummaryDTO | null) => {
+      if (result && this.summary) {
+        if (result.isDefault) {
+          this.summary.paymentMethods.forEach(pm => pm.isDefault = false);
+        }
+        this.summary.paymentMethods.push(result);
+        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Payment method added successfully.'));
+      }
+      dialogRef.close();
+    });
+  }
+
+  async setDefaultPaymentMethod(paymentMethod: PaymentMethodSummaryDTO): Promise<void> {
+    if (!this.summary || paymentMethod.isDefault) {
+      return;
+    }
+
+    this.loadingScreenService.changeLoadingState(true);
+    const success = await this.billingService.setDefaultPaymentMethod(this.currentEntityId, paymentMethod.paymentMethodId);
+    this.loadingScreenService.changeLoadingState(false);
+
+    if (success) {
+      this.summary.paymentMethods.forEach(pm => pm.isDefault = pm.paymentMethodId === paymentMethod.paymentMethodId);
+      this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Default payment method updated.'));
+    }
+    else {
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to update the default payment method.'));
+    }
+  }
+
+  openRemovePaymentMethodDialog(paymentMethod: PaymentMethodSummaryDTO): void {
+    const dialogRef = this.dialog.open(GenericWarningDialogComponent, {
+      width: '500px',
+      data: {
+        warningTitle: 'Remove payment method',
+        warningMessage: `Are you sure you want to remove the card ending in ${paymentMethod.lastFourDigits}?`,
+        isDeleteWarning: true
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        await this.removePaymentMethod(paymentMethod);
+      }
+    });
+  }
+
+  private async removePaymentMethod(paymentMethod: PaymentMethodSummaryDTO): Promise<void> {
+    if (!this.summary) {
+      return;
+    }
+
+    this.loadingScreenService.changeLoadingState(true);
+    const success = await this.billingService.removePaymentMethod(this.currentEntityId, paymentMethod.paymentMethodId);
+    this.loadingScreenService.changeLoadingState(false);
+
+    if (success) {
+      const index = this.summary.paymentMethods.findIndex(pm => pm.paymentMethodId === paymentMethod.paymentMethodId);
+      if (index >= 0) {
+        this.summary.paymentMethods.splice(index, 1);
+      }
+      this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Payment method removed.'));
+    }
+    else {
+      this.snackbarManagerService.showFailSnackbar(new SnackbarUIModel(5, 'Failed to remove the payment method.'));
+    }
   }
 
   get membersProgress(): number {
