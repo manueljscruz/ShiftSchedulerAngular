@@ -3,8 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { BaseViewModelRequestDTO } from '../../../shared/models/DTOs/Outgoing/BaseViewModelRequestDTO';
 import { BillingSummaryDTO, PaymentMethodSummaryDTO } from '../../../shared/models/DTOs/Incoming/billing/BillingSummaryDTO';
 import { SetupIntentDTO } from '../../../shared/models/DTOs/Incoming/billing/SetupIntentDTO';
-import { AvailablePlanDTO } from '../../../shared/models/DTOs/Incoming/billing/AvailablePlanDTO';
-import { SubscribeRequestDTO } from '../../../shared/models/DTOs/Outgoing/billing/SubscribeRequestDTO';
 import { ENTITY_BILLING_URL } from '../../../shared/constants/APIPathsConstants';
 
 @Injectable({
@@ -29,36 +27,6 @@ export class BillingService {
         }
 
         return summary;
-    }
-
-    /// <summary>
-    /// Get the public, active subscription plan+duration combinations available for self-serve subscription
-    /// </summary>
-    async getAvailablePlans(): Promise<AvailablePlanDTO[]> {
-        let plans: AvailablePlanDTO[] = [];
-
-        try {
-            plans = await this.http.get<AvailablePlanDTO[]>(`${ENTITY_BILLING_URL}/available-plans`).toPromise() as AvailablePlanDTO[];
-        }
-        catch (error: any) {
-            console.error('Error fetching available plans:', error.message);
-        }
-
-        return plans;
-    }
-
-    /// <summary>
-    /// Subscribes (or changes) the entity's subscription plan, using an already-saved payment method
-    /// </summary>
-    async subscribe(entityId: string, request: SubscribeRequestDTO): Promise<boolean> {
-        try {
-            await this.http.post(`${ENTITY_BILLING_URL}/${entityId}/subscribe`, request).toPromise();
-            return true;
-        }
-        catch (error: any) {
-            console.error('Error subscribing to plan:', error.message);
-            return false;
-        }
     }
 
     /// <summary>

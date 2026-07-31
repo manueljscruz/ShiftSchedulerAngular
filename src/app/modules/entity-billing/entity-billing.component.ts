@@ -12,7 +12,6 @@ import { SnackbarManagerService } from '../../core/services/ui/snackbar-manager.
 import { LoadingSpinnerManagerService } from '../../core/services/ui/loading-spinner-manager.service';
 import { SnackbarUIModel } from '../../shared/models/UI/SnackbarUIModel';
 import { AddPaymentMethodDialogComponent } from './add-payment-method-dialog/add-payment-method-dialog.component';
-import { ChangePlanDialogComponent } from './change-plan-dialog/change-plan-dialog.component';
 import { GenericWarningDialogComponent } from '../../shared/components/generic-warning-dialog/generic-warning-dialog.component';
 
 @Component({
@@ -99,30 +98,6 @@ export class EntityBillingComponent implements OnInit, OnDestroy {
         this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Payment method added successfully.'));
       }
       dialogRef.close();
-    });
-  }
-
-  openChangePlanDialog(): void {
-    if (!this.summary) {
-      return;
-    }
-
-    const dialogRef = this.dialog.open(ChangePlanDialogComponent, {
-      width: '600px',
-      data: { entityId: this.currentEntityId, paymentMethods: this.summary.paymentMethods }
-    });
-
-    dialogRef.componentInstance.closeOp.subscribe(async (subscribed: boolean) => {
-      dialogRef.close();
-      if (subscribed) {
-        this.snackbarManagerService.showSuccessSnackbar(new SnackbarUIModel(5, 'Subscription updated successfully.'));
-        await this.loadViewData();
-      }
-    });
-
-    dialogRef.componentInstance.requestAddPaymentMethod.subscribe(() => {
-      dialogRef.close();
-      this.openAddPaymentMethodDialog();
     });
   }
 
