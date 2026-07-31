@@ -5,9 +5,9 @@
             <h1 i18n>Billing</h1>
             <p i18n>Track your current subscription, usage, and payment methods.</p>
         </div>
-        <button mat-stroked-button (click)="openHistoryDialog()" *ngIf="!isLoading && summary">
-            <mat-icon>history</mat-icon>
-            <span i18n>View history</span>
+        <button mat-stroked-button (click)="openChangePlanDialog()" *ngIf="!isLoading && summary">
+            <mat-icon>workspace_premium</mat-icon>
+            <span i18n>Change plan</span>
         </button>
     </div>
 
@@ -90,7 +90,13 @@
 
         <!-- Payment Methods -->
         <div class="payment-methods-section">
-            <h3 class="section-title" i18n>Payment methods</h3>
+            <div class="payment-methods-header">
+                <h3 class="section-title" i18n>Payment methods</h3>
+                <button mat-stroked-button (click)="openAddPaymentMethodDialog()">
+                    <mat-icon>add</mat-icon>
+                    <span i18n>Add payment method</span>
+                </button>
+            </div>
 
             <div *ngIf="summary.paymentMethods.length === 0" class="activity-empty" i18n>
                 No payment methods on file.
@@ -101,6 +107,13 @@
                     <mat-icon>credit_card</mat-icon>
                     <span>{{ pm.cardBrand }} •••• {{ pm.lastFourDigits }}</span>
                     <span class="default-badge" *ngIf="pm.isDefault" i18n>Default</span>
+
+                    <span class="payment-method-actions">
+                        <button mat-button *ngIf="!pm.isDefault" (click)="setDefaultPaymentMethod(pm)" i18n>Make default</button>
+                        <button mat-icon-button (click)="openRemovePaymentMethodDialog(pm)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </span>
                 </div>
             </div>
         </div>

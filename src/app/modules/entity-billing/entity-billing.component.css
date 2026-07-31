@@ -90,12 +90,16 @@
     font-size: 0.95rem;
     font-weight: 600;
     color: #1a237e;
-    margin: 0 0 12px;
+    margin: 0;
 }
 
 .usage-section, .payment-methods-section {
     display: flex;
     flex-direction: column;
+}
+
+.usage-section .section-title {
+    margin-bottom: 12px;
 }
 
 .usage-item {
@@ -111,6 +115,13 @@
 }
 
 /* Payment Methods */
+.payment-methods-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
 .payment-method-list {
     display: flex;
     flex-direction: column;
@@ -129,7 +140,6 @@
 }
 
 .default-badge {
-    margin-left: auto;
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -137,6 +147,13 @@
     background: rgba(26, 35, 126, 0.08);
     padding: 2px 8px;
     border-radius: 6px;
+}
+
+.payment-method-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .activity-empty {

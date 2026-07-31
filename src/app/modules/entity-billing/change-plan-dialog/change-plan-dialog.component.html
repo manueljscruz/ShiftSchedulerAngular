@@ -1,0 +1,73 @@
+<div id="change-plan-dialog">
+    <h2 mat-dialog-title i18n>Change plan</h2>
+
+    <mat-dialog-content>
+
+        <div *ngIf="isLoading" class="loading-container">
+            <mat-spinner diameter="32"></mat-spinner>
+        </div>
+
+        <ng-container *ngIf="!isLoading">
+
+            <!-- No payment method yet -->
+            <div *ngIf="paymentMethods.length === 0" class="no-payment-method">
+                <p i18n>You need a payment method on file before subscribing to a plan.</p>
+                <button mat-stroked-button (click)="addPaymentMethod()">
+                    <mat-icon>add</mat-icon>
+                    <span i18n>Add payment method</span>
+                </button>
+            </div>
+
+            <ng-container *ngIf="paymentMethods.length > 0">
+
+                <!-- Plan tiers -->
+                <div class="tier-list">
+                    <div class="tier-group" *ngFor="let tier of tierGroups">
+                        <h4 class="tier-name">{{ tier.subscriptionPlanTypeName }}</h4>
+                        <p class="tier-description" *ngIf="tier.subscriptionPlanTypeDescription">{{ tier.subscriptionPlanTypeDescription }}</p>
+
+                        <mat-radio-group [(ngModel)]="selectedPlanId" class="duration-options">
+                            <mat-radio-button *ngFor="let duration of tier.durations" [value]="duration.subscriptionPlanDurationPriceId" class="duration-option">
+                                {{ duration.subscriptionDurationTypeName }} — {{ duration.basePrice | currency:'EUR' }}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+
+                <!-- Payment method -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label i18n>Payment method</mat-label>
+                    <mat-select [(ngModel)]="selectedPaymentMethodId">
+                        <mat-option *ngFor="let pm of paymentMethods" [value]="pm.paymentMethodId">
+                            {{ pm.cardBrand }} •••• {{ pm.lastFourDigits }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- Coupon code -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label i18n>Coupon code (optional)</mat-label>
+                    <input matInput [(ngModel)]="couponCode">
+                </mat-form-field>
+
+                <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+            </ng-container>
+
+        </ng-container>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button mat-fab extended class="secondary-color-bg flex-1" (click)="cancel()" [disabled]="isSubmitting">
+            <mat-icon>{{CANCEL_ICON}}</mat-icon>
+            <span i18n>Cancel</span>
+        </button>
+        <button mat-fab extended class="primary-color-bg flex-1"
+                *ngIf="paymentMethods.length > 0"
+                (click)="submit()"
+                [disabled]="isSubmitting || !selectedPlanId">
+            <span i18n>Subscribe</span>
+        </button>
+    </mat-dialog-actions>
+</div>
