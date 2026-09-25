@@ -22,7 +22,9 @@
 
                 <ng-container matColumnDef="endDate">
                     <mat-header-cell *matHeaderCellDef i18n>End date</mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{ row.endDate | date:'dd/MM/yyyy' }}</mat-cell>
+                    <mat-cell *matCellDef="let row"><ng-container *ngIf="row.endDate; else neverExpires">{{ row.endDate | date:'dd/MM/yyyy' }}</ng-container>
+                        <ng-template #neverExpires><ng-container i18n>Never expires</ng-container></ng-template>
+                    </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="status">

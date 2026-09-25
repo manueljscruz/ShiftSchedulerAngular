@@ -4,6 +4,6 @@ export interface SubscriptionHistoryItemDTO {
     subscriptionDurationTypeName: string;
     basePrice: number;
     startDate: string;
-    endDate: string;
+    endDate: string | null;
     status: string;
 }

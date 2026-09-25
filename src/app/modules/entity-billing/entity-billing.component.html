@@ -41,7 +41,10 @@
                     <mat-icon>event_repeat</mat-icon>
                 </div>
                 <div class="stat-text">
-                    <span class="stat-value">{{ summary.currentPlan.endDate | date:'dd/MM/yyyy' }}</span>
+                    <span class="stat-value">
+                        <ng-container *ngIf="summary.currentPlan.endDate; else neverExpires">{{ summary.currentPlan.endDate | date:'dd/MM/yyyy' }}</ng-container>
+                        <ng-template #neverExpires><ng-container i18n>Never expires</ng-container></ng-template>
+                    </span>
                     <span class="stat-label" i18n>Renewal date</span>
                 </div>
             </mat-card>
